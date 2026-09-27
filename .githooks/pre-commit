@@ -1,0 +1,4 @@
+#!/bin/sh
+# Enable with: git config core.hooksPath .githooks
+node scripts/check-forbidden.mjs || { echo "pre-commit: forbidden strings found"; exit 1; }
+node scripts/check-sources.mjs --allow-pending || { echo "pre-commit: sources or template problems"; exit 1; }

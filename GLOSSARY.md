@@ -1,0 +1,94 @@
+# Glossary
+
+One or two lines per term, alphabetical. A source id in brackets means the definition follows that source; "(general)" means common usage. Every id resolves in `sources.md`.
+
+- **Agent**: a system in which a model directs its own steps, choosing tools and deciding when to stop, as opposed to a workflow with a fixed path. Suited to "open-ended problems where it's difficult or impossible to predict the required number of steps" [S166].
+- **Agent-to-agent testing**: driving the agent under test with a second model that plays the user or the counterpart, so long multi-turn scenarios run without a person. (general)
+- **Agentic safety**: the part of a system card that covers misuse of agentic products and prompt injection across coding, computer use and browser use surfaces [S164].
+- **AI management system (AIMS)**: "a set of interrelated or interacting elements of an organization intended to establish policies and objectives, and processes to achieve those objectives, in relation to the responsible development, provision, or use of AI systems" [S162].
+- **AI RMF**: the NIST AI Risk Management Framework 1.0, voluntary, organised into the functions Govern, Map, Measure and Manage [S159].
+- **AI Safety Level (ASL)**: a tier in Anthropic's Responsible Scaling Policy that sets the security and deployment safeguards a model must be released under; Claude Sonnet 4.6 was "deployed under the AI Safety Level 3 (ASL-3) Standard" [S164].
+- **Allow, ask, deny rules**: permission rules for an agent tool, evaluated "deny, then ask, then allow"; "An allow rule can't carve an exception out of a deny rule" [S167].
+- **Annotation**: a human label attached to a model output or a case, used as ground truth for evals and for calibrating judges. (general)
+- **Autonomous QA agent**: a model-driven process that decides what to test, writes or runs tests and opens changes without a person at the keyboard; governed by a charter. (general)
+- **Benchmark**: a fixed task set with a grading procedure used to compare models; the number is only as good as the grading and the contamination status. (general)
+- **Branch protection**: repository rules that require approving reviews, code-owner review, passing status checks or restricted pushes before a merge to a protected branch [S168].
+- **Calibration (of a judge)**: measuring how often a model judge agrees with human labels on the same items, and adjusting the prompt or threshold until agreement is acceptable. (general)
+- **Capability threshold**: a level of dangerous capability defined in a lab's scaling policy that, if crossed, triggers stronger safeguards; the Sonnet 4.6 card discusses AI R&D-4 and CBRN-4 [S164].
+- **Chain of command**: the Model Spec's ordering of instruction authority, root, system, developer, user, guideline, where a higher level overrides a lower one [S158].
+- **Charter**: the written scope of an autonomous agent: purpose, allowed outputs, volume cap, no-go layers, permissions, phase gates, kill switch, escalation, records. (general)
+- **CI gate**: a check in the pipeline that blocks a merge or a deploy when it fails; only deterministic, trusted checks should gate. (general)
+- **Code owner**: a person or team named for a path; branch protection can require "any pull request that affects code with a code owner must be approved by that code owner" [S168].
+- **Confabulation**: NIST's term for GAI producing "confidently stated but erroneous or false content", one of the twelve GAI risks [S160].
+- **Contamination**: eval or benchmark items appearing in training data, so a score measures memory rather than capability. (general)
+- **Datasheet**: a document that accompanies a dataset and records "its motivation, composition, collection process, recommended uses, and so on" [S157].
+- **Denied topic**: a subject a guardrail is configured to refuse outright, tested with both must-block and must-not-block cases. (general)
+- **Deprecation**: a provider retiring a model version on a date, after which requests fail or are routed elsewhere; the trigger for a regression-on-upgrade run. (general)
+- **Disaggregated evaluation**: reporting results split by factor (group, environment, instrument) rather than as one aggregate, the core of the model card format [S156].
+- **DPO**: direct preference optimisation, a post-training method that fits a model to preference pairs without a separate reward model. (general)
+- **Draft pull request**: a pull request marked not ready for review or merge; the safe output form for an agent that proposes changes. (general)
+- **Drift**: a change over time in inputs, outputs or quality in production, detected by sampling and scoring live traffic against a baseline. (general)
+- **Error bar**: the uncertainty interval around an eval score; two scores whose intervals overlap have not been shown to differ. (general)
+- **Eval-driven development**: writing the eval set before or alongside the feature and using it as the loop's definition of done. (general)
+- **Excessive agency**: OWASP LLM06:2025, where an LLM-based system is granted more capability, permission or autonomy than the function needs [S163].
+- **Factors**: the model card section listing the groups, environments and instrumentation across which performance should be reported [S156].
+- **Fine-tune**: further training of a base model on task data; a fine-tune must be compared against the base model and against a prompt on a held-out set. (general)
+- **Flake**: a test whose result varies across runs with no code change; in LLM apps a flake is often the model, not the test. (general)
+- **GenAI semantic conventions**: the OpenTelemetry attribute names for model calls (model, tokens, prompt, completion) so traces from different tools line up. (general)
+- **Generative AI Profile**: NIST AI 600-1, a companion to the AI RMF that lists twelve GAI risks and suggested actions with ids such as GV-1.2-002 [S160].
+- **Golden set**: a curated, human-verified set of cases with expected outputs, used as the reference for regression and as the calibration set for judges. (general)
+- **GPAI Code of Practice**: the EU General-Purpose AI Code of Practice, final version 10 July 2025, with Transparency, Copyright and Safety and Security chapters [S161].
+- **Guardrail**: a check placed around a model call (input filter, output classifier, prompt rule) that blocks or rewrites content; an over-blocking guardrail is a defect. (general)
+- **Harness**: the code that runs cases through a model or agent, collects outputs and applies graders; the reusable frame around an eval. (general)
+- **Held-out**: cases kept away from prompt tuning and training so a score on them is not fitted. (general)
+- **Helpful-only snapshot**: a model variant "where safeguards and other harmlessness training were removed", used by a lab to measure dangerous capability without refusals in the way [S164].
+- **Human in the loop**: the rule that a person takes the decisions that change production, money, data or access, with the model limited to proposing. (general)
+- **Human-AI configuration**: NIST's term for "arrangements of or interactions between a human and an AI system", one of the twelve GAI risks [S160].
+- **Improper output handling**: OWASP LLM05:2025, insufficient validation or sanitisation of model output before it is passed downstream [S163].
+- **Intended use**: the model card section that states primary uses, intended users and out-of-scope uses [S156].
+- **Kappa**: an agreement statistic (Cohen's or Fleiss') that corrects raw agreement between raters for chance. (general)
+- **Kill switch**: one owner and one action that stops an autonomous agent: a deny rule, a disabled workflow or a revoked token. (general)
+- **Lane**: a risk class for a change. Green: internal UI, docs, tests, fixtures. Yellow: business logic, integrations. Red: auth, payments, PII, migrations, infrastructure, where "AI may draft only" [S169].
+- **Lethal trifecta**: the combination of private data access, exposure to untrusted content, and a channel to exfiltrate, which together make prompt injection exploitable. (general)
+- **Likert**: a graded scale (for example 1 to 5) for scoring an output; harder to make gradeable than a binary criterion. (general)
+- **LLM-as-judge**: using a model to grade outputs against a rubric; needs calibration against human labels and has known biases. (general)
+- **Model card**: a short document accompanying a trained model that reports "benchmarked evaluation in a variety of conditions" and the context in which the model is intended to be used [S156].
+- **Model Documentation Form**: the EU code's template that a provider fills before placing a general-purpose model on the market and keeps updated for ten years [S161].
+- **Model Spec**: OpenAI's published statement of how its models should behave, used for training and as a target for evaluation [S158].
+- **model-index**: the YAML structure in a Hugging Face model card that records evaluation results per task, dataset and metric so the Hub can render and index them [S165].
+- **Mutation testing**: deliberately changing the code under test and checking that tests fail; a surviving mutant means the tests do not cover that behaviour. (general)
+- **Pairwise**: scoring two outputs against each other rather than each on its own; less sensitive to scale drift, more sensitive to position bias. (general)
+- **Pass rate**: the share of runs of a case that pass; with a non-deterministic model a case has a pass rate, not a result. (general)
+- **Permission mode**: the setting that decides which agent actions ask for approval; modes include default, acceptEdits, plan, bypassPermissions and auto [S167].
+- **Phase gate**: a checkpoint in an agent's rollout with a written exit criterion, so scope widens only when the previous phase met it. (general)
+- **Position bias**: a judge's tendency to prefer the first or the second of two candidates regardless of content; controlled by swapping order. (general)
+- **Preliminary assessment**: the RSP protocol a lab applies to a model that does not push the capability frontier, using automated evaluations and reference to the frontier model [S164].
+- **Prompt injection**: OWASP LLM01:2025, where content in the prompt or in retrieved data alters the model's behaviour in a way the developer did not intend [S163].
+- **Quarantine**: moving a flaky test out of the gating suite to a non-blocking run until it is fixed or deleted. (general)
+- **Red team**: adversarial testing by people or models to find failure modes before release; NIST suggests "GAI red-teaming, or chaos testing to identify anomalous or unforeseen failure modes" [S160].
+- **Redaction**: removing or masking personal or sensitive data from prompts, completions and traces before they are stored or exported. (general)
+- **Regression on upgrade**: the eval run before switching model versions to catch behaviour that changed with the model, not the code. (general)
+- **Required review**: a branch rule that "all pull requests receive a specific number of approving reviews before someone merges" [S168].
+- **Responsible Scaling Officer (RSO)**: the Anthropic role that, per the system card, determined the ASL-3 safeguards level for the CBRN domain [S164].
+- **Reward hacking**: a model gaming the grader instead of solving the task, for example special-casing hidden tests; measured by labs as a hack rate on hack-prone and impossible tasks [S164].
+- **RLHF**: reinforcement learning from human feedback, post-training that optimises a policy against a reward model trained on human preferences. (general)
+- **RLVR**: reinforcement learning with verifiable rewards, post-training where the reward is a programmatic check such as a unit test or a maths answer. (general)
+- **RSP**: Anthropic's Responsible Scaling Policy, the framework a system card reports against when it explains a release decision [S164].
+- **Rubric**: a written set of criteria a grader applies; a good rubric can be applied by two graders with the same result. (general)
+- **Rule-in and rule-out evaluation**: a lab's early-proxy tests for a capability threshold; scoring above the rule-in line means the threshold may be reached, scoring below the rule-out line means it is not [S164].
+- **Sandbagging**: a model that "might intentionally, selectively underperform when it can tell that it is undergoing pre-deployment testing for a potentially-dangerous capability" [S164].
+- **Sandbox**: an isolated environment where an agent's actions have no real side effects; Anthropic recommends "extensive testing in sandboxed environments" [S166].
+- **Scope of autonomy**: in the Model Spec, "a clear, mutually understood scope of autonomy shared between the assistant and the user" that bounds what the assistant may do without asking [S158].
+- **SFT**: supervised fine-tuning, post-training on demonstrated input-output pairs. (general)
+- **Simulated user**: a scripted or model-driven stand-in for a person, used to drive multi-turn tests; it can double the noise if it is itself non-deterministic. (general)
+- **Span**: one timed operation in a trace, such as a model call or a tool call, carrying attributes and a parent. (general)
+- **Stale approval**: a review approval given before later commits changed the diff; branch protection can dismiss it so "the pull request cannot be merged until someone approves the work again" [S168].
+- **Status check**: an automated check on a pull request that branch protection can require to be "successful, skipped, or neutral" before merge [S168].
+- **Suggested action**: an entry in NIST AI 600-1 with an id such as MP-5.1-005, tied to an AI RMF subcategory and mapped to the GAI risks it addresses [S160].
+- **Supply chain (LLM03)**: OWASP LLM03:2025, vulnerabilities introduced through third-party models, datasets, adapters and packages [S163].
+- **System card**: a lab's release document that describes "evaluations for its capabilities and its safety-related properties" and "the reasoning behind its release" under the lab's scaling policy [S164].
+- **Systemic risk**: in the EU code, the category of risk from the most capable general-purpose models that triggers the Safety and Security chapter [S161].
+- **Tool contract**: the schema, examples and boundaries that define a tool for a model; Anthropic says tool definitions deserve "just as much prompt engineering attention as your overall prompts" [S166].
+- **Trajectory**: the full sequence of an agent's steps, tool calls and observations on one task; assertions on a trajectory check the path, not only the outcome. (general)
+- **Uplift**: the increase in a threat actor's ability to cause harm that access to a model provides, the quantity RSP capability evaluations try to bound [S164].
+- **Workflow**: a system where a model's calls follow a predefined path; Anthropic's guidance is to prefer a workflow and add agent complexity "only when it demonstrably improves outcomes" [S166].

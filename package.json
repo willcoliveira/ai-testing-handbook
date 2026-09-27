@@ -1,0 +1,17 @@
+{
+  "name": "ai-testing-handbook",
+  "version": "0.1.0",
+  "description": "Evals, guardrails, benchmarks and audits for LLM applications and agents: a sourced reference and a learning path for AI testing.",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "check": "node scripts/check-forbidden.mjs && node scripts/check-sources.mjs && node scripts/check-links.mjs --report-only",
+    "check:forbidden": "node scripts/check-forbidden.mjs",
+    "check:sources": "node scripts/check-sources.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:balance": "node scripts/check-balance.mjs"
+  },
+  "license": "MIT",
+  "author": "William Oliveira"
+}

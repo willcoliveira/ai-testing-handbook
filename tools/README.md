@@ -1,0 +1,38 @@
+# Tools: a comparison matrix
+
+One row per tool, filled only from the source in the last column. "unknown" means the source did not say, not that the tool lacks it. "Last release checked" is the version or date seen on 2026-09-26 (package registries and GitHub releases, cross-checked against the docs). Per-tool notes are in [harnesses.md](harnesses.md), [platforms.md](platforms.md), [auditors.md](auditors.md) and [load-and-voice.md](load-and-voice.md). Guardrails, red-teaming and observability tools have their own files.
+
+| Tool | Kind | Open source | Language or SDK | Judge support | Datasets and experiments | Agent and multi-turn | Red team | Tracing | CI-friendly | Hosted | Last release checked | Source id |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Inspect AI | harness | yes, MIT | Python | yes: model-graded and custom scorers | yes: 200+ pre-built evals, eval-set, per-sample logs | yes: react agent, multi-agent, agent bridge, sandboxes, limits | unknown | yes: tracing and Inspect View | yes: CLI | no | inspect-ai 0.3.270, 2026-09-26; inspect_evals v0.22.0, 2026-09-25 | S066, S067 |
+| promptfoo | harness and red team | yes, MIT | Node CLI, YAML, library | yes: model-graded assertions | yes: matrix views, caching, concurrency | agents as targets; multi-turn unknown | yes: plugins for harmful content, BOLA, BFLA, prompt injection | unknown | yes: GitHub Actions | unknown | 0.123.1, 2026-09-18 | S068, S069 |
+| DeepEval | harness | yes, Apache-2.0 | Python, pytest | yes: LLM-as-a-judge, 50+ metrics | yes: repeatable experiments | yes: agent, conversational, trajectory modes | via DeepTeam | yes: spans, tool calls | yes: pytest and CI providers | unknown | 4.2.6, 2026-09-24 | S070 |
+| Ragas | metrics library | yes, Apache-2.0 | Python | yes: LLM-driven metrics, custom via decorators | yes: experiments, dataset tools | unknown | unknown | unknown | unknown | no | 0.4.3, 2026-01-13 | S080 |
+| OpenAI Evals | harness and registry | yes, MIT per README | Python, YAML | yes: model-graded templates | yes: registry over Git LFS | partial: completion functions for prompt chains and tool-using agents | unknown | unknown: Snowflake logging only | unknown | no | last push 2026-04-14, no deprecation notice | S082 |
+| Braintrust | platform | SDK Apache-2.0, autoevals MIT; platform hosted | TypeScript, Python | yes: autoevals, LLM-as-a-judge, custom code | yes: datasets, experiments | yes: multi-step agents, remote evals, sandboxes | unknown | yes: online scoring of production traces | yes: evals on every pull request | yes | braintrust 3.35.0, 2026-09-23 | S081 |
+| Langfuse | platform | yes, self-hostable | SDKs and API | yes: LLM-as-a-judge, human annotation, code evaluators | yes | traces cover multi-turn; agent-specific graders unknown | unknown | yes | yes: GitHub Action to block deploys | yes, and self-host | v4.46.0, 2026-09-25 | S071, S079 |
+| LangSmith | platform | unknown | LangChain integration | yes: LLM-as-judge, pairwise, decision model evaluators | yes | yes: threads, trajectory, tool selection | unknown | yes | partial: automation rules; CI not stated | yes | unknown | S083 |
+| Arize Phoenix | platform, self-hosted | source-available, Elastic License 2.0 | Python, TypeScript (alpha) | yes: evals packages | yes: datasets, experiments | yes: OpenTelemetry traces, agent SDK integrations | unknown | yes | unknown | AX (hosted) per S079 | arize-phoenix 20.16.0, 2026-09-23 | S084, S079 |
+| W&B Weave | platform | SDK Apache-2.0; platform hosted | Python | custom scorers; LLM judge not stated | yes: Dataset, trials | unknown | unknown | unknown | unknown | yes | weave 0.53.11, 2026-09-25 | S085 |
+| Vertex AI evaluation | managed service | no | Python SDK, console, API | yes: adaptive and static rubrics | yes: upload, production logs, synthetic generation | yes: agent evaluation | unknown | unknown | unknown | yes | docs updated 2026-09-25 | S087 |
+| Azure AI Foundry evaluation | managed service | SDK MIT; service hosted | Python, C# | yes: AI-assisted evaluators | yes: bring your own data | yes: tool call accuracy, task completion | yes: AI red teaming agent on PyRIT | yes: OpenTelemetry, Application Insights | yes: quality gates in CI/CD | yes | docs 2026-07-31; azure-ai-evaluation 1.18.7, 2026-09-25 | S088 |
+| Amazon Bedrock Evaluations | managed service | no | console, CLI, API | yes: built-in and custom metrics, listed judge models | yes: prompt datasets, bring your own responses | unknown | unknown | unknown | unknown | yes | living docs | S086 |
+| Petri | auditor | yes, MIT | Python | yes: LLM judges across dimensions | seed instructions | yes: multi-turn with simulated users and tools | yes: alignment auditing | transcripts | unknown | no | 3.1.0, 2026-08-12 | S072 |
+| Bloom | auditor | yes, MIT | Python | yes: judge and meta-judge | generated suites | yes: conversation and simenv with tools | partial: variation dimensions; jailbreak evaluation reported by adopters | Inspect-compatible transcripts, W&B | unknown | no | tag v1.1.0; post 2025-12-19 | S073 |
+| k6 | load | yes, AGPL-3.0 | JavaScript, TypeScript | not applicable | not applicable | WebSocket virtual users | not applicable | unknown | yes: thresholds, non-zero exit | unknown | v2.3.0, 2026-09-21 | S076 |
+| Vapi voice testing | voice simulation (platform feature) | no | platform | yes: exact, pattern, AI judge | reusable checks | yes: AI tester as caller, chat and voice | unknown | unknown | unknown | yes | living docs | S093 |
+| Roark | voice simulation | no | platform | pass/fail scores | scenario suites from real call types | yes: simulated callers | yes: adversarial callers | call monitoring | yes: CI/CD gates | yes | living page | S094 |
+| Coval | voice simulation | no | REST API, CLI, TypeScript and Python SDKs, MCP | AI judge retrained by human review | thousands of scenarios | yes: voice and chat | unknown | production call scoring | yes: CI/CD | yes | living docs | S095 |
+
+## How to choose
+
+Start from what is under test, not from the tool. A model or an agent on public tasks points to Inspect and its evals library [S066][S067]. An application on your own distribution points to a harness in your language: DeepEval or Ragas for Python teams [S070][S080], promptfoo for a Node team or for anyone who wants red-team plugins in the same config [S068][S069]. If the same team also needs production traces scored, a platform saves a second integration: Braintrust, Langfuse, LangSmith, Phoenix or Weave [S081][S071][S083][S084][S085], or the managed service of the cloud you already run on [S086][S087][S088]. Petri and Bloom are for finding behaviours, not for gating releases [S072][S073]. k6 is for the transport and the code around the model, with the model stubbed [S076]. Voice simulation platforms are candidates until they pass a stability gate and a cost gate you set yourself [S093][S094][S095]. Whatever you pick, the dataset and the scorers should be yours and portable; the harness is the part you will change.
+
+## Adjacent tools cited by the practices
+
+- Playwright test agents (planner, generator, healer) for assistant-driven browser exploration and test generation; @playwright/test 1.63.0, Apache-2.0 [S090].
+- StrykerJS v10.0.0 for mutation testing of JavaScript and TypeScript, Apache-2.0 [S091].
+- mutmut 3.8.0 for mutation testing of Python, BSD-3-Clause [S092].
+- tau2-bench v1.0.1 for tool-agent-user simulation with a user simulator and state-based rewards, MIT [S078].
+- Berkeley Function Calling Leaderboard V4 for function-calling accuracy, cost and latency [S089].
+- VoiceBench for speech-input evaluation of voice assistants, CC BY 4.0 [S075].

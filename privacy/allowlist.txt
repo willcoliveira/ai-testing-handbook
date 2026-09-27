@@ -1,0 +1,4 @@
+# Tokens that a generic pattern would flag but are public names. One per line, exact match.
+MATH-500
+GSM-8K
+ARC-AGI-3

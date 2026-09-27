@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Forbidden strings (example list only in CI)
+        run: node scripts/check-forbidden.mjs
+        env:
+          CI: "1"
+      - name: Sources, templates and taxonomy
+        run: node scripts/check-sources.mjs
+      - name: Links (report only)
+        run: node scripts/check-links.mjs --report-only
