@@ -103,7 +103,7 @@ implementations", so it is guidance, not evidence of internal practice [S244].
   AI evaluation service, covered in `tools/platforms.md` [S087].
 - No open-source evaluation harness is named in the pages fetched. The UK AISI Inspect Evals collection
   includes a "GDM CTF" suite; see `labs/third-party-evaluators.md`.
-- **Double-blind evaluations, August 2026:** a pilot in which an external evaluator's prompts and the model's weights stay hidden from each other inside a cryptographically protected environment, aimed at contamination and weight leakage at once; listed by the refresh, post not yet read in full [S295].
+- **Double-blind evaluations, August 2026:** a pilot on Gemini Flash Lite with the Singapore AI Safety Institute, OpenMined, AVERI and MLCommons, run inside Google Cloud Confidential Space: "the evaluator cannot see the Gemini model weights, and Google cannot see the evaluator's test prompts", with cryptographic verification that both stay private. The post calls it a pilot and points to a technical report for detail [S295].
 
 ## What is not public (stated as unknown)
 - The values of alert thresholds and the pass criteria for early warning evaluations. The reports say a

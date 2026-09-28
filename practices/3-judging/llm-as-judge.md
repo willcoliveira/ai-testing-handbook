@@ -3,8 +3,8 @@ id: llm-as-judge
 title: LLM-as-judge
 area: 3-judging
 status: draft
-last_reviewed: 2026-09-27
-sources: [S051, S052, S053, S054, S055, S056, S057, S058, S059, S060, S061, S153, S213, S221, S229, S230, S252, S253, S255, S265, S270, S272, S278]
+last_reviewed: 2026-09-28
+sources: [S051, S052, S053, S054, S055, S056, S057, S058, S059, S060, S061, S070, S071, S153, S213, S221, S229, S230, S252, S253, S255, S265, S270, S272, S278, S303]
 related: [judge-calibration, rubrics-and-pairwise, human-annotation, criteria-authoring, non-determinism-and-pass-rates]
 ---
 
@@ -46,6 +46,9 @@ Human grading does not scale and code checks cannot read prose. Zheng et al. fou
 - **xAI, April 2026:** refusal outcomes graded by "a separate model", correctness on HLE judged by "a separate LLM judge", and an alignment audit whose judge is built on Petri 2.0 [S265].
 - **NVIDIA, living:** NeMo Evaluator marks judge-based benchmarks (SimpleQA, HealthBench) as `needs_judge` [S270].
 - **AI2, December 2025:** relies on verifiable metrics for most of the suite and reports AlpacaEval, a judge-based task, as one of its high-variance benchmarks [S278].
+- **DeepEval, 2026-09:** version 4.2.4 added a decision-model judge (TypeSafe's Jev) that returns bounded verdicts instead of generated text, presented as less flaky, cheaper and faster [S070].
+- **Langfuse, 2026-08 and 2026-09:** versions 4.42 to 4.44 surfaced decision-model evaluators in the template gallery and added them as a judge option [S071].
+- **arXiv, 2026-09:** a model used as a document auditor at scale fabricated findings and degraded as batch size grew, a warning for any judge asked to review many items in one call [S303].
 
 ## Pitfalls
 1. Position bias. With the default prompt GPT-4 gave the same verdict across a swap only 65.0% of the time and Claude-v1 23.8%; most judges favoured the first position [S051]. The survey lists position bias as task-agnostic and swapping as the standard fix [S058].
@@ -82,3 +85,6 @@ None yet.
 - [S265] Grok 4.20 System Card, xAI, 2026-04-07
 - [S270] NeMo Evaluator (repository), NVIDIA-NeMo, GitHub, living
 - [S278] Olmo 3 (technical report), Ai2 (Olmo Team), arXiv 2512.13961, 2025-12
+- [S070] DeepEval documentation, introduction, Confident AI, living
+- [S071] Langfuse evaluation overview, Langfuse, living
+- [S303] When Auditors Fabricate: batch-size degradation and confident hallucination in LLM detection of planted document contamination, arXiv 2609.09696, 2026-09-09

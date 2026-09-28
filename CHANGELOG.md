@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.4 (2026-09-28)
+
+- Second refresh, areas 1 to 4, 6 and 7 plus the vendor pages: 10 new sources (S297 to S306), 17 sourced
+  bullets across nine practices, tool release notes for promptfoo, DeepEval and Langfuse, and the three
+  headline sources from the first run (OWASP 2026, METR on Opus 5.5, DeepMind double-blind) read in
+  full and upgraded from listings to content. Digest: `digests/2026-09-28-areas-1-4-6-7.md`.
+
 ## 0.1.3 (2026-09-28)
 
 - First refresh, area 5: 16 new sources (S281 to S296), 18 sourced bullets across nine practices,

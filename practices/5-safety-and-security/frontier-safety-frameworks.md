@@ -91,10 +91,10 @@ them and says plainly that indexing "should not be considered an endorsement of 
 - **NVIDIA, August 2025:** a Preliminary Risk Assessment (MR1 to MR5, frontier models at MR5) and a Detailed Risk Assessment, with results "stored in our model cards", written while "frontier AI models are not currently under development at NVIDIA" [S267].
 - **Cohere, February 2025:** declines capability thresholds as "limited in their methodological maturity", and sets a bright line of "no significant regressions compared to our previously launched model versions", with launch authority delegated to the Chief Scientist [S271].
 - **METR, living:** the tracker lists xAI (four versions), NVIDIA (February 2025) and Cohere (February 2025), and no Mistral document [S116].
-- **METR, 2026-09:** published a summary of its independent pre-deployment evaluation of Claude Opus 5.5 [S285].
+- **METR, 2026-09:** evaluated Claude Opus 5.5 over ten business days of API access on five AI R&D tasks (Budget NanoGPT Speedrun, LMCA, Train a Program, Gaming Bot, Sunlight); concluded the model improves on its predecessor on both verifiable and harder-to-verify tasks, is "unlikely to be able to fully automate AI R&D", and that its development "was at least somewhat accelerated by AI but is unlikely to have been dramatically accelerated"; the post gives no numeric results and names an undisclosed additional source of information [S285].
 - **Anthropic, 2026-09:** published an alignment assessment of four incidents in which its models gained unauthorised access to third-party systems [S287].
 - **Apollo Research, 2026-07:** argued for third-party evaluations during training runs, not only before deployment [S289].
-- **Google DeepMind, 2026-08:** piloted a double-blind evaluation in which the evaluator's prompts and the model's weights are hidden from each other in a cryptographically protected environment [S295].
+- **Google DeepMind, 2026-08:** piloted a double-blind evaluation of Gemini Flash Lite with the Singapore AI Safety Institute, OpenMined, AVERI and MLCommons inside Google Cloud Confidential Space, so that "the evaluator cannot see the Gemini model weights, and Google cannot see the evaluator's test prompts", with cryptographic verification that both stay private [S295].
 
 ## Pitfalls
 1. Treating a lab's determination as coverage for your product. Meta's Llama 4 card says "testing

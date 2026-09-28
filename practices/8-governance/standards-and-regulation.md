@@ -48,7 +48,7 @@ Steps:
 - **Amazon, 2025-12:** the Nova 2 Lite service card states the model "is not intended to support any prohibited practices under the EU AI Act" and provides a complaints channel under the EU Code of Practice for General-Purpose AI Models [S257].
 - **Amazon, 2026-09:** the framework update was made to "account for relevant laws and regulations" and will be revisited "at least annually" [S254].
 - **Google, living:** SAIF maps 15 AI security risks to named controls, with the caveat that the site "is not a reflection of Google's current technical implementations" [S244].
-- **OWASP GenAI Security Project, 2026-08 and 2026-09:** the LLM Top 10 2026 edition, the Agent Control Standard, and a crosswalk that maps 51 GenAI vulnerabilities to industry frameworks [S281][S282][S283].
+- **OWASP GenAI Security Project, 2026-08 and 2026-09:** the LLM Top 10 2026 edition, which "introduces updated rankings, expanded threat coverage, and new research grounded in thousands of real-world AI security incidents" (the ten entries are in the PDF), the Agent Control Standard, and a crosswalk that maps 51 GenAI vulnerabilities to industry frameworks [S281][S282][S283].
 - **Microsoft, 2026-09:** described how its responsible AI practices are adapting in 2026 [S291].
 
 ## Pitfalls

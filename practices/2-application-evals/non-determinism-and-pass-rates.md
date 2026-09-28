@@ -3,8 +3,8 @@ id: non-determinism-and-pass-rates
 title: Non-determinism and pass rates
 area: 2-application-evals
 status: draft
-last_reviewed: 2026-09-26
-sources: [S031, S032, S033, S034, S036, S041, S047, S049]
+last_reviewed: 2026-09-28
+sources: [S031, S032, S033, S034, S036, S041, S047, S049, S068]
 related: [statistical-treatment-of-evals, ci-gates-for-llm-apps, regression-on-upgrade, online-evals-and-drift, golden-datasets]
 ---
 
@@ -83,6 +83,7 @@ depending on the failures you are willing to tolerate" [S036].
   conclude on "the need to continuously monitor LLMs' behavior over time" [S041].
 - **Hamel Husain on Rechat, 2024-03-29:** says the pass rate is a product decision and not necessarily 100
   percent [S036].
+- **promptfoo, 2026-08:** version 0.121.19 added a per-test repeat option, which makes N runs a first-class setting [S068].
 
 ## Pitfalls
 1. **One run per case.** A single boolean hides variance that a 3 to 5 trial run would show [S049], [S032].
@@ -107,3 +108,4 @@ None yet.
 - [S041] How is ChatGPT's behavior changing over time?, Chen, Zaharia, Zou, arXiv v3 2023-10-31.
 - [S047] Command line reference, promptfoo docs, living (checked 2026-09-26).
 - [S049] How to deal with nondeterminism, Braintrust foundations, living (checked 2026-09-26).
+- [S068] promptfoo documentation, intro, promptfoo, living

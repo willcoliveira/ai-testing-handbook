@@ -39,7 +39,7 @@ Bounded on purpose. Add a line only with a reason, and remove one when you do.
 | https://github.com/safety-research/petri/releases | petri version |
 | https://github.com/safety-research/bloom/releases | bloom version |
 | https://github.com/sierra-research/tau2-bench/releases | tau2 version |
-| https://github.com/open-telemetry/semantic-conventions/releases | semconv version |
+| https://github.com/open-telemetry/semantic-conventions-genai/releases | GenAI semconv version (the conventions moved to their own repository) |
 | https://github.com/mlcommons/ailuminate/releases | ailuminate version |
 | https://github.com/stanford-crfm/helm/releases | helm version |
 
