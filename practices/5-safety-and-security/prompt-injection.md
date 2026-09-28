@@ -3,8 +3,8 @@ id: prompt-injection
 title: Prompt injection
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-09-26
-sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127]
+last_reviewed: 2026-09-28
+sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296]
 related: [red-teaming, guardrails, tool-use-evals, agent-evals]
 ---
 
@@ -83,6 +83,10 @@ unusual user prompts, and a model trained to trust the user turn can follow what
   attacks including jailbreaks, prompt injections, and prompt leakages" [S124].
 - **NIST, July 2024:** AI 600-1 suggests red-teaming "to assess resilience against" GAI attacks such as
   prompt injection [S127].
+- **OWASP GenAI Security Project, 2026-08:** published the 2026 edition of the LLM Top 10, superseding the 2025 list [S281].
+- **arXiv, 2026-09:** in multi-agent systems, injection has fourteen attack vectors that single-model defences do not cover; a four-part architectural defence cut attack success from 31.2 to 4.2 percent in the paper's setting [S293].
+- **arXiv, 2026-09:** token-level perturbations guided by explainability methods bypassed classifier-based injection detectors, Prompt Guard 2 among them [S294].
+- **arXiv, 2026-09:** trigger-based prompts stay dormant until a condition fires; the paper's detector reported 97 percent accuracy in its own setting [S296].
 
 ## Pitfalls
 1. Trusting everything in the user turn. Anthropic's model "often reasoned that anything in the user's
@@ -111,3 +115,7 @@ None yet.
 - [S124] Amazon Bedrock Guardrails components, AWS, living.
 - [S125] CyberSecEval, Meta, living.
 - [S127] NIST AI 600-1 Generative AI Profile, NIST, 2024-07-26.
+- [S281] OWASP GenAI LLM Top 10 2026, OWASP GenAI Security Project, 2026-08-03
+- [S293] Beyond Single-Model Injection: a threat model and defense architecture for prompt injection in multi-agent systems, arXiv 2609.22949, 2026-09-19
+- [S294] Decoding Guardrails: XAI-guided perturbation analysis of prompt injection detection, arXiv 2609.24801, 2026-09-21
+- [S296] Defusing Explosive Prompts: understanding and preventing trigger-based prompt injections in LLM agents, arXiv 2609.22510, 2026-09-18

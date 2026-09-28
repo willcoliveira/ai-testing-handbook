@@ -1,8 +1,8 @@
 ---
 id: mistral
 title: Mistral AI
-sources: [S116, S259, S260, S261, S262]
-last_reviewed: 2026-09-27
+sources: [S116, S259, S260, S261, S262, S292]
+last_reviewed: 2026-09-28
 ---
 
 # Mistral AI
@@ -52,6 +52,7 @@ labs give, and publishes nothing about safety evaluation of the generative model
   per-category scores, plus a guardrailing layer with custom policies on top of `moderation_llm_v2`
   [S261][S262].
 - No evaluation harness, no published red-team suite and no auditing tool in the pages fetched.
+- **Shieldstral, August 2026:** a safety product announced on the news page; details not read at the time of the refresh [S292].
 
 ## What is not public (stated as unknown)
 - Any pre-release safety evaluation of Mistral Large 3, Mistral Medium 3 or Magistral. The announcement
@@ -80,3 +81,4 @@ labs give, and publishes nothing about safety evaluation of the generative model
 - [S260] Magistral (technical report, arXiv 2506.10910), Mistral AI, 2025-06.
 - [S261] Moderation and guardrailing (docs.mistral.ai), Mistral AI, living.
 - [S262] Mistral Moderation API (announcement), Mistral AI, 2024-11-07.
+- [S292] Introducing Shieldstral, Mistral AI, 2026-08-04.

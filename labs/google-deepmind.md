@@ -1,8 +1,8 @@
 ---
 id: google-deepmind
 title: Google DeepMind
-sources: [S087, S107, S108, S109, S110, S111, S116, S236, S237, S238, S239, S240, S241, S242, S243, S244, S245]
-last_reviewed: 2026-09-27
+sources: [S087, S107, S108, S109, S110, S111, S116, S236, S237, S238, S239, S240, S241, S242, S243, S244, S245, S295]
+last_reviewed: 2026-09-28
 ---
 
 # Google DeepMind
@@ -103,6 +103,7 @@ implementations", so it is guidance, not evidence of internal practice [S244].
   AI evaluation service, covered in `tools/platforms.md` [S087].
 - No open-source evaluation harness is named in the pages fetched. The UK AISI Inspect Evals collection
   includes a "GDM CTF" suite; see `labs/third-party-evaluators.md`.
+- **Double-blind evaluations, August 2026:** a pilot in which an external evaluator's prompts and the model's weights stay hidden from each other inside a cryptographically protected environment, aimed at contamination and weight leakage at once; listed by the refresh, post not yet read in full [S295].
 
 ## What is not public (stated as unknown)
 - The values of alert thresholds and the pass criteria for early warning evaluations. The reports say a
@@ -157,3 +158,4 @@ implementations", so it is guidance, not evidence of internal practice [S244].
 - [S243] ShieldGemma 2 model card, Google, 2025-04-03.
 - [S244] Secure AI Framework (SAIF) risks, Google, living.
 - [S245] Responsible AI practices and AI principles, Google, living.
+- [S295] Piloting the world's first double-blind AI evaluations, Google DeepMind, 2026-08-27.

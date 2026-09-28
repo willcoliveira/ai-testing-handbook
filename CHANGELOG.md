@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3 (2026-09-28)
+
+- First refresh, area 5: 16 new sources (S281 to S296), 18 sourced bullets across nine practices,
+  the OWASP LLM Top 10 2026 edition recorded, newer OpenAI system cards noted for reading, six lab
+  files updated with listing-level items, the sweep list extended to the vendors added in 0.1.1.
+  Digest: `digests/2026-09-28.md`.
+
 ## 0.1.2 (2026-09-27)
 
 - Removed the eleven patterns drawn from one healthcare voice-and-SMS programme; that case stays

@@ -13,6 +13,21 @@ Bounded on purpose. Add a line only with a reason, and remove one when you do.
 | https://ai.meta.com/blog | 5, 7 | model releases and evals |
 | https://metr.org/blog | 1, 5 | third-party evaluation |
 | https://www.aisi.gov.uk/ | 4, 5 | Inspect and evaluations |
+| https://www.apolloresearch.ai/research | 5 | scheming and audit research |
+
+## Lab pages added 2026-09-28 for the vendors covered in labs/ (10)
+| Page | Area | Notes |
+|---|---|---|
+| https://x.ai/news | 5 | Grok cards and the frontier framework; returned 403 to WebFetch on 2026-09-28, read by hand |
+| https://blogs.microsoft.com/on-the-issues/ | 5, 8 | responsible AI and frontier governance posts |
+| https://www.amazon.science/blog | 5, 7 | Nova reports and the frontier model safety framework |
+| https://developer.nvidia.com/blog | 4, 5 | Nemotron, NeMo Evaluator, guardrails |
+| https://cohere.com/blog | 5, 7 | Command releases and the frontier model framework |
+| https://mistral.ai/news | 5, 7 | model releases and moderation |
+| https://huggingface.co/deepseek-ai | 5, 7 | model cards with dates; the GitHub org page lists no dates |
+| https://huggingface.co/Qwen | 5, 7 | model cards with dates; qwen.ai/blog is script-rendered and returns nothing |
+| https://huggingface.co/moonshotai | 5, 7 | model cards with dates; moonshotai.github.io redirects |
+| https://huggingface.co/zai-org | 5, 7 | model cards with dates; z.ai/blog is a 404 |
 
 ## Tool release pages (10)
 | Repository releases page | Register notes to compare |

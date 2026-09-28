@@ -12,11 +12,16 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
 
 ## Every refresh (monthly, or when a lab, tool or standard ships something)
 
-1. Open Claude Code inside this repository.
+1. Open Claude Code inside this repository on a fresh branch: `git checkout -b refresh/$(date +%F)`.
+   Check `gh auth status` first: the CLI on this machine has two accounts and can revert to the
+   work one after a restart; `gh auth switch --user willcoliveira` before any `gh` command.
 2. `/kb-refresh --area <n>`, one or two areas per session. `--dry-run` writes only a gitignored draft digest.
 3. Read `digests/YYYY-MM-DD.md`, then `git diff`. The skill adds sourced bullets, register rows and date
    bumps only; anything else is listed under "Skipped" for a human.
 4. `npm run check`. Commit as `docs(refresh): YYYY-MM-DD digest`. Add one line to `CHANGELOG.md`.
+5. `main` requires the CI check, so push the branch and merge through a pull request:
+   `git push -u origin HEAD && gh pr create --fill && gh pr merge --squash --auto`. Auto-merge is
+   enabled at repository level and lands the change when the check is green.
 
 ## When adding by hand
 

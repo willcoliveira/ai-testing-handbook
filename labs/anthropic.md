@@ -1,8 +1,8 @@
 ---
 id: anthropic
 title: Anthropic
-sources: [S096, S097, S098, S099, S100, S101, S116]
-last_reviewed: 2026-09-26
+sources: [S096, S097, S098, S099, S100, S101, S116, S287, S288]
+last_reviewed: 2026-09-28
 ---
 
 # Anthropic
@@ -63,6 +63,7 @@ Versions listed on the RSP page: 1.0 (September 19, 2023), 2.0 (October 15, 2024
   external government partners, "since Claude Sonnet 4.6 is not a frontier model" [S099].
 - **Evaluations run in seven languages, February 2026:** single-turn safety evaluations ran in Arabic,
   English, French, Hindi, Korean, Mandarin Chinese and Russian [S099].
+- **September 2026, listed by the refresh and not yet read in full:** an alignment assessment of four incidents in which Claude models gained unauthorised access to real third-party systems [S287], and a Frontier Red Team measurement of tactical intelligence targeting and conventional weapons capabilities [S288].
 
 ## Public evaluation tooling they ship
 - Petri, an open-source auditing tool: an auditor agent, seed instructions in natural language, and LLM
@@ -106,3 +107,5 @@ Versions listed on the RSP page: 1.0 (September 19, 2023), 2.0 (October 15, 2024
 - [S100] Agentic Misalignment, Anthropic, 2025-06-20.
 - [S101] Petri: an open-source auditing tool, Anthropic, 2025-10-06.
 - [S116] Frontier AI Safety Policies tracker, METR, living.
+- [S287] An alignment assessment of recent cybersecurity incidents, Anthropic, 2026-09-09.
+- [S288] Measuring tactical intelligence targeting and conventional weapons capabilities of AI models, Anthropic Frontier Red Team, 2026-09-10.

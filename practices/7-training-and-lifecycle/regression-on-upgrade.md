@@ -3,8 +3,8 @@ id: regression-on-upgrade
 title: Regression on upgrade
 area: 7-training-and-lifecycle
 status: draft
-last_reviewed: 2026-09-27
-sources: [S146, S147, S148, S149, S217, S222, S223, S224, S225, S226, S240, S251, S254, S257, S261, S266, S271]
+last_reviewed: 2026-09-28
+sources: [S146, S147, S148, S149, S217, S222, S223, S224, S225, S226, S240, S251, S254, S257, S261, S266, S271, S290]
 related: [non-determinism-and-pass-rates, ci-gates-for-llm-apps, online-evals-and-drift, fine-tuning-evals, golden-datasets]
 ---
 
@@ -57,6 +57,7 @@ A pre-switch checklist, in order:
 - **Cohere, February 2025:** the launch rule is "no significant regressions compared to our previously launched model versions"; regressions found in any pre-deployment evaluation "are investigated and mitigated before deployment" [S271].
 - **Mistral, living:** `mistral-moderation-2411` was deprecated on March 31, 2026 in favour of `mistral-moderation-2603`, and the docs warn that threshold-based custom policies "can require recalibration" [S261].
 - **xAI, September 2026:** each safety table reports Grok 4.5, 4.6 and 4.7 side by side on the same suites, which is what makes a regression visible [S266].
+- **Apollo Research, 2026-07:** measured whether models are becoming aligned or better at concealing misalignment as training proceeds, a reason to re-run behavioural evaluations on every version [S290].
 
 ## Pitfalls
 1. **Aliases in production.** The alias moves when the provider says so; the dated id moves when you say so [S148].
@@ -87,3 +88,4 @@ None yet.
 - [S271] The Cohere Secure AI Frontier Model Framework V1.0, Cohere, 2025-02
 - [S261] Moderation and guardrailing (docs), Mistral AI, living
 - [S266] Grok 4.7 Model Card (revision 2026-09-21), xAI (SpaceXAI), 2026-09-21
+- [S290] Measuring Reward-Seeking via Contrastive Belief Updates, Apollo Research, 2026-07-21

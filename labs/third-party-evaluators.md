@@ -1,8 +1,8 @@
 ---
 id: third-party-evaluators
 title: Third-party evaluators
-sources: [S098, S099, S104, S106, S115, S116, S117, S118, S119, S120]
-last_reviewed: 2026-09-26
+sources: [S098, S099, S104, S106, S115, S116, S117, S118, S119, S120, S284, S285, S286, S289, S290]
+last_reviewed: 2026-09-28
 ---
 
 # Third-party evaluators
@@ -55,6 +55,7 @@ benchmark or a tracker, and the labs cite them in system cards. Five appear repe
   set of 24,000 human-generated prompts and a public demo set of 1,200 [S119][S120].
 - **US CAISI, 2025 to 2026:** named in both labs' cards as running pre- and post-deployment evaluations
   of cyber and biological capabilities and safeguards [S104][S098]. We did not fetch a CAISI publication.
+- **METR, 2026:** a summary of its independent pre-deployment evaluation of Claude Opus 5.5 (2026-09-22) [S285], and a post on how independent researchers could investigate AI propensities after misalignment incidents (2026-07-28) [S286]. **Apollo Research, 2026:** an argument for third-party evaluations during training runs (2026-07-05) [S289] and a method for measuring reward-seeking through contrastive belief updates (2026-07-21) [S290]. **OWASP, 2026-06:** a red, blue and purple teaming taxonomy [S284]. All listed by the 2026-09-28 refresh; not yet read in full.
 
 ## Public evaluation tooling they ship
 - Inspect and Inspect Evals (UK AISI): "over 200 pre-built evaluations", agent benchmarks including
@@ -102,3 +103,8 @@ benchmark or a tracker, and the labs cite them in system cards. Five appear repe
 - [S118] HELM repository, Stanford CRFM, living.
 - [S119] AILuminate v1.0 benchmark paper, MLCommons, 2025-02-19.
 - [S120] AILuminate repository, MLCommons, living.
+- [S284] Solutions Landscape: Red Teaming Taxonomy, OWASP GenAI Security Project, 2026-06-28.
+- [S285] Summary of METR's predeployment evaluation of Claude Opus 5.5, METR, 2026-09-22.
+- [S286] How independent researchers could investigate AI propensities after misalignment incidents, METR, 2026-07-28.
+- [S289] We Need 3rd Party Training-Run Evaluations, Apollo Research, 2026-07-05.
+- [S290] Measuring Reward-Seeking via Contrastive Belief Updates, Apollo Research, 2026-07-21.
