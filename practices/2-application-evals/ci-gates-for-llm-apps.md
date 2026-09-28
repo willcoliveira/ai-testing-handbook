@@ -3,8 +3,8 @@ id: ci-gates-for-llm-apps
 title: CI gates for LLM apps
 area: 2-application-evals
 status: draft
-last_reviewed: 2026-09-26
-sources: [S031, S032, S033, S036, S042, S043, S046, S047, S049]
+last_reviewed: 2026-09-28
+sources: [S031, S032, S033, S036, S042, S043, S046, S047, S049, S299]
 related: [eval-driven-development, non-determinism-and-pass-rates, load-and-latency, regression-on-upgrade, online-evals-and-drift]
 ---
 
@@ -76,6 +76,7 @@ holds only the checks that are stable enough to be believed, and the rest is rep
   and scores production traces asynchronously "with no impact on latency" [S043].
 - **promptfoo, docs dated 2026-09-26:** ships a GitHub Action, a pass-rate threshold, JUnit output and caching
   for pull-request runs [S046], [S047].
+- **arXiv, 2026-09:** selecting a benchmark subset from agent action-trajectory embeddings cut regression-testing cost by 90 percent in the paper's setting, at an accepted error rate [S299].
 
 ## Pitfalls
 1. **Gating on a suite that is supposed to fail.** Capability evals start low by design [S032].
@@ -101,3 +102,4 @@ None yet.
 - [S046] CI/CD integration, promptfoo docs, living (checked 2026-09-26).
 - [S047] Command line reference, promptfoo docs, living (checked 2026-09-26).
 - [S049] How to deal with nondeterminism, Braintrust foundations, living (checked 2026-09-26).
+- [S299] Trajectory-aware benchmark subset selection for cost-efficient software engineering agent regression testing, arXiv 2609.24928, 2026-09-21

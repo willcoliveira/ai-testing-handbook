@@ -4,7 +4,7 @@ title: Agent evals
 area: 4-agents-and-systems
 status: draft
 last_reviewed: 2026-09-28
-sources: [S066, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282]
+sources: [S066, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306]
 related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks]
 ---
 
@@ -52,6 +52,9 @@ A single-turn eval scores one output. An agent's failures live in the sequence: 
 - **NVIDIA, living:** NeMo Evaluator ships agentic and terminal benchmarks (PinchBench, Terminal-Bench) with Docker sandboxes and solvers for tool calling [S270].
 - **Cohere, April 2025:** agentic tool use is an evaluation area of its own, with TauBench and BFCL [S272].
 - **OWASP GenAI Security Project, 2026-09:** the Agent Control Standard sets requirements for inspectable and traceable agents, which is what a state or trajectory oracle depends on [S282].
+- **arXiv, 2026-09:** SWE-Serve's 53 production inference-serving tasks found that serving end-to-end tests reject about a third of patches that pass every other test, a measured gap between local completion and production correctness [S298].
+- **arXiv, 2026-09:** a benchmark of parallel coding agents found high interference in constructed scenarios and few conflicts in real pull-request pairs, so coordination is best measured on real pairs [S300].
+- **arXiv, 2026-09:** enterprise agents struggled most on questions that require disambiguation among similar records [S306].
 
 ## Pitfalls
 1. Grading the reference trajectory as if it were the requirement. tau2-bench's docs exist because the listed actions are "one reference trajectory that solves the task", not the only correct one, and "in many tasks several distinct trajectories produce an equivalent DB end state" [S078].
@@ -86,3 +89,6 @@ None yet.
 - [S270] NeMo Evaluator (repository), NVIDIA-NeMo, GitHub, living
 - [S272] Command A: An Enterprise-Ready Large Language Model (technical report), Cohere, arXiv 2504.00698, 2025-04
 - [S282] Agent Control Standard (ACS), OWASP GenAI Security Project, 2026-09-01
+- [S298] SWE-Serve: benchmarking agentic engineering for production inference serving, arXiv 2609.26777, 2026-09-22
+- [S300] Passes Alone, Fails Together: benchmarking semantic coordination in parallel LLM-agent development, arXiv 2609.25396, 2026-09-21
+- [S306] Era by Eon: benchmarking enterprise agents on hidden knowledge, arXiv 2609.30055, 2026-09-24

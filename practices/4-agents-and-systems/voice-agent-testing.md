@@ -3,8 +3,8 @@ id: voice-agent-testing
 title: Voice agent testing
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-26
-sources: [S074, S075, S078, S093, S094, S095, S070, S076]
+last_reviewed: 2026-09-28
+sources: [S068, S070, S074, S075, S076, S078, S093, S094, S095]
 related: [orchestrators-and-simulators, load-and-latency, exploratory-testing-of-agents, agent-evals, regulated-domain-checks]
 ---
 
@@ -41,6 +41,7 @@ Latency is the product. Twilio: "Most applications should stream these text toke
 - **Roark, living product page:** simulated callers with background noise and 45 languages, an example scenario "Interrupts mid-disclosure" scored as a fail, load testing to 250 concurrent calls, and "Always-on probes" that call the agent around the clock [S094].
 - **Coval, living docs:** simulations "with background noise, accents, and edge cases", production call scoring, and human review that retrains the judge [S095].
 - **Confident AI, DeepEval, 2026-09:** lists voice among its evaluation targets and ships "voice" metrics [S070].
+- **promptfoo, 2026-09:** version 0.123.0 added native audio grading through the rubric assertion and support for live voice sessions, so the audio can be graded and not only its transcript [S068].
 
 ## Pitfalls
 1. Grading the transcript when the channel was audio. A platform can capture real two-channel audio and still assert on the transcript, so speech defects cannot fail a run.
@@ -61,3 +62,4 @@ None yet.
 - [S095] Coval documentation, Coval, living.
 - [S070] DeepEval documentation, Confident AI, living (4.2.6, 2026-09-24).
 - [S076] Grafana k6 documentation, Grafana Labs, living (v2.3.0, 2026-09-21).
+- [S068] promptfoo documentation, intro, promptfoo, living

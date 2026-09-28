@@ -3,8 +3,8 @@ id: judge-calibration
 title: Judge calibration
 area: 3-judging
 status: draft
-last_reviewed: 2026-09-27
-sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257]
+last_reviewed: 2026-09-28
+sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303]
 related: [llm-as-judge, human-annotation, rubrics-and-pairwise, statistical-treatment-of-evals, non-determinism-and-pass-rates]
 ---
 
@@ -37,6 +37,7 @@ An uncalibrated judge is an unmeasured guess, and its errors are not symmetric. 
 - **Microsoft, 2026-07:** the safety-evaluator judge was checked against human labels on "500 English, single-turn texts, 250 single-turn text-to-image generations, and 250 multi-modal text with image-to-text generations" per risk area on a 0 to 7 scale at 0, 1 and 2-level tolerance, with lower agreement for violence and hate because the human and automated guidelines "have since diverged" [S252].
 - **Microsoft, 2026-08:** red-teaming runs "use generative models to evaluate Attack Success Rates (ASR) and can be non-deterministic, non-predictive" [S251].
 - **Amazon, 2025-12:** the service card tells customers to establish an effectiveness score from "human judgements (with multiple judgements per test prompt)", and the Nova 2 report's image quality study was "performed by a third-party" in a single-blind design [S257][S255].
+- **arXiv, 2026-09:** auditor models degraded with batch size and invented findings, so calibrate a judge at the batch size you will run it at [S303].
 
 ## Pitfalls
 1. Raw agreement on imbalanced classes. With a 5% defect rate a judge that always passes scores 95% agreement and zero recall on defects [S052].
@@ -66,3 +67,4 @@ None yet.
 - [S251] AI Red Teaming Agent (Microsoft Foundry docs), Microsoft, living
 - [S257] Amazon Nova 2 Lite, AWS AI Service Card, AWS, living
 - [S255] Amazon Nova 2: Multimodal Reasoning and Generation Models, technical report and model card, Amazon AGI, 2025-12
+- [S303] When Auditors Fabricate: batch-size degradation and confident hallucination in LLM detection of planted document contamination, arXiv 2609.09696, 2026-09-09

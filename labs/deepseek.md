@@ -1,8 +1,8 @@
 ---
 id: deepseek
 title: DeepSeek
-sources: [S116, S153, S213, S214, S215, S216, S217, S218, S219, S232, S234, S235]
-last_reviewed: 2026-09-27
+sources: [S116, S153, S213, S214, S215, S216, S217, S218, S219, S232, S234, S235, S297]
+last_reviewed: 2026-09-28
 ---
 
 # DeepSeek
@@ -73,6 +73,7 @@ ran 19 benchmarks over R1, R1-0528 and V3.1 in September 2025 and reported that 
 2026 CAISI placed V4 Pro about eight months behind the frontier on a nine-benchmark capability index
 [S219]. Concordia AI's 2026 survey: "only five of ten leading foundation-model developers reported
 safety evaluation results when releasing models this past year. No company did so consistently" [S232].
+- **September 2026:** a DeepSeek-V4.1-Flash model card appeared on the organisation page; not read at the time of the refresh [S297].
 
 ## Public evaluation tooling they ship
 - Open weights and code: V3 code under MIT with weights under a model licence; V4 weights and code
@@ -118,3 +119,4 @@ safety evaluation results when releasing models this past year. No company did s
 - [S232] State of AI Safety in China (2026), Concordia AI, 2026-07.
 - [S234] Frontier AI Safety Commitments, AI Seoul Summit 2024, UK DSIT, 2024-05-21.
 - [S235] DeepSeek and Other Chinese Firms Converge with Western Companies on AI Promises, Carnegie, 2025-01-28.
+- [S297] DeepSeek-V4.1-Flash model card, DeepSeek, 2026-09.

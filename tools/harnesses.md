@@ -19,6 +19,7 @@ Open-source frameworks that run a dataset through a model or an application, sco
 - **What it is for:** prompts crossed with providers and checked by assertions, with caching, concurrency, a web UI and GitHub Actions [S068]; red-team plugins for harmful content, BOLA, BFLA, competitor endorsement and prompt injection, against RAG systems, agents and chatbots [S069].
 - **What it is not for:** the source does not describe multi-turn simulation or trajectory grading; check before you assume it.
 - **Version checked:** 0.123.1, 2026-09-18 [S068].
+- **2026-08 and 2026-09 releases:** OpenTelemetry GenAI tracing with external trace fetch (0.122.1), a per-test repeat option (0.121.19), and native audio grading with live voice sessions (0.123.0) [S068].
 
 ## DeepEval
 - **What it is:** an open-source Python framework, Apache-2.0, for "unit testing of LLM outputs with pytest-style assertions" [S070].

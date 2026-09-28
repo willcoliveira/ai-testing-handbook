@@ -3,8 +3,8 @@ id: harnesses
 title: Harnesses
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-27
-sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279]
+last_reviewed: 2026-09-28
+sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302]
 related: [agent-evals, ci-gates-for-llm-apps, eval-driven-development, capability-benchmarks, llm-as-judge]
 ---
 
@@ -46,6 +46,7 @@ Every team writes one anyway. Without a harness the eval is a notebook nobody re
 - **Hugging Face, living:** lighteval, MIT, v0.13.0 (2025-11-24), "1000+ evaluation tasks" over inspect-ai, accelerate, nanotron, vLLM, SGLang and endpoints [S275].
 - **NVIDIA, living:** NeMo Evaluator, Apache 2.0, v0.3.0 (2026-06-03), 17 built-in benchmarks and other harnesses addressed as `lm-eval://`, `skills://`, `vlmevalkit://`, `gym://`, `harbor://` and `container://` [S270]; the Nemotron 3 Nano report collected its results through it and LM Evaluation Harness [S268].
 - **AI2, living:** OLMES, Apache 2.0, the suite behind OLMo 3, with a companion `decon` tool for decontamination [S279][S278].
+- **arXiv, 2026-09:** "harness or model" measured with a private suite: no consistent advantage for vendor-native harnesses over neutral ones [S302].
 
 ## Pitfalls
 1. Choosing by star count instead of by the shape of the thing under test. A harness built for model benchmarks (Inspect, OpenAI Evals) makes you wrap your application as a model; an application harness makes benchmark runs awkward [S066][S082].
@@ -74,3 +75,4 @@ None yet.
 - [S268] Nemotron 3 Nano: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic Reasoning (technical report), NVIDIA, 2025-12-23
 - [S279] OLMES: A Standard for Language Model Evaluations, Ai2, arXiv 2406.08446, 2024-06-12
 - [S278] Olmo 3 (technical report), Ai2 (Olmo Team), arXiv 2512.13961, 2025-12
+- [S302] Harness or Model? Isolating the harness effect in agentic coding with a contamination-controlled private suite, arXiv 2609.11987, 2026-09-08
