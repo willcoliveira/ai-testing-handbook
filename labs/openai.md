@@ -2,7 +2,7 @@
 id: openai
 title: OpenAI
 sources: [S102, S103, S104, S105, S106, S116, S131]
-last_reviewed: 2026-09-26
+last_reviewed: 2026-09-28
 ---
 
 # OpenAI
@@ -61,6 +61,7 @@ cards through September 2026 [S103].
   precision 0.647); three expert bioweaponisation campaigns; third-party red teaming; "external
   government red teaming" by the US CAISI and the UK AI Security Institute, the latter with access to
   "prototype versions of our safeguards" and finding "multiple model-level jailbreaks" [S104].
+- **Newer cards, not yet read here:** the Deployment Safety Hub lists GPT-Live (2026-07-08), GPT-5.6 (2026-07-09) and GPT-6 Astra (2026-09-03) system cards after the GPT-5 card this file draws on; they are PDFs and were recorded by the 2026-09-28 refresh for a human to read [S103].
 
 ## Public evaluation tooling they ship
 - The Deployment Safety Hub, "sharing the technical work we do to make our systems safe, including how

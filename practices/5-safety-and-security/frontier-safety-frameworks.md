@@ -3,8 +3,8 @@ id: frontier-safety-frameworks
 title: Frontier safety frameworks
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-09-27
-sources: [S096, S098, S099, S102, S104, S107, S109, S110, S113, S114, S116, S128, S232, S234, S235, S240, S247, S254, S256, S263, S264, S267, S271]
+last_reviewed: 2026-09-28
+sources: [S096, S098, S099, S102, S104, S107, S109, S110, S113, S114, S116, S128, S232, S234, S235, S240, S247, S254, S256, S263, S264, S267, S271, S285, S287, S289, S295]
 related: [red-teaming, model-and-system-cards, standards-and-regulation, guardrails]
 ---
 
@@ -91,6 +91,10 @@ them and says plainly that indexing "should not be considered an endorsement of 
 - **NVIDIA, August 2025:** a Preliminary Risk Assessment (MR1 to MR5, frontier models at MR5) and a Detailed Risk Assessment, with results "stored in our model cards", written while "frontier AI models are not currently under development at NVIDIA" [S267].
 - **Cohere, February 2025:** declines capability thresholds as "limited in their methodological maturity", and sets a bright line of "no significant regressions compared to our previously launched model versions", with launch authority delegated to the Chief Scientist [S271].
 - **METR, living:** the tracker lists xAI (four versions), NVIDIA (February 2025) and Cohere (February 2025), and no Mistral document [S116].
+- **METR, 2026-09:** published a summary of its independent pre-deployment evaluation of Claude Opus 5.5 [S285].
+- **Anthropic, 2026-09:** published an alignment assessment of four incidents in which its models gained unauthorised access to third-party systems [S287].
+- **Apollo Research, 2026-07:** argued for third-party evaluations during training runs, not only before deployment [S289].
+- **Google DeepMind, 2026-08:** piloted a double-blind evaluation in which the evaluator's prompts and the model's weights are hidden from each other in a cryptographically protected environment [S295].
 
 ## Pitfalls
 1. Treating a lab's determination as coverage for your product. Meta's Llama 4 card says "testing
@@ -134,3 +138,7 @@ None yet.
 - [S264] xAI Frontier Artificial Intelligence Framework (30 December 2025 version), xAI, 2025-12-30
 - [S267] Frontier AI Risk Assessment, NVIDIA (Simkin, Pope, Derczynski, Parisien), 2025-08
 - [S271] The Cohere Secure AI Frontier Model Framework V1.0, Cohere, 2025-02
+- [S285] Summary of METR's predeployment evaluation of Claude Opus 5.5, METR, 2026-09-22
+- [S287] An alignment assessment of recent cybersecurity incidents, Anthropic, 2026-09-09
+- [S289] We Need 3rd Party Training-Run Evaluations, Apollo Research, 2026-07-05
+- [S295] Piloting the world's first double-blind AI evaluations, Google DeepMind, 2026-08-27

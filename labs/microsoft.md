@@ -1,8 +1,8 @@
 ---
 id: microsoft
 title: Microsoft
-sources: [S088, S116, S131, S246, S247, S248, S249, S250, S251, S252, S253]
-last_reviewed: 2026-09-27
+sources: [S088, S116, S131, S246, S247, S248, S249, S250, S251, S252, S253, S291]
+last_reviewed: 2026-09-28
 ---
 
 # Microsoft
@@ -31,6 +31,7 @@ for Microsoft's AI governance program (or their delegates)"; updates are reviewe
 Responsible AI Officer and published "within 30 days of adoption" [S247]. The 2026 transparency report
 frames the programme on the NIST AI RMF functions "Govern, Map, Measure, and Manage, complemented by a
 central pre-release oversight process" [S250].
+- **September 2026:** a post on how the responsible AI practices are adapting in 2026, listed by the refresh and not yet read in full [S291].
 
 ## What they say they run before a release (sourced, dated)
 - **Leading indicators, February 2026:** benchmarks for six precursor capabilities (general, scientific
@@ -118,3 +119,4 @@ central pre-release oversight process" [S250].
 - [S251] AI Red Teaming Agent (Microsoft Foundry docs), Microsoft, living.
 - [S252] Microsoft Foundry risk and safety evaluations Transparency Note, Microsoft, living.
 - [S253] Risk and safety evaluators for generative AI (Microsoft Foundry docs), Microsoft, living.
+- [S291] Responsible AI in 2026: how we are adapting for what's ahead, Microsoft, 2026-09-01.

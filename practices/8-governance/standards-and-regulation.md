@@ -3,8 +3,8 @@ id: standards-and-regulation
 title: Standards and regulation
 area: 8-governance
 status: draft
-last_reviewed: 2026-09-27
-sources: [S158, S159, S160, S161, S162, S163, S164, S233, S234, S244, S247, S250, S254, S257]
+last_reviewed: 2026-09-28
+sources: [S158, S159, S160, S161, S162, S163, S164, S233, S234, S244, S247, S250, S254, S257, S281, S282, S283, S291]
 related: [model-and-system-cards, frontier-safety-frameworks, red-teaming, prompt-injection, human-in-the-loop, regulated-domain-checks]
 ---
 
@@ -23,7 +23,7 @@ These documents are the vocabulary of auditors, procurement and regulators, so t
 | AI RMF Generative AI Profile, NIST AI 600-1 | NIST, July 2024 | voluntary companion | twelve GAI risks; suggested actions with ids GV-, MP-, MS-, MG-x.y-nnn; four considerations: Governance, Content Provenance, Pre-deployment Testing, Incident Disclosure [S160] | red-team reports (MP-5.1-005); pre-deployment and ongoing evaluation policy (GV-1.2-002); T&E roles (GV-3.2-002); capability claims backed by "empirically validated methods" (MS-2.3-002) |
 | ISO/IEC 42001:2023 | ISO/IEC, December 2023 | certifiable | an AI management system: policies, objectives and processes for responsible development, provision or use of AI; risk assessment, AI system impact assessment, lifecycle management, supplier oversight [S162] | documented risk and impact assessments; lifecycle records; an audit trail; the model's own tests are inputs, not the certificate |
 | General-Purpose AI Code of Practice | EU AI Office, 10 July 2025 | voluntary, for GPAI providers | Transparency: Model Documentation Form kept ten years (Measure 1.1). Copyright: policy, robots.txt, complaint mechanism. Safety and Security, systemic-risk models only: a Framework, model evaluations including "red-teaming and other methods of adversarial testing" (Measure 3.2), external evaluator access (Measure 3.5), a Model Report (Commitment 7), serious incident reporting (Commitment 9) [S161] | evaluation results with samples of inputs and outputs; incident write-ups; a dated Framework with a changelog |
-| OWASP Top 10 for LLM Applications 2025 | OWASP GenAI Security Project, 2025 | community risk list | LLM01 Prompt Injection to LLM10 Unbounded Consumption [S163] | an injection suite; output-handling tests; agency limits; rate and cost limits |
+| OWASP Top 10 for LLM Applications, 2025 edition; a 2026 edition was published 2026-08-03 [S281] | OWASP GenAI Security Project, 2025 and 2026 | community risk list | LLM01 Prompt Injection to LLM10 Unbounded Consumption [S163] | an injection suite; output-handling tests; agency limits; rate and cost limits |
 | Model Spec | OpenAI, version 2026-08-18 | a lab's published behaviour spec, CC0 | a chain of command (root, system, developer, user, guideline); a bounded scope of autonomy [S158] | a behaviour spec of your own that evals are written against |
 
 Steps:
@@ -48,6 +48,8 @@ Steps:
 - **Amazon, 2025-12:** the Nova 2 Lite service card states the model "is not intended to support any prohibited practices under the EU AI Act" and provides a complaints channel under the EU Code of Practice for General-Purpose AI Models [S257].
 - **Amazon, 2026-09:** the framework update was made to "account for relevant laws and regulations" and will be revisited "at least annually" [S254].
 - **Google, living:** SAIF maps 15 AI security risks to named controls, with the caveat that the site "is not a reflection of Google's current technical implementations" [S244].
+- **OWASP GenAI Security Project, 2026-08 and 2026-09:** the LLM Top 10 2026 edition, the Agent Control Standard, and a crosswalk that maps 51 GenAI vulnerabilities to industry frameworks [S281][S282][S283].
+- **Microsoft, 2026-09:** described how its responsible AI practices are adapting in 2026 [S291].
 
 ## Pitfalls
 1. Reading "voluntary" as "optional". Procurement questionnaires quote the NIST functions whether or not anyone signed anything [S159].
@@ -74,3 +76,7 @@ None yet.
 - [S257] Amazon Nova 2 Lite, AWS AI Service Card, AWS, living
 - [S254] Amazon's Frontier Model Safety Framework (September 2026 update), Amazon, 2026-09-17
 - [S244] Secure AI Framework (SAIF) risks, Google, living
+- [S281] OWASP GenAI LLM Top 10 2026, OWASP GenAI Security Project, 2026-08-03
+- [S282] Agent Control Standard (ACS), OWASP GenAI Security Project, 2026-09-01
+- [S283] GenAI Security Industry Framework Crosswalk, OWASP GenAI Security Project, 2026-09-01
+- [S291] Responsible AI in 2026: how we are adapting for what's ahead, Microsoft, 2026-09-01

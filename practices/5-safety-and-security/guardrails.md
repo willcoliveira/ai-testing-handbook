@@ -3,8 +3,8 @@ id: guardrails
 title: Guardrails
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-09-27
-sources: [S098, S104, S109, S114, S124, S126, S129, S135, S153, S214, S221, S233, S236, S243, S247, S254, S257, S261, S262, S266, S269, S272]
+last_reviewed: 2026-09-28
+sources: [S098, S104, S109, S114, S124, S126, S129, S135, S153, S214, S221, S233, S236, S243, S247, S254, S257, S261, S262, S266, S269, S272, S292, S294]
 related: [false-positive-protection, prompt-injection, redaction-in-telemetry, voice-agent-testing]
 ---
 
@@ -89,6 +89,8 @@ prevent safe uses of the product" [S104].
 - **NVIDIA, March 2026:** Nemotron-3-Content-Safety V1.1 reports accuracy 0.56 to 0.94 across 14 external safety benchmarks and false-positive rates of 0.023 (MMMU), 0.058 (DocVQA) and 0.001 (AI2D) on sets assumed benign [S269]; NeMo Guardrails supplies the rails [S129].
 - **Cohere, April 2025:** Safety Modes ("contextual", "strict") are evaluated with one set that "should always be answered" and one that "should always be refused", and the over-refusal set came from red-teaming the previous model [S272].
 - **xAI, September 2026:** a "layered, defense-in-depth stack": safety fine-tuning, system prompts, and on some surfaces "runtime input and topical filters" for CSAM, self-harm and CBRN pathways, measured by refusal recall (bio 100%, chem 99.9%) and a self-harm suite that fails refusals "without redirecting the user to help" [S266].
+- **Mistral AI, 2026-08:** shipped Shieldstral, a safety product for AI applications [S292].
+- **arXiv, 2026-09:** classifier guardrails for injection were bypassed by token-level perturbation, which is a reason to treat a classifier as one layer and not the wall [S294].
 
 ## Pitfalls
 1. Over-blocking treated as safe. It is a defect with a cost; see
@@ -130,3 +132,5 @@ None yet.
 - [S269] Nemotron-3-Content-Safety model card, NVIDIA, Hugging Face, living
 - [S272] Command A: An Enterprise-Ready Large Language Model (technical report), Cohere, arXiv 2504.00698, 2025-04
 - [S266] Grok 4.7 Model Card (revision 2026-09-21), xAI (SpaceXAI), 2026-09-21
+- [S292] Introducing Shieldstral, Mistral AI, 2026-08-04
+- [S294] Decoding Guardrails: XAI-guided perturbation analysis of prompt injection detection, arXiv 2609.24801, 2026-09-21

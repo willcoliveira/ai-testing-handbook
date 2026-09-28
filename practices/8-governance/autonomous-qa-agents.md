@@ -3,8 +3,8 @@ id: autonomous-qa-agents
 title: Autonomous QA agents
 area: 8-governance
 status: draft
-last_reviewed: 2026-09-26
-sources: [S158, S160, S161, S163, S164, S166, S167, S168, S169]
+last_reviewed: 2026-09-28
+sources: [S158, S160, S161, S163, S164, S166, S167, S168, S169, S282]
 related: [human-in-the-loop, ai-generated-tests, agent-evals, prompt-injection, guardrails, standards-and-regulation]
 ---
 
@@ -44,6 +44,7 @@ A charter has ten parts. Write all ten before the first run.
 - **NIST, July 2024:** suggested action MP-5.1-005, "Conduct adversarial role-playing exercises, GAI red-teaming, or chaos testing to identify anomalous or unforeseen failure modes"; GOVERN 3.2 asks for policies that "define and differentiate roles and responsibilities for human-AI configurations" [S160].
 - **EU AI Office, July 2025:** for systemic-risk models, a Safety and Security Framework must include "systemic risk acceptance criteria" and responsibility allocation (Measure 1.1) and be reassessed every 12 months (Measure 1.3); the same shape, at a smaller scale, is a charter [S161].
 - **metacto (practitioner), July 2026:** the red lane (auth, payments, PII, migrations, infrastructure, public APIs) is "AI may draft only" [S169].
+- **OWASP GenAI Security Project, 2026-09:** the Agent Control Standard asks for agents that are inspectable, traceable and instrumentable across enterprise environments [S282].
 
 ## Pitfalls
 1. Charter in the prompt only. The agent will read it and then be told otherwise by a web page or a fixture. Enforce no-go layers with deny rules and code owners [S167] [S168].
@@ -66,3 +67,4 @@ On a payments-heavy checkout platform a charter-governed coverage agent was desi
 - [S167] Configure permissions, Claude Code docs, Anthropic, living.
 - [S168] About protected branches, GitHub Docs, living.
 - [S169] Establishing code review standards for AI-generated code, metacto, 8 July 2026.
+- [S282] Agent Control Standard (ACS), OWASP GenAI Security Project, 2026-09-01

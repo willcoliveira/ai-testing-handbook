@@ -3,8 +3,8 @@ id: agent-evals
 title: Agent evals
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-27
-sources: [S066, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272]
+last_reviewed: 2026-09-28
+sources: [S066, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282]
 related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks]
 ---
 
@@ -51,6 +51,7 @@ A single-turn eval scores one output. An agent's failures live in the sequence: 
 - **xAI, April 2026:** AgentHarm for agentic refusals (violation rate 0.30) and AgentDojo for prompt injection (attack success 0.33), both in the model card [S265]; **September 2026:** CyberGym, CVE-Bench and Terminal-Bench run through the Grok Build harness, with the caveat that scores "remain sensitive to the agent harness" [S266].
 - **NVIDIA, living:** NeMo Evaluator ships agentic and terminal benchmarks (PinchBench, Terminal-Bench) with Docker sandboxes and solvers for tool calling [S270].
 - **Cohere, April 2025:** agentic tool use is an evaluation area of its own, with TauBench and BFCL [S272].
+- **OWASP GenAI Security Project, 2026-09:** the Agent Control Standard sets requirements for inspectable and traceable agents, which is what a state or trajectory oracle depends on [S282].
 
 ## Pitfalls
 1. Grading the reference trajectory as if it were the requirement. tau2-bench's docs exist because the listed actions are "one reference trajectory that solves the task", not the only correct one, and "in many tasks several distinct trajectories produce an equivalent DB end state" [S078].
@@ -84,3 +85,4 @@ None yet.
 - [S266] Grok 4.7 Model Card (revision 2026-09-21), xAI (SpaceXAI), 2026-09-21
 - [S270] NeMo Evaluator (repository), NVIDIA-NeMo, GitHub, living
 - [S272] Command A: An Enterprise-Ready Large Language Model (technical report), Cohere, arXiv 2504.00698, 2025-04
+- [S282] Agent Control Standard (ACS), OWASP GenAI Security Project, 2026-09-01

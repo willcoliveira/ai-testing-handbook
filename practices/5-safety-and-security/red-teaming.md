@@ -3,8 +3,8 @@ id: red-teaming
 title: Red teaming
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-09-27
-sources: [S098, S099, S101, S104, S106, S110, S111, S113, S114, S127, S128, S130, S131, S132, S214, S218, S224, S228, S240, S248, S249, S251, S255, S256, S265, S266, S267, S271, S278]
+last_reviewed: 2026-09-28
+sources: [S098, S099, S101, S104, S106, S110, S111, S113, S114, S127, S128, S130, S131, S132, S214, S218, S224, S228, S240, S248, S249, S251, S255, S256, S265, S266, S267, S271, S278, S284, S288]
 related: [prompt-injection, guardrails, frontier-safety-frameworks, exploratory-testing-of-agents]
 ---
 
@@ -87,6 +87,8 @@ release [S104]) and automated attackers generate findings that need triage befor
 - **Cohere, February 2025:** "multidisciplinary red teaming during both the model development phase and post-launch", which "may include independent external parties, such as NIST and Humane Intelligence"; findings become standing evaluations run on later versions [S271].
 - **NVIDIA, August 2025:** "uses Garak as a highest-priority assessment of models before release" and has red teams probe "each guardrail component independently with targeted examples" [S267][S130].
 - **AI2, December 2025:** no human or external red teaming is described for OLMo 3; safety is a benchmark average [S278].
+- **OWASP GenAI Security Project, 2026-06:** published a taxonomy for classifying red, blue and purple teaming capabilities in AI security [S284].
+- **Anthropic Frontier Red Team, 2026-09:** measured tactical intelligence targeting and conventional weapons capabilities of models [S288].
 
 ## Pitfalls
 1. Static sets as proof. Anthropic calls this "a common pitfall" and invests in adaptive evaluations
@@ -136,3 +138,5 @@ None yet.
 - [S271] The Cohere Secure AI Frontier Model Framework V1.0, Cohere, 2025-02
 - [S267] Frontier AI Risk Assessment, NVIDIA (Simkin, Pope, Derczynski, Parisien), 2025-08
 - [S278] Olmo 3 (technical report), Ai2 (Olmo Team), arXiv 2512.13961, 2025-12
+- [S284] Solutions Landscape: Red Teaming Taxonomy, OWASP GenAI Security Project, 2026-06-28
+- [S288] Measuring tactical intelligence targeting and conventional weapons capabilities of AI models, Anthropic Frontier Red Team, 2026-09-10

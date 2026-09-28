@@ -3,8 +3,8 @@ id: benchmark-hygiene
 title: Benchmark hygiene: contamination, gaming and trust
 area: 1-capability
 status: draft
-last_reviewed: 2026-09-27
-sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278]
+last_reviewed: 2026-09-28
+sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295]
 related: [capability-benchmarks, statistical-treatment-of-evals, data-contamination, golden-datasets]
 ---
 
@@ -51,6 +51,7 @@ A contaminated or gamed score is worse than no score, because it carries the aut
 - **Cohere Labs, April 2025:** co-authored The Leaderboard Illusion on private testing and data asymmetries on Chatbot Arena [S006]; Cohere's own human-evaluation prompts are "curated from scratch by our pool of annotators to avoid accidental contamination for competitor models" [S272].
 - **EleutherAI, August 2026:** the v0.4.13 release fixed eval documents leaking into few-shot prompts and warns that "prior numbers on those tasks may not be comparable" after prompt changes [S274].
 - **xAI, September 2026:** notes that CursorBench 4.0 "scores are not comparable with CursorBench 3.2" and that DeepSWE tasks are "written from scratch rather than mined from existing commits" to keep reference solutions out of the public record [S266].
+- **Google DeepMind, 2026-08:** the double-blind evaluation pilot targets contamination from the evaluator side and weight leakage from the developer side at the same time [S295].
 
 ## Pitfalls
 1. Trusting "verified" as permanent. Human-filtered tasks still carried flawed tests at a rate found only when strong models' failures were audited [S028].
@@ -86,3 +87,4 @@ None yet.
 - [S272] Command A: An Enterprise-Ready Large Language Model (technical report), Cohere, arXiv 2504.00698, 2025-04
 - [S274] lm-evaluation-harness (repository), EleutherAI, GitHub, living
 - [S266] Grok 4.7 Model Card (revision 2026-09-21), xAI (SpaceXAI), 2026-09-21
+- [S295] Piloting the world's first double-blind AI evaluations, Google DeepMind, 2026-08-27
