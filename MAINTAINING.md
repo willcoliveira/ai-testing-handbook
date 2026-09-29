@@ -15,7 +15,8 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
 1. Open Claude Code inside this repository on a fresh branch: `git checkout -b refresh/$(date +%F)`.
    Check `gh auth status` first: the CLI on this machine has two accounts and can revert to the
    work one after a restart; `gh auth switch --user willcoliveira` before any `gh` command.
-2. `/kb-refresh --area <n>`, one or two areas per session. `--dry-run` writes only a gitignored draft digest.
+2. `/refresh` does steps 2 to 5 in one command (full sweep, digest, commit, pull request, no merge).
+   By hand: `/kb-refresh --area <n>`, one or two areas per session. `--dry-run` writes only a gitignored draft digest.
 3. Read `digests/YYYY-MM-DD.md`, then `git diff`. The skill adds sourced bullets, register rows and date
    bumps only; anything else is listed under "Skipped" for a human.
 4. `npm run check`. Commit as `docs(refresh): YYYY-MM-DD digest`. Add one line to `CHANGELOG.md`.
@@ -50,6 +51,7 @@ fewer than three organisations).
 ## Never
 
 - Commit `privacy/forbidden-strings.txt` (the checker refuses to run if it is tracked).
-- Let the skill commit or push.
+- Let `kb-refresh` commit or push. `/refresh` wraps it and commits and opens a pull request on a
+  refresh branch, only when the maintainer types it; neither skill merges.
 - Add a client fact that is not expressed in the stand-in vocabulary.
 - Quote a lab's internal process without a source; write "unknown" instead.
