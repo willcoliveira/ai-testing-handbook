@@ -1,0 +1,25 @@
+# Register rows that share a URL on purpose (one row per area range, registered in parallel).
+# check-sources.mjs fails on any other shared URL. One group per line, ids separated by spaces.
+# Merge a pair by marking one row "notes: superseded by S0nn" and removing its line here.
+S012 S078
+S013 S089
+S025 S154
+S031 S061
+S032 S079
+S034 S055
+S035 S077
+S039 S157
+S040 S166
+S041 S149
+S043 S081
+S069 S132
+S071 S140
+S072 S101
+S076 S200
+S090 S207
+S092 S211
+S099 S164
+S121 S163
+S124 S202
+S127 S159
+S128 S161

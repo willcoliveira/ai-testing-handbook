@@ -27,7 +27,7 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
 
 | Adding | Do |
 |---|---|
-| a source | append a row to `sources.md` in the area's id range; cite `[S0nn]`; add the id to the file's frontmatter |
+| a source | append a row to the area's `sources/_*.rows.md` file in its id range, then `node scripts/merge-sources.mjs` (it rebuilds `sources.md`, so a row added there directly is lost); reuse an existing id if the url is already registered; cite `[S0nn]`; add the id to the file's frontmatter |
 | a practice | copy `practices/_TEMPLATE.md`; keep the seven headings; cite at least three organisations; add it to `TAXONOMY.md` |
 | a pattern | copy `patterns/_TEMPLATE.md`; use the stand-ins in `PRIVACY.md`; leave `pending` until re-read cold, then `reviewed` |
 | a lab or vendor | copy `labs/_TEMPLATE.md`; write "What is not public" first; add a row to the matrix in `labs/README.md` |
