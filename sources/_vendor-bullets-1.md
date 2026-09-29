@@ -1,3 +1,4 @@
+<!-- applied: 2026-09-27 -->
 # Proposed "Who does it (sourced)" bullets, Chinese frontier labs
 
 One block per practice id. Each bullet is what the named document says, with its id from

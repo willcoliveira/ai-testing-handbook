@@ -1,3 +1,4 @@
+<!-- applied: 2026-09-27 -->
 # Proposed "Who does it (sourced)" bullets, vendor batch 2 (Google, Microsoft, Amazon)
 
 Ids S236 to S258 are in `sources/_vendors-2.rows.md` and must be merged into `sources.md` before these

@@ -1,6 +1,7 @@
 // Every practice, lab and pattern file cites at least one source id that resolves in
 // sources.md with a date; practice files carry the seven headings in order; every
-// sub-area in TAXONOMY.md links to an existing file; no pattern stays "pending" unless
+// sub-area in TAXONOMY.md links to an existing file; no two register rows share a url unless
+// listed in sources/known-duplicate-urls.txt; no pattern stays "pending" unless
 // --allow-pending. Exits 1 on any violation.
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname, resolve } from "node:path";
@@ -34,6 +35,25 @@ for (const [id, r] of reg) {
   if (!dated) errors.push(`sources.md ${id}: published must be YYYY-MM[-DD], "living" or "unknown" (got "${r.published}")`);
   if ((r.published === "living" || r.published === "unknown") && !/^\d{4}-\d{2}-\d{2}$/.test(r.last_checked)) errors.push(`sources.md ${id}: a living or undated source needs last_checked`);
   if (!/^https?:\/\//.test(r.url)) errors.push(`sources.md ${id}: url missing`);
+}
+// one row per URL, except the groups listed in sources/known-duplicate-urls.txt
+const knownDup = new Set();
+const dupFile = join(root, "sources", "known-duplicate-urls.txt");
+if (existsSync(dupFile)) {
+  for (const line of readFileSync(dupFile, "utf8").split("\n")) {
+    if (!line.trim() || line.startsWith("#")) continue;
+    knownDup.add(line.trim().split(/\s+/).sort().join(" "));
+  }
+}
+const byUrl = new Map();
+for (const [id, r] of reg) {
+  const u = r.url.replace(/\/+$/, "").toLowerCase();
+  byUrl.set(u, [...(byUrl.get(u) || []), id]);
+}
+for (const [u, ids] of byUrl) {
+  if (ids.length < 2) continue;
+  const key = ids.sort().join(" ");
+  if (!knownDup.has(key)) errors.push(`sources.md ${ids.join(", ")}: same url ${u}; reuse the existing id, or list the group in sources/known-duplicate-urls.txt`);
 }
 function frontmatter(text) {
   const m = text.match(/^---\n([\s\S]*?)\n---/);

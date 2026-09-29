@@ -1,3 +1,4 @@
+<!-- applied: 2026-09-28 -->
 ## practice: llm-as-judge
 - **DeepEval, 2026-09:** version 4.2.4 added a decision-model judge (TypeSafe's Jev) that returns bounded verdicts instead of generated text, presented as less flaky, cheaper and faster [S070].
 - **Langfuse, 2026-08 and 2026-09:** versions 4.42 to 4.44 surfaced decision-model evaluators in the template gallery and added them as a judge option [S071].

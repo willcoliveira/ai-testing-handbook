@@ -1,3 +1,4 @@
+<!-- applied: 2026-09-27 -->
 # Proposed "Who does it (sourced)" bullets, vendors batch 3
 
 Mistral, xAI, NVIDIA, Cohere, and the open ecosystem (Hugging Face, EleutherAI, AI2). One block per

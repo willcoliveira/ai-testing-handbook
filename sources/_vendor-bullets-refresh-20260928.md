@@ -1,3 +1,4 @@
+<!-- applied: 2026-09-28 -->
 ## practice: prompt-injection
 - **OWASP GenAI Security Project, 2026-08:** published the 2026 edition of the LLM Top 10, superseding the 2025 list [S281].
 - **arXiv, 2026-09:** in multi-agent systems, injection has fourteen attack vectors that single-model defences do not cover; a four-part architectural defence cut attack success from 31.2 to 4.2 percent in the paper's setting [S293].
