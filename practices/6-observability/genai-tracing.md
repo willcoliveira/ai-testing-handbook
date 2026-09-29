@@ -3,8 +3,8 @@ id: genai-tracing
 title: GenAI tracing
 area: 6-observability
 status: draft
-last_reviewed: 2026-09-28
-sources: [S068, S136, S137, S138, S139, S141]
+last_reviewed: 2026-09-29
+sources: [S068, S071, S136, S137, S138, S139, S141]
 related: [online-evals-and-drift, redaction-in-telemetry, load-and-latency, agent-evals]
 ---
 
@@ -57,6 +57,7 @@ attributes:
 - **Langfuse, living (checked 2026-09-26):** OTLP over HTTP only, gRPC "not supported yet"; the v4 ingestion header; SDKs "send tracing data asynchronously in the background" so tracing does not add request latency [S139].
 - **Arize, living (checked 2026-09-26):** OpenInference is "a set of conventions and plugins that is complementary to OpenTelemetry", with Python, JavaScript, Java and Go instrumentations, and honours `OPENINFERENCE_HIDE_*` variables [S141].
 - **promptfoo, 2026-08:** version 0.122.1 added tracing on the OpenTelemetry GenAI conventions and fetches external traces from Braintrust, Langfuse and Tempo [S068].
+- **Langfuse, 2026-09:** version 4.47.0 made the AI gateway mark inputs it omits (full-mode capture up to 5 MiB) and fixed cache-write cost accounting for Anthropic and OpenAI [S071].
 
 ## Pitfalls
 1. **Treating Development names as stable.** A rename between convention releases leaves dashboards keyed on the old attribute blank; pin the instrumentation version and diff on upgrade [S136].
@@ -76,3 +77,4 @@ None yet.
 - [S139] Observability and OpenTelemetry documentation, Langfuse, living, checked 2026-09-26.
 - [S141] OpenInference specification and instrumentations, Arize AI, living, checked 2026-09-26.
 - [S068] promptfoo documentation, intro, promptfoo, living
+- [S071] Langfuse evaluation overview, Langfuse, living

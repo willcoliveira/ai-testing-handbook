@@ -3,8 +3,8 @@ id: data-contamination
 title: Data contamination
 area: 7-training-and-lifecycle
 status: draft
-last_reviewed: 2026-09-28
-sources: [S143, S153, S154, S155, S220, S224, S225, S229, S230, S231, S272, S274, S278, S301, S304, S305]
+last_reviewed: 2026-09-29
+sources: [S143, S153, S154, S155, S220, S224, S225, S229, S230, S231, S272, S274, S278, S301, S304, S305, S312]
 related: [benchmark-hygiene, golden-datasets, capability-benchmarks, fine-tuning-evals, post-training-evals, llm-as-judge]
 ---
 
@@ -55,6 +55,7 @@ Hygiene rules for a team's private set, each traceable to the sources above:
 - **arXiv, 2026-08:** a taxonomy of contamination organised by which mitigation each type defeats, with a disclosure protocol for reporting contamination status beside a score [S301].
 - **arXiv, 2026-09:** a synthetic-data screen for training corpora that measures lexical-diversity collapse and n-gram tail truncation [S304].
 - **arXiv, 2026-08:** residual-stream probing for contamination carried more variance than its baseline and gave no definitive verdicts, so activation probes are not reliable detectors [S305].
+- **arXiv, 2026-09:** pairing each reasoning task with a copy that swaps real entities for fictitious ones separates contextual reasoning from recall of memorised facts [S312].
 
 ## Pitfalls
 1. **N-gram as the only check.** It finds verbatim copies; paraphrased and translated copies pass [S155].
@@ -83,3 +84,4 @@ None yet.
 - [S301] Benchmark Contamination: a taxonomy organised by defeated mitigation, arXiv 2608.29463, 2026-08-29
 - [S304] SynthSentry: detecting synthetic data contamination in language model training data, arXiv 2609.12353, 2026-09-11
 - [S305] Excess Separability: nuisance-controlled residual-stream probing for benchmark contamination detection, arXiv 2608.12652, 2026-08-12
+- [S312] MemoReason: evaluating the effect of parametric memory on contextual reasoning in LLMs, arXiv 2609.35312, 2026-09-28
