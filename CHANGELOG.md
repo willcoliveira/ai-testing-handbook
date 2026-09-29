@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.5 (2026-09-29)
+
+- Third refresh, all areas (full sweep list, 36 items): 6 new sources (S307 to S312, arXiv), 8 sourced
+  bullets across seven practices, Inspect AI 0.3.272 and Langfuse 4.47.0 recorded, last_checked bumped
+  on 56 rows. Labs, vendor and standards pages had nothing new since 2026-09-28.
+  Digest: `digests/2026-09-29.md`.
+
 ## 0.1.4 (2026-09-28)
 
 - Second refresh, areas 1 to 4, 6 and 7 plus the vendor pages: 10 new sources (S297 to S306), 17 sourced

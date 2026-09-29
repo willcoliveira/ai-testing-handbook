@@ -3,7 +3,7 @@ id: harnesses
 title: Harnesses
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-28
+last_reviewed: 2026-09-29
 sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302]
 related: [agent-evals, ci-gates-for-llm-apps, eval-driven-development, capability-benchmarks, llm-as-judge]
 ---
@@ -47,6 +47,7 @@ Every team writes one anyway. Without a harness the eval is a notebook nobody re
 - **NVIDIA, living:** NeMo Evaluator, Apache 2.0, v0.3.0 (2026-06-03), 17 built-in benchmarks and other harnesses addressed as `lm-eval://`, `skills://`, `vlmevalkit://`, `gym://`, `harbor://` and `container://` [S270]; the Nemotron 3 Nano report collected its results through it and LM Evaluation Harness [S268].
 - **AI2, living:** OLMES, Apache 2.0, the suite behind OLMo 3, with a companion `decon` tool for decontamination [S279][S278].
 - **arXiv, 2026-09:** "harness or model" measured with a private suite: no consistent advantage for vendor-native harnesses over neutral ones [S302].
+- **Inspect AI, 2026-09:** version 0.3.272 deprecated the `web_browser()` tool, which now warns and will be removed, and fixed computer-tool back and forward clicks in a rebuilt sandbox image [S066].
 
 ## Pitfalls
 1. Choosing by star count instead of by the shape of the thing under test. A harness built for model benchmarks (Inspect, OpenAI Evals) makes you wrap your application as a model; an application harness makes benchmark runs awkward [S066][S082].
