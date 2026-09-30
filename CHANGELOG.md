@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.8 (2026-09-30)
+
+- `learning-path/ai-qa-requirements.md`: the requirements that AI QA roles ask for, consolidated
+  from 24 current postings into 18 requirements with fundamentals, a worked example and what to
+  build for each, plus a section on evaluation roles at AI labs; five new interview questions
+  (18 to 22); 7 new sources (S348 to S354); `/roles` to update the page from new postings.
+
 ## 0.1.7 (2026-09-30)
 
 - Interview preparation and two new playbooks: 13 Debug a multi-agent orchestration (tracing a

@@ -149,7 +149,57 @@ counts, finish reason and errors; message content opt-in and redacted [S136]. Fo
 agent spans and ids from question 2 [S323].
 **Read.** [genai-tracing](../practices/6-observability/genai-tracing.md).
 
+## AI-augmented QA
+
+### 18. How do you gate code or tests written by a coding agent?
+**Short answer.** Review against the requirement, not against green, and prove each test can fail.
+**The mechanism.** A generated test can assert what the code does rather than what it should do;
+review checks requirement fidelity and weakened gates such as skipped tests or lowered thresholds
+[S169]. Mutation testing makes it measurable: change the code, and a test that still passes
+verifies nothing [S091][S092]. Generated tests start as non-blocking and gate only once reviewed.
+**Example.** Changing `>=` to `>` in discount code leaves the agent's test green: the mutant
+survives, so the test only checked that a number came back.
+**Read.** [ai-generated-tests](../practices/8-governance/ai-generated-tests.md),
+[mutation-checking](../practices/4-agents-and-systems/mutation-checking.md).
+
+### 19. How does a production failure become an eval case?
+**Short answer.** Trace, find, freeze, gate. The trace shows where it failed; the input and the
+expected behaviour become a versioned golden case; the fix ships when that case passes.
+**The mechanism.** Score sampled live spans with rules and judges, baseline per model and prompt
+version, and treat every failed live case as a candidate for the offline dataset [S140]; spans per
+model and tool call make the failure locatable [S136][S322].
+**Read.** [online-evals-and-drift](../practices/6-observability/online-evals-and-drift.md).
+
+### 20. You are asked to build an autonomous QA agent. What stops it doing damage?
+**Short answer.** A charter enforced in configuration: allowed outputs (draft pull requests only),
+a volume cap, no-go paths, least permission, phase gates starting in shadow mode, and a tested kill
+switch.
+**The mechanism.** Excessive agency is an OWASP top risk [S163]; agents suit problems whose steps
+cannot be predicted and need extensive testing first [S166]; deny rules and sandbox allowlists are
+the boundary, not prompt text [S167]. Self-healing tests need review too, because a healed step can
+hide a real regression.
+**Read.** [autonomous-qa-agents](../practices/8-governance/autonomous-qa-agents.md).
+
+### 21. How do you use AI in your own QA work without creating new risk?
+**Short answer.** Approved tools per data class, a human decision on anything that ships, and a
+record of what the AI did.
+**The mechanism.** Permissions live in configuration [S167]; review standards for AI output are
+written down [S169]; customer data never goes to an unapproved tool. Note how the labs frame it
+for candidates: AI may help you prepare, and some interview formats allow it while others do not
+[S349][S350].
+
+### 22. How is an evaluation role at an AI lab different from AI QA in a product team?
+**Short answer.** Labs measure the model during training and before release; product teams test a
+product built on a model. The habits are shared: distrust a single number, read transcripts, turn
+failures into cases, measure over- and under-refusal.
+**The mechanism.** Anthropic's Safeguards team tests violations, ambiguous contexts and long
+multi-turn conversations with model grading and human review [S351]; OpenAI pairs automated
+evaluations with expert-led deep dives [S354]. On hiring: "We care about what you can do, not where
+you learned to do it" [S348]; "We are not credential-driven" [S350].
+**Read.** [AI QA requirements](ai-qa-requirements.md#evaluation-roles-at-ai-labs).
+
 ## What to study, in order
-Phase 5 of this path, then playbooks 01 to 08 and 13 to 14. Know one tool well enough to write a
+Phase 5 of this path, then playbooks 01 to 08 and 13 to 14, then the
+[AI QA requirements](ai-qa-requirements.md) page for what roles ask for. Know one tool well enough to write a
 test in it live (DeepEval or promptfoo), and be ready to explain one number you reported with
 its interval.

@@ -29,7 +29,9 @@ every video, talk and document with its phase and its testing counterpart.
   phase ends with something you can show.
 - If you interview people for AI quality roles: the matrix is a question bank.
 - If you are interviewing for one: [interview questions](interview-questions.md) has the common
-  questions with sourced answers and the follow-up that tests depth.
+  questions with sourced answers and the follow-up that tests depth, and
+  [AI QA requirements](ai-qa-requirements.md) consolidates what the roles ask for, with the
+  fundamentals, an example and what to build for each.
 
 ## The build project
 

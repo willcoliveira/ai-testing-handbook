@@ -24,6 +24,11 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
    `git push -u origin HEAD && gh pr create --fill && gh pr merge --squash --auto`. Auto-merge is
    enabled at repository level and lands the change when the check is green.
 
+## Every few weeks
+
+`/roles` reads current AI QA postings and updates `learning-path/ai-qa-requirements.md` and the
+interview questions. It stores requirements only, never postings, companies or links.
+
 ## When adding by hand
 
 | Adding | Do |
