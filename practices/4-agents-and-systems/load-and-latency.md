@@ -3,8 +3,8 @@ id: load-and-latency
 title: Load and latency
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-26
-sources: [S076, S074, S094, S088, S089]
+last_reviewed: 2026-09-30
+sources: [S074, S076, S088, S089, S094, S341, S342, S343, S345]
 related: [voice-agent-testing, ci-gates-for-llm-apps, non-determinism-and-pass-rates, genai-tracing]
 ---
 
@@ -47,6 +47,9 @@ An LLM app has two latency budgets: the model's, which you can only choose, and 
 - **Roark, living product page:** "Load testing up to 250 concurrent calls" for voice agents, alongside regression runs [S094].
 - **Microsoft Foundry, 2026-07:** production dashboards tracking "token consumption, latency, error rates, and quality scores", with alerts when outputs fail thresholds [S088].
 - **UC Berkeley, BFCL V4, 2026-04:** reports cost and latency next to accuracy, so model choice can be made on all three [S089].
+- **Anthropic, 2026-09:** the latency guide defines time to first token and says streaming improves perceived responsiveness; the prompt caching docs say a prompt below the minimum length is processed without caching and without an error, and usage fields show whether a request hit the cache [S341][S342].
+- **OpenAI, 2026-09:** the latency guide lists seven principles and says halving output tokens may cut about half the latency while halving the prompt may give 1 to 5 percent [S343].
+- **Locust, 2026-09:** load scenarios are plain Python user classes, one per type of user, run headless with a user count and spawn rate [S345].
 
 ## Pitfalls
 1. Gating p95 on a system whose tail belongs to the vendor. Report the tail as a miss with the reason written down and gate the median; a gate that fails every run stops being trusted.
@@ -64,3 +67,7 @@ None yet.
 - [S094] Simulation testing for voice AI agents, Roark, living.
 - [S088] Observability in Generative AI, Microsoft Foundry, 2026-07-31.
 - [S089] Berkeley Function Calling Leaderboard, UC Berkeley, living (V4, 2026-04-12).
+- [S341] Reducing latency (Claude docs), Anthropic, living
+- [S342] Prompt caching (Claude docs), Anthropic, living
+- [S343] Latency optimization (OpenAI docs), OpenAI, living
+- [S345] Locust documentation, Locust, living

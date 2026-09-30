@@ -3,8 +3,8 @@ id: orchestrators-and-simulators
 title: Orchestrators and simulators
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-26
-sources: [S078, S079, S072, S073, S093, S094, S095]
+last_reviewed: 2026-09-30
+sources: [S072, S073, S078, S079, S093, S094, S095, S325, S326]
 related: [agent-evals, voice-agent-testing, non-determinism-and-pass-rates, red-teaming, ci-gates-for-llm-apps]
 ---
 
@@ -41,6 +41,8 @@ A scripted multi-turn test breaks the moment the agent rephrases. A simulated us
 - **Vapi, living docs:** two mechanisms, evals that check "exact matching, a pattern, or an AI judge" at known points, and simulations where an AI tester plays the caller over chat or voice; manual real calls are still recommended for background noise and accents [S093].
 - **Roark, living product page:** "Hundreds of simulated callers (the angry one, the rambler, the interrupter) built from your real call types", with regression runs and CI/CD gates [S094].
 - **Coval, living docs:** "Run thousands of realistic conversations" before launch, with "human reviewers whose feedback retrains the AI judge" [S095].
+- **Anthropic, 2026-09:** in the Claude Agent SDK a subagent's intermediate tool calls stay inside it and only its final message returns to the parent; transcripts are stored per subagent, and depth, concurrency and budget are capped [S326].
+- **LangChain, 2026-09:** LangGraph checkpoints graph state at each super-step under a thread id, lists the history, and can re-run from a prior checkpoint, re-executing later nodes including LLM and API calls [S325].
 
 ## Pitfalls
 1. Gating on a simulator you have not measured. A simulator can leave zero scenarios reliably stable after days of tuning, and scenarios at 100 percent can regress the moment the team tunes its own prompt.
@@ -60,3 +62,5 @@ None yet.
 - [S093] Voice testing, Vapi docs, living.
 - [S094] Simulation testing for voice AI agents, Roark, living.
 - [S095] Coval documentation, Coval, living.
+- [S326] Subagents in the SDK (Claude Agent SDK), Anthropic, living
+- [S325] Checkpointers (LangGraph), LangChain, living

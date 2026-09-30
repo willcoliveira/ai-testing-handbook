@@ -18,6 +18,8 @@ step, with templates. Read them in order the first time; after that, start from 
 | a model version change or a deprecation notice | [10 Run a model upgrade](10-run-a-model-upgrade.md) |
 | results and a reader | [11 Report results](11-report-results.md) |
 | a green suite and a feeling it is measuring the wrong thing | [12 Run an exploratory session](12-run-an-exploratory-session.md) |
+| an orchestrator and subagents that fail and nobody can say which one | [13 Debug a multi-agent orchestration](13-debug-a-multi-agent-orchestration.md) |
+| a chatbot that exists only as an API | [14 Test a backend-only chatbot](14-test-a-backend-chatbot.md) |
 
 Each playbook has six sections: When (the trigger), What (the artefact you leave behind), Why
 (what goes wrong without it), How (numbered steps and templates), Done when (exit criteria you can

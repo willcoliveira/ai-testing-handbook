@@ -4,7 +4,7 @@ title: GenAI tracing
 area: 6-observability
 status: draft
 last_reviewed: 2026-09-30
-sources: [S068, S071, S136, S137, S138, S139, S141]
+sources: [S068, S071, S136, S137, S138, S139, S141, S323, S324, S327]
 related: [online-evals-and-drift, redaction-in-telemetry, load-and-latency, agent-evals]
 ---
 
@@ -59,6 +59,9 @@ attributes:
 - **promptfoo, 2026-08:** version 0.122.1 added tracing on the OpenTelemetry GenAI conventions and fetches external traces from Braintrust, Langfuse and Tempo [S068].
 - **Langfuse, 2026-09:** version 4.47.0 made the AI gateway mark inputs it omits (full-mode capture up to 5 MiB) and fixed cache-write cost accounting for Anthropic and OpenAI [S071].
 - **OpenTelemetry, 2026-09:** the GenAI conventions added `gen_ai.skill.*` attributes (name, description, source URI, resource name) on the `execute_tool` span, so loading an agent skill, reading its resources or running its scripts is recorded as a tool execution; still Development status, no release [S136].
+- **OpenTelemetry, 2026-09:** the agent span conventions add `invoke_workflow` for multi-agent processes, reported even when nested, with `gen_ai.agent.id` and `gen_ai.conversation.id` for correlation [S323].
+- **OpenAI, 2026-09:** the Agents SDK nests agent, generation, function, handoff and guardrail spans under a trace, links traces of one conversation with `group_id`, and accepts custom trace processors [S324].
+- **LangChain, 2026-09:** LangSmith treats a run as a span, binds runs to a trace id, caps a trace at 25,000 runs, and groups traces into threads with a `thread_id` [S327].
 
 ## Pitfalls
 1. **Treating Development names as stable.** A rename between convention releases leaves dashboards keyed on the old attribute blank; pin the instrumentation version and diff on upgrade [S136].
@@ -79,3 +82,6 @@ None yet.
 - [S141] OpenInference specification and instrumentations, Arize AI, living, checked 2026-09-26.
 - [S068] promptfoo documentation, intro, promptfoo, living
 - [S071] Langfuse evaluation overview, Langfuse, living
+- [S323] Semantic Conventions for GenAI agent and framework spans, OpenTelemetry, living
+- [S324] Tracing (OpenAI Agents SDK), OpenAI, living
+- [S327] Observability concepts (LangSmith), LangChain, living
