@@ -1,6 +1,6 @@
 # Tools: a comparison matrix
 
-One row per tool, filled only from the source in the last column. "unknown" means the source did not say, not that the tool lacks it. "Last release checked" is the version or date seen on 2026-09-26 (package registries and GitHub releases, cross-checked against the docs). Per-tool notes are in [harnesses.md](harnesses.md), [platforms.md](platforms.md), [auditors.md](auditors.md) and [load-and-voice.md](load-and-voice.md). Guardrails, red-teaming and observability tools have their own files.
+One row per tool, filled only from the source in the last column. "unknown" means the source did not say, not that the tool lacks it. "Last release checked" is the version or date seen on 2026-09-26 (package registries and GitHub releases, cross-checked against the docs). Per-tool notes are in [harnesses.md](harnesses.md), [platforms.md](platforms.md), [auditors.md](auditors.md) and [load-and-voice.md](load-and-voice.md). DeepEval and Ragas metrics are mapped side by side in [rag-and-agent-metrics.md](rag-and-agent-metrics.md). Guardrails, red-teaming and observability tools have their own files.
 
 | Tool | Kind | Open source | Language or SDK | Judge support | Datasets and experiments | Agent and multi-turn | Red team | Tracing | CI-friendly | Hosted | Last release checked | Source id |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|

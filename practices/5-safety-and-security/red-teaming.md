@@ -3,8 +3,8 @@ id: red-teaming
 title: Red teaming
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-09-29
-sources: [S098, S099, S101, S104, S106, S110, S111, S113, S114, S127, S128, S130, S131, S132, S214, S218, S224, S228, S240, S248, S249, S251, S255, S256, S265, S266, S267, S271, S278, S284, S288, S309]
+last_reviewed: 2026-09-30
+sources: [S098, S099, S101, S104, S106, S110, S111, S113, S114, S127, S128, S130, S131, S132, S214, S218, S224, S228, S240, S248, S249, S251, S255, S256, S265, S266, S267, S271, S278, S284, S288, S309, S344]
 related: [prompt-injection, guardrails, frontier-safety-frameworks, exploratory-testing-of-agents]
 ---
 
@@ -90,6 +90,7 @@ release [S104]) and automated attackers generate findings that need triage befor
 - **OWASP GenAI Security Project, 2026-06:** published a taxonomy for classifying red, blue and purple teaming capabilities in AI security [S284].
 - **Anthropic Frontier Red Team, 2026-09:** measured tactical intelligence targeting and conventional weapons capabilities of models [S288].
 - **arXiv, 2026-09:** training an attacker model against a sequence of increasingly robust targets got RL-based injection red-teaming past the cold start where every attack on a frontier model fails [S309].
+- **Microsoft Research, 2024-04:** Crescendo is a multi-turn jailbreak that starts benign and gradually escalates; the paper reports high attack success across the evaluated models and an automated version, Crescendomation [S344].
 
 ## Pitfalls
 1. Static sets as proof. Anthropic calls this "a common pitfall" and invests in adaptive evaluations
@@ -142,3 +143,4 @@ None yet.
 - [S284] Solutions Landscape: Red Teaming Taxonomy, OWASP GenAI Security Project, 2026-06-28
 - [S288] Measuring tactical intelligence targeting and conventional weapons capabilities of AI models, Anthropic Frontier Red Team, 2026-09-10
 - [S309] Climbing the Hill: prompt injection red-teaming against frontier models with curriculum reinforcement learning, arXiv 2609.33628, 2026-09-27
+- [S344] Great, Now Write an Article About That: the Crescendo multi-turn LLM jailbreak attack, Russinovich, Salem, Eldan (Microsoft), arXiv 2404.01833, 2024-04-02

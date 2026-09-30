@@ -15,8 +15,10 @@ and [qualiow-playwright-skills](https://github.com/willcoliveira/qualiow-playwri
   is the reading order through the whole reference.
 - **You test software and want to move into AI:** [learning-path/README.md](learning-path/README.md),
   six phases, each with line items, a worked example and exercises.
-- **You want to do it, step by step:** [how-to/](how-to/README.md), twelve playbooks that say when,
+- **You want to do it, step by step:** [how-to/](how-to/README.md), fourteen playbooks that say when,
   what, why and how, from deciding what to test through to auditing and reporting.
+- **You have an interview for an AI QA role:** [learning-path/interview-questions.md](learning-path/interview-questions.md),
+  common questions with sourced answers.
 - **You want one practice:** [TAXONOMY.md](TAXONOMY.md), two hops from a question to a file.
 - **You want a worked example of governance:** [patterns/](patterns/), an anonymised production-build pattern.
 

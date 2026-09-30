@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.7 (2026-09-30)
+
+- Interview preparation and two new playbooks: 13 Debug a multi-agent orchestration (tracing a
+  subagent's status and context, budgets, handoff contracts, checkpoints and replay) and 14 Test a
+  backend-only chatbot (deterministic, judged, red team and performance layers); a DeepEval and
+  Ragas metric map in `tools/rag-and-agent-metrics.md`; `learning-path/interview-questions.md` with
+  17 sourced answers; 26 new sources (S322 to S347) and 11 sourced bullets across six practices.
+
 ## 0.1.6 (2026-09-30)
 
 - Fourth refresh, all areas (35 items, first run of `/refresh`): 9 new sources (S313 to S321: the GPT-6.1 Sol

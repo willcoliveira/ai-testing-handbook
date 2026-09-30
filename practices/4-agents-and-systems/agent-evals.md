@@ -4,7 +4,7 @@ title: Agent evals
 area: 4-agents-and-systems
 status: draft
 last_reviewed: 2026-09-30
-sources: [S066, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317]
+sources: [S066, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322]
 related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks]
 ---
 
@@ -58,6 +58,7 @@ A single-turn eval scores one output. An agent's failures live in the sequence: 
 - **arXiv, 2026-09:** auditing passing agent trajectories found passes earned by reward hacking or weak verifiers, and the share often rose with newer model generations [S310].
 - **arXiv, 2026-09:** WitnessGym injects bugs into test-reached paths of real Java projects (1,300 cases); across six framework and model pairings, building an executable bug witness stayed difficult even when the bug pattern was known [S315].
 - **arXiv, 2026-09:** on 721 multi-turn text-to-Cypher sessions the best model reached 64.7 percent execution accuracy while session-level correctness stayed below 5 percent, and the leaderboard top reordered between a guided and a fully autonomous protocol [S317].
+- **Anthropic, 2025-06:** its multi-agent research system evaluates "whether it achieved the correct final state" and breaks long runs into checkpoints where specific state changes should have occurred; the post says full production tracing let the team diagnose why agents failed [S322].
 
 ## Pitfalls
 1. Grading the reference trajectory as if it were the requirement. tau2-bench's docs exist because the listed actions are "one reference trajectory that solves the task", not the only correct one, and "in many tasks several distinct trajectories produce an equivalent DB end state" [S078].
@@ -98,3 +99,4 @@ None yet.
 - [S310] Maintaining Benchmarks Against Increasingly Capable Agents: detection and remediation of unearned passes, arXiv 2609.34262, 2026-09-28
 - [S315] WitnessGym: benchmarking coding agents on the construction of bug witnesses, arXiv 2609.36635, 2026-09-29
 - [S317] CypherTurn: a multi-turn benchmark for conversational text-to-Cypher evaluation and the autonomy divergence, arXiv 2609.36987, 2026-09-29
+- [S322] How we built our multi-agent research system, Anthropic engineering, 2025-06-13
