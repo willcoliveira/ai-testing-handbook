@@ -1,3 +1,4 @@
+<!-- applied: 2026-09-30 -->
 ## practice: harnesses
 - **Inspect AI, 2026-09:** version 0.3.272 deprecated the `web_browser()` tool, which now warns and will be removed, and fixed computer-tool back and forward clicks in a rebuilt sandbox image [S066].
 ## practice: genai-tracing

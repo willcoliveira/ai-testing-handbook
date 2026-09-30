@@ -3,8 +3,8 @@ id: prompt-injection
 title: Prompt injection
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-09-29
-sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311]
+last_reviewed: 2026-09-30
+sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316]
 related: [red-teaming, guardrails, tool-use-evals, agent-evals]
 ---
 
@@ -89,6 +89,8 @@ unusual user prompts, and a model trained to trust the user turn can follow what
 - **arXiv, 2026-09:** trigger-based prompts stay dormant until a condition fires; the paper's detector reported 97 percent accuracy in its own setting [S296].
 - **arXiv, 2026-09:** re-scoring the same traces showed that harness defects in an indirect-injection benchmark, such as payloads never delivered or success scored by tool name rather than arguments, each give a plausible and wrong attack-success number [S307].
 - **arXiv, 2026-09:** defences trained on static, explicit injections missed attacks folded into plausible workflows and deferred over several turns [S311].
+- **arXiv, 2026-09:** a toolkit of 13 attacks, 16 channels and 12 defences found prevention strategies on a coding agent cut attack success by 71.8 percent relative, and offline detectors had perfect precision but low recall [S316].
+- **arXiv, 2026-09:** subtracting a fitted activation direction from tool-result tokens cut AgentDojo compromise from 0.10-0.49 to 0.006-0.079 at 93 to 100 percent benign utility on five open-weights models; attacker-chosen arguments in legitimate calls were only partly resisted [S314].
 
 ## Pitfalls
 1. Trusting everything in the user turn. Anthropic's model "often reasoned that anything in the user's
@@ -123,3 +125,5 @@ None yet.
 - [S296] Defusing Explosive Prompts: understanding and preventing trigger-based prompt injections in LLM agents, arXiv 2609.22510, 2026-09-18
 - [S307] Silent Failures in Agentic Security Evaluation: a validated harness for tool-call mediation under indirect prompt injection, arXiv 2609.32691, 2026-09-26
 - [S311] CoDeL: co-evolutionary defense against indirect prompt injection in LLM-based agents, arXiv 2609.34463, 2026-09-28
+- [S316] pikit: a composable toolkit for indirect prompt injection research and evaluation, arXiv 2609.36817, 2026-09-29
+- [S314] CounterSteer: suppressing indirect prompt injection with activation steering, arXiv 2609.36570, 2026-09-29
