@@ -18,7 +18,8 @@ and [qualiow-playwright-skills](https://github.com/willcoliveira/qualiow-playwri
 - **You want to do it, step by step:** [how-to/](how-to/README.md), fourteen playbooks that say when,
   what, why and how, from deciding what to test through to auditing and reporting.
 - **You have an interview for an AI QA role:** [learning-path/interview-questions.md](learning-path/interview-questions.md),
-  common questions with sourced answers.
+  common questions with sourced answers, and [learning-path/ai-qa-requirements.md](learning-path/ai-qa-requirements.md),
+  what the roles ask for and how to meet each requirement.
 - **You want one practice:** [TAXONOMY.md](TAXONOMY.md), two hops from a question to a file.
 - **You want a worked example of governance:** [patterns/](patterns/), an anonymised production-build pattern.
 
