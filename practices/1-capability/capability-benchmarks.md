@@ -3,8 +3,8 @@ id: capability-benchmarks
 title: Capability benchmarks and leaderboards
 area: 1-capability
 status: draft
-last_reviewed: 2026-09-27
-sources: [S001, S002, S003, S006, S007, S008, S009, S010, S011, S012, S013, S014, S015, S016, S017, S018, S019, S020, S021, S022, S023, S024, S026, S027, S028, S029, S215, S219, S220, S225, S230, S239, S241, S247, S248, S255, S260, S266, S272, S274, S276, S277, S278]
+last_reviewed: 2026-09-30
+sources: [S001, S002, S003, S006, S007, S008, S009, S010, S011, S012, S013, S014, S015, S016, S017, S018, S019, S020, S021, S022, S023, S024, S026, S027, S028, S029, S215, S219, S220, S225, S230, S239, S241, S247, S248, S255, S260, S266, S272, S274, S276, S277, S278, S318]
 related: [statistical-treatment-of-evals, benchmark-hygiene, agent-evals, tool-use-evals]
 ---
 
@@ -65,6 +65,7 @@ Then map the benchmark to your need. Knowledge and reasoning: MMLU-Pro, GPQA, HL
 - **Mistral, June 2025:** the Magistral report states its decoding settings (temperature 0.7 for math and GPQA, 0.95 for code; 40k or 32k max tokens) alongside AIME, MATH-500, LiveCodeBench, GPQA and Humanity's Last Exam scores [S260].
 - **Cohere, April 2025:** Command A is scored on a published table of benchmarks by area, follows the simple-evals implementation for MMLU, MMLU-Pro and GPQA, and shows "externally reported results with comparable evaluation settings" wherever possible [S272].
 - **xAI, September 2026:** the Grok 4.7 card runs capability tests unsafeguarded and attributes several results to third-party runs (Datacurve, Harbor), noting that on Terminal-Bench "absolute scores remain sensitive to the agent harness" [S266].
+- **arXiv, 2026-09:** LoLBench pairs long enhancement proposals with systems averaging 2.4M lines of code; the best of 28 agents resolved 14 percent of tasks, with incomplete code localisation named as a major bottleneck [S318].
 
 ## Pitfalls
 1. Mixing versions of one family. SWE-bench full, Verified and Pro are three different task sets with three different difficulty profiles [S007] [S008] [S026].
@@ -121,3 +122,4 @@ None yet.
 - [S260] Magistral (technical report), Mistral AI, arXiv 2506.10910, 2025-06
 - [S272] Command A: An Enterprise-Ready Large Language Model (technical report), Cohere, arXiv 2504.00698, 2025-04
 - [S266] Grok 4.7 Model Card (revision 2026-09-21), xAI (SpaceXAI), 2026-09-21
+- [S318] LoLBench: evaluating coding agents with long-horizon proposals on large software systems, arXiv 2609.37143, 2026-09-29

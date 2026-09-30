@@ -3,7 +3,7 @@ id: genai-tracing
 title: GenAI tracing
 area: 6-observability
 status: draft
-last_reviewed: 2026-09-29
+last_reviewed: 2026-09-30
 sources: [S068, S071, S136, S137, S138, S139, S141]
 related: [online-evals-and-drift, redaction-in-telemetry, load-and-latency, agent-evals]
 ---
@@ -58,6 +58,7 @@ attributes:
 - **Arize, living (checked 2026-09-26):** OpenInference is "a set of conventions and plugins that is complementary to OpenTelemetry", with Python, JavaScript, Java and Go instrumentations, and honours `OPENINFERENCE_HIDE_*` variables [S141].
 - **promptfoo, 2026-08:** version 0.122.1 added tracing on the OpenTelemetry GenAI conventions and fetches external traces from Braintrust, Langfuse and Tempo [S068].
 - **Langfuse, 2026-09:** version 4.47.0 made the AI gateway mark inputs it omits (full-mode capture up to 5 MiB) and fixed cache-write cost accounting for Anthropic and OpenAI [S071].
+- **OpenTelemetry, 2026-09:** the GenAI conventions added `gen_ai.skill.*` attributes (name, description, source URI, resource name) on the `execute_tool` span, so loading an agent skill, reading its resources or running its scripts is recorded as a tool execution; still Development status, no release [S136].
 
 ## Pitfalls
 1. **Treating Development names as stable.** A rename between convention releases leaves dashboards keyed on the old attribute blank; pin the instrumentation version and diff on upgrade [S136].

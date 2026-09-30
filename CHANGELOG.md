@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.6 (2026-09-30)
+
+- Fourth refresh, all areas (35 items, first run of `/refresh`): 9 new sources (S313 to S321: the GPT-6.1 Sol
+  system card addendum, listing only, and eight arXiv papers), 10 sourced bullets across eight practices,
+  Inspect AI 0.3.273 (multi-model grading fix), DeepEval 4.2.7, Langfuse 4.48.0 and the OTel GenAI
+  skill attributes recorded, last_checked bumped on 57 rows. Digest: `digests/2026-09-30.md`.
+
 ## 0.1.5 (2026-09-29)
 
 - Third refresh, all areas (full sweep list, 36 items): 6 new sources (S307 to S312, arXiv), 8 sourced
