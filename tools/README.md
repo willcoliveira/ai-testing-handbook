@@ -35,4 +35,5 @@ Start from what is under test, not from the tool. A model or an agent on public 
 - mutmut 3.8.0 for mutation testing of Python, BSD-3-Clause [S092].
 - tau2-bench v1.0.1 for tool-agent-user simulation with a user simulator and state-based rewards, MIT [S078].
 - Berkeley Function Calling Leaderboard V4 for function-calling accuracy, cost and latency [S089].
+- MCP Inspector 2.9.0, the reference tool for testing and debugging MCP servers, with a CLI for CI [S362]; mcp-scan for poisoned or changed tool definitions [S367]; promptfoo's MCP provider and red-team plugin [S381][S382]. See [mcp-testing](../practices/4-agents-and-systems/mcp-testing.md).
 - VoiceBench for speech-input evaluation of voice assistants, CC BY 4.0 [S075].

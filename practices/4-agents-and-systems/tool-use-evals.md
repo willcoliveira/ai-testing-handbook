@@ -3,8 +3,8 @@ id: tool-use-evals
 title: Tool-use evals
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-30
-sources: [S066, S070, S077, S078, S083, S088, S089, S215, S220, S224, S229, S260, S268, S272, S319]
+last_reviewed: 2026-10-01
+sources: [S066, S070, S077, S078, S083, S088, S089, S215, S220, S224, S229, S260, S268, S272, S319, S373, S377]
 related: [agent-evals, offline-probes, mutation-checking, harnesses, prompt-injection]
 ---
 
@@ -52,6 +52,8 @@ Argument comparison rules that hold up:
 - **NVIDIA, December 2025:** Tau-2 Bench run in a dedicated container under NeMo Evaluator SDK [S268].
 - **Mistral, June 2025:** function calling scored on an "internal benchmark" [S260].
 - **arXiv, 2026-09:** treating each tool's advertised interface as an executable contract confirmed seven tool defects and one evaluator property across 34 tools in four agent benchmarks, including a tau2-bench telecom case where the evaluator rewards refuelling a suspended line and fails the repaired tool [S319].
+- **Anthropic, 2025-09:** evaluates its tools with held-out task sets and grades four failure modes: the wrong tool, the right tool with wrong parameters, too few calls, and mishandled responses; it reports that tool naming and namespacing changed its eval results [S377].
+- **arXiv, 2025-08:** MCP-Universe benchmarks agents on 11 real MCP servers with execution-based evaluators; the best model reached 43.72 percent [S373].
 
 ## Pitfalls
 1. Exact-match on free-text arguments. A search query or a note field varies run to run; compare identifiers exactly and free text by schema or by a tolerant check [S089].
@@ -79,3 +81,5 @@ None yet.
 - [S268] Nemotron 3 Nano: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic Reasoning (technical report), NVIDIA, 2025-12-23
 - [S260] Magistral (technical report), Mistral AI, arXiv 2506.10910, 2025-06
 - [S319] Do Agent Benchmarks Do What They Say? An executable-contract audit of tool-using agent environments, arXiv 2609.37315, 2026-09-29
+- [S377] Writing effective tools for AI agents, using AI agents, Anthropic engineering, 2025-09-11
+- [S373] MCP-Universe: benchmarking LLMs with real-world MCP servers, arXiv 2508.14704, 2025-08-20

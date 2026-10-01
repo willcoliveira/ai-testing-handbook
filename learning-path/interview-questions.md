@@ -198,7 +198,39 @@ evaluations with expert-led deep dives [S354]. On hiring: "We care about what yo
 you learned to do it" [S348]; "We are not credential-driven" [S350].
 **Read.** [AI QA requirements](ai-qa-requirements.md#evaluation-roles-at-ai-labs).
 
-## What to study, in order
+## MCP
+
+### 23. How would you test an MCP server?
+**Short answer.** In layers. Contract tests with no model (discovery, tool schemas, errors,
+transport and auth rules) in CI; a tool-quality set that measures whether a model picks the right
+tool with the right arguments; a security suite with a malicious test server; and tracing.
+**The mechanism.** Protocol errors versus tool execution errors with `isError: true` [S357]; the
+Inspector CLI runs one method per call with stable exit codes [S362]; promptfoo's MCP provider
+records tool calls for routing assertions [S381]; OpenTelemetry has MCP span conventions [S384].
+**Follow-up to expect.** "What changed in the protocol?" The 2026-07-28 revision removed the
+`initialize` handshake and sessions and requires `server/discover` [S356]; older material
+describes the handshake.
+**Read.** [15 Test an MCP server](../how-to/15-test-an-mcp-server.md).
+
+### 24. What is tool poisoning, and how do you test for it?
+**Short answer.** Instructions hidden in a tool's description, invisible to the user and visible
+to the model [S364]. Test by loading a test server whose description plants an instruction and
+asserting on actions: the planted call never happens. Add the variants: a rug pull (description
+changed after approval) and shadowing (one server redirects another's tool) [S364].
+**The mechanism.** The model sees every connected server's descriptions [S369]; MCPTox measured
+72.8 percent attack success for one model on real servers, with more capable models often more
+susceptible [S371]. Defences: pin definitions by hash [S369], least-privilege tool access in the
+host [S386], and blind grading of attack outcomes [S376]. Scanners help find candidates, but under
+half of sampled alerts were true positives in a large study [S374].
+
+### 25. Why are tool names and descriptions a testing concern?
+**Short answer.** They are the prompt the model uses to choose a tool. Anthropic found naming and
+namespacing changed its eval results and that refining descriptions moved SWE-bench Verified
+scores [S377]. So a description change is a behaviour change: rerun the tool-quality set.
+**The mechanism.** Grade the four failure modes: wrong tool, wrong parameters, too few calls,
+mishandled responses [S377]; use held-out cases so you do not tune to the test set [S377].
+
+
 Phase 5 of this path, then playbooks 01 to 08 and 13 to 14, then the
 [AI QA requirements](ai-qa-requirements.md) page for what roles ask for. Know one tool well enough to write a
 test in it live (DeepEval or promptfoo), and be ready to explain one number you reported with

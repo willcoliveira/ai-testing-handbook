@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.9 (2026-10-01)
+
+- MCP testing: practice `mcp-testing` (contract, tool quality, security, tracing; the 2026-07-28
+  stateless spec), playbook 15 Test an MCP server, requirement R19, interview questions 23 to 25,
+  MCP rows in the tools and metrics pages; 32 new sources (S355 to S386) including the MCP
+  specification, OWASP's MCP cheat sheets, Invariant Labs' disclosures and six arXiv papers.
+
 ## 0.1.8 (2026-09-30)
 
 - `learning-path/ai-qa-requirements.md`: the requirements that AI QA roles ask for, consolidated

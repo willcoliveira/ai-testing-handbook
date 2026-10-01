@@ -42,6 +42,7 @@ engineer should be able to answer after reading it. Two hops from any question t
 | Voice agents | [voice-agent-testing](practices/4-agents-and-systems/voice-agent-testing.md) | What is different about voice? What can text harnesses not reach? What are the latency budgets? |
 | Load and latency | [load-and-latency](practices/4-agents-and-systems/load-and-latency.md) | What does a load test prove about an LLM app? What do I stub? What do I gate? |
 | Exploratory testing of agents | [exploratory-testing-of-agents](practices/4-agents-and-systems/exploratory-testing-of-agents.md) | How do I run a session against a probabilistic system? What is the evidence standard? |
+| MCP testing | [mcp-testing](practices/4-agents-and-systems/mcp-testing.md) | How do I test an MCP server? What are tool poisoning and rug pulls? What changed in the 2026-07-28 spec? |
 | Mutation checking | [mutation-checking](practices/4-agents-and-systems/mutation-checking.md) | Where does mutation testing apply around a model? What does a surviving mutant mean? |
 
 ## 5. Safety, security and guardrails. What must it never do, and how do I prove it will not?

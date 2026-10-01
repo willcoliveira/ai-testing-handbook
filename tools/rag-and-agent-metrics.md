@@ -21,6 +21,7 @@ its "generator" [S330][S329]; Ragas splits its RAG metrics the same way [S335].
 | Is the retrieved context relevant at all? | Contextual Relevancy [S328] | none named; noise sensitivity is closest [S335] | DeepEval's page not read for this table | question, retrieved context |
 | Custom criteria | G-Eval (criteria or evaluation steps, 1 to 5 normalised by token probabilities), DAG [S331][S328] | custom metrics via decorators [S080] | a judge applies your rubric | your fields |
 | Right tools called? | Tool Correctness: correctly used tools / tools called, against `expected_tools` [S332] | Tool call accuracy, tool call F1 [S335] | comparison with expected calls; options for order and exact match | tools called, expected tools |
+| Did an MCP agent use the server well? | MCP Use (primitives and arguments chosen against those available), MCP Task Completion per interaction [S379][S380] | none named | judge over the MCP calls in the test case | MCP servers and the tools, resources and prompts called [S378] |
 | Did the agent finish the task? | Task Completion: an LLM extracts task and outcome from the full trace and scores their alignment [S333] | Agent goal accuracy [S335] | judge over the trajectory | a trace (DeepEval requires tracing) |
 
 ## What they need to run
