@@ -3,8 +3,8 @@ id: prompt-injection
 title: Prompt injection
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-09-30
-sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316]
+last_reviewed: 2026-10-01
+sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371]
 related: [red-teaming, guardrails, tool-use-evals, agent-evals]
 ---
 
@@ -91,6 +91,8 @@ unusual user prompts, and a model trained to trust the user turn can follow what
 - **arXiv, 2026-09:** defences trained on static, explicit injections missed attacks folded into plausible workflows and deferred over several turns [S311].
 - **arXiv, 2026-09:** a toolkit of 13 attacks, 16 channels and 12 defences found prevention strategies on a coding agent cut attack success by 71.8 percent relative, and offline detectors had perfect precision but low recall [S316].
 - **arXiv, 2026-09:** subtracting a fitted activation direction from tool-result tokens cut AgentDojo compromise from 0.10-0.49 to 0.006-0.079 at 93 to 100 percent benign utility on five open-weights models; attacker-chosen arguments in legitimate calls were only partly resisted [S314].
+- **Invariant Labs, 2025-04 and 2025-05:** tool poisoning hides instructions in MCP tool descriptions, and a malicious public GitHub issue read through a trusted MCP server led an agent to leak private repositories [S364][S366].
+- **arXiv, 2025-08:** MCPTox measured tool poisoning on 45 real MCP servers and found attack success of 72.8 percent for one model, with more capable models often more susceptible [S371].
 
 ## Pitfalls
 1. Trusting everything in the user turn. Anthropic's model "often reasoned that anything in the user's
@@ -127,3 +129,6 @@ None yet.
 - [S311] CoDeL: co-evolutionary defense against indirect prompt injection in LLM-based agents, arXiv 2609.34463, 2026-09-28
 - [S316] pikit: a composable toolkit for indirect prompt injection research and evaluation, arXiv 2609.36817, 2026-09-29
 - [S314] CounterSteer: suppressing indirect prompt injection with activation steering, arXiv 2609.36570, 2026-09-29
+- [S364] MCP Security Notification: Tool Poisoning Attacks, Invariant Labs (Beurer-Kellner, Fischer), 2025-04-01
+- [S366] GitHub MCP Exploited: accessing private repositories via MCP, Invariant Labs (Milanta, Beurer-Kellner), 2025-05-26
+- [S371] MCPTox: a benchmark for tool poisoning attack on real-world MCP servers, arXiv 2508.14925, 2025-08-19

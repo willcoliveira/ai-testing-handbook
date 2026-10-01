@@ -38,6 +38,7 @@ boilerplate line were not counted. The counts show what recurs, not market share
 | R12 | Use and validate LLM judges | 5 | [05](../how-to/05-calibrate-the-evaluator.md) |
 | R13 | Gate AI-written code and tests | 5 | [ai-generated-tests](../practices/8-governance/ai-generated-tests.md) |
 | R14 | Use AI inside QA work under rules | 5 | [autonomous-qa-agents](../practices/8-governance/autonomous-qa-agents.md) |
+| R19 | Test MCP servers and MCP-using agents | 5 | [mcp-testing](../practices/4-agents-and-systems/mcp-testing.md), [15](../how-to/15-test-an-mcp-server.md) |
 | R15 | Evaluate classic ML models | 3 | [statistical-treatment-of-evals](../practices/1-capability/statistical-treatment-of-evals.md) |
 | R16 | Build eval and agent-test infrastructure | 3 | [harnesses](../practices/4-agents-and-systems/harnesses.md) |
 | R17 | Test voice and multimodal systems | 2 | [voice-agent-testing](../practices/4-agents-and-systems/voice-agent-testing.md) |
@@ -211,6 +212,23 @@ ships, and record what the AI did. Permissions belong in configuration: deny rul
 allowlists [S167]. Write review standards for AI output down [S169].
 **Show it.** A one-page team policy: approved tools, data classes, review rules, records.
 
+## R19 Test MCP servers and MCP-using agents
+**Asked for.** Testing tool interfaces exposed over MCP; MCP servers as part of the product; agent
+tool use mediated by MCP; MCP-based test tooling such as browser automation servers.
+**Fundamentals.** Three jobs: the server as an API (contract), as a prompt (does a model choose the
+right tool with the right arguments), and as an attack surface (descriptions and results are
+untrusted input) [S357]. The current spec, 2026-07-28, is stateless: no `initialize`, no sessions,
+a required `server/discover` [S356]. Tool poisoning hides instructions in descriptions; a rug pull
+changes a description after approval [S364]; a trusted server can still carry an injection that
+leaks data [S366]. Pin tool definitions by hash and alert on change [S369].
+**Example.** A test server's `get_weather` description tells the model to read `~/.ssh/id_rsa` and
+pass it as a parameter. The test asserts the agent calls `get_weather` with a city only and never
+reads the file; a second test changes the description after listing and expects the pin check to
+fail.
+**Show it.** A small MCP server with contract tests run by the Inspector CLI in CI [S362], a
+tool-quality set over five runs, and a malicious test server in the security suite
+([15](../how-to/15-test-an-mcp-server.md)).
+
 ## R15 to R18 in brief
 - **R15 Classic ML evaluation.** Some roles evaluate models, not LLM apps: precision and recall per
   class, accuracy under degraded conditions, drift. The statistics are those of R6 [S004].
@@ -246,6 +264,5 @@ roles, internal levels and tooling are not public.
   monitoring.
 
 ## Gaps to fill next
-MCP is among the most named tools and the register has no source on testing MCP servers. Agent
-sandboxing and durable execution platforms appear in senior postings. Both are candidates for the
-next source sweep.
+Agent sandboxing and durable execution platforms appear in senior postings and have no sources
+yet; they are candidates for the next sweep.
