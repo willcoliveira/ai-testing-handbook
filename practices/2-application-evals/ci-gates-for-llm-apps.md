@@ -3,7 +3,7 @@ id: ci-gates-for-llm-apps
 title: CI gates for LLM apps
 area: 2-application-evals
 status: draft
-last_reviewed: 2026-09-30
+last_reviewed: 2026-10-02
 sources: [S031, S032, S033, S036, S042, S043, S046, S047, S049, S299, S346, S347]
 related: [eval-driven-development, non-determinism-and-pass-rates, load-and-latency, regression-on-upgrade, online-evals-and-drift]
 ---
@@ -91,7 +91,10 @@ holds only the checks that are stable enough to be believed, and the rest is rep
    versions [S036], [S043].
 
 ## Pattern from a production build
-None yet.
+A decision model proposed as a gate in front of an LLM judge (skip or shorten the judge on
+confident items) was refused: it would have passed every claim the judge refuted. It runs in
+shadow, records its reading next to the verdict and fails open: a timeout or an error leaves the
+pipeline exactly as it was. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 
 ## Sources
 - [S031] Create strong empirical evaluations, Anthropic Claude Platform docs, living (checked 2026-09-26).

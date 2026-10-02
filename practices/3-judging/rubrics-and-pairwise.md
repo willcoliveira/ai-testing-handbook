@@ -3,7 +3,7 @@ id: rubrics-and-pairwise
 title: Rubrics and pairwise
 area: 3-judging
 status: draft
-last_reviewed: 2026-09-26
+last_reviewed: 2026-10-02
 sources: [S051, S052, S053, S054, S055, S057, S058, S059, S060, S061]
 related: [llm-as-judge, judge-calibration, human-annotation, criteria-authoring]
 ---
@@ -59,7 +59,11 @@ Pairwise mechanics:
 6. Pairwise as a gate. The better of a pair can still be a defect [S054].
 
 ## Pattern from a production build
-None yet.
+A claim-card triage replaced a free-text verdict with typed questions: five yes/no
+probabilities, one per known false-positive pattern, a severity choice worded from the severity
+guide and a predicted verdict in the judge's own vocabulary, each option with a written
+criterion. Typed answers made item-by-item comparison with the judge possible, and the severity
+reading was kept as advice. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 
 ## Sources
 - [S051] Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena, Zheng et al. (LMSYS), 2023-06-09.

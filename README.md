@@ -21,7 +21,8 @@ and [qualiow-playwright-skills](https://github.com/willcoliveira/qualiow-playwri
   common questions with sourced answers, and [learning-path/ai-qa-requirements.md](learning-path/ai-qa-requirements.md),
   what the roles ask for and how to meet each requirement.
 - **You want one practice:** [TAXONOMY.md](TAXONOMY.md), two hops from a question to a file.
-- **You want a worked example of governance:** [patterns/](patterns/), an anonymised production-build pattern.
+- **You want a worked example from a production build:** [patterns/](patterns/), anonymised patterns on
+  governance and on putting a decision model in front of an LLM judge.
 
 ## The map
 

@@ -3,7 +3,7 @@ id: llm-as-judge
 title: LLM-as-judge
 area: 3-judging
 status: draft
-last_reviewed: 2026-09-30
+last_reviewed: 2026-10-02
 sources: [S051, S052, S053, S054, S055, S056, S057, S058, S059, S060, S061, S066, S070, S071, S153, S213, S221, S229, S230, S252, S253, S255, S265, S270, S272, S278, S303]
 related: [judge-calibration, rubrics-and-pairwise, human-annotation, criteria-authoring, non-determinism-and-pass-rates]
 ---
@@ -60,7 +60,11 @@ Human grading does not scale and code checks cannot read prose. Zheng et al. fou
 6. Trusting raw agreement. If 5% of items fail, a judge that always passes has 95% agreement and catches nothing [S052].
 
 ## Pattern from a production build
-None yet.
+An adversarial LLM judge verified every candidate bug from exploratory testing of payment
+features: a separate sub-agent on the strongest model, given only a claim card, told to refute the
+claim by re-running its steps. A hosted decision model asked typed questions about the same cards
+agreed with that judge on 13 of 16 labelled claims but predicted none of the 3 it refuted, so it
+was kept as an advisory line beside the judge and never in its place. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 
 ## Sources
 - [S051] Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena, Zheng et al. (LMSYS), 2023-06-09.

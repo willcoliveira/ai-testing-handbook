@@ -2,6 +2,12 @@
 
 ## 0.1.10 (2026-10-02)
 
+- Pattern `decision-model-triage-before-an-llm-judge`: a hosted and an open, self-hosted
+  decision model measured against an adversarial LLM judge on payment features (calibration,
+  live shadow sessions, constructed discrimination tests, a partial fine-tune), and why both stay
+  advisory. Pattern sections filled in `llm-as-judge`, `judge-calibration`,
+  `rubrics-and-pairwise`, `exploratory-testing-of-agents`, `ci-gates-for-llm-apps` and
+  `non-determinism-and-pass-rates`; a precursor note on the judge calibration study in the roadmap.
 - Playbook 16 Add a decision model to a testing workflow: typed questions, scrubbing and logging
   what leaves the machine, shadow mode, calibration against existing verdicts, constructed
   discrimination tests, an adoption bar set before the run, and replacement versus gate versus

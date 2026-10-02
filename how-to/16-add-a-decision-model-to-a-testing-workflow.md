@@ -72,5 +72,7 @@ Practices: [llm-as-judge](../practices/3-judging/llm-as-judge.md),
 [judge-calibration](../practices/3-judging/judge-calibration.md),
 [rubrics-and-pairwise](../practices/3-judging/rubrics-and-pairwise.md),
 [ci-gates-for-llm-apps](../practices/2-application-evals/ci-gates-for-llm-apps.md).
+Pattern: [decision-model-triage-before-an-llm-judge](../patterns/decision-model-triage-before-an-llm-judge.md),
+the measurement this playbook comes from, kept separate from the general guidance above.
 Playbooks: [05 Calibrate the evaluator](05-calibrate-the-evaluator.md),
 [12 Run an exploratory session](12-run-an-exploratory-session.md).
