@@ -3,7 +3,7 @@ id: exploratory-testing-of-agents
 title: Exploratory testing of agents
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-26
+last_reviewed: 2026-10-02
 sources: [S079, S072, S073, S090, S093, S088]
 related: [agent-evals, voice-agent-testing, orchestrators-and-simulators, autonomous-qa-agents, ai-generated-tests, human-in-the-loop]
 ---
@@ -51,7 +51,11 @@ Scripted evals find what you thought of. An agent produces behaviours nobody scr
 5. Several symptoms in one report. A finding with three symptoms and one cause, filed as three reports, gets triaged three times.
 
 ## Pattern from a production build
-None yet.
+Every candidate bug from an agent-driven exploratory session went to an adversarial judge
+working from a claim card before it shipped; refuted candidates were kept in their own appendix
+rather than dropped. A decision-model triage in front of the judge was measured in shadow and kept
+advisory, because the refuted claims were internally coherent and only a re-run of the steps
+exposed them. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 
 ## Sources
 - [S079] Demystifying evals for AI agents, Anthropic, 2026-01-09.

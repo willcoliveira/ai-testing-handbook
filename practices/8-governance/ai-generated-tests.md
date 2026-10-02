@@ -50,7 +50,7 @@ A passing generated test proves little on its own, because the model can write a
 6. Losing the origin. Once the marker is stripped, nobody knows which tests were never read. Report the share of AI-assisted changes as a standing metric [S169].
 
 ## Pattern from a production build
-On a payments-heavy checkout platform, AI-generated tests were never treated as validated: each was marked for SDET review, and the rule "agents propose, humans merge" applied to test code as much as to product code. See [governance-agents-propose-humans-merge](../../patterns/governance-agents-propose-humans-merge.md).
+On a platform with payment features, AI-generated tests were never treated as validated: each was marked for SDET review, and the rule "agents propose, humans merge" applied to test code as much as to product code. See [governance-agents-propose-humans-merge](../../patterns/governance-agents-propose-humans-merge.md).
 
 ## Sources
 - [S163] OWASP Top 10 for LLM Applications 2025, OWASP GenAI Security Project, living.

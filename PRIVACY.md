@@ -21,7 +21,7 @@ Every pattern file uses the same stand-ins, so nothing can be triangulated acros
 | the member platform | "the member platform" |
 | the contact-centre platform | "the contact-centre platform" |
 | the crypto wallet client | "a multi-chain wallet" |
-| the ticketing client | "a payments-heavy checkout platform" |
+| the payments client | "a platform with payment features" |
 | any engineer | "an engineer", "the AI engineer", "the team" |
 | any ticket | "the ticket" |
 

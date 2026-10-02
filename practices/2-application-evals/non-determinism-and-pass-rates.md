@@ -3,7 +3,7 @@ id: non-determinism-and-pass-rates
 title: Non-determinism and pass rates
 area: 2-application-evals
 status: draft
-last_reviewed: 2026-09-29
+last_reviewed: 2026-10-02
 sources: [S031, S032, S033, S034, S036, S041, S047, S049, S068, S308]
 related: [statistical-treatment-of-evals, ci-gates-for-llm-apps, regression-on-upgrade, online-evals-and-drift, golden-datasets]
 ---
@@ -98,7 +98,9 @@ depending on the failures you are willing to tolerate" [S036].
    silent model change [S041], [S033].
 
 ## Pattern from a production build
-None yet.
+A decision model asked the same 18 claim cards three times varied by a mean per-question
+standard deviation of 0.005, so repeats said little; the variance that mattered was in the
+labels, three refutations in sixteen. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 
 ## Sources
 - [S031] Create strong empirical evaluations, Anthropic Claude Platform docs, living (checked 2026-09-26).

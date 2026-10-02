@@ -65,3 +65,5 @@ reported without a link to the record.
 Practices: [judge-calibration](../practices/3-judging/judge-calibration.md),
 [human-annotation](../practices/3-judging/human-annotation.md).
 [ROADMAP](../ROADMAP.md) lists a full agreement study as a deliverable.
+Playbook: [16 Add a decision model to a testing workflow](16-add-a-decision-model-to-a-testing-workflow.md)
+applies the same calibration to a cheaper model proposed in front of a judge.

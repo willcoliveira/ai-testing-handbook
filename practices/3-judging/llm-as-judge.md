@@ -3,7 +3,7 @@ id: llm-as-judge
 title: LLM-as-judge
 area: 3-judging
 status: draft
-last_reviewed: 2026-09-30
+last_reviewed: 2026-10-02
 sources: [S051, S052, S053, S054, S055, S056, S057, S058, S059, S060, S061, S066, S070, S071, S153, S213, S221, S229, S230, S252, S253, S255, S265, S270, S272, S278, S303]
 related: [judge-calibration, rubrics-and-pairwise, human-annotation, criteria-authoring, non-determinism-and-pass-rates]
 ---
@@ -55,12 +55,16 @@ Human grading does not scale and code checks cannot read prose. Zheng et al. fou
 1. Position bias. With the default prompt GPT-4 gave the same verdict across a swap only 65.0% of the time and Claude-v1 23.8%; most judges favoured the first position [S051]. The survey lists position bias as task-agnostic and swapping as the standard fix [S058].
 2. Verbosity bias. A "repetitive list" attack that padded 23 answers without adding information fooled Claude-v1 and GPT-3.5 91.3% of the time and GPT-4 8.7% [S051]. Length-controlled AlpacaEval regresses length out of the preference and lifts Spearman with Chatbot Arena from 0.94 to 0.98 [S060].
 3. Self-enhancement bias. GPT-4 favoured its own outputs with a 10% higher win rate and Claude-v1 with 25%, though the authors say the data was too limited to be certain [S051]. G-Eval-4 always scored GPT-3.5 summaries above human-written ones even where humans preferred the human text [S057].
-4. Phrase-locked criteria. A criterion that names a sentence the agent must say breaks on the next prompt change; write behaviours, not phrases. Grading also changes the criteria: EvalGen's authors call this criteria drift [S053]. See [criteria-authoring-for-llm-graders](../../patterns/criteria-authoring-for-llm-graders.md).
+4. Phrase-locked criteria. A criterion that names a sentence the agent must say breaks on the next prompt change; write behaviours, not phrases. Grading also changes the criteria: EvalGen's authors call this criteria drift [S053]. See [criteria-authoring](../2-application-evals/criteria-authoring.md).
 5. Likert scores nobody can act on. "People don't know what to do with a 3 or 4", and expert judgments tend not to correlate with such scales [S052]. Integer scores also cluster on one digit, which is why G-Eval weights by token probability [S057].
 6. Trusting raw agreement. If 5% of items fail, a judge that always passes has 95% agreement and catches nothing [S052].
 
 ## Pattern from a production build
-None yet.
+An adversarial LLM judge verified every candidate bug from exploratory testing of payment
+features: a separate sub-agent on the strongest model, given only a claim card, told to refute the
+claim by re-running its steps. A hosted decision model asked typed questions about the same cards
+agreed with that judge on 13 of 16 labelled claims but predicted none of the 3 it refuted, so it
+was kept as an advisory line beside the judge and never in its place. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 
 ## Sources
 - [S051] Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena, Zheng et al. (LMSYS), 2023-06-09.

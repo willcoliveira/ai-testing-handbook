@@ -82,3 +82,5 @@ Practices: [exploratory-testing-of-agents](../practices/4-agents-and-systems/exp
 [human-annotation](../practices/3-judging/human-annotation.md),
 [regulated-domain-checks](../practices/5-safety-and-security/regulated-domain-checks.md).
 The skills themselves: [S205].
+Playbook: [16 Add a decision model to a testing workflow](16-add-a-decision-model-to-a-testing-workflow.md),
+for a cheaper model proposed in front of the verification of findings.

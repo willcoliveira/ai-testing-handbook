@@ -55,7 +55,7 @@ A charter has ten parts. Write all ten before the first run.
 6. Phase gates with no exit criteria. The pilot becomes production by default. Add scope "only when it demonstrably improves outcomes" [S166].
 
 ## Pattern from a production build
-On a payments-heavy checkout platform a charter-governed coverage agent was designed to open draft pull requests only, at most five a day, and was forbidden from touching framework layers, CI workflows and security-sensitive code; it was phase-gated with a kill switch. Org standards said to use the least capable model that does the job well and that there is no such thing as a temporary secret in code. See [governance-agents-propose-humans-merge](../../patterns/governance-agents-propose-humans-merge.md).
+On a platform with payment features a charter-governed coverage agent was designed to open draft pull requests only, at most five a day, and was forbidden from touching framework layers, CI workflows and security-sensitive code; it was phase-gated with a kill switch. Org standards said to use the least capable model that does the job well and that there is no such thing as a temporary secret in code. See [governance-agents-propose-humans-merge](../../patterns/governance-agents-propose-humans-merge.md).
 
 ## Sources
 - [S158] OpenAI Model Spec, OpenAI, living (version 2026-08-18).

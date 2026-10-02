@@ -9,7 +9,7 @@ anonymisation: pending
 # Title of the pattern
 
 ## Context (anonymised)
-"A payments-heavy checkout platform with nine consuming services." Use the vocabulary in PRIVACY.md.
+"A platform with payment features and nine consuming services." Use the vocabulary in PRIVACY.md.
 
 ## What was built
 

@@ -3,7 +3,7 @@ id: judge-calibration
 title: Judge calibration
 area: 3-judging
 status: draft
-last_reviewed: 2026-09-30
+last_reviewed: 2026-10-02
 sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320]
 related: [llm-as-judge, human-annotation, rubrics-and-pairwise, statistical-treatment-of-evals, non-determinism-and-pass-rates]
 ---
@@ -49,7 +49,13 @@ An uncalibrated judge is an unmeasured guess, and its errors are not symmetric. 
 6. Measuring in one order only. A pairwise agreement figure taken without a position swap can reflect a first-position preference rather than quality [S051].
 
 ## Pattern from a production build
-None yet.
+A cheaper candidate judge was calibrated against an existing LLM judge's verdicts on 16
+labelled claims, three repeats each: 13 of 16 on the binary decision, 10 of 16 on the exact
+verdict, 0 of 3 on the rare class that mattered, and a mean per-question standard deviation of
+0.005 across repeats. The label was another model's verdict, and one of the three refutations was
+later overruled; constructed discrimination tests (AUROC on doctored copies of real claims) were
+added because a judge's verdict is not ground truth and agreement cannot show whether the model
+reads the item. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 
 ## Sources
 - [S051] Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena, Zheng et al. (LMSYS), 2023-06-09.

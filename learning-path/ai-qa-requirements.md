@@ -74,7 +74,7 @@ kill switch. OWASP names excessive agency as a top risk [S163]; Anthropic recomm
 where the steps cannot be predicted and after extensive testing [S166]; path deny rules and sandbox
 network allowlists enforce the limits, not prompt text [S167]. Self-healing has a failure mode
 worth naming: a healed locator can hide a real product regression.
-**Example.** An exploratory agent on a checkout flow may open draft pull requests only, five a
+**Example.** An exploratory agent on a payment flow may open draft pull requests only, five a
 day, never touching auth or payment code. Phase 0 logs proposals without opening anything; a
 reviewer accepts or rejects each, and the acceptance rate decides phase 1.
 **Show it.** A browser agent with a written charter, a shadow-mode log, and a review of what it
