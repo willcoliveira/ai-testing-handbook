@@ -10,7 +10,8 @@ last_reviewed: 2026-10-02
 ## When
 A step in your testing workflow is slow or expensive (an LLM judge, a human review, a re-run) and
 someone proposes a cheaper model to replace it, gate it, or run in front of it. Or a tool offers a
-"decision model" evaluator and you need to know what it is fit for before you rely on it.
+"decision model" evaluator [S070] [S071] [S083] and you need to know what it is fit for before you
+rely on it.
 
 ## What
 A decision model wired into the workflow in shadow, with its questions written down, a log of
@@ -21,8 +22,8 @@ replacement, gate, or advisory.
 ## Why
 A decision model answers typed questions about text with probabilities and returns no prose, so it
 is fast, cheap and easy to log. Evaluation tools already treat a judge as one evaluator type among
-several, next to code checks and human annotation [S071] [S083], and ship ready-made metrics that
-return a score against a threshold [S070]. That makes adding one easy. What it does not tell you is
+several, next to code checks and human annotation [S071] [S083], and ship ready-made metrics
+[S070]. That makes adding one easy. What it does not tell you is
 whether the model catches the cases the slow step exists for. A cheap reader that agrees with the
 expensive one most of the time can still miss every case that matters, and agreement on easy items
 hides that.

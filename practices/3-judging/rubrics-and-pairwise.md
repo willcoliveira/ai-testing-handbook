@@ -59,7 +59,7 @@ Pairwise mechanics:
 6. Pairwise as a gate. The better of a pair can still be a defect [S054].
 
 ## Pattern from a production build
-A claim-card triage replaced a free-text verdict with typed questions: five yes/no
+A claim-card triage asked typed questions instead of a prose verdict: five yes/no
 probabilities, one per known false-positive pattern, a severity choice worded from the severity
 guide and a predicted verdict in the judge's own vocabulary, each option with a written
 criterion. Typed answers made item-by-item comparison with the judge possible, and the severity

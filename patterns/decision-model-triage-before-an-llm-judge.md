@@ -1,7 +1,7 @@
 ---
 id: decision-model-triage-before-an-llm-judge
 title: Decision-model triage before an LLM judge
-practices: [llm-as-judge, judge-calibration, rubrics-and-pairwise, exploratory-testing-of-agents, ci-gates-for-llm-apps]
+practices: [llm-as-judge, judge-calibration, rubrics-and-pairwise, exploratory-testing-of-agents, ci-gates-for-llm-apps, non-determinism-and-pass-rates]
 sources: [S210]
 anonymisation: reviewed
 ---
@@ -13,7 +13,7 @@ Exploratory testing of payment features with an AI exploratory-testing framework
 2026. Every candidate bug an agent session found went to an adversarial LLM judge before it
 shipped: a separate sub-agent [S210] on the strongest available model, given only a claim card
 (title, steps, expected and actual behaviour, evidence), whose job was to refute the claim by
-re-running the steps in its own browser. The judge cost several minutes of that model per claim.
+re-running the steps in its own browser. The judge cost minutes of that model per claim.
 The question was whether a decision model, a model that answers typed questions about text with
 probabilities and no prose, could replace the judge, gate it, or sit beside it as an advisory
 line. Two were tried: a hosted decision model and an open, self-hosted decision model.
@@ -36,7 +36,7 @@ line. Two were tried: a hosted decision model and an open, self-hosted decision 
 - Constructed discrimination tests built from the real claims: the same claim with its evidence
   swapped for another claim's, the same claim with vague steps, and a false-positive pattern that
   cannot apply. A model that reads the claim should separate each pair.
-- A fine-tune of the open model on folds of those constructed items, held out by claim.
+- A fine-tune of the open model on folds of those constructed items, held out by session.
 
 ## Numbers
 - Calibration set: 18 claim cards, each asked 3 times. 16 carried a usable judge label: 10
@@ -46,13 +46,14 @@ line. Two were tried: a hosted decision model and an open, self-hosted decision 
 - Hosted decision model against the judge: 13 of 16 on confirm versus refute, 10 of 16 on the
   exact verdict.
 - It predicted 0 of the 3 refutations, each with high confidence in "confirmed". No threshold on
-  its refutation probability caught one.
-- Calibration cost and latency: about 300 ms and $0.00019 per claim, with a mean per-question
+  its refutation probability between 0.20 and 0.60 caught one.
+- Calibration cost and latency: about 300 ms and well under a tenth of a cent per claim, with a mean per-question
   standard deviation of 0.005 across the three repeats. In one live session the same service took
   47 seconds for four claims, with one server error after retries; the failed claim went to the
   full judge and nothing was lost.
-- Two live sessions in shadow, with 7 and 4 claims: 10 of 10 on confirm versus refute and 9 of 10
-  on the exact verdict, over the claims it answered. Neither session produced a refutation, so
+- Two live sessions with 7 and 4 claims, the first in shadow, the second applying the triage's
+  routing with every shortened claim re-judged at full budget afterwards: 10 of 10 on confirm versus
+  refute and 9 of 10 on the exact verdict, over the claims it answered. Neither session produced a refutation, so
   they could not test the one thing the calibration showed it missing.
 - Open model, zero-shot, on the same 16 labels: 5 of 16 on confirm versus refute. Its yes/no
   answers sat near 0.95 for almost every question on every claim.
@@ -79,7 +80,8 @@ most of the time earns no authority over it, because the cases it misses are the
 - Collect refutations before measuring a refutation predictor. Three is too few: every conclusion
   about missed refutations rests on them, and the live sessions added none.
 - Write the adoption bar before the run, for example no missed refutation across a stated number
-  of labelled refutations, rather than reading the results first.
+  of labelled refutations, rather than reading the results first. The fine-tune had one; the
+  hosted model's calibration did not.
 - Use human labels as well as the judge's and report agreement with chance correction. Here the
   label is another model's verdict, and one of them was overruled.
 - Give the judge a reliably authenticated browser session that can change state. In the live
@@ -98,3 +100,5 @@ written criteria in place of a free-text verdict.
 verifying every candidate finding before it ships.
 [CI gates for LLM apps](../practices/2-application-evals/ci-gates-for-llm-apps.md): why a
 probabilistic signal stays advisory and fails open instead of gating.
+[Non-determinism and pass rates](../practices/2-application-evals/non-determinism-and-pass-rates.md):
+repeats that barely moved, against labels where the rare class was three items.

@@ -92,7 +92,8 @@ holds only the checks that are stable enough to be believed, and the rest is rep
 
 ## Pattern from a production build
 A decision model proposed as a gate in front of an LLM judge (skip or shorten the judge on
-confident items) was refused: it would have passed every claim the judge refuted. It runs in
+confident items) was refused: it predicted every claim the judge refuted as confirmed, and at its
+first thresholds would have shipped two of the three. It runs in
 shadow, records its reading next to the verdict and fails open: a timeout or an error leaves the
 pipeline exactly as it was. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 

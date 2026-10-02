@@ -54,7 +54,8 @@ labelled claims, three repeats each: 13 of 16 on the binary decision, 10 of 16 o
 verdict, 0 of 3 on the rare class that mattered, and a mean per-question standard deviation of
 0.005 across repeats. The label was another model's verdict, and one of the three refutations was
 later overruled; constructed discrimination tests (AUROC on doctored copies of real claims) were
-added because agreement alone hid the miss. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
+added because a judge's verdict is not ground truth and agreement cannot show whether the model
+reads the item. See [decision-model-triage-before-an-llm-judge](../../patterns/decision-model-triage-before-an-llm-judge.md).
 
 ## Sources
 - [S051] Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena, Zheng et al. (LMSYS), 2023-06-09.
