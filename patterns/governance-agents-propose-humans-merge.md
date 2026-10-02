@@ -9,7 +9,7 @@ anonymisation: reviewed
 # Agents propose, humans merge
 
 ## Context (anonymised)
-A payments-heavy checkout platform where an SDET team owned the end-to-end and contract suites
+A platform with payment features, where an SDET team owned the end-to-end and contract suites
 and the deploy gates for nine services, and used Claude Code sub-agents and skills [S210] inside
 the test repositories.
 

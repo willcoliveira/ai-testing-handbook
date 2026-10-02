@@ -28,7 +28,7 @@ Decision table:
 | Feeding a training or optimisation loop? | Smooth 0 to 1 score [S055], or probability-weighted score [S057] | Correlation |
 
 Writing a rubric a grader can apply:
-1. One behaviour per criterion, phrased as what the agent must do, not a sentence it must say. Bound when it must happen and name the speaker. Reserve verbatim matching for compliance copy that is verbatim by law. See [criteria-authoring-for-llm-graders](../../patterns/criteria-authoring-for-llm-graders.md).
+1. One behaviour per criterion, phrased as what the agent must do, not a sentence it must say. Bound when it must happen and name the speaker. Reserve verbatim matching for compliance copy that is verbatim by law. See [criteria-authoring](../2-application-evals/criteria-authoring.md).
 2. Put the criterion and its scale in the prompt. G-Eval's prompt is a task introduction, the criteria, evaluation steps the model generates itself, then a form to fill [S057]. Prometheus 2 takes a score rubric with a description of the criterion and a description for each score from 1 to 5 [S059]. Anthropic's tone prompt anchors only the ends, "1: Not at all {target_tone}" and "5: Perfectly {target_tone}", then "Output only the number" [S061].
 3. Add a third label, Unable to Verify, for pointwise grading. If the transcript lacks the evidence the criterion needs, the grader says so rather than guessing. Track its rate; a high rate means the criterion asks for something the transcript does not show.
 4. Grade with examples. Each example carries the input, the output, a critique and the label, and the requested output format matches the examples [S052]. EvalGen's interface uses thumbs up or down and treats a thumbs up as passing every criterion [S053].
@@ -54,7 +54,7 @@ Pairwise mechanics:
 1. Position bias in pairwise. Default-prompt GPT-4 was consistent across a swap 65.0% of the time; Claude-v1 23.8% [S051].
 2. Verbosity bias. Padded answers won 91.3% of the time under Claude-v1 and GPT-3.5 judges [S051]; length control corrects the leaderboard [S060].
 3. Likert mid-values. A 3 or 4 is not actionable and does not correlate with expert judgement [S052]; integer scores also cluster [S057].
-4. Phrase-locked criteria. A criterion that names a sentence breaks on the next prompt change, and graders reinterpret criteria as they see outputs [S053]. See [criteria-authoring-for-llm-graders](../../patterns/criteria-authoring-for-llm-graders.md).
+4. Phrase-locked criteria. A criterion that names a sentence breaks on the next prompt change, and graders reinterpret criteria as they see outputs [S053]. See [criteria-authoring](../2-application-evals/criteria-authoring.md).
 5. Self-enhancement. A judge from the same family as the graded model may favour it: GPT-4 by 10% and Claude-v1 by 25% in Zheng et al., and GPT-4 scored GPT-3.5 summaries above human ones in G-Eval [S051] [S057].
 6. Pairwise as a gate. The better of a pair can still be a defect [S054].
 

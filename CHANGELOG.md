@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.10 (2026-10-02)
+
+- Playbook 16 Add a decision model to a testing workflow: typed questions, scrubbing and logging
+  what leaves the machine, shadow mode, calibration against existing verdicts, constructed
+  discrimination tests, an adoption bar set before the run, and replacement versus gate versus
+  advisory, failing open.
+- Glossary: adversarial judge, AUROC, claim card, constructed test, decision model, fail open,
+  shadow mode, typed question.
+- Fixed the dead criteria-authoring links in `llm-as-judge` and `rubrics-and-pairwise`.
+- The payments stand-in in `PRIVACY.md` and the governance pages now reads "a platform with
+  payment features".
+
 ## 0.1.9 (2026-10-01)
 
 - MCP testing: practice `mcp-testing` (contract, tool quality, security, tracing; the 2026-07-28

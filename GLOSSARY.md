@@ -2,6 +2,7 @@
 
 One or two lines per term, alphabetical. A source id in brackets means the definition follows that source; "(general)" means common usage. Every id resolves in `sources.md`.
 
+- **Adversarial judge**: a model judge given only the claim and its evidence and told to refute it, for example by re-running the steps, so a finding is checked by a context that never saw how it was made. (general)
 - **Agent**: a system in which a model directs its own steps, choosing tools and deciding when to stop, as opposed to a workflow with a fixed path. Suited to "open-ended problems where it's difficult or impossible to predict the required number of steps" [S166].
 - **Agent-to-agent testing**: driving the agent under test with a second model that plays the user or the counterpart, so long multi-turn scenarios run without a person. (general)
 - **Agentic safety**: the part of a system card that covers misuse of agentic products and prompt injection across coding, computer use and browser use surfaces [S164].
@@ -10,6 +11,7 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **AI Safety Level (ASL)**: a tier in Anthropic's Responsible Scaling Policy that sets the security and deployment safeguards a model must be released under; Claude Sonnet 4.6 was "deployed under the AI Safety Level 3 (ASL-3) Standard" [S164].
 - **Allow, ask, deny rules**: permission rules for an agent tool, evaluated "deny, then ask, then allow"; "An allow rule can't carve an exception out of a deny rule" [S167].
 - **Annotation**: a human label attached to a model output or a case, used as ground truth for evals and for calibrating judges. (general)
+- **AUROC**: area under the ROC curve: the probability that a score ranks a random positive above a random negative; 0.5 is chance, 1.0 is perfect separation. (general)
 - **Autonomous QA agent**: a model-driven process that decides what to test, writes or runs tests and opens changes without a person at the keyboard; governed by a charter. (general)
 - **Benchmark**: a fixed task set with a grading procedure used to compare models; the number is only as good as the grading and the contamination status. (general)
 - **Branch protection**: repository rules that require approving reviews, code-owner review, passing status checks or restricted pushes before a merge to a protected branch [S168].
@@ -18,10 +20,13 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Chain of command**: the Model Spec's ordering of instruction authority, root, system, developer, user, guideline, where a higher level overrides a lower one [S158].
 - **Charter**: the written scope of an autonomous agent: purpose, allowed outputs, volume cap, no-go layers, permissions, phase gates, kill switch, escalation, records. (general)
 - **CI gate**: a check in the pipeline that blocks a merge or a deploy when it fails; only deterministic, trusted checks should gate. (general)
+- **Claim card**: the minimal, self-contained statement of one candidate finding (title, steps, expected and actual behaviour, evidence) handed to a verifier without the finder's reasoning. (general)
 - **Code owner**: a person or team named for a path; branch protection can require "any pull request that affects code with a code owner must be approved by that code owner" [S168].
 - **Confabulation**: NIST's term for GAI producing "confidently stated but erroneous or false content", one of the twelve GAI risks [S160].
+- **Constructed test**: a test item built by altering a real one in a known way (evidence swapped, steps made vague, an inapplicable pattern) so a grader's ability to tell the pair apart can be measured. (general)
 - **Contamination**: eval or benchmark items appearing in training data, so a score measures memory rather than capability. (general)
 - **Datasheet**: a document that accompanies a dataset and records "its motivation, composition, collection process, recommended uses, and so on" [S157].
+- **Decision model**: a model that answers typed questions about text (a probability, a choice from a set, a score on a rubric) and returns no prose. (general)
 - **Denied topic**: a subject a guardrail is configured to refuse outright, tested with both must-block and must-not-block cases. (general)
 - **Deprecation**: a provider retiring a model version on a date, after which requests fail or are routed elsewhere; the trigger for a regression-on-upgrade run. (general)
 - **Disaggregated evaluation**: reporting results split by factor (group, environment, instrument) rather than as one aggregate, the core of the model card format [S156].
@@ -32,6 +37,7 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Eval-driven development**: writing the eval set before or alongside the feature and using it as the loop's definition of done. (general)
 - **Excessive agency**: OWASP LLM06:2025, where an LLM-based system is granted more capability, permission or autonomy than the function needs [S163].
 - **Factors**: the model card section listing the groups, environments and instrumentation across which performance should be reported [S156].
+- **Fail open**: when a check cannot run, the work proceeds as if the check were absent, flagged as unchecked, rather than being blocked. (general)
 - **Fine-tune**: further training of a base model on task data; a fine-tune must be compared against the base model and against a prompt on a held-out set. (general)
 - **Flake**: a test whose result varies across runs with no code change; in LLM apps a flake is often the model, not the test. (general)
 - **GenAI semantic conventions**: the OpenTelemetry attribute names for model calls (model, tokens, prompt, completion) so traces from different tools line up. (general)
@@ -80,6 +86,7 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Sandbox**: an isolated environment where an agent's actions have no real side effects; Anthropic recommends "extensive testing in sandboxed environments" [S166].
 - **Scope of autonomy**: in the Model Spec, "a clear, mutually understood scope of autonomy shared between the assistant and the user" that bounds what the assistant may do without asking [S158].
 - **SFT**: supervised fine-tuning, post-training on demonstrated input-output pairs. (general)
+- **Shadow mode**: running a new evaluator or model beside the current one and recording its output without acting on it, so the two can be compared on the same items. (general)
 - **Simulated user**: a scripted or model-driven stand-in for a person, used to drive multi-turn tests; it can double the noise if it is itself non-deterministic. (general)
 - **Span**: one timed operation in a trace, such as a model call or a tool call, carrying attributes and a parent. (general)
 - **Stale approval**: a review approval given before later commits changed the diff; branch protection can dismiss it so "the pull request cannot be merged until someone approves the work again" [S168].
@@ -90,5 +97,6 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Systemic risk**: in the EU code, the category of risk from the most capable general-purpose models that triggers the Safety and Security chapter [S161].
 - **Tool contract**: the schema, examples and boundaries that define a tool for a model; Anthropic says tool definitions deserve "just as much prompt engineering attention as your overall prompts" [S166].
 - **Trajectory**: the full sequence of an agent's steps, tool calls and observations on one task; assertions on a trajectory check the path, not only the outcome. (general)
+- **Typed question**: a question to a model whose answer must be of a declared type (yes/no probability, one of a fixed set, a level on a scale), each option with a written criterion. (general)
 - **Uplift**: the increase in a threat actor's ability to cause harm that access to a model provides, the quantity RSP capability evaluations try to bound [S164].
 - **Workflow**: a system where a model's calls follow a predefined path; Anthropic's guidance is to prefer a workflow and add agent complexity "only when it demonstrably improves outcomes" [S166].

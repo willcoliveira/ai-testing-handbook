@@ -21,6 +21,7 @@ step, with templates. Read them in order the first time; after that, start from 
 | an orchestrator and subagents that fail and nobody can say which one | [13 Debug a multi-agent orchestration](13-debug-a-multi-agent-orchestration.md) |
 | a chatbot that exists only as an API | [14 Test a backend-only chatbot](14-test-a-backend-chatbot.md) |
 | an MCP server to build, adopt or connect to an agent | [15 Test an MCP server](15-test-an-mcp-server.md) |
+| a cheaper model proposed to replace, gate or sit in front of a slow evaluation step | [16 Add a decision model to a testing workflow](16-add-a-decision-model-to-a-testing-workflow.md) |
 
 Each playbook has six sections: When (the trigger), What (the artefact you leave behind), Why
 (what goes wrong without it), How (numbered steps and templates), Done when (exit criteria you can

@@ -53,7 +53,7 @@ Models produce plausible changes quickly and are poor at knowing when they are w
 6. The human as rubber stamp. The reviewer must be able to name what they checked; "the assistant said it was correct" is not verification [S169].
 
 ## Pattern from a production build
-On a payments-heavy checkout platform the org's rule was "agents propose, humans merge": AI scaffolds, suggests and classifies but does not merge, and AI-generated tests are marked for SDET review rather than treated as validated. An upstream-change-checking agent escalates anything touching authentication, payments, migrations or infrastructure for elevated human review rather than patching it silently. See [governance-agents-propose-humans-merge](../../patterns/governance-agents-propose-humans-merge.md).
+On a platform with payment features the org's rule was "agents propose, humans merge": AI scaffolds, suggests and classifies but does not merge, and AI-generated tests are marked for SDET review rather than treated as validated. An upstream-change-checking agent escalates anything touching authentication, payments, migrations or infrastructure for elevated human review rather than patching it silently. See [governance-agents-propose-humans-merge](../../patterns/governance-agents-propose-humans-merge.md).
 
 ## Sources
 - [S158] OpenAI Model Spec, OpenAI, living (version 2026-08-18).
