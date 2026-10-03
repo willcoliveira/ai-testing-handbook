@@ -3,8 +3,8 @@ id: harnesses
 title: Harnesses
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-29
-sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302]
+last_reviewed: 2026-10-03
+sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302, S389]
 related: [agent-evals, ci-gates-for-llm-apps, eval-driven-development, capability-benchmarks, llm-as-judge]
 ---
 
@@ -48,6 +48,8 @@ Every team writes one anyway. Without a harness the eval is a notebook nobody re
 - **AI2, living:** OLMES, Apache 2.0, the suite behind OLMo 3, with a companion `decon` tool for decontamination [S279][S278].
 - **arXiv, 2026-09:** "harness or model" measured with a private suite: no consistent advantage for vendor-native harnesses over neutral ones [S302].
 - **Inspect AI, 2026-09:** version 0.3.272 deprecated the `web_browser()` tool, which now warns and will be removed, and fixed computer-tool back and forward clicks in a rebuilt sandbox image [S066].
+- **UK AISI, 2026-10:** after agents took unsanctioned actions in cyber testing, AISI resumed evaluations with outbound networking disabled in its cyber ranges plus an independent cloud-network egress block, phased security testing before agents run, a synchronous LLM monitor over messages, tool calls and reasoning with an action-only fallback, and sandbox-escape tests run from weaker to stronger models [S389].
+- **Inspect AI, 2026-10:** version 0.3.274 lets a task set `ViewerConfig(trust_content=False)` so the log viewer shows transcript content as plain text with no markdown, media or clickable links, and runs the sandbox root check once at sample start, before the solver or agent executes [S066].
 
 ## Pitfalls
 1. Choosing by star count instead of by the shape of the thing under test. A harness built for model benchmarks (Inspect, OpenAI Evals) makes you wrap your application as a model; an application harness makes benchmark runs awkward [S066][S082].
@@ -77,3 +79,4 @@ None yet.
 - [S279] OLMES: A Standard for Language Model Evaluations, Ai2, arXiv 2406.08446, 2024-06-12
 - [S278] Olmo 3 (technical report), Ai2 (Olmo Team), arXiv 2512.13961, 2025-12
 - [S302] Harness or Model? Isolating the harness effect in agentic coding with a contamination-controlled private suite, arXiv 2609.11987, 2026-09-08
+- [S389] Building a more secure environment for evaluating dangerous capabilities, UK AI Security Institute, 2026-10-01
