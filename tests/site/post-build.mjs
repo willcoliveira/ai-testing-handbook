@@ -38,7 +38,10 @@ function sidebarLinks(items, out = []) {
   return out;
 }
 
-export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets = BUDGETS, forbidden = true, root = process.cwd() }) {
+// A SITE_TEST=1 build (visual tests) adds the type specimen, which is deliberately outside the book.
+export const SPECIMEN_PAGE = "specimen.html";
+
+export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets = BUDGETS, forbidden = true, root = process.cwd(), siteTest = false }) {
   const errors = [];
   const files = walk(dist);
   const html = files.filter((f) => f.endsWith(".html"));
@@ -97,6 +100,7 @@ export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets =
     }
     for (const f of html) {
       if (relative(dist, f) === "404.html") continue;
+      if (siteTest && relative(dist, f) === SPECIMEN_PAGE) continue;
       const n = seen.get(f) || 0;
       if (n !== 1) errors.push(`sidebar: ${page(f)} appears ${n} times (expected exactly once)`);
     }
@@ -130,7 +134,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const { buildSidebar } = await import("../../.vitepress/book.mjs");
   const dist = join(root, ".vitepress/dist");
   if (!existsSync(join(dist, "index.html"))) { console.error("post-build: no build in .vitepress/dist; run npm run docs:build"); process.exit(1); }
-  const { errors, pages, cites, report } = check({ dist, sidebar: buildSidebar(root), root });
+  const { errors, pages, cites, report } = check({ dist, sidebar: buildSidebar(root), root, siteTest: process.env.SITE_TEST === "1" });
   for (const e of errors) console.log(e);
   const kb = (b) => `${(b / 1024).toFixed(0)} KB`;
   console.log(`post-build: ${pages} pages, ${cites} citations; search index ${kb(report.searchIndex)}, JS ${kb(report.js)} (budget ${kb(BUDGETS.JS_MAX_BYTES)}), largest page chunk ${kb(report.largestPage)}, all JS incl. page content ${kb(report.totalJs)}; ${errors.length} problems`);

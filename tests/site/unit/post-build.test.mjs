@@ -45,6 +45,12 @@ test("negative: missing #fragment fails", () => fails({ "a.html": page(`<a href=
 test("negative: cite to a missing register anchor fails", () => fails({ "sources.html": page("<table></table>") }, /missing fragment .*sources#s001/));
 test("negative: cite pointing somewhere other than the register fails", () => fails({ "a.html": page(`<h2 id="why">Why</h2><a class="cite" href="${B}a#why">S001</a>`) }, /citation does not point at a register row/));
 test("negative: a page missing from the sidebar fails", () => fails({ "b.html": page("orphan") }, /\/b\.html appears 0 times/));
+test("negative: the specimen outside the sidebar fails a production check", () => fails({ "specimen.html": page("specimen") }, /\/specimen\.html appears 0 times/));
+test("SITE_TEST: the specimen may sit outside the sidebar", () => {
+  const d = dist({ "specimen.html": page("specimen") });
+  try { assert.deepEqual(run(d, { siteTest: true }).errors, []); } finally { d.done(); }
+});
+test("negative: SITE_TEST exempts only the specimen, another orphan still fails", () => fails({ "specimen.html": page("specimen"), "b.html": page("orphan") }, /\/b\.html appears 0 times/, { siteTest: true }));
 test("negative: a page twice in the sidebar fails", () => fails({}, /appears 2 times/, { sidebar: [...sidebar, { text: "again", link: "/a" }] }));
 test("negative: a sidebar link with no page fails", () => fails({}, /sidebar: \/gone has no built page/, { sidebar: [...sidebar, { text: "gone", link: "/gone" }] }));
 test("negative: a third-party <script src> fails", () => fails({ "a.html": `<html><head><script src="https://cdn.example.com/x.js"></script></head><body><h2 id="why">Why</h2></body></html>` }, /third-party host: https:\/\/cdn\.example\.com/));

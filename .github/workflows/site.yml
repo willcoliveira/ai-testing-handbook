@@ -7,13 +7,18 @@ on:
   schedule:
     # weekly full browser run (Mondays 05:17 UTC)
     - cron: "17 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      update_baselines:
+        description: "Regenerate the visual baselines in the Playwright image and upload them as an artifact (commit them by hand)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
   # Static gates on Linux and Windows, so contributors on either can build and check the book.
-  # Stage C adds the browser, visual and deploy jobs.
   test:
     strategy:
       fail-fast: false
@@ -38,8 +43,9 @@ jobs:
         env:
           CI: "1"
 
-  # Browser tests (stage B). Lint needs no browsers; PRs run the two PR projects; main and the
-  # weekly schedule run all four projects plus the every-page sweep (tagged @full).
+  # Browser tests. Lint needs no browsers; PRs and main run the two PR projects (main deploys only
+  # after them); main and the weekly schedule also run all four projects plus the every-page sweep
+  # (tagged @full). The visual spec (@visual) runs only in the visual job.
   lint:
     name: Lint, typecheck, format, skills
     runs-on: ubuntu-latest
@@ -56,10 +62,15 @@ jobs:
       - run: npm run format:check
       - name: Generated agent skills are in sync
         run: npm run skills:check
+      - name: Dockerfile base image matches @playwright/test
+        run: |
+          PW="$(node -p "require('@playwright/test/package.json').version")"
+          grep -q "mcr.microsoft.com/playwright:v${PW}-" tests/site/Dockerfile \
+            || { echo "::error file=tests/site/Dockerfile::tests/site/Dockerfile must use mcr.microsoft.com/playwright:v${PW}-noble"; exit 1; }
 
   e2e:
     name: Playwright (chromium, mobile-chrome)
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -130,5 +141,155 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report-full
+          path: playwright-report/
+          retention-days: 7
+
+  # Does this PR touch what the visual spec renders? Content-only PRs (refreshes) skip the visual
+  # job: its screenshots are of the fixed specimen and the chrome, which content cannot change.
+  changes:
+    name: Visual paths changed
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      visual: ${{ steps.filter.outputs.visual }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: filter
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then echo "visual=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          files="$(git diff --name-only "$BASE...$HEAD")"
+          echo "$files"
+          if echo "$files" | grep -qE '^(\.vitepress/|tests/site/|playwright\.config\.ts$|package(-lock)?\.json$)'; then
+            echo "visual=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "visual=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  # Element screenshots of the type specimen and the chrome, in the Playwright image pinned in
+  # tests/site/Dockerfile (Linux baselines, committed). A dispatch with update_baselines regenerates
+  # them and uploads them as an artifact; nothing here commits or pushes.
+  visual:
+    name: Visual (chromium, tablet, mobile-chrome; light and dark)
+    needs: changes
+    if: needs.changes.outputs.visual == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.update_baselines }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Baselines present
+        if: env.UPDATE != 'true'
+        run: |
+          ls tests/site/e2e/visual.spec.ts-snapshots/*-linux.png >/dev/null 2>&1 \
+            || { echo "::error::no baselines: run the update-baselines dispatch (Actions > Site > Run workflow, update_baselines)"; exit 1; }
+      - name: Build the Playwright image
+        run: docker build -f tests/site/Dockerfile -t hb-visual .
+      - name: Visual spec on a SITE_TEST=1 build
+        run: |
+          if [ "$UPDATE" = "true" ]; then
+            docker run --name hb-visual-run --init --ipc=host hb-visual npm run test:visual -- --update-snapshots
+          else
+            docker run --name hb-visual-run --init --ipc=host hb-visual npm run test:visual
+          fi
+      - name: Copy report, diffs and snapshots out of the container
+        if: always()
+        run: |
+          docker cp hb-visual-run:/app/playwright-report ./playwright-report || true
+          docker cp hb-visual-run:/app/test-results ./test-results || true
+          mkdir -p regenerated
+          docker cp hb-visual-run:/app/tests/site/e2e/visual.spec.ts-snapshots ./regenerated/ || true
+      - name: Upload report and diffs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-visual
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+      - name: Upload regenerated baselines
+        if: env.UPDATE == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-baselines
+          path: regenerated/visual.spec.ts-snapshots/
+          retention-days: 7
+
+  # Publish the production build (no SITE_TEST) to GitHub Pages after the gates pass on main.
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [test, lint, e2e]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Production build
+        run: npm run docs:build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .vitepress/dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # The @smoke subset against the live site (BASE_URL set, so no local server starts).
+  smoke:
+    name: Smoke against the live site
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BASE_URL: https://willcoliveira.github.io/ai-testing-handbook/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Playwright version
+        id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Cache browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-chromium-${{ steps.pw.outputs.version }}
+      - name: Install Chromium
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+      - name: Install system dependencies (browsers from cache)
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+      - name: Smoke tests on the deployed book
+        run: npx playwright test --grep @smoke --project=chromium
+      - name: Upload report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-smoke
           path: playwright-report/
           retention-days: 7

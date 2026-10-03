@@ -17,6 +17,38 @@ export const SRC_EXCLUDE = ["sources/**", "**/_TEMPLATE.md", "digests/*.draft.md
   "test-results/**", "playwright-report/**", "blob-report/**"];
 // reference tables: full width, no outline, tables scroll in their own box
 export const WIDE = ["sources.md", "tools/README.md", "labs/README.md", "learning-path/knowledge-matrix.md"];
+// SITE_TEST=1 (the visual tests only) builds one more page: the type specimen, at /specimen, with a
+// fixed sidebar of its own so its screenshots never move with the book's content. Production
+// builds (no SITE_TEST) keep SRC_EXCLUDE, the rewrites and the book sidebar exactly as they are.
+export const SPECIMEN = "tests/site/fixtures/specimen.md";
+export const SPECIMEN_SIDEBAR = [
+  { text: "Introduction", link: "/" },
+  { text: "Specimen part", link: "/practices/3-judging/", collapsed: false, items: [
+    { text: "Type specimen", link: "/specimen" },
+    { text: "A chapter whose label is long enough to wrap onto a second line", link: "/practices/3-judging/judge-calibration" },
+  ] },
+  { text: "A collapsed part", link: "/practices/", collapsed: true, items: [{ text: "Hidden chapter", link: "/practices/3-judging/llm-as-judge" }] },
+  { text: "Appendices", items: [{ text: "Sources register", link: "/sources" }] },
+];
+const REWRITES = {
+  "README.md": "index.md",
+  ":dir/README.md": ":dir/index.md",
+  "practices/:part/_part.md": "practices/:part/index.md",
+  "patterns/_part.md": "patterns/index.md",
+  "practices/_part.md": "practices/index.md",
+};
+export const isSiteTest = (env = process.env) => env.SITE_TEST === "1";
+// what SITE_TEST switches: the specimen is let back in past "tests/**", mapped to /specimen, and given its sidebar
+export function siteOptions(env = process.env, root = ROOT) {
+  const book = buildSidebar(root);
+  if (!isSiteTest(env)) return { srcExclude: SRC_EXCLUDE, rewrites: REWRITES, sidebar: book };
+  return {
+    srcExclude: SRC_EXCLUDE.map((p) => (p === "tests/**" ? "tests/**/!(specimen).md" : p)),
+    rewrites: { ...REWRITES, [SPECIMEN]: "specimen.md" },
+    sidebar: { "/specimen": SPECIMEN_SIDEBAR, "/": book },
+  };
+}
+const site = siteOptions();
 const DESCRIPTION = "Evals, guardrails, benchmarks and audits for LLM applications and agents: a sourced reference and a learning path for AI testing.";
 
 function data(name) {
@@ -36,14 +68,8 @@ export default defineConfig({
   base: BASE,
   cleanUrls: true,
   lastUpdated: false,
-  srcExclude: SRC_EXCLUDE,
-  rewrites: {
-    "README.md": "index.md",
-    ":dir/README.md": ":dir/index.md",
-    "practices/:part/_part.md": "practices/:part/index.md",
-    "patterns/_part.md": "patterns/index.md",
-    "practices/_part.md": "practices/index.md",
-  },
+  srcExclude: site.srcExclude,
+  rewrites: site.rewrites,
   sitemap: { hostname: SITE },
   markdown: {
     html: false,
@@ -85,7 +111,7 @@ export default defineConfig({
       { text: "Playbooks", link: "/how-to/" },
       { text: "Sources", link: "/sources" },
     ],
-    sidebar: buildSidebar(ROOT),
+    sidebar: site.sidebar,
     outline: { level: [2, 3], label: "On this page" },
     socialLinks: [{ icon: "github", link: REPO }],
     editLink: { pattern: `${REPO}/edit/main/:path`, text: "Edit this page on GitHub" },

@@ -55,6 +55,12 @@ export class BookPage {
   readonly firstTable: Locator;
   readonly stylesheet: Locator;
 
+  // chrome and content boxes for the visual tests
+  readonly navBar: Locator;
+  readonly localNav: Locator;
+  readonly sidebarPanel: Locator;
+  readonly article: Locator;
+
   constructor(page: Page) {
     this.page = page;
     this.html = page.locator('html');
@@ -88,6 +94,13 @@ export class BookPage {
 
     this.firstTable = this.main.locator('table').first();
     this.stylesheet = page.locator('link[rel~="stylesheet"][href*="/assets/"]').first();
+
+    this.navBar = page.getByRole('banner');
+    // the "Menu / On this page" bar below 1280px
+    this.localNav = page.locator('.VPLocalNav');
+    this.sidebarPanel = page.locator('aside.VPSidebar');
+    // meta line, the page body, See also, edit link and pager: everything the reader reads
+    this.article = page.locator('.VPDoc .content-container');
 
     this.sourceIdPlaceholder = page.getByRole('link', { name: 'A source id: every one is listed in the sources register' }).first();
   }
@@ -192,6 +205,25 @@ export class BookPage {
           };
         }),
       ));
+  }
+
+  /** Show the sidebar: always there from 960px, behind the Menu button below that. */
+  async showSidebar() {
+    await test.step('Show the sidebar', async () => {
+      // eslint-disable-next-line playwright/no-conditional-in-test -- below 960px the sidebar sits behind the Menu button
+      if (await this.menuButton.isVisible()) await this.openMenu();
+      await expect(this.sidebarPanel).toBeVisible();
+      await expect(this.sidebarPanel).toBeInViewport({ ratio: 1 });
+    });
+  }
+
+  /** Web fonts (the self-hosted serif) finished loading, so text renders in its final face. */
+  async expectFontsLoaded() {
+    await test.step('Verify the web fonts loaded', async () => {
+      await expect
+        .poll(() => this.page.evaluate(async () => (await document.fonts.ready).status), { message: 'document.fonts.status' })
+        .toBe('loaded');
+    });
   }
 
   async openMenu() {

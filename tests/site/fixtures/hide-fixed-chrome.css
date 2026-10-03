@@ -1,0 +1,4 @@
+/* Applied by tests/site/e2e/visual.spec.ts to the specimen content shot only. Fixed chrome floats
+   over a tall element shot (Playwright captures it beyond the viewport) and a mask would paint over
+   the article it covers, so it is hidden there; the nav bar has its own shots. */
+.VPNav, .VPLocalNav, .hb-progress { visibility: hidden !important; }

@@ -31,7 +31,13 @@ export default defineConfig({
   workers: isCI ? 2 : undefined,
 
   timeout: 30_000,
-  expect: { timeout: 5_000 },
+  expect: {
+    timeout: 5_000,
+    // Visual spec (tests/site/e2e/visual.spec.ts): element shots, so a small absolute pixel budget
+    // (a ratio over a big element could hide a missing rule or a 1px shift), CSS pixels on every
+    // device, no animations or caret.
+    toHaveScreenshot: { maxDiffPixels: 50, animations: 'disabled', caret: 'hide', scale: 'css' },
+  },
 
   // CI: line output, GitHub annotations and an HTML report uploaded as an artifact on failure.
   // Local: line output + an HTML report that only opens when something failed.
@@ -50,11 +56,14 @@ export default defineConfig({
 
   // PR set: chromium + mobile-chrome (`npm run test:e2e`).
   // Full set: all four, plus the every-page sweep tagged @full (`npm run test:e2e:full`, main and weekly).
+  // Visual set: the @visual spec on chromium, tablet and mobile-chrome against a SITE_TEST=1 build
+  // (`npm run test:visual`, Linux baselines from tests/site/Dockerfile); the other runs grep it out.
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } } },
     { name: 'mobile-chrome', use: { ...devices['Pixel 7'] } },
     { name: 'tablet', use: { ...devices['Desktop Chrome'], viewport: { width: 820, height: 1180 } } },
-    { name: 'mobile-safari', use: { ...devices['iPhone 15'] } },
+    // no WebKit baselines: the visual spec never runs here
+    { name: 'mobile-safari', use: { ...devices['iPhone 15'] }, testIgnore: /visual\.spec\.ts$/ },
   ],
 
   // The built site, served as GitHub Pages will serve it. Skipped when BASE_URL points elsewhere
