@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.11 (2026-10-03)
+
+- Refresh since 2026-09-30: six new sources (S387 to S392) including METR's Senate testimony on
+  agents defeating a test scorer, UK AISI's hardened environment for dangerous-capability evals
+  and Cohere's RCP-nDCG judge; Inspect AI 0.3.276, Langfuse v4.50.0, Petri 3.1.1 and DeepEval
+  4.2.8 recorded; ten bullets; `digests/2026-10-03.md`.
+
 ## 0.1.10 (2026-10-02)
 
 - Pattern `decision-model-triage-before-an-llm-judge`: a hosted and an open, self-hosted

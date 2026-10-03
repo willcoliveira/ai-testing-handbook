@@ -3,7 +3,7 @@ id: genai-tracing
 title: GenAI tracing
 area: 6-observability
 status: draft
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 sources: [S068, S071, S136, S137, S138, S139, S141, S323, S324, S327, S384]
 related: [online-evals-and-drift, redaction-in-telemetry, load-and-latency, agent-evals]
 ---
@@ -63,6 +63,7 @@ attributes:
 - **OpenAI, 2026-09:** the Agents SDK nests agent, generation, function, handoff and guardrail spans under a trace, links traces of one conversation with `group_id`, and accepts custom trace processors [S324].
 - **LangChain, 2026-09:** LangSmith treats a run as a span, binds runs to a trace id, caps a trace at 25,000 runs, and groups traces into threads with a `thread_id` [S327].
 - **OpenTelemetry, 2026-10:** MCP semantic conventions name spans `{mcp.method.name} {target}`, propagate trace context in `params._meta`, and set `error.type` when a tool result has `isError` [S384].
+- **OpenTelemetry, 2026-09:** the GenAI conventions added a `gen_ai.main_agent` resource entity (`id`, `name`, `description`) so a process identifies its top-level agent separately from subagents, which stay on span attributes; still Development status, no release [S136].
 
 ## Pitfalls
 1. **Treating Development names as stable.** A rename between convention releases leaves dashboards keyed on the old attribute blank; pin the instrumentation version and diff on upgrade [S136].

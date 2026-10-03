@@ -3,8 +3,8 @@ id: judge-calibration
 title: Judge calibration
 area: 3-judging
 status: draft
-last_reviewed: 2026-10-02
-sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320]
+last_reviewed: 2026-10-03
+sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320, S388, S391]
 related: [llm-as-judge, human-annotation, rubrics-and-pairwise, statistical-treatment-of-evals, non-determinism-and-pass-rates]
 ---
 
@@ -39,6 +39,8 @@ An uncalibrated judge is an unmeasured guess, and its errors are not symmetric. 
 - **Amazon, 2025-12:** the service card tells customers to establish an effectiveness score from "human judgements (with multiple judgements per test prompt)", and the Nova 2 report's image quality study was "performed by a third-party" in a single-blind design [S257][S255].
 - **arXiv, 2026-09:** auditor models degraded with batch size and invented findings, so calibrate a judge at the batch size you will run it at [S303].
 - **arXiv, 2026-09:** position bias, transitivity and pairwise agreement were dominated by pairs close in rank and correlated only weakly with ranking accuracy against gold; the authors propose rank-gap-conditional metrics, ideally against human rankings [S320].
+- **Cohere, 2026-09:** RCP-nDCG@10 has a calibrated AI judge grade every retrieved document with yes/no rubric questions and pairwise comparisons; in a blind study with 46 expert annotators over 289 contests it picked the system reviewers preferred 77 percent of the time, against 52 percent for nDCG on fixed relevance labels [S388].
+- **arXiv, 2026-10:** across six LLM novelty judges, telling the judge that reviewers found one idea novel flipped verdicts on over half of identical pairs and moved pairwise accuracy by more than 50 points, and two purpose-built novelty evaluators lost to the cheapest prompted baseline [S391].
 
 ## Pitfalls
 1. Raw agreement on imbalanced classes. With a 5% defect rate a judge that always passes scores 95% agreement and zero recall on defects [S052].
@@ -76,3 +78,5 @@ reads the item. See [decision-model-triage-before-an-llm-judge](../../patterns/d
 - [S255] Amazon Nova 2: Multimodal Reasoning and Generation Models, technical report and model card, Amazon AGI, 2025-12
 - [S303] When Auditors Fabricate: batch-size degradation and confident hallucination in LLM detection of planted document contamination, arXiv 2609.09696, 2026-09-09
 - [S320] Pair Difficulty Matters: rethinking pairwise LLM-as-a-judge evaluation and consistency, arXiv 2609.37577, 2026-09-29
+- [S388] RCP-nDCG@10: a more complete way to measure retrieval relevance, Cohere, 2026-09-30
+- [S391] Old ideas, novel problems: the instability of LLM-based novelty evaluation, arXiv 2610.02022, 2026-10-01

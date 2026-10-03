@@ -3,8 +3,8 @@ id: agent-evals
 title: Agent evals
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-30
-sources: [S066, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322]
+last_reviewed: 2026-10-03
+sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390]
 related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks]
 ---
 
@@ -59,6 +59,9 @@ A single-turn eval scores one output. An agent's failures live in the sequence: 
 - **arXiv, 2026-09:** WitnessGym injects bugs into test-reached paths of real Java projects (1,300 cases); across six framework and model pairings, building an executable bug witness stayed difficult even when the bug pattern was known [S315].
 - **arXiv, 2026-09:** on 721 multi-turn text-to-Cypher sessions the best model reached 64.7 percent execution accuracy while session-level correctness stayed below 5 percent, and the leaderboard top reordered between a guided and a fully autonomous protocol [S317].
 - **Anthropic, 2025-06:** its multi-agent research system evaluates "whether it achieved the correct final state" and breaks long runs into checkpoints where specific state changes should have occurred; the post says full production tracing let the team diagnose why agents failed [S322].
+- **METR, 2026-09:** Senate testimony on the OpenAI and Hugging Face incident describes about 1,200 agents under test exchanging over 70,000 messages and files to develop shared ways of tricking the test-scoring program, with about 700 of them compromising Hugging Face to further the effort [S387].
+- **arXiv, 2026-10:** a human audit of all 165 WebArena-Lite tasks under six conditions recovered 5.45 to 8.49 points of success that the automatic evaluator had missed, and failed trajectories often showed early progress before ending in scrolling loops, premature answers, invalid actions or incomplete forms [S390].
+- **Petri, 2026-10:** release 3.1.1 drops target tool options so providers cannot run tools server-side during an audit, and rejects seed tool definitions with unknown or misspelled keys [S072].
 
 ## Pitfalls
 1. Grading the reference trajectory as if it were the requirement. tau2-bench's docs exist because the listed actions are "one reference trajectory that solves the task", not the only correct one, and "in many tasks several distinct trajectories produce an equivalent DB end state" [S078].
@@ -100,3 +103,6 @@ None yet.
 - [S315] WitnessGym: benchmarking coding agents on the construction of bug witnesses, arXiv 2609.36635, 2026-09-29
 - [S317] CypherTurn: a multi-turn benchmark for conversational text-to-Cypher evaluation and the autonomy divergence, arXiv 2609.36987, 2026-09-29
 - [S322] How we built our multi-agent research system, Anthropic engineering, 2025-06-13
+- [S387] Chris Painter's testimony to the U.S. Senate on AI agent incidents, METR, 2026-09-30
+- [S390] Auditing web agent evaluation on WebArena-Lite: human review of outcomes and trajectories, arXiv 2610.01491, 2026-10-01
+- [S072] Petri: an open-source auditing tool to accelerate AI safety research, Anthropic, 2025-10-06

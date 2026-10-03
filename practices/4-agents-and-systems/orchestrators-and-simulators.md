@@ -3,8 +3,8 @@ id: orchestrators-and-simulators
 title: Orchestrators and simulators
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-30
-sources: [S072, S073, S078, S079, S093, S094, S095, S325, S326]
+last_reviewed: 2026-10-03
+sources: [S072, S073, S078, S079, S093, S094, S095, S325, S326, S392]
 related: [agent-evals, voice-agent-testing, non-determinism-and-pass-rates, red-teaming, ci-gates-for-llm-apps]
 ---
 
@@ -43,6 +43,7 @@ A scripted multi-turn test breaks the moment the agent rephrases. A simulated us
 - **Coval, living docs:** "Run thousands of realistic conversations" before launch, with "human reviewers whose feedback retrains the AI judge" [S095].
 - **Anthropic, 2026-09:** in the Claude Agent SDK a subagent's intermediate tool calls stay inside it and only its final message returns to the parent; transcripts are stored per subagent, and depth, concurrency and budget are capped [S326].
 - **LangChain, 2026-09:** LangGraph checkpoints graph state at each super-step under a thread id, lists the history, and can re-run from a prior checkpoint, re-executing later nodes including LLM and API calls [S325].
+- **arXiv, 2026-10:** Argo-Bench grades data agents by the simulated consequences of the actions they file against a 235-table warehouse with ground truth withheld, with an executable reference solution per task; the best of 14 models averaged 59.5 and scored 95 or more on 34.8 percent of tasks [S392].
 
 ## Pitfalls
 1. Gating on a simulator you have not measured. A simulator can leave zero scenarios reliably stable after days of tuning, and scenarios at 100 percent can regress the moment the team tunes its own prompt.
@@ -64,3 +65,4 @@ None yet.
 - [S095] Coval documentation, Coval, living.
 - [S326] Subagents in the SDK (Claude Agent SDK), Anthropic, living
 - [S325] Checkpointers (LangGraph), LangChain, living
+- [S392] Argo-Bench: evaluating data agents on enterprise-scale workflows, arXiv 2610.02122, 2026-10-01
