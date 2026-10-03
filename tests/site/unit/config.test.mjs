@@ -27,7 +27,7 @@ test("the five rewrites", () => {
 });
 
 test("srcExclude list", () => {
-  assert.deepEqual(SRC_EXCLUDE, ["sources/**", "**/_TEMPLATE.md", "digests/*.draft.md", ".claude/**", "node_modules/**", "scripts/**", "tests/**"]);
+  assert.deepEqual(SRC_EXCLUDE, ["sources/**", "**/_TEMPLATE.md", "digests/*.draft.md", ".claude/**", "node_modules/**", "scripts/**", "tests/**", "test-results/**", "playwright-report/**", "blob-report/**"]);
   assert.deepEqual(config.srcExclude, SRC_EXCLUDE);
 });
 

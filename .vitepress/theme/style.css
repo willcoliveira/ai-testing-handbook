@@ -185,6 +185,11 @@ body { background: var(--hb-bg); color: var(--hb-fg); }
   .VPDocFooter .prev-next { display: flex; flex-direction: column; gap: 12px; }
   .VPDocFooter .pager { width: 100%; }
 }
+/* VitePress bleeds code blocks by -24px below 640px; with the 16px gutter above that is 8px of
+   sideways page scroll (found by tests/site/e2e/layout.spec.ts) */
+@media (max-width: 639px) {
+  .vp-doc div[class*="language-"], .vp-block { margin-left: -16px; margin-right: -16px; }
+}
 
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 

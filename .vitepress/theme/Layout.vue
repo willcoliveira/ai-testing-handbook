@@ -2,8 +2,8 @@
 // Meta line and "See also" (both from transformPageData), a reading-progress line,
 // ← / → for previous / next, and a plain 404.
 import DefaultTheme from "vitepress/theme-without-fonts";
-import { useData, withBase } from "vitepress";
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { useData, useRouter, withBase } from "vitepress";
+import { computed, nextTick, onMounted, onUnmounted, ref } from "vue";
 
 const { Layout } = DefaultTheme;
 const { page } = useData();
@@ -41,6 +41,26 @@ function onKey(e) {
   e.preventDefault();
   a.click();
 }
+
+// After a client-side navigation VitePress scrolls only the window to the #hash. A register row
+// sits inside its table's own scroll box on wide pages, so it stayed out of view; bring it in
+// after VitePress's own scroll (found by tests/site/e2e/citations.spec.ts).
+function inScrollBox(el) {
+  for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+    if (p.scrollHeight > p.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(p).overflowY)) return true;
+  }
+  return false;
+}
+const router = useRouter();
+const afterRouteChange = router.onAfterRouteChange;
+router.onAfterRouteChange = async (href) => {
+  await afterRouteChange?.(href);
+  if (!location.hash) return;
+  await nextTick();
+  let target = null;
+  try { target = document.getElementById(decodeURIComponent(location.hash).slice(1)); } catch { return; }
+  if (target && inScrollBox(target)) requestAnimationFrame(() => requestAnimationFrame(() => target.scrollIntoView({ block: "start" })));
+};
 
 onMounted(() => {
   window.addEventListener("scroll", onScroll, { passive: true });

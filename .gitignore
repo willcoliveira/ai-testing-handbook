@@ -6,3 +6,8 @@ digests/*.draft.md
 .vitepress/cache
 .vitepress/dist
 .vitepress/data/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
