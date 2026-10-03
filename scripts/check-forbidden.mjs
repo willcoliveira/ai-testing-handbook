@@ -53,13 +53,15 @@ const ALLOW_TOKENS = new Set(existsSync(join(root, "privacy/allowlist.txt"))
 const dirArg = process.argv.indexOf("--dir");
 const scanDir = dirArg > 0 ? process.argv[dirArg + 1] : null;
 if (dirArg > 0 && (!scanDir || !existsSync(scanDir))) { console.error(`--dir: no such directory ${scanDir || ""}`); process.exit(2); }
-const files = new Set(scanDir ? walk(resolve(root, scanDir)).map((p) => relative(root, p)) : tracked());
-if (!scanDir && existsSync(join(root, "digests"))) for (const f of readdirSync(join(root, "digests"))) files.add("digests/" + f);
+// label (forward slashes, for rules and output) -> absolute path. Absolute paths are kept because
+// relative() across Windows drives (repo on D:, temp dir on C:) returns a path join() cannot rebuild.
+const label = (abs) => relative(root, abs).split("\\").join("/");
+const files = new Map((scanDir ? walk(resolve(root, scanDir)) : tracked().map((f) => join(root, f))).map((abs) => [label(abs), abs]));
+if (!scanDir && existsSync(join(root, "digests"))) for (const f of readdirSync(join(root, "digests"))) files.set("digests/" + f, join(root, "digests", f));
 const ALLOW = [/noreply@anthropic\.com/i, /^privacy\/forbidden-strings/, /^scripts\/check-forbidden\.mjs$/, /^package(-lock)?\.json$/];
 let hits = 0, scanned = 0;
-for (const f of files) {
+for (const [f, p] of files) {
   if (ALLOW.some((a) => a.test(f))) continue;
-  const p = join(root, f);
   if (!existsSync(p) || statSync(p).isDirectory()) continue;
   if (/\.(png|jpg|jpeg|gif|pdf|zip|woff2?)$/i.test(f)) continue;
   if (scanDir && /\.css$/i.test(f)) continue; // built theme styles carry no content
