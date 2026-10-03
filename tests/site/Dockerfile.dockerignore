@@ -1,0 +1,15 @@
+# Build context for tests/site/Dockerfile (BuildKit reads <Dockerfile>.dockerignore).
+node_modules
+.vitepress/dist
+.vitepress/cache
+.vitepress/data
+**/_part.md
+playwright-report
+test-results
+blob-report
+.git
+.env
+.env.*
+.DS_Store
+privacy/forbidden-strings.txt
+digests/*.draft.md

@@ -1,0 +1,18 @@
+# Monthly, one grouped PR per ecosystem. A bump of @playwright/test must also bump the image tag in
+# tests/site/Dockerfile (the Site lint job fails until it does) and usually the visual baselines.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      npm:
+        patterns: ["*"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      github-actions:
+        patterns: ["*"]

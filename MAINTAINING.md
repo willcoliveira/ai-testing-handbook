@@ -109,6 +109,52 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   add any new placeholder `npm run check` reports there (never a real name).
 - What runs where (`.github/workflows/site.yml`): every PR runs the static gates (Linux and Windows),
   the `lint` job (no browsers) and the `e2e` job (PR set, Chromium only, browsers cached per
-  Playwright version). A push to `main` and the weekly schedule (Mondays) run the `full` job: all four
+  Playwright version); a push to `main` runs `e2e` too, because `deploy` waits for it. A push to
+  `main` and the weekly schedule (Mondays) run the `full` job: all four
   projects in Chromium and WebKit, including the every-page sweep. A failing browser job uploads the
   HTML report as an artifact.
+- Type specimen: `tests/site/fixtures/specimen.md` holds every element the theme styles (headings,
+  lists, citations, the `[S0nn]` text, a normal and a wide table, code, a blockquote, the meta line
+  and See also). It is built only with `SITE_TEST=1 npm run docs:build`, at `/specimen`, with a fixed
+  sidebar of its own (`SPECIMEN_SIDEBAR` in `.vitepress/config.mjs`), so its screenshots never move
+  with the content. A plain `npm run docs:build` (and the deployed site, sitemap and search index)
+  has no specimen; `tests/site/unit/site-test.test.mjs` holds that switch. With `SITE_TEST=1`,
+  `post-build.mjs` lets only the specimen sit outside the book sidebar.
+- Visual tests: `tests/site/e2e/visual.spec.ts` (tag `@visual`) takes element screenshots of the
+  specimen and of the nav bar, sidebar and pager (page body masked) in light and dark, on `chromium`,
+  `tablet` and `mobile-chrome` (never WebKit). Budget: `maxDiffPixels: 50`, animations off
+  (`playwright.config.ts`). `test:e2e`, `test:e2e:full` and `@smoke` runs leave it out;
+  `npm run test:visual` builds with `SITE_TEST=1` and runs it (POSIX shell syntax, so Linux, macOS
+  or the Docker image, not Windows `cmd`). Baselines
+  (`tests/site/e2e/visual.spec.ts-snapshots/*-linux.png`, 24 files) are Linux-only, so run and
+  regenerate them in the Playwright image, from the repository root:
+  ```
+  docker build --platform linux/amd64 -f tests/site/Dockerfile -t hb-visual .
+  docker run --rm --platform linux/amd64 --init --ipc=host hb-visual            # check
+  docker rm -f hb-visual-run 2>/dev/null
+  docker run --platform linux/amd64 --name hb-visual-run --init --ipc=host hb-visual \
+    npm run test:visual -- --update-snapshots                                   # regenerate
+  docker cp hb-visual-run:/app/tests/site/e2e/visual.spec.ts-snapshots tests/site/e2e/
+  docker rm hb-visual-run
+  ```
+  Rebuild the image after any change (it copies the repository). A failed check leaves the diffs in
+  the container's `/app/test-results` (`docker cp` them out, or drop `--rm`). Review the new PNGs,
+  then commit them by hand.
+- Baselines from CI instead: Actions > Site > Run workflow, tick `update_baselines`. The `visual` job
+  regenerates them in the same image and uploads the `visual-baselines` artifact; download it, copy
+  the PNGs into `tests/site/e2e/visual.spec.ts-snapshots/` and commit them by hand. Nothing in the
+  workflow commits or pushes. With no committed baselines the job fails with "no baselines: run the
+  update-baselines dispatch".
+- When the visual job runs: on a PR only when it changes `.vitepress/**`, `tests/site/**`,
+  `playwright.config.ts` or `package*.json` (the `changes` job), and on a dispatch. Content-only PRs,
+  refreshes included, skip it while the other site jobs still run. A failing run uploads the report
+  and diff images (`playwright-report-visual`).
+- Dockerfile tag: the `FROM mcr.microsoft.com/playwright:vX.Y.Z-noble` tag in `tests/site/Dockerfile`
+  must equal the installed `@playwright/test` version; the `lint` job fails until it does. Bump both
+  together, then regenerate the baselines.
+- Deploy: a push to `main` runs `deploy` after `test`, `lint` and `e2e` pass: a production build
+  (no `SITE_TEST`) uploaded with `upload-pages-artifact` and published with `deploy-pages`
+  (Settings > Pages > Source: GitHub Actions). Then `smoke` runs the `@smoke` tests on Chromium
+  against the live URL (`BASE_URL` set, no local server) and uploads its report on failure.
+- Dependabot (`.github/dependabot.yml`): npm and GitHub Actions, monthly, one grouped PR each. A
+  Playwright bump needs the Dockerfile tag and usually new baselines in the same PR.
