@@ -11,13 +11,27 @@ export function linkOf(rel) {
   return "/" + rel.replace(/\.md$/, "");
 }
 
+// Sidebar and prev/next labels stay within two lines: a title over 46 characters loses its
+// parenthetical detail, then its subtitle after ": ", then its last ", " clause. The page H1 keeps
+// the full title; style.css clamps anything still longer to two lines.
+export function shortLabel(t, max = 46) {
+  if (t.length <= max) return t;
+  let s = t.replace(/\s*\(([^()]*)\)/, (m, inner) => (inner.includes(": ") ? ` (${inner.split(": ")[0]})` : m));
+  if (s.length > max) s = s.replace(/\s*\([^()]*\)/, "");
+  const c = s.indexOf(": ");
+  if (s.length > max && c >= 12) s = s.slice(0, c);
+  const k = s.lastIndexOf(", ");
+  if (s.length > max && k >= 12) s = s.slice(0, k);
+  return s;
+}
+
 const LEARNING_TAIL = ["knowledge-matrix.md", "interview-questions.md", "ai-qa-requirements.md", "resources.md"];
 const APPENDICES = [["Labs", "labs"], ["Tools", "tools"], ["Benchmarks", "benchmarks"], ["Datasets", "datasets"], ["Training", "training"]];
 
 export function buildSidebar(root) {
   const page = (rel, text) => {
     if (!existsSync(join(root, rel))) throw new Error(`book: ${rel} does not exist`);
-    return { text: text || titleOf(join(root, rel)), link: linkOf(rel) };
+    return { text: text || shortLabel(titleOf(join(root, rel))), link: linkOf(rel) };
   };
   // a folder: README first, then its files (by name unless order is given)
   const folder = (text, dir, opts = {}) => {

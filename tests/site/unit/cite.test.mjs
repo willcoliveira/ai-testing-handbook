@@ -52,3 +52,9 @@ test("sources.md register rows get id=sNNN", () => {
   assert.match(html, /<tr id="s055">/);
   assert.doesNotMatch(render(table, "other.md"), /<tr id=/);
 });
+
+test("the `[S0nn]` placeholder links to the register, and to its first row on the register", () => {
+  assert.match(render("Cite it as `[S0nn]`."), /<a class="cite-ref" href="\/ai-testing-handbook\/sources" aria-label="[^"]+"><code>\[S0nn\]<\/code><\/a>/);
+  assert.match(render("Every `[S0nn]` resolves here.", "sources.md"), /<a class="cite-ref" href="\/ai-testing-handbook\/sources#s001"/);
+  assert.doesNotMatch(render("`other code`"), /cite-ref/);
+});

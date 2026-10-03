@@ -114,6 +114,9 @@ body { background: var(--hb-bg); color: var(--hb-fg); }
 /* citations: small grey labels, black on hover or focus, tooltip from data-tip */
 .vp-doc a.cite { position: relative; font-family: var(--hb-font-ui); font-size: 0.72em; color: var(--hb-muted); text-decoration: none; padding: 0 1px; white-space: nowrap; }
 .vp-doc a.cite:hover, .vp-doc a.cite:focus-visible { color: var(--hb-fg); text-decoration: underline; }
+/* the `[S0nn]` placeholder: still code, but a link to the register */
+.vp-doc a.cite-ref { text-decoration: underline; text-decoration-color: var(--hb-muted); }
+.vp-doc a.cite-ref:hover, .vp-doc a.cite-ref:focus-visible { text-decoration-color: var(--hb-fg); }
 .vp-doc a.cite:hover::after, .vp-doc a.cite:focus-visible::after {
   content: attr(data-tip);
   position: absolute; left: 0; bottom: calc(100% + 6px); z-index: 30;
@@ -154,6 +157,8 @@ body { background: var(--hb-bg); color: var(--hb-fg); }
 /* sidebar and nav: sans, grey when inactive, black when active */
 .VPSidebar { border-right: 1px solid var(--hb-rule); }
 .VPSidebarItem .text { color: var(--hb-muted); }
+/* every sidebar entry at most two lines; book.mjs shortens long titles first */
+.VPSidebarItem .text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 .VPSidebarItem.level-0 > .item .text { color: var(--hb-fg); font-weight: 600; }
 .VPSidebarItem.is-active > .item .text { color: var(--hb-fg); font-weight: 600; }
 .VPSidebarItem.is-active > .item .indicator { background-color: var(--hb-fg); }

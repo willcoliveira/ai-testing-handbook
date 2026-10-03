@@ -3,6 +3,7 @@
 // register throws. On sources.md each register row gets id="sNNN" so the anchors resolve.
 const CITE = /\[(S\d{3})\]/g;
 const HAS = /\[S\d{3}\]/;
+const PLACEHOLDER = /^\[S0nn\]$/;
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export function citeAnchor(id, src, base = "/") {
@@ -21,6 +22,12 @@ export default function citePlugin(md, { sources, base = "/", registerPage = "so
         if (m) tok.attrSet("id", m[0].toLowerCase());
       }
       if (tok.type !== "inline" || !tok.children) continue;
+      // the placeholder `[S0nn]` (any source id) links to the register; on the register, to its first row
+      for (const child of tok.children) {
+        if (child.type !== "code_inline" || !PLACEHOLDER.test(child.content)) continue;
+        child.type = "html_inline";
+        child.content = `<a class="cite-ref" href="${base}sources${page === registerPage ? "#s001" : ""}" aria-label="A source id: every one is listed in the sources register"><code>${esc(child.content)}</code></a>`;
+      }
       const kids = [];
       let inLink = 0;
       for (const child of tok.children) {

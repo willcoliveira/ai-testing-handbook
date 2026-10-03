@@ -74,3 +74,18 @@ test("negative fixture: a learning-path file with no place in the order throws",
     assert.throws(() => buildSidebar(r.dir), /learning-path\/stray\.md/);
   } finally { r.done(); }
 });
+
+test("shortLabel: long titles fit two sidebar lines, short ones are untouched", async () => {
+  const { shortLabel } = await import("../../../.vitepress/book.mjs");
+  assert.equal(shortLabel("Phase 3: Context, memory, orchestration"), "Phase 3: Context, memory, orchestration");
+  assert.equal(shortLabel("AI QA requirements: what the roles ask for, and how to meet them"), "AI QA requirements");
+  assert.equal(shortLabel("Interview questions for AI QA roles, with answers"), "Interview questions for AI QA roles");
+  assert.equal(shortLabel("Open evaluation ecosystem (Hugging Face, EleutherAI, AI2)"), "Open evaluation ecosystem");
+  assert.equal(shortLabel("Digest 2026-09-28 (second run: areas 1, 2, 3, 4, 6, 7 and the vendor pages)"), "Digest 2026-09-28 (second run)");
+});
+
+test("real repo: every sidebar label is at most 46 characters, or has no place to cut", () => {
+  const texts = (items) => items.flatMap((i) => [i.text, ...(i.items ? texts(i.items) : [])]);
+  const long = texts(buildSidebar(ROOT)).filter((t) => t.length > 46);
+  for (const t of long) assert.ok(!/: |, |\(/.test(t), `could be shortened: ${t}`);
+});
