@@ -4,6 +4,7 @@ Evals, guardrails, benchmarks and audits for LLM applications and agents. A sour
 how AI models and agents are evaluated and tested, and a learning path for breaking into AI
 testing. Every claim about what a lab, a tool or a benchmark does carries a
 dated public source. The author's own production work appears as anonymised patterns.
+Read it as a book at <https://willcoliveira.github.io/ai-testing-handbook/>.
 
 Maintained by [William Oliveira](https://github.com/willcoliveira). Sits beside
 [qualiow-exploratory-testing-skills](https://github.com/willcoliveira/qualiow-exploratory-testing-skills)

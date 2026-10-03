@@ -2,3 +2,7 @@ node_modules/
 .DS_Store
 privacy/forbidden-strings.txt
 digests/*.draft.md
+**/_part.md
+.vitepress/cache
+.vitepress/dist
+.vitepress/data/
