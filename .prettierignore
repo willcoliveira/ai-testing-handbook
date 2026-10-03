@@ -1,0 +1,10 @@
+# Prettier formats the browser tests and their config only. Content Markdown, the site code
+# (.vitepress, .mjs), workflows and generated agent skills keep their own formatting.
+/*
+!/tests/
+/tests/*
+!/tests/site/
+/tests/site/*
+!/tests/site/e2e/
+!/tests/site/pages/
+!/playwright.config.ts

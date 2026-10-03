@@ -12,7 +12,9 @@ import linksPlugin, { REPO } from "./plugins/links.mjs";
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const BASE = "/ai-testing-handbook/";
 export const SITE = `https://willcoliveira.github.io${BASE}`;
-export const SRC_EXCLUDE = ["sources/**", "**/_TEMPLATE.md", "digests/*.draft.md", ".claude/**", "node_modules/**", "scripts/**", "tests/**"];
+export const SRC_EXCLUDE = ["sources/**", "**/_TEMPLATE.md", "digests/*.draft.md", ".claude/**", "node_modules/**", "scripts/**", "tests/**",
+  // Playwright output (error-context.md) would otherwise build as pages; found by tests/site/e2e after a failed run
+  "test-results/**", "playwright-report/**", "blob-report/**"];
 // reference tables: full width, no outline, tables scroll in their own box
 export const WIDE = ["sources.md", "tools/README.md", "labs/README.md", "learning-path/knowledge-matrix.md"];
 const DESCRIPTION = "Evals, guardrails, benchmarks and audits for LLM applications and agents: a sourced reference and a learning path for AI testing.";

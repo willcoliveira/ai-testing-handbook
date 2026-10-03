@@ -22,6 +22,9 @@ export function shortLabel(t, max = 46) {
   if (s.length > max && c >= 12) s = s.slice(0, c);
   const k = s.lastIndexOf(", ");
   if (s.length > max && k >= 12) s = s.slice(0, k);
+  // no parenthesis, colon or comma to cut at: end at a word break (found by
+  // tests/site/e2e/layout.spec.ts, datasets/catalogue.md needed three lines)
+  if (s.length > max) { const w = s.lastIndexOf(" ", max - 1); s = s.slice(0, w >= 12 ? w : max - 1) + "…"; }
   return s;
 }
 
@@ -69,12 +72,14 @@ export function buildSidebar(root) {
     { text: "Practices", link: "/practices/", collapsed: false, items: parts },
     folder("Playbooks", "how-to", { collapsed: true }),
     { text: "Patterns", link: "/patterns/", collapsed: true, items: mdFiles(join(root, "patterns")).map((f) => page(`patterns/${f}`)) },
-    { text: "Appendices", collapsed: false, items: [
+    // no `collapsed` on a group without a link: VitePress would nest a caret button inside the
+    // row's own role="button" (axe nested-interactive, found by tests/site/e2e/a11y.spec.ts)
+    { text: "Appendices", items: [
       ...APPENDICES.map(([t, d]) => folder(t, d)),
       page("GLOSSARY.md", "Glossary"),
       page("sources.md", "Sources register"),
     ] },
-    { text: "About", collapsed: false, items: [
+    { text: "About", items: [
       page("ROADMAP.md", "Roadmap"),
       page("CHANGELOG.md", "Changelog"),
       { text: "Digests", link: "/digests/", collapsed: true, items: digests.map((f) => page(`digests/${f}`)) },

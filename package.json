@@ -15,13 +15,33 @@
     "docs:dev": "node .vitepress/gen.mjs && vitepress dev",
     "docs:build": "node .vitepress/gen.mjs && vitepress build",
     "docs:preview": "node .vitepress/gen.mjs && vitepress preview",
+    "test:e2e": "playwright test --project=chromium --project=mobile-chrome --grep-invert @full",
+    "test:e2e:full": "playwright test",
+    "report": "playwright show-report",
+    "lint": "eslint .",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "typecheck": "tsc --noEmit",
+    "pw:setup": "playwright install chromium webkit",
+    "skills:sync": "wico-playwright-agent-skills init --platforms claude --packs core,templates --project-name ai-testing-handbook --base-url http://localhost:4173/ai-testing-handbook/ --test-dir tests/site/e2e --page-objects-dir tests/site/pages --fixture-import-path none --yes --force",
+    "skills:check": "npm run skills:sync --silent && git diff --exit-code --stat -- .claude/skills/playwright-e2e",
     "test:site": "npm run docs:build && node --test \"tests/site/unit/*.test.mjs\" && node tests/site/post-build.mjs"
   },
   "license": "MIT",
   "author": "William Oliveira",
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@eslint/js": "10.0.1",
     "@fontsource/source-serif-4": "5.3.0",
-    "vitepress": "1.6.4"
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.19.13",
+    "eslint": "10.10.0",
+    "eslint-plugin-playwright": "2.11.0",
+    "prettier": "3.9.6",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.0",
+    "vitepress": "1.6.4",
+    "wico-playwright-agent-skills": "2.0.0"
   },
   "overrides": {
     "vite": "6.4.3"
