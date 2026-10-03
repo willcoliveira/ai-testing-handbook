@@ -35,14 +35,14 @@
     "@eslint/js": "10.0.1",
     "@fontsource/source-serif-4": "5.3.0",
     "@playwright/test": "1.63.0",
-    "@types/node": "22.19.13",
-    "eslint": "10.10.0",
-    "eslint-plugin-playwright": "2.11.0",
-    "prettier": "3.9.6",
-    "typescript": "5.9.3",
-    "typescript-eslint": "8.70.0",
+    "@types/node": "26.6.3",
+    "eslint": "10.11.0",
+    "eslint-plugin-playwright": "2.12.0",
+    "prettier": "3.9.9",
+    "typescript": "7.0.2",
+    "typescript-eslint": "8.71.0",
     "vitepress": "1.6.4",
-    "wico-playwright-agent-skills": "2.0.0"
+    "wico-playwright-agent-skills": "2.4.0"
   },
   "overrides": {
     "vite": "6.4.3"
