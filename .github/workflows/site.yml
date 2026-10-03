@@ -1,0 +1,36 @@
+name: Site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Static gates on Linux and Windows, so contributors on either can build and check the book.
+  # Stage C adds the browser, visual and deploy jobs.
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Dependency advisories
+        run: npm audit --audit-level=moderate
+      - name: Build, unit tests, post-build checks
+        run: npm run test:site
+      - name: Repository scripts (forbidden strings, sources)
+        run: |
+          node scripts/check-forbidden.mjs
+          node scripts/check-sources.mjs
+        env:
+          CI: "1"

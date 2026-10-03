@@ -82,3 +82,8 @@ VitePress reads the Markdown files in place; nothing in the content is written f
 - Privacy: `tests/site/post-build.mjs` runs `check-forbidden --dir .vitepress/dist` on the built
   HTML. In CI only the example list is present (the real list is gitignored), so that check is fully
   effective only locally and in the pre-commit hook. Nothing new is exposed: the repository is public.
+- Windows: CI builds and tests the site on Linux and Windows (`.github/workflows/site.yml`).
+  `.gitattributes` keeps LF line endings and the parsers in `.vitepress/read.mjs` accept CRLF.
+- Dependencies: `package.json` overrides Vite to 6.4.3, because VitePress 1.6.4 ships Vite 5, which
+  has dev-server advisories (one high, Windows paths) with no fix in Vite 5. CI fails on any
+  moderate or higher advisory. Drop the override once a VitePress release depends on a fixed Vite.

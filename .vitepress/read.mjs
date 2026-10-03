@@ -1,10 +1,14 @@
 // Readers shared by gen, book and config: frontmatter, titles, TAXONOMY, the sources register.
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { join, basename } from "node:path";
+
+// Windows checkouts and editors may write CRLF; every parser sees LF only.
+export const lf = (text) => text.replace(/\r\n?/g, "\n");
 
 // The handbook's frontmatter is flat `key: value` lines, the same shape check-sources.mjs reads.
 // Not strict YAML: a title may contain a colon. Lists [a, b], booleans and "quoted" strings.
 export function parseFlat(block) {
+  block = lf(block);
   const fm = {};
   for (const line of block.split("\n")) {
     const k = line.match(/^([A-Za-z_]+):\s*(.*)$/);
@@ -18,17 +22,18 @@ export function parseFlat(block) {
 }
 
 export function frontmatter(text) {
+  text = lf(text);
   const m = text.match(/^---\n([\s\S]*?)\n---/);
   return m ? parseFlat(m[1]) : {};
 }
 
 // frontmatter title, else the first H1, else the file name
 export function titleOf(path) {
-  const text = readFileSync(path, "utf8");
+  const text = lf(readFileSync(path, "utf8"));
   const fm = frontmatter(text);
   if (fm.title) return fm.title;
   const h = text.replace(/^---\n[\s\S]*?\n---\n/, "").match(/^# (.+)$/m);
-  return h ? h[1].trim() : path.split("/").pop().replace(/\.md$/, "");
+  return h ? h[1].trim() : basename(path, ".md");
 }
 
 // .md files directly in dir, sorted, without _* files
@@ -48,6 +53,7 @@ export const roman = (n) => ROMAN[n] || String(n);
 
 // TAXONOMY.md: areas in order, each with name, question, raw table rows and practice paths
 export function parseTaxonomy(text) {
+  text = lf(text);
   const areas = [];
   let cur = null;
   for (const line of text.split("\n")) {
@@ -63,6 +69,7 @@ export function parseTaxonomy(text) {
 
 // sources.md register rows: id -> { title, publisher, date, url }
 export function parseSources(text) {
+  text = lf(text);
   const out = {};
   for (const line of text.split("\n")) {
     const m = line.match(/^\|\s*(S\d{3})\s*\|(.*)$/);
