@@ -4,14 +4,23 @@
   "description": "Evals, guardrails, benchmarks and audits for LLM applications and agents: a sourced reference and a learning path for AI testing.",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": { "node": ">=22.20" },
   "scripts": {
     "check": "node scripts/check-forbidden.mjs && node scripts/check-sources.mjs && node scripts/check-links.mjs --report-only",
     "check:forbidden": "node scripts/check-forbidden.mjs",
     "check:sources": "node scripts/check-sources.mjs",
     "check:links": "node scripts/check-links.mjs",
-    "check:balance": "node scripts/check-balance.mjs"
+    "check:balance": "node scripts/check-balance.mjs",
+    "docs:gen": "node .vitepress/gen.mjs",
+    "docs:dev": "node .vitepress/gen.mjs && vitepress dev",
+    "docs:build": "node .vitepress/gen.mjs && vitepress build",
+    "docs:preview": "node .vitepress/gen.mjs && vitepress preview",
+    "test:site": "npm run docs:build && node --test \"tests/site/unit/*.test.mjs\" && node tests/site/post-build.mjs"
   },
   "license": "MIT",
-  "author": "William Oliveira"
+  "author": "William Oliveira",
+  "devDependencies": {
+    "@fontsource/source-serif-4": "5.3.0",
+    "vitepress": "1.6.4"
+  }
 }

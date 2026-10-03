@@ -1,9 +1,10 @@
-// Scans every tracked file (plus digests/) for forbidden strings.
+// Scans every tracked file (plus digests/) for forbidden strings; --dir <path> scans that
+// directory instead (the built site).
 // Reads privacy/forbidden-strings.example.txt always, and privacy/forbidden-strings.txt
 // unless CI=1. Exits 1 on any hit. Refuses to run if the real list is tracked by git.
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { execSync } from "node:child_process";
-import { join, relative } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 const root = process.cwd();
 const REAL = join(root, "privacy/forbidden-strings.txt");
@@ -49,8 +50,11 @@ const rules = [...loadList(EXAMPLE), ...(process.env.CI ? [] : loadList(REAL))];
 const ALLOW_TOKENS = new Set(existsSync(join(root, "privacy/allowlist.txt"))
   ? readFileSync(join(root, "privacy/allowlist.txt"), "utf8").split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"))
   : []);
-const files = new Set(tracked());
-if (existsSync(join(root, "digests"))) for (const f of readdirSync(join(root, "digests"))) files.add("digests/" + f);
+const dirArg = process.argv.indexOf("--dir");
+const scanDir = dirArg > 0 ? process.argv[dirArg + 1] : null;
+if (dirArg > 0 && (!scanDir || !existsSync(scanDir))) { console.error(`--dir: no such directory ${scanDir || ""}`); process.exit(2); }
+const files = new Set(scanDir ? walk(resolve(root, scanDir)).map((p) => relative(root, p)) : tracked());
+if (!scanDir && existsSync(join(root, "digests"))) for (const f of readdirSync(join(root, "digests"))) files.add("digests/" + f);
 const ALLOW = [/noreply@anthropic\.com/i, /^privacy\/forbidden-strings/, /^scripts\/check-forbidden\.mjs$/, /^package(-lock)?\.json$/];
 let hits = 0, scanned = 0;
 for (const f of files) {
@@ -58,6 +62,7 @@ for (const f of files) {
   const p = join(root, f);
   if (!existsSync(p) || statSync(p).isDirectory()) continue;
   if (/\.(png|jpg|jpeg|gif|pdf|zip|woff2?)$/i.test(f)) continue;
+  if (scanDir && /\.css$/i.test(f)) continue; // built theme styles carry no content
   const text = readFileSync(p, "utf8");
   scanned++;
   text.split("\n").forEach((line, i) => {

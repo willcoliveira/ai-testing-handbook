@@ -60,3 +60,25 @@ fewer than three organisations).
   refresh branch, only when the maintainer types it; neither skill merges.
 - Add a client fact that is not expressed in the stand-in vocabulary.
 - Quote a lab's internal process without a source; write "unknown" instead.
+
+## Site
+
+The handbook is also published as a book at <https://willcoliveira.github.io/ai-testing-handbook/>.
+VitePress reads the Markdown files in place; nothing in the content is written for the site.
+
+- Run: `npm ci`, then `npm run docs:dev` (live), `npm run docs:build` and `npm run docs:preview`
+  (the built site at `http://localhost:4173/ai-testing-handbook/`). Each first runs
+  `node .vitepress/gen.mjs`, which writes the part intro pages (`practices/_part.md`,
+  `practices/N-*/_part.md`, `patterns/_part.md`) and `.vitepress/data/*.json`. All are gitignored,
+  and `_part.md` is skipped by `check-sources` and `apply-bullets`.
+- Gate: `npm run test:site` builds with strict dead-link checking, runs the unit tests in
+  `tests/site/unit/`, then `tests/site/post-build.mjs` over `.vitepress/dist` (links, fragments,
+  citations, every page in the sidebar once, no third-party hosts, size budgets, forbidden strings).
+- Reading order lives in `.vitepress/book.mjs`. Practices follow `TAXONOMY.md`; a practice file not
+  listed there fails the build. A new learning-path file needs a place in `LEARNING_TAIL`.
+- Add a part: create `practices/N-name/`, add a `## N. Name. Question?` area with its table to
+  `TAXONOMY.md`, and add the practice files. The intro page and sidebar group follow from those.
+- Citations: `[S0nn]` becomes a link to the register row; an id missing from `sources.md` fails the build.
+- Privacy: `tests/site/post-build.mjs` runs `check-forbidden --dir .vitepress/dist` on the built
+  HTML. In CI only the example list is present (the real list is gitignored), so that check is fully
+  effective only locally and in the pre-commit hook. Nothing new is exposed: the repository is public.

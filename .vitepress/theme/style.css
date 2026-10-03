@@ -1,0 +1,198 @@
+/* Black on white. Greys only for metadata, rules and inactive sidebar items, each >= 4.5:1 on
+   its background (tests/site/unit/contrast.test.mjs). No accent colour. Dark mode is the inversion. */
+
+:root {
+  --hb-bg: #ffffff;
+  --hb-fg: #111111;
+  --hb-muted: #595959;
+  --hb-rule: #767676;
+  --hb-soft: #f3f3f3;
+  /* one variable swaps the body face */
+  --hb-font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --hb-font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --hb-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --hb-body-size: 18px;
+  --hb-measure: 68ch;
+}
+
+.dark {
+  --hb-bg: #111111;
+  --hb-fg: #eeeeee;
+  --hb-muted: #a6a6a6;
+  --hb-rule: #8c8c8c;
+  --hb-soft: #1e1e1e;
+}
+
+/* VitePress tokens mapped onto the five above */
+:root,
+.dark {
+  --vp-c-bg: var(--hb-bg);
+  --vp-c-bg-alt: var(--hb-bg);
+  --vp-c-bg-elv: var(--hb-bg);
+  --vp-c-bg-soft: var(--hb-soft);
+  --vp-c-text-1: var(--hb-fg);
+  --vp-c-text-2: var(--hb-muted);
+  --vp-c-text-3: var(--hb-muted);
+  --vp-c-divider: var(--hb-rule);
+  --vp-c-border: var(--hb-rule);
+  --vp-c-gutter: var(--hb-rule);
+  --vp-c-brand-1: var(--hb-fg);
+  --vp-c-brand-2: var(--hb-fg);
+  --vp-c-brand-3: var(--hb-fg);
+  --vp-c-brand-soft: var(--hb-soft);
+  --vp-c-default-1: var(--hb-rule);
+  --vp-c-default-2: var(--hb-rule);
+  --vp-c-default-3: var(--hb-rule);
+  --vp-c-default-soft: var(--hb-soft);
+  --vp-c-tip-1: var(--hb-fg);
+  --vp-c-tip-soft: var(--hb-soft);
+  --vp-c-note-1: var(--hb-fg);
+  --vp-c-note-soft: var(--hb-soft);
+  --vp-c-warning-1: var(--hb-fg);
+  --vp-c-warning-soft: var(--hb-soft);
+  --vp-c-danger-1: var(--hb-fg);
+  --vp-c-danger-soft: var(--hb-soft);
+  --vp-c-important-1: var(--hb-fg);
+  --vp-c-important-soft: var(--hb-soft);
+  --vp-code-color: var(--hb-fg);
+  --vp-code-bg: var(--hb-soft);
+  --vp-code-block-bg: var(--hb-soft);
+  --vp-code-block-color: var(--hb-fg);
+  --vp-code-lang-color: var(--hb-muted);
+  --vp-code-copy-code-bg: var(--hb-bg);
+  --vp-code-copy-code-hover-bg: var(--hb-bg);
+  --vp-code-copy-code-active-text: var(--hb-fg);
+  --vp-local-search-highlight-bg: var(--hb-fg);
+  --vp-local-search-highlight-text: var(--hb-bg);
+  --vp-font-family-base: var(--hb-font-ui);
+  --vp-font-family-mono: var(--hb-font-mono);
+  --vp-shadow-1: none;
+  --vp-shadow-2: none;
+  --vp-shadow-3: none;
+  --vp-shadow-4: none;
+  --vp-shadow-5: none;
+  --vp-nav-bg-color: var(--hb-bg);
+  --vp-sidebar-bg-color: var(--hb-bg);
+  --vp-backdrop-bg-color: rgba(0, 0, 0, 0.6);
+}
+
+body { background: var(--hb-bg); color: var(--hb-fg); }
+
+/* no cards, shadows or rounded boxes */
+*, *::before, *::after { box-shadow: none !important; }
+.vp-doc *, .VPDocFooter *, .VPLocalSearchBox *, .VPSidebar *, .VPNav *, .VPLocalNav * { border-radius: 0 !important; }
+
+:focus-visible { outline: 2px solid var(--hb-fg); outline-offset: 2px; }
+
+/* reading-progress line */
+.hb-progress { position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 100; pointer-events: none; }
+.hb-progress span { display: block; height: 100%; background: var(--hb-fg); transform-origin: 0 50%; transform: scaleX(0); }
+
+/* body text */
+.vp-doc { font-family: var(--hb-font-body); font-size: var(--hb-body-size); line-height: 1.65; color: var(--hb-fg); }
+.vp-doc p, .vp-doc li, .vp-doc blockquote > p { font-size: inherit; line-height: 1.65; }
+.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4 { font-family: var(--hb-font-body); font-weight: 600; letter-spacing: 0; color: var(--hb-fg); }
+.vp-doc h1 { font-size: 2.1em; line-height: 1.2; }
+.vp-doc h2 { font-size: 1.45em; line-height: 1.3; margin: 64px 0 16px; padding-top: 24px; border-top: 1px solid var(--hb-rule); }
+.vp-doc h3 { font-size: 1.15em; margin: 40px 0 8px; }
+.vp-doc strong { font-weight: 600; }
+.vp-doc hr { border: 0; border-top: 1px solid var(--hb-rule); }
+.vp-doc blockquote { border-left: 1px solid var(--hb-rule); color: var(--hb-fg); }
+
+/* the column */
+.VPDoc .content-container,
+.VPDoc.has-aside .content-container { max-width: var(--hb-measure); }
+.VPDoc .content-container { font-size: var(--hb-body-size); }
+@media (min-width: 960px) {
+  .VPDoc:not(.has-sidebar) .content { max-width: calc(var(--hb-measure) + 64px); }
+}
+
+/* links: black, underlined */
+.vp-doc a { color: var(--hb-fg); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+.vp-doc a:hover { text-decoration-thickness: 2px; }
+
+/* citations: small grey labels, black on hover or focus, tooltip from data-tip */
+.vp-doc a.cite { position: relative; font-family: var(--hb-font-ui); font-size: 0.72em; color: var(--hb-muted); text-decoration: none; padding: 0 1px; white-space: nowrap; }
+.vp-doc a.cite:hover, .vp-doc a.cite:focus-visible { color: var(--hb-fg); text-decoration: underline; }
+.vp-doc a.cite:hover::after, .vp-doc a.cite:focus-visible::after {
+  content: attr(data-tip);
+  position: absolute; left: 0; bottom: calc(100% + 6px); z-index: 30;
+  width: max-content; max-width: min(28rem, 80vw); white-space: normal;
+  padding: 6px 10px; font-size: 13px; line-height: 1.4; text-align: left;
+  background: var(--hb-bg); color: var(--hb-fg); border: 1px solid var(--hb-fg);
+  pointer-events: none;
+}
+@media (hover: none) { .vp-doc a.cite:hover::after { content: none; } }
+
+/* register row reached from a citation */
+.vp-doc tr[id] { scroll-margin-top: calc(var(--vp-nav-height) + 48px); }
+.vp-doc tr:target td { background: var(--hb-soft); }
+.vp-doc tr:target { outline: 2px solid var(--hb-fg); outline-offset: -2px; }
+
+/* meta line and See also */
+.hb-meta { margin: 0 0 12px; font-family: var(--hb-font-ui); font-size: 14px; color: var(--hb-muted); }
+.hb-see-also { margin: 48px 0 24px; padding-top: 16px; border-top: 1px solid var(--hb-rule); font-family: var(--hb-font-ui); }
+.hb-see-also h2 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: var(--hb-muted); }
+.hb-see-also ul { margin: 0; padding-left: 1.2em; }
+.hb-see-also a { color: var(--hb-fg); text-decoration: underline; text-underline-offset: 0.18em; }
+.hb-404 { max-width: var(--hb-measure); margin: 96px auto; padding: 0 16px; font-family: var(--hb-font-body); font-size: var(--hb-body-size); }
+.hb-404 h1 { font-size: 2em; font-weight: 600; margin-bottom: 16px; }
+.hb-404 a { color: var(--hb-fg); text-decoration: underline; }
+
+/* code: monochrome */
+.vp-doc :not(pre) > code { font-size: 0.85em; color: var(--hb-fg); background: var(--hb-soft); }
+.vp-doc div[class*="language-"] { background: var(--hb-soft); }
+.vp-doc div[class*="language-"] span { color: var(--hb-fg) !important; }
+.vp-doc div[class*="language-"] > span.lang { color: var(--hb-muted) !important; }
+
+/* tables: hairlines, horizontal only; they scroll inside their own box */
+.vp-doc table { font-family: var(--hb-font-ui); font-size: 15px; line-height: 1.5; border-collapse: collapse; }
+.vp-doc tr, .vp-doc tr:nth-child(2n) { background: transparent; border-top: 0; }
+.vp-doc th, .vp-doc td { border: 0; border-bottom: 1px solid var(--hb-rule); padding: 8px 12px; vertical-align: top; }
+.vp-doc th { background: var(--hb-bg); color: var(--hb-fg); font-weight: 600; text-align: left; }
+
+/* sidebar and nav: sans, grey when inactive, black when active */
+.VPSidebar { border-right: 1px solid var(--hb-rule); }
+.VPSidebarItem .text { color: var(--hb-muted); }
+.VPSidebarItem.level-0 > .item .text { color: var(--hb-fg); font-weight: 600; }
+.VPSidebarItem.is-active > .item .text { color: var(--hb-fg); font-weight: 600; }
+.VPSidebarItem.is-active > .item .indicator { background-color: var(--hb-fg); }
+.VPNavBar, .VPNavBar.has-sidebar .content-body { background: var(--hb-bg) !important; }
+.VPNavBar .divider-line, .VPNavBar.has-sidebar .divider { background-color: var(--hb-rule); }
+
+/* previous / next */
+.VPDocFooter .pager-link { border: 1px solid var(--hb-rule); }
+.VPDocFooter .pager-link:hover { border-color: var(--hb-fg); }
+.VPDocFooter .pager-link .title { color: var(--hb-fg); }
+.VPDocFooter .pager-link .desc { color: var(--hb-muted); }
+
+/* wide reference pages: full width, no outline, sticky table header */
+.hb-wide .VPDoc .container, .hb-wide .VPDoc .content, .hb-wide .VPDoc .content-container { max-width: none !important; }
+.hb-wide .vp-doc table { display: block; max-width: 100%; max-height: 80vh; overflow: auto; font-size: 14px; }
+.hb-wide .vp-doc thead th { position: sticky; top: 0; z-index: 2; background: linear-gradient(to top, var(--hb-rule) 1px, var(--hb-bg) 1px); }
+
+/* phone: 17px body, 16px gutters, stacked prev/next */
+@media (max-width: 767px) {
+  :root { --hb-body-size: 17px; }
+  .VPDoc { padding-left: 16px !important; padding-right: 16px !important; }
+  .VPLocalNav .menu, .VPLocalNav .outline { padding-left: 16px; padding-right: 16px; }
+  .VPNavBar .wrapper { padding-left: 16px; padding-right: 16px; }
+  .VPDocFooter .prev-next { display: flex; flex-direction: column; gap: 12px; }
+  .VPDocFooter .pager { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+
+/* print: the chapter only, with link targets written out */
+@media print {
+  .VPNav, .VPLocalNav, .VPSidebar, .VPDocFooter, .VPDocAside, .aside, .VPDocAsideOutline, .VPFooter,
+  .hb-progress, .hb-see-also, .VPSkipLink, .header-anchor { display: none !important; }
+  .VPContent, .VPContent.has-sidebar, .VPDoc { padding: 0 !important; margin: 0 !important; }
+  .VPDoc .container, .VPDoc .content, .VPDoc .content-container { max-width: none !important; }
+  :root, .dark { --hb-bg: #ffffff; --hb-fg: #000000; --hb-muted: #444444; --hb-rule: #777777; --hb-soft: #ffffff; }
+  .vp-doc { font-size: 11pt; }
+  .vp-doc a[href]:not(.header-anchor)::after { content: " (" attr(href) ")"; font-size: 0.8em; word-break: break-all; }
+  .vp-doc a.cite::after { content: " (" attr(href) ")" !important; position: static; border: 0; padding: 0; }
+  .vp-doc table { display: table; max-height: none; overflow: visible; }
+  .vp-doc h2, .vp-doc h3 { break-after: avoid; }
+}
