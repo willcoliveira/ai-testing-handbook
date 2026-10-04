@@ -42,7 +42,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.70.0",
     "vitepress": "1.6.4",
-    "wico-playwright-agent-skills": "2.0.0"
+    "wico-playwright-agent-skills": "2.4.0"
   },
   "overrides": {
     "vite": "6.4.3"
