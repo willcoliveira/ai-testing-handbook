@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.12 (2026-10-04)
+
+- The handbook as a book at <https://willcoliveira.github.io/ai-testing-handbook/>: VitePress over
+  the Markdown in place, learning path first, then parts I to VIII with generated intro pages,
+  playbooks, patterns, appendices and about; previous/next and arrow keys; `[S0nn]` citations link
+  to the register; black-and-white theme with dark mode, print styles and phone and tablet layouts.
+- Gates on every PR, on Linux and Windows: strict links, post-build checks (citations, sidebar
+  coverage, third-party hosts, size budgets, forbidden strings in the built HTML), unit tests,
+  `npm audit`. A Playwright suite on the `playwright-ts-template` conventions with the
+  `playwright-e2e` skill (reading flow, citations, search, layout, dark mode, axe), the full
+  four-browser sweep on `main` and weekly, and screenshot tests of a specimen page with baselines
+  from the Playwright Docker image.
+- Deploy to GitHub Pages on every push to `main` after the gates, then a smoke test on the live
+  site. Dependabot monthly: minor and patch grouped, majors alone. Vite overridden to 6.4.3 for
+  the dev-server advisories in VitePress 1.6.4. See `MAINTAINING.md`, "## Site".
+
 ## 0.1.11 (2026-10-03)
 
 - Refresh since 2026-09-30: six new sources (S387 to S392) including METR's Senate testimony on
