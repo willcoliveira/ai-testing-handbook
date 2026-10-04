@@ -8,6 +8,7 @@ import { buildSidebar, linkOf } from "./book.mjs";
 import { titleOf, parseFlat } from "./read.mjs";
 import citePlugin from "./plugins/cite.mjs";
 import linksPlugin, { REPO } from "./plugins/links.mjs";
+import vueSafePlugin from "./plugins/vue-safe.mjs";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const BASE = "/ai-testing-handbook/";
@@ -78,6 +79,7 @@ export default defineConfig({
     config(md) {
       md.use(citePlugin, { sources, base: BASE });
       md.use(linksPlugin, { root: ROOT, exclude: SRC_EXCLUDE });
+      md.use(vueSafePlugin);
     },
   },
   head: [["meta", { property: "og:site_name", content: "AI Testing Handbook" }]],

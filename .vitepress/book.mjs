@@ -28,6 +28,13 @@ export function shortLabel(t, max = 46) {
   return s;
 }
 
+// VitePress renders sidebar and prev/next labels with v-html, so a title is HTML there. Escape every
+// label once, at the end of buildSidebar: a title like `x<img onerror=...>` must render as text.
+export const escapeLabel = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+function escapeTree(items) {
+  return items.map((it) => ({ ...it, text: escapeLabel(it.text), ...(it.items ? { items: escapeTree(it.items) } : {}) }));
+}
+
 const LEARNING_TAIL = ["knowledge-matrix.md", "interview-questions.md", "ai-qa-requirements.md", "resources.md"];
 const APPENDICES = [["Labs", "labs"], ["Tools", "tools"], ["Benchmarks", "benchmarks"], ["Datasets", "datasets"], ["Training", "training"]];
 
@@ -64,7 +71,7 @@ export function buildSidebar(root) {
 
   const digests = mdFiles(join(root, "digests")).filter((f) => f !== "README.md" && !f.endsWith(".draft.md"));
 
-  return [
+  return escapeTree([
     page("README.md", "Introduction"),
     { text: "Learning path", link: "/learning-path/", collapsed: false,
       items: [...phases, ...LEARNING_TAIL.filter((f) => lp.includes(f))].map((f) => page(`learning-path/${f}`)) },
@@ -87,7 +94,7 @@ export function buildSidebar(root) {
       page("CONTRIBUTING.md", "Contributing"),
       page("MAINTAINING.md", "Maintaining"),
     ] },
-  ];
+  ]);
 }
 
 // every link in sidebar order, the sequence prev/next walks

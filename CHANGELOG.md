@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.13 (2026-10-04)
+
+- Security hardening from a review of the site work: page titles and `{{ }}` in content can no
+  longer inject markup or run code in the book (escaped labels, entity-encoded braces, post-build
+  guards and payload tests); the privacy check reports every match and no longer lets one allowed
+  token or the noreply address hide a line; the Pages deploy is split so the job holding deploy
+  permissions runs no repository or dependency code; checkouts keep no credentials, jobs have
+  timeouts, superseded PR runs are cancelled. `MAINTAINING.md`, "## Site".
+
 ## 0.1.12 (2026-10-04)
 
 - The handbook as a book at <https://willcoliveira.github.io/ai-testing-handbook/>: VitePress over

@@ -17,6 +17,12 @@ on:
 permissions:
   contents: read
 
+# a newer push to a PR cancels its older run; main, schedule and dispatch runs queue by event, so a
+# scheduled run never cancels a pending deploy
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.event_name) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Static gates on Linux and Windows, so contributors on either can build and check the book.
   test:
@@ -25,8 +31,11 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -49,8 +58,11 @@ jobs:
   lint:
     name: Lint, typecheck, format, skills
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -75,6 +87,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -113,6 +127,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -150,11 +166,13 @@ jobs:
     name: Visual paths changed
     if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       visual: ${{ steps.filter.outputs.visual }}
     steps:
       - uses: actions/checkout@v7
         with:
+          persist-credentials: false
           fetch-depth: 0
       - id: filter
         env:
@@ -164,7 +182,6 @@ jobs:
         run: |
           if [ "$EVENT" = "workflow_dispatch" ]; then echo "visual=true" >> "$GITHUB_OUTPUT"; exit 0; fi
           files="$(git diff --name-only "$BASE...$HEAD")"
-          echo "$files"
           if echo "$files" | grep -qE '^(\.vitepress/|tests/site/|playwright\.config\.ts$|package(-lock)?\.json$)'; then
             echo "visual=true" >> "$GITHUB_OUTPUT"
           else
@@ -184,6 +201,8 @@ jobs:
       UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.update_baselines }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Baselines present
         if: env.UPDATE != 'true'
         run: |
@@ -222,15 +241,39 @@ jobs:
           path: regenerated/visual.spec.ts-snapshots/
           retention-days: 7
 
-  # Publish the production build (no SITE_TEST) to GitHub Pages after the gates pass on main.
-  deploy:
-    name: Deploy to GitHub Pages
+  # Publish the production build (no SITE_TEST) to GitHub Pages after the gates pass on main. Two
+  # jobs: `build` installs (no lifecycle scripts) and builds with a read-only token; `deploy` holds
+  # the Pages and OIDC permissions and runs nothing but deploy-pages (security review 2026-10-04).
+  build:
+    name: Build the site for Pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [test, lint, e2e]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Production build
+        run: npm run docs:build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: .vitepress/dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
       pages: write
       id-token: write
     environment:
@@ -240,17 +283,6 @@ jobs:
       group: pages
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - name: Production build
-        run: npm run docs:build
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: .vitepress/dist
       - id: deployment
         uses: actions/deploy-pages@v5
 
@@ -264,6 +296,8 @@ jobs:
       BASE_URL: https://willcoliveira.github.io/ai-testing-handbook/
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc

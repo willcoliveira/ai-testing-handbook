@@ -40,10 +40,11 @@ function loadList(path) {
       if (l.startsWith("/") && l.lastIndexOf("/") > 0) {
         const last = l.lastIndexOf("/");
         const flags = l.slice(last + 1).replace(/[^i]/g, "");
-        return { re: new RegExp(l.slice(1, last), flags), src: l };
+        return { re: new RegExp(l.slice(1, last), flags), global: new RegExp(l.slice(1, last), flags + "g"), src: l };
       }
       if (l.startsWith("<") && l.endsWith(">")) return null; // placeholder, ignored
-      return { re: new RegExp(l.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"), src: l };
+      const esc = l.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return { re: new RegExp(esc, "i"), global: new RegExp(esc, "gi"), src: l };
     }).filter(Boolean);
 }
 const rules = [...loadList(EXAMPLE), ...(process.env.CI ? [] : loadList(REAL))];
@@ -58,21 +59,37 @@ if (dirArg > 0 && (!scanDir || !existsSync(scanDir))) { console.error(`--dir: no
 const label = (abs) => relative(root, abs).split("\\").join("/");
 const files = new Map((scanDir ? walk(resolve(root, scanDir)) : tracked().map((f) => join(root, f))).map((abs) => [label(abs), abs]));
 if (!scanDir && existsSync(join(root, "digests"))) for (const f of readdirSync(join(root, "digests"))) files.set("digests/" + f, join(root, "digests", f));
-const ALLOW = [/noreply@anthropic\.com/i, /^privacy\/forbidden-strings/, /^scripts\/check-forbidden\.mjs$/, /^package(-lock)?\.json$/];
+// files never scanned (by path only). The noreply address is removed from a line before matching,
+// so it cannot hide anything else on that line (security review 2026-10-04).
+const ALLOW_PATHS = [/^privacy\/forbidden-strings/, /^scripts\/check-forbidden\.mjs$/, /^package(-lock)?\.json$/];
+const ALLOW_SUBSTRINGS = [/noreply@anthropic\.com/gi];
+// the whole token around a match, so an allowlisted id (BUG-123) is compared in full, not by the
+// prefix a rule happened to match (BUG-1)
+const DELIM = /[\s`'"()[\]<>{},;|*]/;
+function tokenAt(line, start, end) {
+  let a = start, b = end;
+  while (a > 0 && !DELIM.test(line[a - 1])) a--;
+  while (b < line.length && !DELIM.test(line[b])) b++;
+  return line.slice(a, b).replace(/[.:!?]+$/, "");
+}
 let hits = 0, scanned = 0;
 for (const [f, p] of files) {
-  if (ALLOW.some((a) => a.test(f))) continue;
+  if (ALLOW_PATHS.some((a) => a.test(f))) continue;
   if (!existsSync(p) || statSync(p).isDirectory()) continue;
   if (/\.(png|jpg|jpeg|gif|pdf|zip|woff2?)$/i.test(f)) continue;
   if (scanDir && /\.css$/i.test(f)) continue; // built theme styles carry no content
   const text = readFileSync(p, "utf8");
   scanned++;
-  text.split("\n").forEach((line, i) => {
+  text.split("\n").forEach((raw, i) => {
+    const line = ALLOW_SUBSTRINGS.reduce((l, a) => l.replace(a, (s) => " ".repeat(s.length)), raw);
     for (const r of rules) {
-      const m = line.match(r.re);
-      if (!m || ALLOW.some((a) => a.test(line))) continue;
-      if (ALLOW_TOKENS.has(m[0])) continue;
-      hits++; console.log(`${f}:${i + 1}: matches ${r.src} (${m[0]})`);
+      // every match, not just the first: one allowlisted token must not mask a later hit
+      // (built page chunks are a single line each)
+      for (const m of line.matchAll(r.global)) {
+        if (!m[0]) continue;
+        if (ALLOW_TOKENS.has(m[0]) || ALLOW_TOKENS.has(tokenAt(line, m.index, m.index + m[0].length))) continue;
+        hits++; console.log(`${f}:${i + 1}: matches ${r.src} (${m[0]})`);
+      }
     }
   });
 }

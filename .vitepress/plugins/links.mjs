@@ -24,7 +24,10 @@ export function resolveHref(href, from, { root, isPage, repo = REPO }) {
   if (/^([a-z][a-z0-9+.-]*:|#|\/)/i.test(href)) return null;
   const [path, ...rest] = href.split("#");
   const hash = rest.length ? "#" + rest.join("#") : "";
-  let target = posix.normalize(posix.join(posix.dirname(from), decodeURI(path)));
+  // a malformed escape (`%zz`) is not a link we can resolve: leave it, rather than crash the build
+  let decoded;
+  try { decoded = decodeURI(path); } catch { return null; }
+  let target = posix.normalize(posix.join(posix.dirname(from), decoded));
   if (target.startsWith("..")) return null;
   const abs = join(root, target);
   const isDir = path.endsWith("/") || path === "" || (existsSync(abs) && statSync(abs).isDirectory());

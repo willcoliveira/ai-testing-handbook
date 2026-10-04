@@ -82,6 +82,15 @@ VitePress reads the Markdown files in place; nothing in the content is written f
 - Privacy: `tests/site/post-build.mjs` runs `check-forbidden --dir .vitepress/dist` on the built
   HTML. In CI only the example list is present (the real list is gitignored), so that check is fully
   effective only locally and in the pre-commit hook. Nothing new is exposed: the repository is public.
+- Security (review of 2026-10-04): page content cannot inject markup or code into the site.
+  Sidebar and prev/next labels are escaped (`book.mjs`, VitePress renders them as HTML), and every
+  `{` and `}` in text and inline code is emitted as an entity (`plugins/vue-safe.mjs`), so `{{ }}` is
+  never evaluated by Vue. `post-build` fails on markup in a label or any inline event handler, and
+  `tests/site/unit/security-*.test.mjs` build the original payloads. `check-forbidden` reports every
+  match on a line, compares allowlisted ids as whole tokens, and removes the noreply address before
+  matching instead of skipping its line. Deploy is two jobs: `build` (read-only token, `npm ci
+  --ignore-scripts`) and `deploy` (Pages and OIDC permissions, runs only `deploy-pages`). Checkouts
+  keep no credentials, every job has a timeout, and a newer push to a PR cancels its older run.
 - Windows: CI builds and tests the site on Linux and Windows (`.github/workflows/site.yml`).
   `.gitattributes` keeps LF line endings and the parsers in `.vitepress/read.mjs` accept CRLF.
 - Dependencies: `package.json` overrides Vite to 6.4.3, because VitePress 1.6.4 ships Vite 5, which

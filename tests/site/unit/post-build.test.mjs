@@ -53,6 +53,13 @@ test("SITE_TEST: the specimen may sit outside the sidebar", () => {
 test("negative: SITE_TEST exempts only the specimen, another orphan still fails", () => fails({ "specimen.html": page("specimen"), "b.html": page("orphan") }, /\/b\.html appears 0 times/, { siteTest: true }));
 test("negative: a page twice in the sidebar fails", () => fails({}, /appears 2 times/, { sidebar: [...sidebar, { text: "again", link: "/a" }] }));
 test("negative: a sidebar link with no page fails", () => fails({}, /sidebar: \/gone has no built page/, { sidebar: [...sidebar, { text: "gone", link: "/gone" }] }));
+test("negative: markup in a sidebar label fails (title XSS, security review 2026-10-04)", () => fails({ "a.html": page(`<p class="text" data-v-1>Judge<img src=x onerror=alert(1)></p>`) }, /sidebar or pager label contains markup/));
+test("negative: markup in a prev/next label fails", () => fails({ "a.html": page(`<span class="title" data-v-1>x<svg onload=alert(1)></span>`) }, /label contains markup/));
+test("negative: an inline event handler anywhere fails", () => fails({ "a.html": page(`<div onclick="alert(1)">x</div>`) }, /inline event handler/));
+test("escaped labels pass", () => {
+  const d = dist({ "a.html": page(`<h2 id="why">Why</h2><p class="text" data-v-1>Judge&lt;img src=x&gt;</p>`) });
+  try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }
+});
 test("negative: a third-party <script src> fails", () => fails({ "a.html": `<html><head><script src="https://cdn.example.com/x.js"></script></head><body><h2 id="why">Why</h2></body></html>` }, /third-party host: https:\/\/cdn\.example\.com/));
 test("negative: a third-party stylesheet or font in CSS fails", () => fails({ "assets/style.css": "@import url(https://fonts.googleapis.com/css2?family=X);" }, /CSS loads from a third-party host/));
 test("negative: JS over the budget fails", () => fails({ "assets/big.js": "x".repeat(BUDGETS.JS_MAX_BYTES + 1) }, /budget: JS/));

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createMarkdownRenderer } from "vitepress";
 import linksPlugin, { resolveHref, pageTest, globToRe, REPO } from "../../../.vitepress/plugins/links.mjs";
-import { tmp } from "./helpers.mjs";
+import { tmp, ROOT } from "./helpers.mjs";
 
 const fx = tmp({
   "README.md": "# Intro\n", "LICENSE": "MIT\n",
@@ -54,4 +54,8 @@ test("globToRe matches srcExclude globs", () => {
   assert.ok(globToRe("**/_TEMPLATE.md").test("labs/_TEMPLATE.md"));
   assert.ok(globToRe("digests/*.draft.md").test("digests/2026-09-26.draft.md"));
   assert.ok(!globToRe("digests/*.draft.md").test("digests/2026-09-26.md"));
+});
+
+test("a malformed % escape is left alone instead of crashing the build", () => {
+  assert.equal(resolveHref("bad%zz.md", "practices/3-judging/x.md", { root: ROOT, isPage: () => true }), null);
 });

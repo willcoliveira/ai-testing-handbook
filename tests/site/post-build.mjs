@@ -62,6 +62,12 @@ export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets =
       if (kind === "link" && attr === "href" && !/rel="(stylesheet|preload|modulepreload|icon|prefetch|manifest)"/.test(tag)) continue;
       if (/^(https?:)?\/\//.test(url)) errors.push(`${here}: <${kind}> loads from a third-party host: ${url}`);
     }
+    // labels VitePress renders with v-html (sidebar, prev/next) must be text, and no tag may carry
+    // an inline event handler: either would mean a title or a page injected markup
+    for (const m of text.matchAll(/<(p|span) class="(?:text|title)"[^>]*>([\s\S]*?)<\/\1>/g)) {
+      if (/<[a-z!/]/i.test(m[2])) errors.push(`${here}: a sidebar or pager label contains markup: ${m[2].slice(0, 80)}`);
+    }
+    for (const m of text.matchAll(/<[a-z][a-z0-9-]*\b[^>]*?\son[a-z]+\s*=/gi)) errors.push(`${here}: inline event handler in ${m[0].slice(0, 80)}`);
     for (const m of text.matchAll(/<a\b([^>]*)>/g)) {
       const attrs = m[1];
       const hm = attrs.match(/\shref="([^"]*)"/);
