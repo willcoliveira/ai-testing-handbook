@@ -79,3 +79,32 @@ test("--dir: a longer id that starts like an allowlisted one is not exempt", () 
     assert.equal(r.status, 1, r.stdout);
   } finally { d.done(); }
 });
+
+// evasions found in the adversarial re-test of the fixes (2026-10-04); each must be reported
+const [A, B] = ["AC", ["ME", "1234"].join("-")];
+const ARN = ["arn", "aws", ""].join(":");
+const evasions = {
+  "markup split in HTML": { "page.html": `<p>${A}<strong>${B.slice(0, 2)}</strong>${B.slice(2)}</p>` },
+  "emphasis split in Markdown": { "page.md": `${A}**${B.slice(0, 2)}**${B.slice(2)}` },
+  "non-breaking hyphen": { "page.html": `${A}${B.replace("-", "‑")}` },
+  "zero-width space in an ARN": { "page.html": `${ARN.replace(":aws", ":​aws")}iam::1:role/x` },
+  "entity-encoded hyphen": { "page.html": `${A}${B.replace("-", "&#45;")}` },
+  "UTF-16 file": { "page.txt": Buffer.concat([Buffer.from([0xff, 0xfe]), Buffer.from(`${A}${B}`, "utf16le")]) },
+  "text file named .png": { "logo.png": `${A}${B}` },
+  "string in a .CSS file": { "theme.CSS": `.x{content:"${A}${B}"}` },
+  "address ending in the noreply address": { "page.html": `alice.${["noreply", "anthropic.com"].join("@")}` },
+};
+for (const [name, files] of Object.entries(evasions)) {
+  test(`--dir: reported despite evasion: ${name}`, () => {
+    const d = tmp(files);
+    try {
+      const r = run("--dir", d.dir);
+      assert.equal(r.status, 1, r.stdout);
+    } finally { d.done(); }
+  });
+}
+
+test("--dir: a CSS selector that looks like a hostname is not a hit", () => {
+  const d = tmp({ "theme.css": `.${"lo" + "cal"}{color:red}.x{content:"ok"}` });
+  try { assert.equal(run("--dir", d.dir).status, 0); } finally { d.done(); }
+});

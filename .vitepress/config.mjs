@@ -9,6 +9,7 @@ import { titleOf, parseFlat } from "./read.mjs";
 import citePlugin from "./plugins/cite.mjs";
 import linksPlugin, { REPO } from "./plugins/links.mjs";
 import vueSafePlugin from "./plugins/vue-safe.mjs";
+import lockdownPlugin, { checkFrontmatter } from "./plugins/lockdown.mjs";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const BASE = "/ai-testing-handbook/";
@@ -74,12 +75,16 @@ export default defineConfig({
   sitemap: { hostname: SITE },
   markdown: {
     html: false,
+    // no `{...}` attribute syntax and no GitHub alerts: both let content set raw attributes or HTML
+    attrs: { disable: true },
+    gfmAlerts: false,
     // flat key: value frontmatter (see read.mjs); one title has a colon, which strict YAML rejects
     frontmatter: { grayMatterOptions: { engines: { yaml: (s) => parseFlat(s) } } },
     config(md) {
       md.use(citePlugin, { sources, base: BASE });
       md.use(linksPlugin, { root: ROOT, exclude: SRC_EXCLUDE });
       md.use(vueSafePlugin);
+      md.use(lockdownPlugin);
     },
   },
   head: [["meta", { property: "og:site_name", content: "AI Testing Handbook" }]],
@@ -96,6 +101,9 @@ export default defineConfig({
   },
   transformPageData(pageData) {
     const fm = pageData.frontmatter;
+    // frontmatter is data, not site config: `description`, `layout`, `prev`, `next`, `head` and the
+    // rest reach VitePress sinks unescaped, so only the keys the book uses are accepted
+    checkFrontmatter(fm, pageData.filePath);
     if (WIDE.includes(pageData.filePath)) Object.assign(fm, { aside: false, outline: false, pageClass: "hb-wide" });
     // meta line: status · reviewed DATE · N sources, from whatever the frontmatter carries
     const n = Array.isArray(fm.sources) ? fm.sources.length : 0;

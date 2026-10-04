@@ -3,6 +3,8 @@ import { join } from "node:path";
 import { readFileSync } from "node:fs";
 import { build } from "vitepress";
 import { escapeLabel } from "../../../.vitepress/book.mjs";
+import { writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { tmp, ROOT } from "./helpers.mjs";
 
 export const XSS_TITLE = "Judge<img src=x onerror=alert(document.domain)>";
@@ -17,15 +19,41 @@ const PAGE = [
   "",
 ].join("\n");
 
+// bypasses from the adversarial re-test (B1 attrs, B2 GitHub alert title, B3 code-group label, B8
+// snippet import of a file outside the repository); with the fixes they must render as inert text
+export const OUTSIDE = join(tmpdir(), "hb-outside-marker.md");
+const BYPASSES = (fence) => [
+  "",
+  "## Attrs {:data-pwn=\"6*7\"}",
+  "",
+  "para {:data-pwn10=\"[].constructor.constructor('return 6*7')()\"}",
+  "",
+  "click {@click=\"6*7\"}",
+  "",
+  "> [!NOTE] <img :data-pwn=\"6*7\" data-pwn2=alert>",
+  "",
+  "::: code-group",
+  `${fence}js [<img :data-pwn="6*7" data-pwn3=tab>]`,
+  "a",
+  fence,
+  ":::",
+  "",
+  `<<< ${OUTSIDE}`,
+  "",
+].join("\n");
+
 export async function site({ safe }) {
   const plugin = JSON.stringify(join(ROOT, ".vitepress/plugins/vue-safe.mjs"));
+  const lockdown = JSON.stringify(join(ROOT, ".vitepress/plugins/lockdown.mjs"));
+  writeFileSync(OUTSIDE, "OUTSIDE-FILE-MARKER\n");
   const label = JSON.stringify(safe ? escapeLabel(XSS_TITLE) : XSS_TITLE);
   // with the fix, also a payload that markdown splits across emphasis tokens (it would not compile without it)
-  const page = safe ? PAGE + "\nSplit {{ 7*7 }} across emphasis {{ 2*2 }}.\n" : PAGE;
+  const page = safe ? PAGE + "\nSplit {{ 7*7 }} across emphasis {{ 2*2 }}.\n" + BYPASSES("```") : PAGE;
   const s = tmp({
     "index.md": page, "other.md": "# Other\n",
     ".vitepress/config.mjs": `import vueSafe from ${plugin};
-export default { base: "/b/", markdown: { html: false, config: (md) => { ${safe ? "md.use(vueSafe);" : ""} } },
+import lockdown from ${lockdown};
+export default { base: "/b/", markdown: { html: false, ${safe ? "attrs: { disable: true }, gfmAlerts: false," : ""} config: (md) => { ${safe ? "md.use(vueSafe); md.use(lockdown);" : ""} } },
   themeConfig: { sidebar: [{ text: ${label}, link: "/other" }] } };`,
   }, { inRepo: true });
   await build(s.dir, { outDir: join(s.dir, "dist") });

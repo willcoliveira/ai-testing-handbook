@@ -4,7 +4,9 @@
   "description": "Evals, guardrails, benchmarks and audits for LLM applications and agents: a sourced reference and a learning path for AI testing.",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22.20" },
+  "engines": {
+    "node": ">=22.20"
+  },
   "scripts": {
     "check": "node scripts/check-forbidden.mjs && node scripts/check-sources.mjs && node scripts/check-links.mjs --report-only",
     "check:forbidden": "node scripts/check-forbidden.mjs",
@@ -38,11 +40,13 @@
     "@types/node": "22.20.4",
     "eslint": "10.11.0",
     "eslint-plugin-playwright": "2.12.0",
+    "parse5": "8.0.1",
     "prettier": "3.9.9",
     "typescript": "5.9.3",
     "typescript-eslint": "8.71.0",
     "vitepress": "1.6.4",
-    "wico-playwright-agent-skills": "2.4.0"
+    "wico-playwright-agent-skills": "2.4.0",
+    "yaml": "2.9.1"
   },
   "overrides": {
     "vite": "6.4.3"

@@ -62,7 +62,8 @@ if (!scanDir && existsSync(join(root, "digests"))) for (const f of readdirSync(j
 // files never scanned (by path only). The noreply address is removed from a line before matching,
 // so it cannot hide anything else on that line (security review 2026-10-04).
 const ALLOW_PATHS = [/^privacy\/forbidden-strings/, /^scripts\/check-forbidden\.mjs$/, /^package(-lock)?\.json$/];
-const ALLOW_SUBSTRINGS = [/noreply@anthropic\.com/gi];
+// only the whole address: `alice.noreply@anthropic.com` is not exempt
+const ALLOW_SUBSTRINGS = [/(?<![\w.+-])noreply@anthropic\.com/gi];
 // the whole token around a match, so an allowlisted id (BUG-123) is compared in full, not by the
 // prefix a rule happened to match (BUG-1)
 const DELIM = /[\s`'"()[\]<>{},;|*]/;
@@ -72,23 +73,60 @@ function tokenAt(line, start, end) {
   while (b < line.length && !DELIM.test(line[b])) b++;
   return line.slice(a, b).replace(/[.:!?]+$/, "");
 }
+// Text a reader would see, as well as the raw line, so a name split by markup or disguised with
+// lookalike characters is still found (adversarial re-test, 2026-10-04): tags removed (inline tags
+// join, block tags separate), the common entities decoded, Markdown emphasis and code markers
+// removed, NFKC, zero-width characters dropped, Unicode hyphens and dashes made `-`.
+const INLINE_TAGS = "a|abbr|b|bdi|bdo|cite|code|del|dfn|em|i|ins|kbd|mark|q|s|samp|small|span|strong|sub|sup|u|var|wbr";
+const ENTITIES = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", "#39": "'" };
+function projection(line) {
+  return line
+    .replace(new RegExp(`</?(?:${INLINE_TAGS})\\b[^>]*>`, "gi"), "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+\d*);/gi, (m, e) => {
+      if (ENTITIES[e.toLowerCase()]) return ENTITIES[e.toLowerCase()];
+      if (e[0] === "#") { const n = e[1].toLowerCase() === "x" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10); return Number.isFinite(n) ? String.fromCodePoint(n) : m; }
+      return m;
+    })
+    .normalize("NFKC")
+    .replace(/[\u200B-\u200D\u2060\uFEFF\u00AD]/g, "")
+    .replace(/[\u2010-\u2015\u2212\uFE58\uFE63\uFF0D]/g, "-")
+    .replace(/\*\*|__|~~|[*_`]/g, "");
+}
+// binary by content, not by name: a NUL byte in the first 8 KB (UTF-16 text is decoded instead)
+function readText(p) {
+  const buf = readFileSync(p);
+  if (buf[0] === 0xff && buf[1] === 0xfe) return { text: buf.subarray(2).toString("utf16le") };
+  if (buf[0] === 0xfe && buf[1] === 0xff) return { text: Buffer.from(buf.subarray(2)).swap16().toString("utf16le") };
+  if (buf.subarray(0, 8192).includes(0)) return { binary: true };
+  return { text: buf.toString("utf8") };
+}
+// in a built site, a CSS file is checked for what it can show: strings and comments, not selectors
+// (a minified `.local` class is not a hostname)
+const cssVisible = (text) => [...text.matchAll(/\/\*[\s\S]*?\*\/|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g)].map((m) => m[0]).join("\n");
 let hits = 0, scanned = 0;
 for (const [f, p] of files) {
   if (ALLOW_PATHS.some((a) => a.test(f))) continue;
   if (!existsSync(p) || statSync(p).isDirectory()) continue;
-  if (/\.(png|jpg|jpeg|gif|pdf|zip|woff2?)$/i.test(f)) continue;
-  if (scanDir && /\.css$/i.test(f)) continue; // built theme styles carry no content
-  const text = readFileSync(p, "utf8");
+  const read = readText(p);
+  if (read.binary) continue;
+  const text = scanDir && /\.css$/i.test(f) ? cssVisible(read.text) : read.text;
   scanned++;
-  text.split("\n").forEach((raw, i) => {
+  text.split(/\r?\n|\r/).forEach((raw, i) => {
     const line = ALLOW_SUBSTRINGS.reduce((l, a) => l.replace(a, (s) => " ".repeat(s.length)), raw);
-    for (const r of rules) {
-      // every match, not just the first: one allowlisted token must not mask a later hit
-      // (built page chunks are a single line each)
-      for (const m of line.matchAll(r.global)) {
-        if (!m[0]) continue;
-        if (ALLOW_TOKENS.has(m[0]) || ALLOW_TOKENS.has(tokenAt(line, m.index, m.index + m[0].length))) continue;
-        hits++; console.log(`${f}:${i + 1}: matches ${r.src} (${m[0]})`);
+    const seen = new Set();
+    for (const view of [line, projection(line)]) {
+      for (const r of rules) {
+        // every match, not just the first: one allowlisted token must not mask a later hit
+        // (built page chunks are a single line each)
+        for (const m of view.matchAll(r.global)) {
+          if (!m[0]) continue;
+          if (ALLOW_TOKENS.has(m[0]) || ALLOW_TOKENS.has(tokenAt(view, m.index, m.index + m[0].length))) continue;
+          const key = `${r.src}\u0000${m[0]}`;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          hits++; console.log(`${f}:${i + 1}: matches ${r.src} (${m[0]})`);
+        }
       }
     }
   });

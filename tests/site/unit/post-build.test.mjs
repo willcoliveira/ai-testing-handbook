@@ -53,9 +53,18 @@ test("SITE_TEST: the specimen may sit outside the sidebar", () => {
 test("negative: SITE_TEST exempts only the specimen, another orphan still fails", () => fails({ "specimen.html": page("specimen"), "b.html": page("orphan") }, /\/b\.html appears 0 times/, { siteTest: true }));
 test("negative: a page twice in the sidebar fails", () => fails({}, /appears 2 times/, { sidebar: [...sidebar, { text: "again", link: "/a" }] }));
 test("negative: a sidebar link with no page fails", () => fails({}, /sidebar: \/gone has no built page/, { sidebar: [...sidebar, { text: "gone", link: "/gone" }] }));
-test("negative: markup in a sidebar label fails (title XSS, security review 2026-10-04)", () => fails({ "a.html": page(`<p class="text" data-v-1>Judge<img src=x onerror=alert(1)></p>`) }, /sidebar or pager label contains markup/));
+test("negative: markup in a sidebar label fails (title XSS, security review 2026-10-04)", () => fails({ "a.html": page(`<p class="text" data-v-1>Judge<img src=x onerror=alert(1)></p>`) }, /label contains markup/));
 test("negative: markup in a prev/next label fails", () => fails({ "a.html": page(`<span class="title" data-v-1>x<svg onload=alert(1)></span>`) }, /label contains markup/));
 test("negative: an inline event handler anywhere fails", () => fails({ "a.html": page(`<div onclick="alert(1)">x</div>`) }, /inline event handler/));
+// bypasses of the regex guard found in the adversarial re-test, now parsed
+test("negative: a slash-separated handler (<svg/onload=) fails", () => fails({ "a.html": page(`<svg/onload=0></svg>`) }, /inline event handler onload/));
+test("negative: a label closed early (x</span><img>) fails", () => fails({ "a.html": page(`<span class="title" data-v-1>x<img data-pwn=pager></span>`) }, /label contains markup/));
+test("negative: a group heading label with markup fails", () => fails({ "a.html": page(`<h2 class="text" data-v-1>x<b>y</b></h2>`) }, /label contains markup/));
+test("negative: an unquoted third-party src fails", () => fails({ "a.html": page(`<img src=//e.invalid/x>`) }, /third-party host: \/\/e\.invalid\/x/));
+test("negative: a third-party srcset fails", () => fails({ "a.html": page(`<img srcset="/ok.png 1x, https://e.invalid/x.png 2x">`) }, /third-party host: https:\/\/e\.invalid/));
+test("negative: an iframe fails", () => fails({ "a.html": page(`<iframe srcdoc="x"></iframe>`) }, /<iframe> is not allowed/));
+test("negative: a meta refresh fails", () => fails({ "a.html": page(`<meta http-equiv=refresh content="0;url=https://e.invalid">`) }, /meta refresh/));
+test("negative: a javascript: URL fails", () => fails({ "a.html": page(`<a href="javascript:alert(1)">x</a>`) }, /javascript: URL/));
 test("escaped labels pass", () => {
   const d = dist({ "a.html": page(`<h2 id="why">Why</h2><p class="text" data-v-1>Judge&lt;img src=x&gt;</p>`) });
   try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }

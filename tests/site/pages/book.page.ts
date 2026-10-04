@@ -414,7 +414,7 @@ export class BookPage {
         if (!outline || outline.getBoundingClientRect().width === 0) return [];
         const limit = outline.getBoundingClientRect().left;
         const blocks = document.querySelectorAll(
-          '.vp-doc > div > :is(p, h1, h2, h3, ul, ol, blockquote, table, div[class*="language-"]), .hb-meta, .hb-see-also',
+          '.vp-doc .hb-content > :is(p, h1, h2, h3, ul, ol, blockquote, table, div[class*="language-"]), .hb-meta, .hb-see-also',
         );
         const hits: string[] = [];
         for (const el of blocks) {

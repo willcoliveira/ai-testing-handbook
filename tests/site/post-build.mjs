@@ -2,6 +2,7 @@
 // exists, every citation hits a register row, every page sits in the sidebar exactly once,
 // nothing loads from a third-party host, search index and JS stay under budget, and the
 // forbidden-strings check passes on the HTML. Exits 1 on any failure.
+import { parse } from "parse5";
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, relative, dirname, posix } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -39,6 +40,47 @@ function sidebarLinks(items, out = []) {
 }
 
 // A SITE_TEST=1 build (visual tests) adds the type specimen, which is deliberately outside the book.
+// Structural checks on the parsed page (parse5, so `<svg/onload=`, unquoted URLs or a `</span>` that
+// closes a label early cannot slip past a regex; adversarial re-test of the 2026-10-04 security review).
+// A page fails on: any `on*` attribute; a javascript: URL; an element that loads from another host;
+// an iframe, object, embed, frame or meta refresh; markup inside a label VitePress renders with v-html.
+const LOAD_ATTRS = ["src", "srcset", "href", "poster", "data", "action", "formaction", "xlink:href"];
+const BANNED = new Set(["iframe", "object", "embed", "frame", "frameset", "applet", "base"]);
+const LABEL_TAGS = new Set(["p", "span", "h2", "h3", "label", "summary"]);
+const LABEL_CLASSES = /(^|\s)(text|title|custom-block-title)(\s|$)/;
+export function domErrors(html) {
+  const out = [];
+  const walk = (node) => {
+    if (node.tagName) {
+      const tag = node.tagName;
+      const attrs = Object.fromEntries((node.attrs || []).map((a) => [a.name, a.value]));
+      for (const name of Object.keys(attrs)) {
+        if (/^on/i.test(name)) out.push(`inline event handler ${name} on <${tag}>`);
+        if (LOAD_ATTRS.includes(name) && /^\s*javascript:/i.test(attrs[name])) out.push(`javascript: URL in ${name} on <${tag}>`);
+      }
+      if (BANNED.has(tag)) out.push(`<${tag}> is not allowed`);
+      if (tag === "meta" && /refresh/i.test(attrs["http-equiv"] || "")) out.push("meta refresh is not allowed");
+      // anything but a link may only load from this site
+      if (tag !== "a") {
+        for (const name of LOAD_ATTRS) {
+          const v = attrs[name];
+          if (!v) continue;
+          if (tag === "link" && name === "href" && !/(stylesheet|preload|modulepreload|icon|prefetch|manifest)/.test(attrs.rel || "")) continue;
+          const urls = name === "srcset" ? v.split(",").map((s) => s.trim().split(/\s+/)[0]) : [v.trim()];
+          for (const u of urls) if (/^(https?:)?\/\//i.test(u)) out.push(`<${tag}> loads from a third-party host: ${u}`);
+        }
+      }
+      if (LABEL_TAGS.has(tag) && LABEL_CLASSES.test(attrs.class || "") && (node.childNodes || []).some((c) => c.nodeName !== "#text" && c.nodeName !== "#comment")) {
+        out.push(`a sidebar, pager or block label contains markup: <${tag} class="${attrs.class}">`);
+      }
+    }
+    for (const c of node.childNodes || []) walk(c);
+    if (node.content) walk(node.content);
+  };
+  walk(parse(html));
+  return out;
+}
+
 export const SPECIMEN_PAGE = "specimen.html";
 
 export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets = BUDGETS, forbidden = true, root = process.cwd(), siteTest = false }) {
@@ -56,18 +98,7 @@ export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets =
   for (const f of html) {
     const text = readFileSync(f, "utf8");
     const here = page(f);
-    // third-party hosts for anything the page loads
-    for (const m of text.matchAll(/<(script|link|img|source|iframe|video|audio)\b[^>]*?\s(src|href)="([^"]*)"[^>]*>/g)) {
-      const [tag, kind, attr, url] = [m[0], m[1], m[2], m[3]];
-      if (kind === "link" && attr === "href" && !/rel="(stylesheet|preload|modulepreload|icon|prefetch|manifest)"/.test(tag)) continue;
-      if (/^(https?:)?\/\//.test(url)) errors.push(`${here}: <${kind}> loads from a third-party host: ${url}`);
-    }
-    // labels VitePress renders with v-html (sidebar, prev/next) must be text, and no tag may carry
-    // an inline event handler: either would mean a title or a page injected markup
-    for (const m of text.matchAll(/<(p|span) class="(?:text|title)"[^>]*>([\s\S]*?)<\/\1>/g)) {
-      if (/<[a-z!/]/i.test(m[2])) errors.push(`${here}: a sidebar or pager label contains markup: ${m[2].slice(0, 80)}`);
-    }
-    for (const m of text.matchAll(/<[a-z][a-z0-9-]*\b[^>]*?\son[a-z]+\s*=/gi)) errors.push(`${here}: inline event handler in ${m[0].slice(0, 80)}`);
+    for (const e of domErrors(text)) errors.push(`${here}: ${e}`);
     for (const m of text.matchAll(/<a\b([^>]*)>/g)) {
       const attrs = m[1];
       const hm = attrs.match(/\shref="([^"]*)"/);

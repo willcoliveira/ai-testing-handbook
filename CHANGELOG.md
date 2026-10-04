@@ -2,12 +2,15 @@
 
 ## 0.1.13 (2026-10-04)
 
-- Security hardening from a review of the site work: page titles and `{{ }}` in content can no
-  longer inject markup or run code in the book (escaped labels, entity-encoded braces, post-build
-  guards and payload tests); the privacy check reports every match and no longer lets one allowed
-  token or the noreply address hide a line; the Pages deploy is split so the job holding deploy
-  permissions runs no repository or dependency code; checkouts keep no credentials, jobs have
-  timeouts, superseded PR runs are cancelled. `MAINTAINING.md`, "## Site".
+- Security hardening from a review of the site work and an adversarial re-test of the fixes: the
+  book accepts plain Markdown and an allowlist of frontmatter keys only, page content is never
+  evaluated by Vue, labels are escaped, and a parser-based post-build check fails on handlers,
+  `javascript:` URLs, third-party loads and injected markup, with tests for every known payload.
+  The privacy check scans visible text as well as raw lines and no longer lets an allowed token,
+  the noreply address, markup, lookalike characters or a file extension hide a hit. The Pages
+  deploy is split so the job holding deploy permissions runs no repository or dependency code,
+  checked on the parsed workflow. New dev dependencies: `parse5`, `yaml`. `MAINTAINING.md`,
+  "## Site".
 
 ## 0.1.12 (2026-10-04)
 

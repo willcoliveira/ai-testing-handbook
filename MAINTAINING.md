@@ -82,15 +82,22 @@ VitePress reads the Markdown files in place; nothing in the content is written f
 - Privacy: `tests/site/post-build.mjs` runs `check-forbidden --dir .vitepress/dist` on the built
   HTML. In CI only the example list is present (the real list is gitignored), so that check is fully
   effective only locally and in the pre-commit hook. Nothing new is exposed: the repository is public.
-- Security (review of 2026-10-04): page content cannot inject markup or code into the site.
-  Sidebar and prev/next labels are escaped (`book.mjs`, VitePress renders them as HTML), and every
-  `{` and `}` in text and inline code is emitted as an entity (`plugins/vue-safe.mjs`), so `{{ }}` is
-  never evaluated by Vue. `post-build` fails on markup in a label or any inline event handler, and
-  `tests/site/unit/security-*.test.mjs` build the original payloads. `check-forbidden` reports every
-  match on a line, compares allowlisted ids as whole tokens, and removes the noreply address before
-  matching instead of skipping its line. Deploy is two jobs: `build` (read-only token, `npm ci
-  --ignore-scripts`) and `deploy` (Pages and OIDC permissions, runs only `deploy-pages`). Checkouts
-  keep no credentials, every job has a timeout, and a newer push to a PR cancels its older run.
+- Security (review and adversarial re-test, 2026-10-04): the book accepts plain Markdown and data
+  only. Off: Markdown attributes (`{...}`), GitHub alerts, custom containers (`:::`), snippet
+  imports (`<<<`). Frontmatter keys are an allowlist (`plugins/lockdown.mjs`; `description`,
+  `layout`, `prev`, `next`, `head` fail the build). Every page's content is wrapped in `v-pre`, and
+  every `{` `}` in text is an entity, so Vue evaluates nothing from content. Sidebar and prev/next
+  labels are escaped. `post-build` parses each page (parse5) and fails on any `on*` attribute,
+  `javascript:` URL, third-party load, iframe/object/embed/meta refresh, or markup in a label.
+  `tests/site/unit/security-*.test.mjs` build every known payload. `check-forbidden` scans each line
+  raw and as visible text (tags and emphasis removed, entities decoded, NFKC, zero-width and
+  Unicode hyphens normalised), reports every match, compares allowlisted ids as whole tokens, skips
+  files only when they are binary by content, reads UTF-16, and scans CSS strings and comments.
+  Deploy is two jobs: `build` (read-only token, `npm ci --ignore-scripts`) and `deploy` (Pages and
+  OIDC permissions, only `deploy-pages`); `tests/site/unit/workflow.test.mjs` checks this and more on
+  the parsed YAML. Checkouts keep no credentials, every job has a timeout, superseded PR runs are
+  cancelled. Adding a Markdown feature or a frontmatter key means changing `lockdown.mjs` and these
+  tests on purpose.
 - Windows: CI builds and tests the site on Linux and Windows (`.github/workflows/site.yml`).
   `.gitattributes` keeps LF line endings and the parsers in `.vitepress/read.mjs` accept CRLF.
 - Dependencies: `package.json` overrides Vite to 6.4.3, because VitePress 1.6.4 ships Vite 5, which

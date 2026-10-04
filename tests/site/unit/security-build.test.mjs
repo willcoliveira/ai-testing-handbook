@@ -11,5 +11,25 @@ test("with the fixes: mustaches stay text and a title cannot inject markup", { t
     for (const evaluated of ["Plain 9", "cell 25", "code 64", " 12.", "Split 49", "emphasis 4"]) assert.ok(!s.html.includes(evaluated), `not evaluated: ${evaluated}`);
     assert.ok(!s.html.includes("<img src=x"), "no live <img> from the title");
     assert.ok(s.html.includes("Judge&lt;img"), "title shown as text");
+    // adversarial re-test bypasses: no live data-pwn attribute, no evaluated 42, no outside file
+    assert.doesNotMatch(s.html, /<[^>]+\sdata-pwn\d*=/, "no live data-pwn attribute");
+    // VitePress itself puts v-pre on code blocks; any other directive would be content's doing
+    assert.doesNotMatch(s.html, /<[^>]+\s(:|@|v-(?!pre=))[a-z-]+=/i, "no Vue directive on an element");
+    assert.ok(!s.html.includes("OUTSIDE-FILE-MARKER"), "no file from outside the repository");
+    assert.ok(s.html.includes('class="hb-content"'), "content wrapped for v-pre");
   } finally { s.done(); }
+});
+
+test("frontmatter: only the book's keys are accepted (description, layout, prev, next, head rejected)", async () => {
+  const { checkFrontmatter, FRONTMATTER_KEYS } = await import("../../../.vitepress/plugins/lockdown.mjs");
+  for (const fm of [
+    { title: "x", description: 'x"><svg/onload=0><meta name="y' },
+    { title: "x", layout: "svg/onload=6*7 data-pwn=1" },
+    { title: "x", prev: "x</span><img data-pwn=pager><span>" },
+    { title: "x", next: "<img src=x>" },
+    { title: "x", head: [["script", {}, "alert(1)"]] },
+    { title: "x", editLink: true },
+  ]) assert.throws(() => checkFrontmatter(fm, "p.md"), /not allowed/, JSON.stringify(fm));
+  assert.doesNotThrow(() => checkFrontmatter(Object.fromEntries(FRONTMATTER_KEYS.map((k) => [k, "v"])), "p.md"));
+  assert.doesNotThrow(() => checkFrontmatter({ title: "x", editLink: false }, "p.md"));
 });
