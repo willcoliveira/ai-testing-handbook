@@ -10,7 +10,8 @@
   The privacy check scans visible text as well as raw lines and no longer lets an allowed token,
   the noreply address, markup, lookalike characters or a file extension hide a hit. The Pages
   deploy is split so the job holding deploy permissions runs no repository or dependency code,
-  checked on the parsed workflow. New dev dependencies: `parse5`, `yaml`. `MAINTAINING.md`,
+  checked on the parsed workflow, re-checked on the exact artifact, with every action pinned to a
+  commit SHA. Content folders hold Markdown only. New dev dependencies: `parse5`, `yaml`. `MAINTAINING.md`,
   "## Site".
 
 ## 0.1.12 (2026-10-04)

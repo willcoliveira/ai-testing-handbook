@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { join } from "node:path";
 import { tmp, ROOT } from "./helpers.mjs";
 
 // an example-list pattern, assembled so this file does not trip the repo scan itself
@@ -107,4 +108,25 @@ for (const [name, files] of Object.entries(evasions)) {
 test("--dir: a CSS selector that looks like a hostname is not a hit", () => {
   const d = tmp({ "theme.css": `.${"lo" + "cal"}{color:red}.x{content:"ok"}` });
   try { assert.equal(run("--dir", d.dir).status, 0); } finally { d.done(); }
+});
+
+// round four: a multi-word name wrapped across lines or spaced out, and a NUL byte in a text file
+test("--dir: a multi-word name split across lines or spaces is reported", () => {
+  const name = ["acme", "corp"].join(" ");
+  const d = tmp({
+    "privacy/forbidden-strings.example.txt": `${name}\n`,
+    "site/a.md": "the acme\ncorp report\n",
+    "site/b.html": "<p>ACME   corp</p>",
+  });
+  try {
+    const r = spawnSync(process.execPath, [join(ROOT, "scripts/check-forbidden.mjs"), "--dir", "site"], { cwd: d.dir, encoding: "utf8", env: { ...process.env, CI: "1" } });
+    assert.equal(r.status, 1, r.stdout);
+    assert.match(r.stdout, /site\/a\.md: matches .* across lines/);
+    assert.match(r.stdout, /site\/b\.html/);
+  } finally { d.done(); }
+});
+
+test("--dir: a NUL byte does not hide a text file", () => {
+  const d = tmp({ "notes.txt": Buffer.concat([Buffer.from("x\0y "), Buffer.from(`${A}${B}`)]) });
+  try { assert.equal(run("--dir", d.dir).status, 1); } finally { d.done(); }
 });

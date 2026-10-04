@@ -5,6 +5,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildSidebar, linkOf } from "./book.mjs";
+import { lintAll } from "./gen.mjs";
 import { titleOf, parseFlat } from "./read.mjs";
 import citePlugin from "./plugins/cite.mjs";
 import linksPlugin, { REPO } from "./plugins/links.mjs";
@@ -50,6 +51,8 @@ export function siteOptions(env = process.env, root = ROOT) {
     sidebar: { "/specimen": SPECIMEN_SIDEBAR, "/": book },
   };
 }
+// the content lint runs here too, so `vitepress build` or `dev` without gen.mjs cannot skip it
+lintAll(ROOT);
 const site = siteOptions();
 const DESCRIPTION = "Evals, guardrails, benchmarks and audits for LLM applications and agents: a sourced reference and a learning path for AI testing.";
 

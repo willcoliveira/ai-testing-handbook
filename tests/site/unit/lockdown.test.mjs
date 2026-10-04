@@ -72,3 +72,20 @@ test("a title with a long whitespace run is labelled quickly", async () => {
   assert.equal(shortLabel("a" + " ".repeat(80000) + "b"), "a b");
   assert.ok(performance.now() - t0 < 200, "under 200 ms");
 });
+
+// round four: content folders hold Markdown only, linted at any depth
+test("content folders reject code, route and data loaders, public/, and lint nested folders", () => {
+  for (const [files, re] of [
+    [{ "how-to/_[n].md": "x" }, /dynamic route/],
+    [{ "how-to/_n.paths.js": "export default {}" }, /paths or data loader/],
+    [{ "how-to/x.data.mjs": "export default {}" }, /paths or data loader/],
+    [{ "how-to/x.js": "1" }, /code is not allowed/],
+    [{ "public/a.js": "1" }, /public\/ folder/],
+    [{ "how-to/sources/x.md": "<!--@include: ../../../m.txt-->" }, /@include directive/],
+  ]) {
+    const d = tmp({ "ok.md": "# ok\n", ...files });
+    try { assert.throws(() => lintAll(d.dir), re, JSON.stringify(files)); } finally { d.done(); }
+  }
+  const ok = tmp({ "ok.md": "# ok\n", "playwright.config.ts": "x", "tests/site/a.ts": "x", "sources/_x.rows.md": "| S001 |" });
+  try { assert.doesNotThrow(() => lintAll(ok.dir)); } finally { ok.done(); }
+});

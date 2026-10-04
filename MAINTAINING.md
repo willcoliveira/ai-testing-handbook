@@ -87,7 +87,9 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   imports (`<<<`), includes (`<!--@include-->`, rejected by `gen.mjs` before the build), and code
   fence info other than a plain language name (VitePress writes it into the page raw). Frontmatter
   keys are an allowlist with fixed types, a title may not contain `<` or `>`, and frontmatter must
-  open with a plain `---` (gray-matter would run `---js` through eval) (`plugins/lockdown.mjs`; `description`,
+  open with a plain `---` (gray-matter would run `---js` through eval). Content folders hold
+  Markdown only, checked at any depth by `gen.mjs` (also run from `config.mjs`): code, `[param]`
+  routes, `*.paths.*` and `*.data.*` loaders and `public/` fail the build (`plugins/lockdown.mjs`; `description`,
   `layout`, `prev`, `next`, `head` fail the build). Every page's content is wrapped in `v-pre`, and
   every `{` `}` in text is an entity, so Vue evaluates nothing from content. Sidebar and prev/next
   labels are escaped. `post-build` parses each page (parse5) and fails on any `on*` attribute,
@@ -97,10 +99,12 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   `tests/site/unit/security-*.test.mjs` build every known payload. `check-forbidden` scans each line
   raw and as visible text (tags and emphasis removed, entities decoded, NFKC, zero-width and
   Unicode hyphens normalised), reports every match, compares allowlisted ids as whole tokens, skips
-  files only when they are binary by content, reads UTF-16, and scans CSS strings and comments.
+  binary formats only when they hold a NUL byte, reads UTF-16, scans CSS strings and comments, and
+  matches names wrapped across lines or spaced out.
   Deploy is two jobs: `build` (read-only token, `npm ci --ignore-scripts`) and `deploy` (Pages and
   OIDC permissions, only `deploy-pages`); `tests/site/unit/workflow.test.mjs` checks this and more on
-  the parsed YAML. Checkouts keep no credentials, every job has a timeout, superseded PR runs are
+  the parsed YAML; the build job re-runs the post-build checks on the exact artifact, and every action
+  is GitHub's own, pinned to a commit SHA (Dependabot updates the pins). Checkouts keep no credentials, every job has a timeout, superseded PR runs are
   cancelled. Adding a Markdown feature or a frontmatter key means changing `lockdown.mjs` and these
   tests on purpose.
 - Windows: CI builds and tests the site on Linux and Windows (`.github/workflows/site.yml`).

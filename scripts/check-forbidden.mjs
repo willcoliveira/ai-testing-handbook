@@ -94,11 +94,14 @@ function projection(line) {
     .replace(/\*\*|__|~~|[*_`]/g, "");
 }
 // binary by content, not by name: a NUL byte in the first 8 KB (UTF-16 text is decoded instead)
+// A NUL byte makes a file binary only for real binary formats; any other file with a NUL is read as
+// text with the NULs removed (round four: a NUL hid a whole text file)
+const BINARY_EXT = /\.(png|jpe?g|gif|webp|ico|pdf|zip|gz|woff2?|ttf|otf)$/i;
 function readText(p) {
   const buf = readFileSync(p);
   if (buf[0] === 0xff && buf[1] === 0xfe) return { text: buf.subarray(2).toString("utf16le") };
   if (buf[0] === 0xfe && buf[1] === 0xff) return { text: Buffer.from(buf.subarray(2)).swap16().toString("utf16le") };
-  if (buf.subarray(0, 8192).includes(0)) return { binary: true };
+  if (buf.subarray(0, 8192).includes(0)) return BINARY_EXT.test(p) ? { binary: true } : { text: buf.toString("utf8").replace(/\0/g, "") };
   return { text: buf.toString("utf8") };
 }
 // in a built site, a CSS file is checked for what it can show: strings and comments, not selectors
@@ -112,6 +115,7 @@ for (const [f, p] of files) {
   if (read.binary) continue;
   const text = scanDir && /\.css$/i.test(f) ? cssVisible(read.text) : read.text;
   scanned++;
+  const reported = new Set();
   text.split(/\r?\n|\r/).forEach((raw, i) => {
     const line = ALLOW_SUBSTRINGS.reduce((l, a) => l.replace(a, (s) => " ".repeat(s.length)), raw);
     const seen = new Set();
@@ -125,11 +129,27 @@ for (const [f, p] of files) {
           const key = `${r.src}\u0000${m[0]}`;
           if (seen.has(key)) continue;
           seen.add(key);
+          reported.add(key.toLowerCase());
           hits++; console.log(`${f}:${i + 1}: matches ${r.src} (${m[0]})`);
         }
       }
     }
   });
+  // a name wrapped across lines or with extra spaces: the whole file with all whitespace runs as one
+  // space, in both views (round four); hits already reported on a single line are not repeated
+  const flat = ALLOW_SUBSTRINGS.reduce((l, a) => l.replace(a, (s) => " ".repeat(s.length)), text).replace(/\s+/g, " ");
+  for (const view of [flat, projection(flat).replace(/\s+/g, " ")]) {
+    for (const r of rules) {
+      for (const m of view.matchAll(r.global)) {
+        if (!m[0]) continue;
+        if (ALLOW_TOKENS.has(m[0]) || ALLOW_TOKENS.has(tokenAt(view, m.index, m.index + m[0].length))) continue;
+        const key = `${r.src}\u0000${m[0]}`.toLowerCase();
+        if (reported.has(key)) continue;
+        reported.add(key);
+        hits++; console.log(`${f}: matches ${r.src} across lines (${m[0]})`);
+      }
+    }
+  }
 }
 console.log(`${hits} hits across ${scanned} files (${rules.length} rules${process.env.CI ? ", CI example list only" : ""})`);
 process.exit(hits ? 1 : 0);

@@ -81,14 +81,31 @@ export function write(root, out) {
   }
 }
 
-// every Markdown file VitePress could build, checked before it expands includes
-const SKIP_DIRS = new Set(["node_modules", ".git", ".vitepress", ".claude", "sources", "test-results", "playwright-report", "blob-report"]);
+// Every Markdown file VitePress could build is checked before it expands includes, at any depth
+// (round four: a nested `sources/` folder was built but never linted). Content folders hold Markdown
+// only: code, VitePress route and data loaders (`[param].md`, `*.paths.js`, `*.data.js`) and a
+// `public/` folder all run or publish something no reviewer reads as content, so they fail here.
+const ROOT_SKIP = new Set([".git", "node_modules", "sources", ".claude", ".vitepress", "test-results", "playwright-report", "blob-report"]);
+const CODE_ROOTS = new Set([".vitepress", "scripts", "tests", ".githooks", ".github", ".claude", "node_modules"]);
+const ROOT_CODE_FILES = new Set(["playwright.config.ts", "eslint.config.mjs"]);
+const CODE = /\.(m?js|cjs|m?ts|cts|jsx|tsx|vue|svelte|wasm)$/i;
 export function lintAll(root, dir = root, n = { files: 0 }) {
+  const top = dir === root;
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
-    if (statSync(p).isDirectory()) { if (!SKIP_DIRS.has(name)) lintAll(root, p, n); continue; }
+    const rel = p.slice(root.length + 1).split("\\").join("/");
+    if (statSync(p).isDirectory()) {
+      if (name === "node_modules" || (top && ROOT_SKIP.has(name))) continue;
+      if (name === "public") throw new Error(`${rel}: a public/ folder is published as-is; it is not allowed`);
+      if (top && CODE_ROOTS.has(name)) continue;
+      lintAll(root, p, n);
+      continue;
+    }
+    if (/[[\]]/.test(name)) throw new Error(`${rel}: a [param] file is a VitePress dynamic route; not allowed in content`);
+    if (/\.(paths|data)\.[a-z]+$/i.test(name)) throw new Error(`${rel}: a VitePress paths or data loader runs code at build time; not allowed in content`);
+    if (CODE.test(name) && !(top && ROOT_CODE_FILES.has(name))) throw new Error(`${rel}: code is not allowed in content folders`);
     if (!name.endsWith(".md")) continue;
-    lintSource(readFileSync(p, "utf8"), p.slice(root.length + 1));
+    lintSource(readFileSync(p, "utf8"), rel);
     n.files++;
   }
   return n.files;

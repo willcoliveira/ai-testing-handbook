@@ -102,3 +102,4 @@ test("budgets are named constants", () => {
   assert.equal(BUDGETS.SEARCH_INDEX_MAX_BYTES, 3 * 1024 * 1024);
   assert.equal(BUDGETS.JS_MAX_BYTES, 2 * 1024 * 1024);
 });
+test("negative: a scheme hidden with a tab still fails", () => fails({ "a.html": page(`<img src="java\tscript:alert(1)">`) }, /javascript: URL/));

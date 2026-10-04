@@ -28,6 +28,10 @@ export function workflowProblems(wf, name) {
       if (usesOf(s) === "actions/checkout" && s.with?.["persist-credentials"] !== false) out.push(`${name}/${id}: a checkout keeps its credentials`);
       if (/\bgit\s+(push|commit)\b/.test(s.run || "")) out.push(`${name}/${id}: runs git push or commit`);
       if (/^\.\//.test(String(s.uses || ""))) out.push(`${name}/${id}: uses a local action`);
+      // only GitHub's own actions, each pinned to a full commit SHA (round four)
+      if (s.uses && !/^\.\//.test(s.uses)) {
+        if (!/^actions\/[\w.-]+@[0-9a-f]{40}$/.test(String(s.uses))) out.push(`${name}/${id}: ${s.uses} is not an actions/* step pinned to a commit SHA`);
+      }
     }
   }
   return out;
@@ -59,6 +63,16 @@ export function deployProblems(wf) {
   if (ds.length !== 1 || usesOf(ds[0]) !== "actions/deploy-pages" || ds[0].run) out.push("deploy must have exactly one step: actions/deploy-pages");
   for (const s of steps(build)) if (/\bnpm (ci|install|i)\b/.test(s.run || "") && !/--ignore-scripts/.test(s.run)) out.push("build installs with lifecycle scripts");
   if (!steps(build).some((s) => /npm ci --ignore-scripts/.test(s.run || ""))) out.push("build must run npm ci --ignore-scripts");
+  // the build job runs exactly these commands and actions, checks the artifact, and uploads dist
+  const BUILD_RUNS = ["npm ci --ignore-scripts", "npm run docs:build", "node tests/site/post-build.mjs"];
+  const BUILD_USES = ["actions/checkout", "actions/setup-node", "actions/upload-pages-artifact"];
+  for (const s of steps(build)) {
+    if (s.run && !BUILD_RUNS.includes(String(s.run).trim())) out.push(`build runs an unexpected command: ${String(s.run).trim().slice(0, 60)}`);
+    if (s.uses && !BUILD_USES.includes(usesOf(s))) out.push(`build uses an unexpected action: ${s.uses}`);
+  }
+  if (!steps(build).some((s) => String(s.run || "").trim() === "node tests/site/post-build.mjs")) out.push("build must run the post-build checks on the artifact");
+  const upload = steps(build).find((s) => usesOf(s) === "actions/upload-pages-artifact");
+  if (upload?.with?.path !== ".vitepress/dist") out.push("build must upload .vitepress/dist");
   if (!smoke || JSON.stringify([].concat(smoke.needs || [])) !== JSON.stringify(["deploy"])) out.push("smoke must need exactly deploy");
   if (smoke && smoke.if && smoke.if !== PUSH_MAIN) out.push("smoke may only run on a push to main");
   return out;
@@ -92,6 +106,12 @@ const MUTATIONS = {
   "build skips the e2e gate": (w) => { w.jobs.build.needs = ["test", "lint"]; },
   "deploy runs in a container": (w) => { w.jobs.deploy.container = "node:22"; },
   "a step uses a local action": (w) => { w.jobs.build.steps.push({ uses: "./.github/actions/x" }); },
+  // round four
+  "a third-party action": (w) => { w.jobs.test.steps.push({ uses: "attacker/x@0123456789abcdef0123456789abcdef01234567" }); },
+  "an action pinned to a tag": (w) => { w.jobs.build.steps[0].uses = "actions/checkout@v7"; },
+  "an extra command in build": (w) => { w.jobs.build.steps.splice(3, 0, { run: "node -e 1" }); },
+  "post-build removed from build": (w) => { w.jobs.build.steps = w.jobs.build.steps.filter((s) => s.run !== "node tests/site/post-build.mjs"); },
+  "a different upload path": (w) => { w.jobs.build.steps.find((s) => String(s.uses).startsWith("actions/upload-pages-artifact")).with.path = "."; },
 };
 for (const [name, mutate] of Object.entries(MUTATIONS)) {
   test(`rejected: ${name}`, () => {

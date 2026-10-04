@@ -63,7 +63,9 @@ export function domErrors(html) {
       const attrs = Object.fromEntries((node.attrs || []).map((a) => [a.name, a.value]));
       for (const name of Object.keys(attrs)) {
         if (/^on/i.test(name)) out.push(`inline event handler ${name} on <${tag}>`);
-        if (LOAD_ATTRS.includes(name) && /^\s*(javascript|vbscript|data):/i.test(attrs[name])) out.push(`${attrs[name].trim().split(":")[0]}: URL in ${name} on <${tag}>`);
+        // browsers drop tabs, newlines and control characters inside a URL scheme
+        const bare = String(attrs[name]).replace(/[\u0000-\u0020]/g, "");
+        if (LOAD_ATTRS.includes(name) && /^(javascript|vbscript|data):/i.test(bare)) out.push(`${bare.split(":")[0]}: URL in ${name} on <${tag}>`);
         if (name === "style" && /url\(\s*['"]?\s*([a-z][a-z0-9+.-]*:|\/\/)/i.test(attrs[name])) out.push(`style attribute loads a URL on <${tag}>`);
       }
       if (BANNED.has(tag)) out.push(`<${tag}> is not allowed`);
