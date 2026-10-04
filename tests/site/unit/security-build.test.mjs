@@ -32,4 +32,12 @@ test("frontmatter: only the book's keys are accepted (description, layout, prev,
   ]) assert.throws(() => checkFrontmatter(fm, "p.md"), /not allowed/, JSON.stringify(fm));
   assert.doesNotThrow(() => checkFrontmatter(Object.fromEntries(FRONTMATTER_KEYS.map((k) => [k, "v"])), "p.md"));
   assert.doesNotThrow(() => checkFrontmatter({ title: "x", editLink: false }, "p.md"));
+  assert.throws(() => checkFrontmatter({ title: "T</script><script>0</script>" }, "p.md"), /title may not contain/);
+  assert.doesNotThrow(() => checkFrontmatter({ title: "Humanity's Last Exam: a & b" }, "p.md"));
+});
+
+test("a real build fails on a fence whose language is markup (round-two re-test)", { timeout: 120000 }, async () => {
+  await assert.rejects(site({ safe: true, extra: "\n```<b></b>\nx\n```\n" }), /not a plain language name/);
+  // the round-one code-group tab label payload now fails the build the same way
+  await assert.rejects(site({ safe: true, extra: '\n```js [<img :data-pwn="6*7" data-pwn3=tab>]\na\n```\n' }), /not a plain language name/);
 });

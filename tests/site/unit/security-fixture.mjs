@@ -33,7 +33,7 @@ const BYPASSES = (fence) => [
   "> [!NOTE] <img :data-pwn=\"6*7\" data-pwn2=alert>",
   "",
   "::: code-group",
-  `${fence}js [<img :data-pwn="6*7" data-pwn3=tab>]`,
+  `${fence}js`,
   "a",
   fence,
   ":::",
@@ -42,13 +42,13 @@ const BYPASSES = (fence) => [
   "",
 ].join("\n");
 
-export async function site({ safe }) {
+export async function site({ safe, extra = "" }) {
   const plugin = JSON.stringify(join(ROOT, ".vitepress/plugins/vue-safe.mjs"));
   const lockdown = JSON.stringify(join(ROOT, ".vitepress/plugins/lockdown.mjs"));
   writeFileSync(OUTSIDE, "OUTSIDE-FILE-MARKER\n");
   const label = JSON.stringify(safe ? escapeLabel(XSS_TITLE) : XSS_TITLE);
   // with the fix, also a payload that markdown splits across emphasis tokens (it would not compile without it)
-  const page = safe ? PAGE + "\nSplit {{ 7*7 }} across emphasis {{ 2*2 }}.\n" + BYPASSES("```") : PAGE;
+  const page = (safe ? PAGE + "\nSplit {{ 7*7 }} across emphasis {{ 2*2 }}.\n" + BYPASSES("```") : PAGE) + extra;
   const s = tmp({
     "index.md": page, "other.md": "# Other\n",
     ".vitepress/config.mjs": `import vueSafe from ${plugin};
@@ -56,7 +56,7 @@ import lockdown from ${lockdown};
 export default { base: "/b/", markdown: { html: false, ${safe ? "attrs: { disable: true }, gfmAlerts: false," : ""} config: (md) => { ${safe ? "md.use(vueSafe); md.use(lockdown);" : ""} } },
   themeConfig: { sidebar: [{ text: ${label}, link: "/other" }] } };`,
   }, { inRepo: true });
-  await build(s.dir, { outDir: join(s.dir, "dist") });
+  try { await build(s.dir, { outDir: join(s.dir, "dist") }); } catch (e) { s.done(); throw e; }
   return { html: readFileSync(join(s.dir, "dist/index.html"), "utf8"), done: s.done };
 }
 

@@ -7,13 +7,29 @@
 // pages set) is enforced in transformPageData.
 export const FRONTMATTER_KEYS = ["id", "title", "area", "status", "last_reviewed", "sources", "related", "practices", "anonymisation", "search"];
 
+// a fence's info string is a plain language name: VitePress writes the language into the page as
+// raw HTML (round-two re-test: a fence "language" of `<b></b>` became an element, a script ran)
+export const FENCE_INFO = /^[A-Za-z0-9_+#.-]*$/;
+// checks on the page source, before VitePress expands includes (run from gen.mjs on every page)
+export function lintSource(text, file) {
+  if (/<!--\s*@include/i.test(text)) throw new Error(`${file}: <!--@include--> is not allowed (it can read files outside the page)`);
+}
+
 // throws on any frontmatter key the book does not use (`editLink: false` is the one extra)
 export function checkFrontmatter(fm, file) {
   const unknown = Object.keys(fm || {}).filter((k) => !FRONTMATTER_KEYS.includes(k) && !(k === "editLink" && fm[k] === false));
+  if (/[<>]/.test(String(fm?.title ?? ""))) throw new Error(`${file}: frontmatter title may not contain < or >`);
   if (unknown.length) throw new Error(`${file}: frontmatter key(s) not allowed: ${unknown.join(", ")} (allowed: ${FRONTMATTER_KEYS.join(", ")}, and editLink: false)`);
 }
 
 export default function lockdownPlugin(md) {
+  md.core.ruler.push("hb_fence_info", (state) => {
+    for (const tok of state.tokens) {
+      if (tok.type === "fence" && !FENCE_INFO.test(tok.info.trim())) {
+        throw new Error(`${state.env?.relativePath || "page"}: code fence info "${tok.info.trim().slice(0, 60)}" is not a plain language name`);
+      }
+    }
+  });
   const blockRules = md.block.ruler.__rules__.map((r) => r.name);
   md.block.ruler.disable(blockRules.filter((n) => n === "snippet" || n.startsWith("container_")));
   // every page's content inside v-pre: Vue compiles no interpolation, directive or component in it

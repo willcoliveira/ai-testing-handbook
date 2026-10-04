@@ -84,11 +84,14 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   effective only locally and in the pre-commit hook. Nothing new is exposed: the repository is public.
 - Security (review and adversarial re-test, 2026-10-04): the book accepts plain Markdown and data
   only. Off: Markdown attributes (`{...}`), GitHub alerts, custom containers (`:::`), snippet
-  imports (`<<<`). Frontmatter keys are an allowlist (`plugins/lockdown.mjs`; `description`,
+  imports (`<<<`), includes (`<!--@include-->`, rejected by `gen.mjs` before the build), and code
+  fence info other than a plain language name (VitePress writes it into the page raw). Frontmatter
+  keys are an allowlist, and a title may not contain `<` or `>` (`plugins/lockdown.mjs`; `description`,
   `layout`, `prev`, `next`, `head` fail the build). Every page's content is wrapped in `v-pre`, and
   every `{` `}` in text is an entity, so Vue evaluates nothing from content. Sidebar and prev/next
   labels are escaped. `post-build` parses each page (parse5) and fails on any `on*` attribute,
-  `javascript:` URL, third-party load, iframe/object/embed/meta refresh, or markup in a label.
+  URL with a scheme in anything but a link, `target=_blank` without `rel`, iframe/object/embed/meta
+  refresh, markup in a label, or any tag inside page content that plain Markdown does not produce.
   `tests/site/unit/security-*.test.mjs` build every known payload. `check-forbidden` scans each line
   raw and as visible text (tags and emphasis removed, entities decoded, NFKC, zero-width and
   Unicode hyphens normalised), reports every match, compares allowlisted ids as whole tokens, skips

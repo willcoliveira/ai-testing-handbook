@@ -1,10 +1,11 @@
 // Prebuild: writes the part intro pages (practices/_part.md, practices/N-*/_part.md,
 // patterns/_part.md) and .vitepress/data/{sources,ids}.json. All outputs are gitignored and
 // byte-identical across runs. _part.md is skipped by check-sources and apply-bullets.
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join, dirname, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import { frontmatter, titleOf, mdFiles, partDirs, parseTaxonomy, parseSources, roman } from "./read.mjs";
+import { lintSource } from "./plugins/lockdown.mjs";
 
 const head = (title) => `---\ntitle: ${JSON.stringify(title)}\neditLink: false\n---\n\n# ${title}\n\n`;
 
@@ -80,8 +81,22 @@ export function write(root, out) {
   }
 }
 
+// every Markdown file VitePress could build, checked before it expands includes
+const SKIP_DIRS = new Set(["node_modules", ".git", ".vitepress", ".claude", "sources", "test-results", "playwright-report", "blob-report"]);
+export function lintAll(root, dir = root, n = { files: 0 }) {
+  for (const name of readdirSync(dir)) {
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) { if (!SKIP_DIRS.has(name)) lintAll(root, p, n); continue; }
+    if (!name.endsWith(".md")) continue;
+    lintSource(readFileSync(p, "utf8"), p.slice(root.length + 1));
+    n.files++;
+  }
+  return n.files;
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+  lintAll(root);
   const out = generate(root);
   write(root, out);
   console.log(`gen: ${out.size} files (${[...out.keys()].filter((k) => k.endsWith("_part.md")).length} part pages)`);

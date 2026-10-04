@@ -65,6 +65,20 @@ test("negative: a third-party srcset fails", () => fails({ "a.html": page(`<img 
 test("negative: an iframe fails", () => fails({ "a.html": page(`<iframe srcdoc="x"></iframe>`) }, /<iframe> is not allowed/));
 test("negative: a meta refresh fails", () => fails({ "a.html": page(`<meta http-equiv=refresh content="0;url=https://e.invalid">`) }, /meta refresh/));
 test("negative: a javascript: URL fails", () => fails({ "a.html": page(`<a href="javascript:alert(1)">x</a>`) }, /javascript: URL/));
+// round-two re-test: markup reached page content through a fence language
+const content = (inner) => page(`<div class="hb-content"><p>x</p>${inner}</div>`);
+test("negative: a <script> inside page content fails", () => fails({ "a.html": content(`<span class="lang"><script>0===0</script></span>`) }, /<script> is not allowed in page content/));
+test("negative: <svg>, <style> or <b> inside page content fails", () => {
+  for (const inner of ["<svg></svg>", "<style>p{}</style>", "<b>x</b>"]) fails({ "a.html": content(inner) }, /is not allowed in page content/);
+});
+test("negative: a src with a scheme but no slashes fails", () => fails({ "a.html": page(`<img src="http:evil.example/x.png">`) }, /third-party host: http:evil/));
+test("negative: a data: URL fails", () => fails({ "a.html": page(`<img src="data:image/svg+xml,x">`) }, /data: URL/));
+test("negative: a style attribute loading a URL fails", () => fails({ "a.html": page(`<p style="background:url(https://e.invalid/x)">x</p>`) }, /style attribute loads a URL/));
+test("the tags plain Markdown produces pass inside page content", () => {
+  const d = dist({ "a.html": content(`<h2 id="why">Why</h2><ul><li><strong>a</strong> <em>b</em> <code>c</code></li></ul><table><thead><tr><th>h</th></tr></thead><tbody><tr><td>d</td></tr></tbody></table><div class="language-ts"><button title="Copy"></button><span class="lang">ts</span><pre><code><span>x</span></code></pre></div>`) });
+  try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }
+});
+test("negative: target=_blank without rel fails", () => fails({ "a.html": page(`<a href="https://example.com" target="_blank">x</a>`) }, /target=_blank> without rel/));
 test("escaped labels pass", () => {
   const d = dist({ "a.html": page(`<h2 id="why">Why</h2><p class="text" data-v-1>Judge&lt;img src=x&gt;</p>`) });
   try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }

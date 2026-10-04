@@ -47,18 +47,27 @@ function sidebarLinks(items, out = []) {
 const LOAD_ATTRS = ["src", "srcset", "href", "poster", "data", "action", "formaction", "xlink:href"];
 const BANNED = new Set(["iframe", "object", "embed", "frame", "frameset", "applet", "base"]);
 const LABEL_TAGS = new Set(["p", "span", "h2", "h3", "label", "summary"]);
+// inside page content, only the tags plain Markdown and VitePress code blocks produce (round-two
+// re-test: a fence language emitted <script> into the content and nothing flagged it)
+const CONTENT_TAGS = new Set(["h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "em", "strong", "del", "s", "code", "pre", "span", "div", "button",
+  "ul", "ol", "li", "table", "thead", "tbody", "tr", "th", "td", "blockquote", "hr", "br", "img", "sup", "sub"]);
+// a URL with any scheme (http:, data:, javascript:, ...) or a protocol-relative one
+const EXTERNAL = /^\s*([a-z][a-z0-9+.-]*:|\/\/)/i;
 const LABEL_CLASSES = /(^|\s)(text|title|custom-block-title)(\s|$)/;
 export function domErrors(html) {
   const out = [];
-  const walk = (node) => {
+  const walk = (node, inContent = false) => {
     if (node.tagName) {
       const tag = node.tagName;
+      if (inContent && !CONTENT_TAGS.has(tag)) out.push(`<${tag}> is not allowed in page content`);
       const attrs = Object.fromEntries((node.attrs || []).map((a) => [a.name, a.value]));
       for (const name of Object.keys(attrs)) {
         if (/^on/i.test(name)) out.push(`inline event handler ${name} on <${tag}>`);
-        if (LOAD_ATTRS.includes(name) && /^\s*javascript:/i.test(attrs[name])) out.push(`javascript: URL in ${name} on <${tag}>`);
+        if (LOAD_ATTRS.includes(name) && /^\s*(javascript|vbscript|data):/i.test(attrs[name])) out.push(`${attrs[name].trim().split(":")[0]}: URL in ${name} on <${tag}>`);
+        if (name === "style" && /url\(\s*['"]?\s*([a-z][a-z0-9+.-]*:|\/\/)/i.test(attrs[name])) out.push(`style attribute loads a URL on <${tag}>`);
       }
       if (BANNED.has(tag)) out.push(`<${tag}> is not allowed`);
+      if (attrs.target === "_blank" && !/\b(noopener|noreferrer)\b/.test(attrs.rel || "")) out.push(`<${tag} target=_blank> without rel=noopener or noreferrer`);
       if (tag === "meta" && /refresh/i.test(attrs["http-equiv"] || "")) out.push("meta refresh is not allowed");
       // anything but a link may only load from this site
       if (tag !== "a") {
@@ -67,15 +76,16 @@ export function domErrors(html) {
           if (!v) continue;
           if (tag === "link" && name === "href" && !/(stylesheet|preload|modulepreload|icon|prefetch|manifest)/.test(attrs.rel || "")) continue;
           const urls = name === "srcset" ? v.split(",").map((s) => s.trim().split(/\s+/)[0]) : [v.trim()];
-          for (const u of urls) if (/^(https?:)?\/\//i.test(u)) out.push(`<${tag}> loads from a third-party host: ${u}`);
+          for (const u of urls) if (EXTERNAL.test(u)) out.push(`<${tag}> loads from a third-party host: ${u}`);
         }
       }
       if (LABEL_TAGS.has(tag) && LABEL_CLASSES.test(attrs.class || "") && (node.childNodes || []).some((c) => c.nodeName !== "#text" && c.nodeName !== "#comment")) {
         out.push(`a sidebar, pager or block label contains markup: <${tag} class="${attrs.class}">`);
       }
     }
-    for (const c of node.childNodes || []) walk(c);
-    if (node.content) walk(node.content);
+    const content = inContent || /(^|\s)hb-content(\s|$)/.test((node.attrs || []).find((a) => a.name === "class")?.value || "");
+    for (const c of node.childNodes || []) walk(c, content);
+    if (node.content) walk(node.content, content);
   };
   walk(parse(html));
   return out;
