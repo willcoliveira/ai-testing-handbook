@@ -27,9 +27,9 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
 3. Read `digests/YYYY-MM-DD.md`, then `git diff`. The skill adds sourced bullets, register rows and date
    bumps only; anything else is listed under "Skipped" for a human.
 4. `npm run check`. Commit as `docs(refresh): YYYY-MM-DD digest`. Add one line to `CHANGELOG.md`.
-5. `main` requires the CI check, so push the branch and merge through a pull request:
-   `git push -u origin HEAD && gh pr create --fill && gh pr merge --squash --auto`. Auto-merge is
-   enabled at repository level and lands the change when the check is green.
+5. `main` requires the CI and Site checks, so push the branch and open a pull request:
+   `git push -u origin HEAD && gh pr create --fill`. The maintainer reviews every pull request
+   and merges it by hand; nothing is auto-merged, refreshes included.
 
 ## Every few weeks
 
