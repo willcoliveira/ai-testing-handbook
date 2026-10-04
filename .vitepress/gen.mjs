@@ -47,7 +47,7 @@ export function generate(root) {
   }
 
   // practice id -> path
-  const ids = {};
+  const ids = Object.create(null);
   for (const dir of parts) for (const f of mdFiles(join(root, "practices", dir))) {
     const p = `practices/${dir}/${f}`;
     const id = frontmatter(readFileSync(join(root, p), "utf8")).id || f.replace(/\.md$/, "");
@@ -60,7 +60,7 @@ export function generate(root) {
   pat += "Worked examples from production builds, anonymised per [PRIVACY.md](../PRIVACY.md). Each names the practices it puts to work.\n\n";
   for (const f of mdFiles(join(root, "patterns"))) {
     const fm = frontmatter(readFileSync(join(root, "patterns", f), "utf8"));
-    const used = (fm.practices || []).filter((id) => ids[id])
+    const used = (fm.practices || []).filter((id) => Object.hasOwn(ids, id))
       .map((id) => `[${titleOf(join(root, ids[id]))}](${posix.relative("patterns", ids[id])})`);
     pat += `- [${titleOf(join(root, "patterns", f))}](${f})${used.length ? `. Practices: ${used.join(", ")}` : ""}\n`;
   }

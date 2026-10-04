@@ -3,7 +3,8 @@
 ## 0.1.13 (2026-10-04)
 
 - Security hardening from a review of the site work and an adversarial re-test of the fixes: the
-  book accepts plain Markdown and an allowlist of frontmatter keys only, page content is never
+  book accepts plain Markdown (no images, attributes, containers, includes or raw fence labels) and
+  typed frontmatter from an allowlist only, opened by a plain `---`, page content is never
   evaluated by Vue, labels are escaped, and a parser-based post-build check fails on handlers,
   `javascript:` URLs, third-party loads and injected markup, with tests for every known payload.
   The privacy check scans visible text as well as raw lines and no longer lets an allowed token,

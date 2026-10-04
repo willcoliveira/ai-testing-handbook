@@ -35,9 +35,40 @@ test("an include fails before the build, in any page", () => {
   assert.throws(() => lintSource("<!-- @include: ./x.md -->", "p.md"), /@include/);
   assert.doesNotThrow(() => lintSource("<!-- a plain comment -->", "p.md"));
   const d = tmp({ "ok.md": "# ok\n", "deep/bad.md": "<!--@include: ./ok.md-->\n" });
-  try { assert.throws(() => lintAll(d.dir), /deep\/bad\.md: <!--@include--> is not allowed/); } finally { d.done(); }
+  try { assert.throws(() => lintAll(d.dir), /deep\/bad\.md: an @include directive is not allowed/); } finally { d.done(); }
 });
 
 test("the real repository has no include", () => {
   assert.ok(lintAll(ROOT) > 100, "pages linted");
+});
+
+// round-three re-test
+test("frontmatter must open with a plain --- line", () => {
+  for (const head of ["---js\n({})\n---\n", "---json\n{}\n---\n", "--- js\n({})\n---\n", "\uFEFF---javascript\n({})\n---\n"]) {
+    assert.throws(() => lintSource(head + "# x\n", "p.md"), /plain --- line/, JSON.stringify(head));
+  }
+  assert.doesNotThrow(() => lintSource("---\ntitle: x\n---\n# x\n", "p.md"));
+});
+
+test("only VitePress's include directive is rejected, not a mention of it", () => {
+  assert.throws(() => lintSource("<!--@include: ./x.md-->", "p.md"), /@include/);
+  assert.doesNotThrow(() => lintSource("includes (`<!--@include-->`) are rejected", "p.md"));
+});
+
+test("images are off: ![x](y) does not become an <img>", () => {
+  assert.doesNotMatch(md.render("![o](../outside.png)\n", { relativePath: "p.md" }), /<img/);
+});
+
+test("frontmatter values must have the expected types", async () => {
+  const { checkFrontmatter } = await import("../../../.vitepress/plugins/lockdown.mjs");
+  for (const fm of [{ title: true }, { related: "x" }, { sources: [1] }, { search: "no" }, { status: ["a"] }]) {
+    assert.throws(() => checkFrontmatter(fm, "p.md"), /must be/, JSON.stringify(fm));
+  }
+});
+
+test("a title with a long whitespace run is labelled quickly", async () => {
+  const { shortLabel } = await import("../../../.vitepress/book.mjs");
+  const t0 = performance.now();
+  assert.equal(shortLabel("a" + " ".repeat(80000) + "b"), "a b");
+  assert.ok(performance.now() - t0 < 200, "under 200 ms");
 });

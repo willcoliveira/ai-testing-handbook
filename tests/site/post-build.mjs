@@ -131,6 +131,15 @@ export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets =
     }
   }
 
+  // only the files a VitePress build of this book produces; anything else was bundled from content
+  // (round-three re-test: an image import copied a file from outside the repository into assets/)
+  const ROOT_FILES = new Set(["vp-icons.css", "sitemap.xml", "hashmap.json"]);
+  for (const f of files) {
+    const rel = relative(dist, f).split("\\").join("/");
+    const ok = rel.endsWith(".html") || ROOT_FILES.has(rel) || /^assets\/(chunks\/)?[\w.@-]+\.(js|css|woff2?)$/.test(rel);
+    if (!ok) errors.push(`unexpected file in the built site: ${rel}`);
+  }
+
   // no third-party url() or @import in built CSS
   for (const f of files.filter((x) => x.endsWith(".css"))) {
     for (const m of readFileSync(f, "utf8").matchAll(/(?:url\(\s*["']?|@import\s+["'])((?:https?:)?\/\/[^"')\s]+)/g)) errors.push(`${page(f)}: CSS loads from a third-party host: ${m[1]}`);

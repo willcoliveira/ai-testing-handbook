@@ -79,6 +79,7 @@ test("the tags plain Markdown produces pass inside page content", () => {
   try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }
 });
 test("negative: target=_blank without rel fails", () => fails({ "a.html": page(`<a href="https://example.com" target="_blank">x</a>`) }, /target=_blank> without rel/));
+test("negative: an unexpected file in the built site fails (bundled from outside)", () => fails({ "assets/outside.B_qK0nZ8.png": "x" }, /unexpected file in the built site: assets\/outside/));
 test("escaped labels pass", () => {
   const d = dist({ "a.html": page(`<h2 id="why">Why</h2><p class="text" data-v-1>Judge&lt;img src=x&gt;</p>`) });
   try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }

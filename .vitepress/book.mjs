@@ -15,6 +15,8 @@ export function linkOf(rel) {
 // parenthetical detail, then its subtitle after ": ", then its last ", " clause. The page H1 keeps
 // the full title; style.css clamps anything still longer to two lines.
 export function shortLabel(t, max = 46) {
+  // whitespace collapsed and length capped first: long whitespace runs made the regexes quadratic
+  t = String(t).replace(/\s+/g, " ").trim().slice(0, 400);
   if (t.length <= max) return t;
   let s = t.replace(/\s*\(([^()]*)\)/, (m, inner) => (inner.includes(": ") ? ` (${inner.split(": ")[0]})` : m));
   if (s.length > max) s = s.replace(/\s*\([^()]*\)/, "");

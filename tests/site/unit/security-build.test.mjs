@@ -30,7 +30,8 @@ test("frontmatter: only the book's keys are accepted (description, layout, prev,
     { title: "x", head: [["script", {}, "alert(1)"]] },
     { title: "x", editLink: true },
   ]) assert.throws(() => checkFrontmatter(fm, "p.md"), /not allowed/, JSON.stringify(fm));
-  assert.doesNotThrow(() => checkFrontmatter(Object.fromEntries(FRONTMATTER_KEYS.map((k) => [k, "v"])), "p.md"));
+  const typed = { sources: ["S001"], related: ["x"], practices: ["x"], search: false };
+  assert.doesNotThrow(() => checkFrontmatter(Object.fromEntries(FRONTMATTER_KEYS.map((k) => [k, typed[k] ?? "v"])), "p.md"));
   assert.doesNotThrow(() => checkFrontmatter({ title: "x", editLink: false }, "p.md"));
   assert.throws(() => checkFrontmatter({ title: "T</script><script>0</script>" }, "p.md"), /title may not contain/);
   assert.doesNotThrow(() => checkFrontmatter({ title: "Humanity's Last Exam: a & b" }, "p.md"));
@@ -40,4 +41,19 @@ test("a real build fails on a fence whose language is markup (round-two re-test)
   await assert.rejects(site({ safe: true, extra: "\n```<b></b>\nx\n```\n" }), /not a plain language name/);
   // the round-one code-group tab label payload now fails the build the same way
   await assert.rejects(site({ safe: true, extra: '\n```js [<img :data-pwn="6*7" data-pwn3=tab>]\na\n```\n' }), /not a plain language name/);
+});
+
+// round-three re-test
+test("a real build fails on ---js frontmatter (gray-matter's eval engine)", { timeout: 120000 }, async () => {
+  await assert.rejects(site({ safe: true, head: '---js\n({ title: "T", status: String(6*7) })\n---\n' }), /only plain --- frontmatter/);
+  await assert.rejects(site({ safe: true, head: '---json\n{ "title": "T" }\n---\n' }), /only plain --- frontmatter/);
+});
+
+test("a Markdown image from outside the repository is not bundled", { timeout: 120000 }, async () => {
+  const { OUTSIDE_PNG } = await import("./security-fixture.mjs");
+  const s = await site({ safe: true, extra: `\n![o](/@fs${OUTSIDE_PNG})\n` });
+  try {
+    assert.deepEqual(s.assets.filter((a) => !/\.(js|css|woff2?)$/.test(a) && a !== "chunks"), [], "only code and fonts in assets/");
+    assert.doesNotMatch(s.html, /<img\b/, "no image element");
+  } finally { s.done(); }
 });

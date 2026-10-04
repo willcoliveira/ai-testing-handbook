@@ -1,6 +1,6 @@
 // Shared fixture for security-build and security-control: a VitePress build of the payloads.
 import { join } from "node:path";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { build } from "vitepress";
 import { escapeLabel } from "../../../.vitepress/book.mjs";
 import { writeFileSync } from "node:fs";
@@ -42,21 +42,25 @@ const BYPASSES = (fence) => [
   "",
 ].join("\n");
 
-export async function site({ safe, extra = "" }) {
+// a file outside the repository, large enough (8 KB) that Vite would emit it as an asset, not inline it
+export const OUTSIDE_PNG = join(tmpdir(), "hb-outside-image.png");
+export async function site({ safe, extra = "", head = "" }) {
   const plugin = JSON.stringify(join(ROOT, ".vitepress/plugins/vue-safe.mjs"));
   const lockdown = JSON.stringify(join(ROOT, ".vitepress/plugins/lockdown.mjs"));
+  writeFileSync(OUTSIDE_PNG, Buffer.alloc(8192, 7));
   writeFileSync(OUTSIDE, "OUTSIDE-FILE-MARKER\n");
   const label = JSON.stringify(safe ? escapeLabel(XSS_TITLE) : XSS_TITLE);
   // with the fix, also a payload that markdown splits across emphasis tokens (it would not compile without it)
   const page = (safe ? PAGE + "\nSplit {{ 7*7 }} across emphasis {{ 2*2 }}.\n" + BYPASSES("```") : PAGE) + extra;
   const s = tmp({
-    "index.md": page, "other.md": "# Other\n",
+    "index.md": head + page, "other.md": "# Other\n",
     ".vitepress/config.mjs": `import vueSafe from ${plugin};
-import lockdown from ${lockdown};
-export default { base: "/b/", markdown: { html: false, ${safe ? "attrs: { disable: true }, gfmAlerts: false," : ""} config: (md) => { ${safe ? "md.use(vueSafe); md.use(lockdown);" : ""} } },
+import lockdown, { BLOCKED_ENGINES } from ${lockdown};
+export default { base: "/b/", markdown: { html: false, ${safe ? "attrs: { disable: true }, gfmAlerts: false, frontmatter: { grayMatterOptions: { engines: BLOCKED_ENGINES } }," : ""} config: (md) => { ${safe ? "md.use(vueSafe); md.use(lockdown);" : ""} } },
   themeConfig: { sidebar: [{ text: ${label}, link: "/other" }] } };`,
   }, { inRepo: true });
   try { await build(s.dir, { outDir: join(s.dir, "dist") }); } catch (e) { s.done(); throw e; }
-  return { html: readFileSync(join(s.dir, "dist/index.html"), "utf8"), done: s.done };
+  const assets = readdirSync(join(s.dir, "dist/assets"), { recursive: true }).map(String);
+  return { html: readFileSync(join(s.dir, "dist/index.html"), "utf8"), assets, done: s.done };
 }
 
