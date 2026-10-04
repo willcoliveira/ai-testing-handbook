@@ -1,5 +1,10 @@
-# Monthly, one grouped PR per ecosystem. A bump of @playwright/test must also bump the image tag in
-# tests/site/Dockerfile (the Site lint job fails until it does) and usually the visual baselines.
+# Monthly. Minor and patch updates come as one grouped PR per ecosystem; a major update comes as
+# its own PR so a breaking change does not block the safe ones.
+# Not grouped, because each needs a follow-up commit in the same PR before CI can pass:
+# - @playwright/test: bump the image tag in tests/site/Dockerfile (the lint job checks it) and
+#   regenerate the visual baselines (MAINTAINING.md, "## Site").
+# - wico-playwright-agent-skills: run `npm run skills:sync` and commit .claude/skills/playwright-e2e
+#   (`skills:check` fails until then).
 version: 2
 updates:
   - package-ecosystem: npm
@@ -7,8 +12,17 @@ updates:
     schedule:
       interval: monthly
     groups:
-      npm:
+      npm-minor-patch:
         patterns: ["*"]
+        exclude-patterns: ["@playwright/test", "wico-playwright-agent-skills"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # the site runs on Node 22 (.nvmrc); newer typings would allow APIs Node 22 lacks
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # typescript-eslint supports typescript < 6.1; lift this when it supports 7
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
