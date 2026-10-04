@@ -156,5 +156,9 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   (no `SITE_TEST`) uploaded with `upload-pages-artifact` and published with `deploy-pages`
   (Settings > Pages > Source: GitHub Actions). Then `smoke` runs the `@smoke` tests on Chromium
   against the live URL (`BASE_URL` set, no local server) and uploads its report on failure.
-- Dependabot (`.github/dependabot.yml`): npm and GitHub Actions, monthly, one grouped PR each. A
-  Playwright bump needs the Dockerfile tag and usually new baselines in the same PR.
+- Dependabot (`.github/dependabot.yml`): monthly. npm minor and patch updates come as one grouped
+  PR, and GitHub Actions as another; an npm major update comes as its own PR. `@playwright/test`
+  and `wico-playwright-agent-skills` always come alone, because each needs a follow-up commit on
+  the PR: the Dockerfile tag and usually new baselines for Playwright, `npm run skills:sync` for the
+  skill. Major updates of `typescript` (until `typescript-eslint` supports it) and `@types/node`
+  (the site runs on Node 22) are ignored.
