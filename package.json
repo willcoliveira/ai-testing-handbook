@@ -45,7 +45,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.71.0",
     "vitepress": "1.6.4",
-    "wico-playwright-agent-skills": "2.4.0",
+    "wico-playwright-agent-skills": "2.4.1",
     "yaml": "2.9.1"
   },
   "overrides": {

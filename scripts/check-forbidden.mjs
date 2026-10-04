@@ -1,5 +1,5 @@
 // Scans every tracked file (plus digests/) for forbidden strings; --dir <path> scans that
-// directory instead (the built site).
+// directory instead (the built site). --file <path> one file (a commit message or PR body)
 // Reads privacy/forbidden-strings.example.txt always, and privacy/forbidden-strings.txt
 // unless CI=1. Exits 1 on any hit. Refuses to run if the real list is tracked by git.
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
@@ -57,8 +57,12 @@ if (dirArg > 0 && (!scanDir || !existsSync(scanDir))) { console.error(`--dir: no
 // label (forward slashes, for rules and output) -> absolute path. Absolute paths are kept because
 // relative() across Windows drives (repo on D:, temp dir on C:) returns a path join() cannot rebuild.
 const label = (abs) => relative(root, abs).split("\\").join("/");
-const files = new Map((scanDir ? walk(resolve(root, scanDir)) : tracked().map((f) => join(root, f))).map((abs) => [label(abs), abs]));
-if (!scanDir && existsSync(join(root, "digests"))) for (const f of readdirSync(join(root, "digests"))) files.set("digests/" + f, join(root, "digests", f));
+// --file <path>: one file only, e.g. a commit message or a PR body before it is published
+const fileArg = process.argv.indexOf("--file");
+const scanFile = fileArg > 0 ? process.argv[fileArg + 1] : null;
+if (fileArg > 0 && (!scanFile || !existsSync(scanFile) || statSync(scanFile).isDirectory())) { console.error(`--file: no such file ${scanFile || ""}`); process.exit(2); }
+const files = new Map((scanFile ? [resolve(root, scanFile)] : scanDir ? walk(resolve(root, scanDir)) : tracked().map((f) => join(root, f))).map((abs) => [label(abs), abs]));
+if (!scanDir && !scanFile && existsSync(join(root, "digests"))) for (const f of readdirSync(join(root, "digests"))) files.set("digests/" + f, join(root, "digests", f));
 // files never scanned (by path only). The noreply address is removed from a line before matching,
 // so it cannot hide anything else on that line (security review 2026-10-04).
 const ALLOW_PATHS = [/^privacy\/forbidden-strings/, /^scripts\/check-forbidden\.mjs$/, /^package(-lock)?\.json$/];

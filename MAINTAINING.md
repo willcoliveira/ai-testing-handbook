@@ -17,6 +17,13 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
    work one after a restart; `gh auth switch --user willcoliveira` before any `gh` command.
 2. `/refresh` does steps 2 to 5 in one command (full sweep, digest, commit, pull request, no merge).
    By hand: `/kb-refresh --area <n>`, one or two areas per session. `--dry-run` writes only a gitignored draft digest.
+   The sweeps read pages anyone can publish, so their reach is narrow by design: fetching is done
+   by `web-reader` subagents (`.claude/agents/web-reader.md`, web access only); `kb-refresh`
+   pre-approves only its own scripts and the sweep-list domains, so a write, an edit or any other
+   command asks you first; `/refresh` and `/roles` stage named paths only after
+   `node scripts/check-diff-paths.mjs <refresh|roles>` passes, and check the commit message and PR
+   body with `check-forbidden --file`. With `git config core.hooksPath .githooks`, the `commit-msg`
+   hook checks every commit message the same way.
 3. Read `digests/YYYY-MM-DD.md`, then `git diff`. The skill adds sourced bullets, register rows and date
    bumps only; anything else is listed under "Skipped" for a human.
 4. `npm run check`. Commit as `docs(refresh): YYYY-MM-DD digest`. Add one line to `CHANGELOG.md`.

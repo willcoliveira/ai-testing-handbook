@@ -21,7 +21,9 @@ Same as `/refresh`: clean tree, `main` pulled, `gh` on `willcoliveira`, branch `
 (suffix `-b` if taken). Read the requirements page: its basis line (sample size, months) and the
 table of requirements R1 to Rn with counts.
 
-## 2. Read postings (one read-only subagent, or two for UK and EU)
+## 2. Read postings (one `web-reader` subagent, or two for UK and EU)
+`.claude/agents/web-reader.md` has web access only: no files, no commands. Job boards publish
+anyone's text, so the subagent that reads them must have nothing else to act with.
 - Sources that work without login: Greenhouse, Ashby and Lever public board APIs; aggregators that
   link to them (TestDevJobs AI-testing tag, the Arbeitnow API). LinkedIn's guest search is often
   blocked; use a posting page only if a link to it is given.
@@ -54,8 +56,13 @@ table of requirements R1 to Rn with counts.
 - `npm run check` passes. No em dashes; none of the banned words in CONTRIBUTING.
 - `grep` the diff for company names and job ids from the subagent's report: none may appear.
 - `CHANGELOG.md`: a new patch entry, one bullet.
+- `node scripts/check-diff-paths.mjs roles` must pass, then stage those paths only:
+  `git add learning-path/ai-qa-requirements.md learning-path/interview-questions.md sources.md sources/ CHANGELOG.md`
+  (never `git add -A`).
+- Write the commit message and the PR body to files in the scratchpad and run
+  `node scripts/check-forbidden.mjs --file <path>` on each.
 - Commit `docs(roles): YYYY-MM-DD requirements update`, no attribution lines. Push, open a pull
-  request with: postings read and skipped, requirements whose count or rank changed, new
+  request (`--body-file` the checked file) with: postings read and skipped, requirements whose count or rank changed, new
   requirements, new sources, new questions, gaps. Do not merge.
 
 ## 5. Report
