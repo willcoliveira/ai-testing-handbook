@@ -5,9 +5,12 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildSidebar, linkOf } from "./book.mjs";
+import { lintAll } from "./gen.mjs";
 import { titleOf, parseFlat } from "./read.mjs";
 import citePlugin from "./plugins/cite.mjs";
 import linksPlugin, { REPO } from "./plugins/links.mjs";
+import vueSafePlugin from "./plugins/vue-safe.mjs";
+import lockdownPlugin, { checkFrontmatter, BLOCKED_ENGINES } from "./plugins/lockdown.mjs";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const BASE = "/ai-testing-handbook/";
@@ -48,6 +51,8 @@ export function siteOptions(env = process.env, root = ROOT) {
     sidebar: { "/specimen": SPECIMEN_SIDEBAR, "/": book },
   };
 }
+// the content lint runs here too, so `vitepress build` or `dev` without gen.mjs cannot skip it
+lintAll(ROOT);
 const site = siteOptions();
 const DESCRIPTION = "Evals, guardrails, benchmarks and audits for LLM applications and agents: a sourced reference and a learning path for AI testing.";
 
@@ -73,11 +78,16 @@ export default defineConfig({
   sitemap: { hostname: SITE },
   markdown: {
     html: false,
+    // no `{...}` attribute syntax and no GitHub alerts: both let content set raw attributes or HTML
+    attrs: { disable: true },
+    gfmAlerts: false,
     // flat key: value frontmatter (see read.mjs); one title has a colon, which strict YAML rejects
-    frontmatter: { grayMatterOptions: { engines: { yaml: (s) => parseFlat(s) } } },
+    frontmatter: { grayMatterOptions: { engines: { ...BLOCKED_ENGINES, yaml: (s) => parseFlat(s) } } },
     config(md) {
       md.use(citePlugin, { sources, base: BASE });
       md.use(linksPlugin, { root: ROOT, exclude: SRC_EXCLUDE });
+      md.use(vueSafePlugin);
+      md.use(lockdownPlugin);
     },
   },
   head: [["meta", { property: "og:site_name", content: "AI Testing Handbook" }]],
@@ -94,12 +104,15 @@ export default defineConfig({
   },
   transformPageData(pageData) {
     const fm = pageData.frontmatter;
+    // frontmatter is data, not site config: `description`, `layout`, `prev`, `next`, `head` and the
+    // rest reach VitePress sinks unescaped, so only the keys the book uses are accepted
+    checkFrontmatter(fm, pageData.filePath);
     if (WIDE.includes(pageData.filePath)) Object.assign(fm, { aside: false, outline: false, pageClass: "hb-wide" });
     // meta line: status · reviewed DATE · N sources, from whatever the frontmatter carries
     const n = Array.isArray(fm.sources) ? fm.sources.length : 0;
     const meta = [fm.status, fm.last_reviewed && `reviewed ${fm.last_reviewed}`, n && `${n} source${n === 1 ? "" : "s"}`].filter(Boolean).join(" · ");
     const see = [...(fm.related || []), ...(fm.practices || [])].map((id) => {
-      if (!ids[id]) throw new Error(`${pageData.filePath}: related practice "${id}" is not a practice id`);
+      if (!Object.hasOwn(ids, id)) throw new Error(`${pageData.filePath}: related practice "${id}" is not a practice id`);
       return { text: titleOf(join(ROOT, ids[id])), link: linkOf(ids[id]) };
     });
     return { handbook: { meta, seeAlso: see } };

@@ -53,6 +53,37 @@ test("SITE_TEST: the specimen may sit outside the sidebar", () => {
 test("negative: SITE_TEST exempts only the specimen, another orphan still fails", () => fails({ "specimen.html": page("specimen"), "b.html": page("orphan") }, /\/b\.html appears 0 times/, { siteTest: true }));
 test("negative: a page twice in the sidebar fails", () => fails({}, /appears 2 times/, { sidebar: [...sidebar, { text: "again", link: "/a" }] }));
 test("negative: a sidebar link with no page fails", () => fails({}, /sidebar: \/gone has no built page/, { sidebar: [...sidebar, { text: "gone", link: "/gone" }] }));
+test("negative: markup in a sidebar label fails (title XSS, security review 2026-10-04)", () => fails({ "a.html": page(`<p class="text" data-v-1>Judge<img src=x onerror=alert(1)></p>`) }, /label contains markup/));
+test("negative: markup in a prev/next label fails", () => fails({ "a.html": page(`<span class="title" data-v-1>x<svg onload=alert(1)></span>`) }, /label contains markup/));
+test("negative: an inline event handler anywhere fails", () => fails({ "a.html": page(`<div onclick="alert(1)">x</div>`) }, /inline event handler/));
+// bypasses of the regex guard found in the adversarial re-test, now parsed
+test("negative: a slash-separated handler (<svg/onload=) fails", () => fails({ "a.html": page(`<svg/onload=0></svg>`) }, /inline event handler onload/));
+test("negative: a label closed early (x</span><img>) fails", () => fails({ "a.html": page(`<span class="title" data-v-1>x<img data-pwn=pager></span>`) }, /label contains markup/));
+test("negative: a group heading label with markup fails", () => fails({ "a.html": page(`<h2 class="text" data-v-1>x<b>y</b></h2>`) }, /label contains markup/));
+test("negative: an unquoted third-party src fails", () => fails({ "a.html": page(`<img src=//e.invalid/x>`) }, /third-party host: \/\/e\.invalid\/x/));
+test("negative: a third-party srcset fails", () => fails({ "a.html": page(`<img srcset="/ok.png 1x, https://e.invalid/x.png 2x">`) }, /third-party host: https:\/\/e\.invalid/));
+test("negative: an iframe fails", () => fails({ "a.html": page(`<iframe srcdoc="x"></iframe>`) }, /<iframe> is not allowed/));
+test("negative: a meta refresh fails", () => fails({ "a.html": page(`<meta http-equiv=refresh content="0;url=https://e.invalid">`) }, /meta refresh/));
+test("negative: a javascript: URL fails", () => fails({ "a.html": page(`<a href="javascript:alert(1)">x</a>`) }, /javascript: URL/));
+// round-two re-test: markup reached page content through a fence language
+const content = (inner) => page(`<div class="hb-content"><p>x</p>${inner}</div>`);
+test("negative: a <script> inside page content fails", () => fails({ "a.html": content(`<span class="lang"><script>0===0</script></span>`) }, /<script> is not allowed in page content/));
+test("negative: <svg>, <style> or <b> inside page content fails", () => {
+  for (const inner of ["<svg></svg>", "<style>p{}</style>", "<b>x</b>"]) fails({ "a.html": content(inner) }, /is not allowed in page content/);
+});
+test("negative: a src with a scheme but no slashes fails", () => fails({ "a.html": page(`<img src="http:evil.example/x.png">`) }, /third-party host: http:evil/));
+test("negative: a data: URL fails", () => fails({ "a.html": page(`<img src="data:image/svg+xml,x">`) }, /data: URL/));
+test("negative: a style attribute loading a URL fails", () => fails({ "a.html": page(`<p style="background:url(https://e.invalid/x)">x</p>`) }, /style attribute loads a URL/));
+test("the tags plain Markdown produces pass inside page content", () => {
+  const d = dist({ "a.html": content(`<h2 id="why">Why</h2><ul><li><strong>a</strong> <em>b</em> <code>c</code></li></ul><table><thead><tr><th>h</th></tr></thead><tbody><tr><td>d</td></tr></tbody></table><div class="language-ts"><button title="Copy"></button><span class="lang">ts</span><pre><code><span>x</span></code></pre></div>`) });
+  try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }
+});
+test("negative: target=_blank without rel fails", () => fails({ "a.html": page(`<a href="https://example.com" target="_blank">x</a>`) }, /target=_blank> without rel/));
+test("negative: an unexpected file in the built site fails (bundled from outside)", () => fails({ "assets/outside.B_qK0nZ8.png": "x" }, /unexpected file in the built site: assets\/outside/));
+test("escaped labels pass", () => {
+  const d = dist({ "a.html": page(`<h2 id="why">Why</h2><p class="text" data-v-1>Judge&lt;img src=x&gt;</p>`) });
+  try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }
+});
 test("negative: a third-party <script src> fails", () => fails({ "a.html": `<html><head><script src="https://cdn.example.com/x.js"></script></head><body><h2 id="why">Why</h2></body></html>` }, /third-party host: https:\/\/cdn\.example\.com/));
 test("negative: a third-party stylesheet or font in CSS fails", () => fails({ "assets/style.css": "@import url(https://fonts.googleapis.com/css2?family=X);" }, /CSS loads from a third-party host/));
 test("negative: JS over the budget fails", () => fails({ "assets/big.js": "x".repeat(BUDGETS.JS_MAX_BYTES + 1) }, /budget: JS/));
@@ -71,3 +102,4 @@ test("budgets are named constants", () => {
   assert.equal(BUDGETS.SEARCH_INDEX_MAX_BYTES, 3 * 1024 * 1024);
   assert.equal(BUDGETS.JS_MAX_BYTES, 2 * 1024 * 1024);
 });
+test("negative: a scheme hidden with a tab still fails", () => fails({ "a.html": page(`<img src="java\tscript:alert(1)">`) }, /javascript: URL/));

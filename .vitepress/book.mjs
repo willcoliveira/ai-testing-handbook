@@ -15,6 +15,8 @@ export function linkOf(rel) {
 // parenthetical detail, then its subtitle after ": ", then its last ", " clause. The page H1 keeps
 // the full title; style.css clamps anything still longer to two lines.
 export function shortLabel(t, max = 46) {
+  // whitespace collapsed and length capped first: long whitespace runs made the regexes quadratic
+  t = String(t).replace(/\s+/g, " ").trim().slice(0, 400);
   if (t.length <= max) return t;
   let s = t.replace(/\s*\(([^()]*)\)/, (m, inner) => (inner.includes(": ") ? ` (${inner.split(": ")[0]})` : m));
   if (s.length > max) s = s.replace(/\s*\([^()]*\)/, "");
@@ -26,6 +28,13 @@ export function shortLabel(t, max = 46) {
   // tests/site/e2e/layout.spec.ts, datasets/catalogue.md needed three lines)
   if (s.length > max) { const w = s.lastIndexOf(" ", max - 1); s = s.slice(0, w >= 12 ? w : max - 1) + "…"; }
   return s;
+}
+
+// VitePress renders sidebar and prev/next labels with v-html, so a title is HTML there. Escape every
+// label once, at the end of buildSidebar: a title like `x<img onerror=...>` must render as text.
+export const escapeLabel = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+function escapeTree(items) {
+  return items.map((it) => ({ ...it, text: escapeLabel(it.text), ...(it.items ? { items: escapeTree(it.items) } : {}) }));
 }
 
 const LEARNING_TAIL = ["knowledge-matrix.md", "interview-questions.md", "ai-qa-requirements.md", "resources.md"];
@@ -64,7 +73,7 @@ export function buildSidebar(root) {
 
   const digests = mdFiles(join(root, "digests")).filter((f) => f !== "README.md" && !f.endsWith(".draft.md"));
 
-  return [
+  return escapeTree([
     page("README.md", "Introduction"),
     { text: "Learning path", link: "/learning-path/", collapsed: false,
       items: [...phases, ...LEARNING_TAIL.filter((f) => lp.includes(f))].map((f) => page(`learning-path/${f}`)) },
@@ -87,7 +96,7 @@ export function buildSidebar(root) {
       page("CONTRIBUTING.md", "Contributing"),
       page("MAINTAINING.md", "Maintaining"),
     ] },
-  ];
+  ]);
 }
 
 // every link in sidebar order, the sequence prev/next walks

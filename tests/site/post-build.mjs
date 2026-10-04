@@ -2,6 +2,7 @@
 // exists, every citation hits a register row, every page sits in the sidebar exactly once,
 // nothing loads from a third-party host, search index and JS stay under budget, and the
 // forbidden-strings check passes on the HTML. Exits 1 on any failure.
+import { parse } from "parse5";
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, relative, dirname, posix } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -39,6 +40,59 @@ function sidebarLinks(items, out = []) {
 }
 
 // A SITE_TEST=1 build (visual tests) adds the type specimen, which is deliberately outside the book.
+// Structural checks on the parsed page (parse5, so `<svg/onload=`, unquoted URLs or a `</span>` that
+// closes a label early cannot slip past a regex; adversarial re-test of the 2026-10-04 security review).
+// A page fails on: any `on*` attribute; a javascript: URL; an element that loads from another host;
+// an iframe, object, embed, frame or meta refresh; markup inside a label VitePress renders with v-html.
+const LOAD_ATTRS = ["src", "srcset", "href", "poster", "data", "action", "formaction", "xlink:href"];
+const BANNED = new Set(["iframe", "object", "embed", "frame", "frameset", "applet", "base"]);
+const LABEL_TAGS = new Set(["p", "span", "h2", "h3", "label", "summary"]);
+// inside page content, only the tags plain Markdown and VitePress code blocks produce (round-two
+// re-test: a fence language emitted <script> into the content and nothing flagged it)
+const CONTENT_TAGS = new Set(["h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "em", "strong", "del", "s", "code", "pre", "span", "div", "button",
+  "ul", "ol", "li", "table", "thead", "tbody", "tr", "th", "td", "blockquote", "hr", "br", "img", "sup", "sub"]);
+// a URL with any scheme (http:, data:, javascript:, ...) or a protocol-relative one
+const EXTERNAL = /^\s*([a-z][a-z0-9+.-]*:|\/\/)/i;
+const LABEL_CLASSES = /(^|\s)(text|title|custom-block-title)(\s|$)/;
+export function domErrors(html) {
+  const out = [];
+  const walk = (node, inContent = false) => {
+    if (node.tagName) {
+      const tag = node.tagName;
+      if (inContent && !CONTENT_TAGS.has(tag)) out.push(`<${tag}> is not allowed in page content`);
+      const attrs = Object.fromEntries((node.attrs || []).map((a) => [a.name, a.value]));
+      for (const name of Object.keys(attrs)) {
+        if (/^on/i.test(name)) out.push(`inline event handler ${name} on <${tag}>`);
+        // browsers drop tabs, newlines and control characters inside a URL scheme
+        const bare = String(attrs[name]).replace(/[\u0000-\u0020]/g, "");
+        if (LOAD_ATTRS.includes(name) && /^(javascript|vbscript|data):/i.test(bare)) out.push(`${bare.split(":")[0]}: URL in ${name} on <${tag}>`);
+        if (name === "style" && /url\(\s*['"]?\s*([a-z][a-z0-9+.-]*:|\/\/)/i.test(attrs[name])) out.push(`style attribute loads a URL on <${tag}>`);
+      }
+      if (BANNED.has(tag)) out.push(`<${tag}> is not allowed`);
+      if (attrs.target === "_blank" && !/\b(noopener|noreferrer)\b/.test(attrs.rel || "")) out.push(`<${tag} target=_blank> without rel=noopener or noreferrer`);
+      if (tag === "meta" && /refresh/i.test(attrs["http-equiv"] || "")) out.push("meta refresh is not allowed");
+      // anything but a link may only load from this site
+      if (tag !== "a") {
+        for (const name of LOAD_ATTRS) {
+          const v = attrs[name];
+          if (!v) continue;
+          if (tag === "link" && name === "href" && !/(stylesheet|preload|modulepreload|icon|prefetch|manifest)/.test(attrs.rel || "")) continue;
+          const urls = name === "srcset" ? v.split(",").map((s) => s.trim().split(/\s+/)[0]) : [v.trim()];
+          for (const u of urls) if (EXTERNAL.test(u)) out.push(`<${tag}> loads from a third-party host: ${u}`);
+        }
+      }
+      if (LABEL_TAGS.has(tag) && LABEL_CLASSES.test(attrs.class || "") && (node.childNodes || []).some((c) => c.nodeName !== "#text" && c.nodeName !== "#comment")) {
+        out.push(`a sidebar, pager or block label contains markup: <${tag} class="${attrs.class}">`);
+      }
+    }
+    const content = inContent || /(^|\s)hb-content(\s|$)/.test((node.attrs || []).find((a) => a.name === "class")?.value || "");
+    for (const c of node.childNodes || []) walk(c, content);
+    if (node.content) walk(node.content, content);
+  };
+  walk(parse(html));
+  return out;
+}
+
 export const SPECIMEN_PAGE = "specimen.html";
 
 export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets = BUDGETS, forbidden = true, root = process.cwd(), siteTest = false }) {
@@ -56,12 +110,7 @@ export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets =
   for (const f of html) {
     const text = readFileSync(f, "utf8");
     const here = page(f);
-    // third-party hosts for anything the page loads
-    for (const m of text.matchAll(/<(script|link|img|source|iframe|video|audio)\b[^>]*?\s(src|href)="([^"]*)"[^>]*>/g)) {
-      const [tag, kind, attr, url] = [m[0], m[1], m[2], m[3]];
-      if (kind === "link" && attr === "href" && !/rel="(stylesheet|preload|modulepreload|icon|prefetch|manifest)"/.test(tag)) continue;
-      if (/^(https?:)?\/\//.test(url)) errors.push(`${here}: <${kind}> loads from a third-party host: ${url}`);
-    }
+    for (const e of domErrors(text)) errors.push(`${here}: ${e}`);
     for (const m of text.matchAll(/<a\b([^>]*)>/g)) {
       const attrs = m[1];
       const hm = attrs.match(/\shref="([^"]*)"/);
@@ -82,6 +131,15 @@ export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets =
         if (!/^\S*sources#s\d{3}$/.test(href) || !target.endsWith("sources.html")) errors.push(`${here}: citation does not point at a register row: ${href}`);
       }
     }
+  }
+
+  // only the files a VitePress build of this book produces; anything else was bundled from content
+  // (round-three re-test: an image import copied a file from outside the repository into assets/)
+  const ROOT_FILES = new Set(["vp-icons.css", "sitemap.xml", "hashmap.json"]);
+  for (const f of files) {
+    const rel = relative(dist, f).split("\\").join("/");
+    const ok = rel.endsWith(".html") || ROOT_FILES.has(rel) || /^assets\/(chunks\/)?[\w.@-]+\.(js|css|woff2?)$/.test(rel);
+    if (!ok) errors.push(`unexpected file in the built site: ${rel}`);
   }
 
   // no third-party url() or @import in built CSS

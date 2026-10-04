@@ -17,6 +17,12 @@ on:
 permissions:
   contents: read
 
+# a newer push to a PR cancels its older run; main, schedule and dispatch runs queue by event, so a
+# scheduled run never cancels a pending deploy
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.event_name) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Static gates on Linux and Windows, so contributors on either can build and check the book.
   test:
@@ -25,9 +31,12 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -49,9 +58,12 @@ jobs:
   lint:
     name: Lint, typecheck, format, skills
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -74,8 +86,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -85,7 +99,7 @@ jobs:
         run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
       - name: Cache browsers
         id: pw-cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-chromium-${{ steps.pw.outputs.version }}
@@ -100,7 +114,7 @@ jobs:
         run: npm run test:e2e
       - name: Upload report
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: playwright-report-pr
           path: playwright-report/
@@ -112,8 +126,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -123,7 +139,7 @@ jobs:
         run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
       - name: Cache browsers
         id: pw-cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-chromium-webkit-${{ steps.pw.outputs.version }}
@@ -138,7 +154,7 @@ jobs:
         run: npm run test:e2e:full
       - name: Upload report
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: playwright-report-full
           path: playwright-report/
@@ -150,11 +166,13 @@ jobs:
     name: Visual paths changed
     if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       visual: ${{ steps.filter.outputs.visual }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           fetch-depth: 0
       - id: filter
         env:
@@ -164,7 +182,6 @@ jobs:
         run: |
           if [ "$EVENT" = "workflow_dispatch" ]; then echo "visual=true" >> "$GITHUB_OUTPUT"; exit 0; fi
           files="$(git diff --name-only "$BASE...$HEAD")"
-          echo "$files"
           if echo "$files" | grep -qE '^(\.vitepress/|tests/site/|playwright\.config\.ts$|package(-lock)?\.json$)'; then
             echo "visual=true" >> "$GITHUB_OUTPUT"
           else
@@ -183,7 +200,9 @@ jobs:
     env:
       UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.update_baselines }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Baselines present
         if: env.UPDATE != 'true'
         run: |
@@ -207,7 +226,7 @@ jobs:
           docker cp hb-visual-run:/app/tests/site/e2e/visual.spec.ts-snapshots ./regenerated/ || true
       - name: Upload report and diffs
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: playwright-report-visual
           path: |
@@ -216,21 +235,50 @@ jobs:
           retention-days: 7
       - name: Upload regenerated baselines
         if: env.UPDATE == 'true'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: visual-baselines
           path: regenerated/visual.spec.ts-snapshots/
           retention-days: 7
 
-  # Publish the production build (no SITE_TEST) to GitHub Pages after the gates pass on main.
-  deploy:
-    name: Deploy to GitHub Pages
+  # Publish the production build (no SITE_TEST) to GitHub Pages after the gates pass on main. Two
+  # jobs: `build` installs (no lifecycle scripts) and builds with a read-only token; `deploy` holds
+  # the Pages and OIDC permissions and runs nothing but deploy-pages (security review 2026-10-04).
+  build:
+    name: Build the site for Pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [test, lint, e2e]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Production build
+        run: npm run docs:build
+      # the gates again, on the exact files that will be published
+      - name: Post-build checks on the artifact
+        run: node tests/site/post-build.mjs
+        env:
+          CI: "1"
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: .vitepress/dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
       pages: write
       id-token: write
     environment:
@@ -240,19 +288,8 @@ jobs:
       group: pages
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - name: Production build
-        run: npm run docs:build
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: .vitepress/dist
       - id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
 
   # The @smoke subset against the live site (BASE_URL set, so no local server starts).
   smoke:
@@ -263,8 +300,10 @@ jobs:
     env:
       BASE_URL: https://willcoliveira.github.io/ai-testing-handbook/
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -274,7 +313,7 @@ jobs:
         run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
       - name: Cache browsers
         id: pw-cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-chromium-${{ steps.pw.outputs.version }}
@@ -288,7 +327,7 @@ jobs:
         run: npx playwright test --grep @smoke --project=chromium
       - name: Upload report
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: playwright-report-smoke
           path: playwright-report/
