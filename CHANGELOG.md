@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.14 (2026-10-04)
+
+- The refresh and roles skills, which read pages anyone can publish, can no longer be steered by a
+  fetched page into files, commands or a commit: fetching moves to a `web-reader` agent with web
+  access only, `kb-refresh` pre-approves only its own scripts and the sweep-list domains, and
+  `/refresh` and `/roles` stage named paths after `scripts/check-diff-paths.mjs` and check the
+  commit message and PR body for forbidden strings (also a `commit-msg` hook).
+  `wico-playwright-agent-skills` 2.4.1: writes are contained to the project and project fields
+  are validated; the regenerated skill treats traces and saved auth state as secrets.
+
 ## 0.1.13 (2026-10-04)
 
 - Security hardening from a review of the site work and an adversarial re-test of the fixes: the

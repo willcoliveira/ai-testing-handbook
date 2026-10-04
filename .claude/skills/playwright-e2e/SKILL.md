@@ -4,7 +4,7 @@ description: "Playwright end-to-end testing skills for ai-testing-handbook: plan
 allowed-tools: "Bash(playwright-cli:*), Bash(npx playwright:*), Read, Write, Edit, Glob, Grep"
 metadata:
   generator: wico-playwright-agent-skills
-  generator-version: 2.4.0
+  generator-version: 2.4.1
 ---
 
 # Playwright E2E Skills

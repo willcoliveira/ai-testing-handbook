@@ -7,12 +7,20 @@ description: >
   never pushes. Use when user says: "refresh the kb", "what moved since the last digest",
   "sweep sources", "run kb-refresh".
 argument-hint: "[--dry-run] [--since YYYY-MM-DD] [--area <1-8>] [--max-sources <n>] [--only <S0nn,S0nn>]"
-allowed-tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(node scripts/*), Bash(npm run check*), Bash(date:*), Bash(ls:*)
+allowed-tools: Read, Glob, Grep, Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(date:*), Bash(ls:*), Bash(node scripts/merge-sources.mjs), Bash(node scripts/apply-bullets.mjs), Bash(node scripts/bump-checked.mjs:*), Bash(node scripts/check-forbidden.mjs), Bash(node scripts/check-sources.mjs), Bash(node scripts/check-links.mjs:*), WebFetch(domain:anthropic.com), WebFetch(domain:deploymentsafety.openai.com), WebFetch(domain:deepmind.google), WebFetch(domain:ai.meta.com), WebFetch(domain:metr.org), WebFetch(domain:aisi.gov.uk), WebFetch(domain:apolloresearch.ai), WebFetch(domain:blogs.microsoft.com), WebFetch(domain:amazon.science), WebFetch(domain:developer.nvidia.com), WebFetch(domain:cohere.com), WebFetch(domain:mistral.ai), WebFetch(domain:huggingface.co), WebFetch(domain:github.com), WebFetch(domain:pypi.org), WebFetch(domain:registry.npmjs.org), WebFetch(domain:export.arxiv.org), WebFetch(domain:arxiv.org), WebFetch(domain:genai.owasp.org), WebFetch(domain:nist.gov), WebFetch(domain:code-of-practice.ai)
 ---
 
 # kb-refresh
 
-This skill is a sweep, not a research pass. Cap first, fetch second. It never runs `git add`,
+This skill is a sweep, not a research pass. Cap first, fetch second.
+
+Permissions are deliberately narrow, because the sweep reads pages anyone can publish (an arXiv
+abstract, a release note): only the scripts listed in `allowed-tools` and fetches to the sweep-list
+domains run without asking. Write, Edit, any other command and any other domain ask the maintainer
+first. When the sweep is sharded, fetching is done by `web-reader` subagents
+(`.claude/agents/web-reader.md`), which have web access only.
+
+This skill never runs `git add`,
 `git commit`, `git push` or `gh`. If you find yourself wanting to commit, stop: the digest tells
 the reviewer what to commit.
 
@@ -77,6 +85,6 @@ the reviewer what to commit.
 ## Budget
 
 If the sweep list grows past 30 items, shard it: either `--area` in separate sessions, or one
-read-only subagent per sweep-list group in the same session (each fetches its group and reports
+read-only `web-reader` subagent per sweep-list group in the same session (each fetches its group and reports
 findings; only the main session edits files). Do not raise `--max-sources` above 40 in one session,
 and keep each subagent to about 10 fetches.
