@@ -33,8 +33,13 @@ every video, talk and document with its phase and its testing counterpart.
   [AI QA requirements](ai-qa-requirements.md) consolidates what the roles ask for, with the
   fundamentals, an example and what to build for each.
 
-## The build project
+## The build projects
 
-The hands-on vehicle for this path is a multimodal build (a detector, an embedding index and a
-language layer taken to a production shape with evals, guardrails and QA at each step). It is
-planned separately; each phase names the exercise that will map onto it.
+[RAG build project](rag-build-project.md): build a small retrieval-augmented assistant over
+documents you wrote, then test ingestion, retrieval, generation, abstention and the index as an
+attack surface, stage by stage, ending with a report. It runs alongside phases 0 to 5 and the
+exercises are specs, so any stack works.
+
+The larger hands-on vehicle is a multimodal build (a detector, an embedding index and a language
+layer taken to a production shape with evals, guardrails and QA at each step). It is planned
+separately; each phase names the exercise that will map onto it.

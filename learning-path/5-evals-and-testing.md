@@ -14,7 +14,9 @@ The whole reference, in this reading order.
 ## Doing order
 
 Work through [how-to/](../how-to/README.md) 01 to 12 against your own agent. Each playbook ends
-with a "Done when" you can check. The reading order below is the theory behind each step.
+with a "Done when" you can check. The reading order below is the theory behind each step. If
+your system answers from documents, add [17 Test a RAG application](../how-to/17-test-a-rag-application.md)
+and stages 4 to 8 of the [RAG build project](rag-build-project.md).
 
 ## Reading order
 
@@ -26,7 +28,7 @@ with a "Done when" you can check. The reading order below is the theory behind e
 | 4 | [llm-as-judge](../practices/3-judging/llm-as-judge.md), [judge-calibration](../practices/3-judging/judge-calibration.md), [rubrics-and-pairwise](../practices/3-judging/rubrics-and-pairwise.md) | choose a judge and prove it agrees with humans |
 | 5 | [non-determinism-and-pass-rates](../practices/2-application-evals/non-determinism-and-pass-rates.md) | gate on distributions |
 | 6 | [guardrails](../practices/5-safety-and-security/guardrails.md), [false-positive-protection](../practices/5-safety-and-security/false-positive-protection.md), [prompt-injection](../practices/5-safety-and-security/prompt-injection.md), [red-teaming](../practices/5-safety-and-security/red-teaming.md) | build the binary safety suite |
-| 7 | [agent-evals](../practices/4-agents-and-systems/agent-evals.md), [tool-use-evals](../practices/4-agents-and-systems/tool-use-evals.md), [harnesses](../practices/4-agents-and-systems/harnesses.md), [tools/README](../tools/README.md) | pick a harness and assert on trajectories and state |
+| 7 | [agent-evals](../practices/4-agents-and-systems/agent-evals.md), [tool-use-evals](../practices/4-agents-and-systems/tool-use-evals.md), [harnesses](../practices/4-agents-and-systems/harnesses.md), [tools/README](../tools/README.md), [rag-evals](../practices/2-application-evals/rag-evals.md) | pick a harness, assert on trajectories and state, and score retrieval and generation separately |
 | 8 | [ci-gates-for-llm-apps](../practices/2-application-evals/ci-gates-for-llm-apps.md), [load-and-latency](../practices/4-agents-and-systems/load-and-latency.md) | decide what runs where |
 | 9 | [genai-tracing](../practices/6-observability/genai-tracing.md), [online-evals-and-drift](../practices/6-observability/online-evals-and-drift.md), [redaction-in-telemetry](../practices/6-observability/redaction-in-telemetry.md) | close the loop from production |
 | 10 | [regression-on-upgrade](../practices/7-training-and-lifecycle/regression-on-upgrade.md), [fine-tuning-evals](../practices/7-training-and-lifecycle/fine-tuning-evals.md), [post-training-evals](../practices/7-training-and-lifecycle/post-training-evals.md), [data-contamination](../practices/7-training-and-lifecycle/data-contamination.md), [training/README](../training/README.md) | handle a model change and a fine-tune |

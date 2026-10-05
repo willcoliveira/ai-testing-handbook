@@ -37,7 +37,7 @@ function escapeTree(items) {
   return items.map((it) => ({ ...it, text: escapeLabel(it.text), ...(it.items ? { items: escapeTree(it.items) } : {}) }));
 }
 
-const LEARNING_TAIL = ["knowledge-matrix.md", "interview-questions.md", "ai-qa-requirements.md", "resources.md"];
+const LEARNING_TAIL = ["rag-build-project.md", "knowledge-matrix.md", "interview-questions.md", "ai-qa-requirements.md", "resources.md"];
 const APPENDICES = [["Labs", "labs"], ["Tools", "tools"], ["Benchmarks", "benchmarks"], ["Datasets", "datasets"], ["Training", "training"]];
 
 export function buildSidebar(root) {

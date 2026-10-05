@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.15 (2026-10-05)
+
+- RAG testing: a practice page (`practices/2-application-evals/rag-evals.md`), playbook 17 (Test a
+  RAG application) with a worked example that redoes a five-case demo report (the unanswerable case
+  becomes an expected abstention), and a staged RAG build project in the learning path whose
+  exercises run from a planted corpus to a report. Interview questions 26 to 28, seven glossary
+  terms, the DeepEval recall, relevancy and hallucination rows in the metrics table, a roadmap row
+  for a starter repository, and sources S393 to S411.
+
 ## 0.1.14 (2026-10-04)
 
 - The refresh and roles skills, which read pages anyone can publish, can no longer be steered by a

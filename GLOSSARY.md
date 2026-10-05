@@ -2,6 +2,7 @@
 
 One or two lines per term, alphabetical. A source id in brackets means the definition follows that source; "(general)" means common usage. Every id resolves in `sources.md`.
 
+- **Abstention**: a system declining to answer because its inputs do not support an answer, for example "the documents do not say"; in a RAG test set, the expected behaviour of an unanswerable case. Models often answer instead of abstaining when retrieved context is insufficient [S402].
 - **Adversarial judge**: a model judge given only the claim and its evidence and told to refute it, for example by re-running the steps, so a finding is checked by a context that never saw how it was made. (general)
 - **Agent**: a system in which a model directs its own steps, choosing tools and deciding when to stop, as opposed to a workflow with a fixed path. Suited to "open-ended problems where it's difficult or impossible to predict the required number of steps" [S166].
 - **Agent-to-agent testing**: driving the agent under test with a second model that plays the user or the counterpart, so long multi-turn scenarios run without a person. (general)
@@ -19,12 +20,14 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Capability threshold**: a level of dangerous capability defined in a lab's scaling policy that, if crossed, triggers stronger safeguards; the Sonnet 4.6 card discusses AI R&D-4 and CBRN-4 [S164].
 - **Chain of command**: the Model Spec's ordering of instruction authority, root, system, developer, user, guideline, where a higher level overrides a lower one [S158].
 - **Charter**: the written scope of an autonomous agent: purpose, allowed outputs, volume cap, no-go layers, permissions, phase gates, kill switch, escalation, records. (general)
+- **Chunking**: splitting documents into passages before embedding and indexing them; a chunk cut from its document can "lack sufficient context" [S405].
 - **CI gate**: a check in the pipeline that blocks a merge or a deploy when it fails; only deterministic, trusted checks should gate. (general)
 - **Claim card**: the minimal, self-contained statement of one candidate finding (title, steps, expected and actual behaviour, evidence) handed to a verifier without the finder's reasoning. (general)
 - **Code owner**: a person or team named for a path; branch protection can require "any pull request that affects code with a code owner must be approved by that code owner" [S168].
 - **Confabulation**: NIST's term for GAI producing "confidently stated but erroneous or false content", one of the twelve GAI risks [S160].
 - **Constructed test**: a test item built by altering a real one in a known way (evidence swapped, steps made vague, an inapplicable pattern) so a grader's ability to tell the pair apart can be measured. (general)
 - **Contamination**: eval or benchmark items appearing in training data, so a score measures memory rather than capability. (general)
+- **Contextual retrieval**: prepending a short, chunk-specific description of the surrounding document to each chunk before embedding and BM25 indexing; Anthropic reported it cut top-20 retrieval failures from 5.7 to 2.9 percent, and to 1.9 percent with reranking [S405].
 - **Datasheet**: a document that accompanies a dataset and records "its motivation, composition, collection process, recommended uses, and so on" [S157].
 - **Decision model**: a model that answers typed questions about text (a probability, a choice from a set, a score on a rubric) and returns no prose. (general)
 - **Denied topic**: a subject a guardrail is configured to refuse outright, tested with both must-block and must-not-block cases. (general)
@@ -38,12 +41,14 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Excessive agency**: OWASP LLM06:2025, where an LLM-based system is granted more capability, permission or autonomy than the function needs [S163].
 - **Factors**: the model card section listing the groups, environments and instrumentation across which performance should be reported [S156].
 - **Fail open**: when a check cannot run, the work proceeds as if the check were absent, flagged as unchecked, rather than being blocked. (general)
+- **Faithfulness**: the share of claims in an answer that the retrieved context supports; a judge-scored generation metric in DeepEval and Ragas [S329][S336].
 - **Fine-tune**: further training of a base model on task data; a fine-tune must be compared against the base model and against a prompt on a held-out set. (general)
 - **Flake**: a test whose result varies across runs with no code change; in LLM apps a flake is often the model, not the test. (general)
 - **GenAI semantic conventions**: the OpenTelemetry attribute names for model calls (model, tokens, prompt, completion) so traces from different tools line up. (general)
 - **Generative AI Profile**: NIST AI 600-1, a companion to the AI RMF that lists twelve GAI risks and suggested actions with ids such as GV-1.2-002 [S160].
 - **Golden set**: a curated, human-verified set of cases with expected outputs, used as the reference for regression and as the calibration set for judges. (general)
 - **GPAI Code of Practice**: the EU General-Purpose AI Code of Practice, final version 10 July 2025, with Transparency, Copyright and Safety and Security chapters [S161].
+- **Groundedness**: Microsoft's name for whether a response stays within its grounding context, "the precision aspect of the response" [S407].
 - **Guardrail**: a check placed around a model call (input filter, output classifier, prompt rule) that blocks or rewrites content; an over-blocking guardrail is a defect. (general)
 - **Harness**: the code that runs cases through a model or agent, collects outputs and applies graders; the reusable frame around an eval. (general)
 - **Held-out**: cases kept away from prompt tuning and training so a score on them is not fitted. (general)
@@ -71,11 +76,13 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Preliminary assessment**: the RSP protocol a lab applies to a model that does not push the capability frontier, using automated evaluations and reference to the frontier model [S164].
 - **Prompt injection**: OWASP LLM01:2025, where content in the prompt or in retrieved data alters the model's behaviour in a way the developer did not intend [S163].
 - **Quarantine**: moving a flaky test out of the gating suite to a non-blocking run until it is fixed or deleted. (general)
+- **Recall@k**: the share of relevant items that appear in the top k retrieved; scorable without a judge when the relevant chunk ids are labelled [S405].
 - **Red team**: adversarial testing by people or models to find failure modes before release; NIST suggests "GAI red-teaming, or chaos testing to identify anomalous or unforeseen failure modes" [S160].
 - **Redaction**: removing or masking personal or sensitive data from prompts, completions and traces before they are stored or exported. (general)
 - **Regression on upgrade**: the eval run before switching model versions to catch behaviour that changed with the model, not the code. (general)
 - **Required review**: a branch rule that "all pull requests receive a specific number of approving reviews before someone merges" [S168].
 - **Responsible Scaling Officer (RSO)**: the Anthropic role that, per the system card, determined the ASL-3 safeguards level for the CBRN domain [S164].
+- **Retrieval-augmented generation (RAG)**: answering with a generator conditioned on passages a retriever fetched at query time, combining "parametric and non-parametric memory" [S399].
 - **Reward hacking**: a model gaming the grader instead of solving the task, for example special-casing hidden tests; measured by labs as a hack rate on hack-prone and impossible tasks [S164].
 - **RLHF**: reinforcement learning from human feedback, post-training that optimises a policy against a reward model trained on human preferences. (general)
 - **RLVR**: reinforcement learning with verifiable rewards, post-training where the reward is a programmatic check such as a unit test or a maths answer. (general)

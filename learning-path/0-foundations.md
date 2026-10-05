@@ -33,6 +33,8 @@ always stable. That difference is the whole subject.
 1. Write a script that runs one prompt N times and prints the distinct outputs with counts.
 2. Add a JSON schema and a validator. Make the validator fail on purpose.
 3. Add one tool. Log every call with its arguments. Assert the arguments in a test.
+4. Start the [RAG build project](rag-build-project.md): write the corpus (stage 0) and test
+   ingestion and chunking (stage 1).
 
 ## Read next
 [non-determinism-and-pass-rates](../practices/2-application-evals/non-determinism-and-pass-rates.md),

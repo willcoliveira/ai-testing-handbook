@@ -21,7 +21,7 @@ test("real repo: sidebar is the plan's reading order", () => {
     "/",
     "/learning-path/", "/learning-path/0-foundations", "/learning-path/1-harness-loop-graph", "/learning-path/2-build-a-harness",
     "/learning-path/3-context-memory-orchestration", "/learning-path/4-production-and-inference", "/learning-path/5-evals-and-testing",
-    "/learning-path/knowledge-matrix", "/learning-path/interview-questions", "/learning-path/ai-qa-requirements", "/learning-path/resources",
+    "/learning-path/rag-build-project", "/learning-path/knowledge-matrix", "/learning-path/interview-questions", "/learning-path/ai-qa-requirements", "/learning-path/resources",
     "/TAXONOMY",
     "/practices/", ...practices,
     ...folder("how-to"),
@@ -33,7 +33,7 @@ test("real repo: sidebar is the plan's reading order", () => {
   assert.deepEqual(flatten(sidebar), expected);
   assert.equal(parts.length, 8);
   const playbooks = flatten(sidebar).filter((l) => /^\/how-to\/\d\d-/.test(l)).map((l) => l.slice(8, 10));
-  assert.deepEqual(playbooks, Array.from({ length: 16 }, (_, i) => String(i + 1).padStart(2, "0")));
+  assert.deepEqual(playbooks, Array.from({ length: 17 }, (_, i) => String(i + 1).padStart(2, "0")));
 });
 
 test("real repo: Parts I to VIII are collapsible groups opening with the intro page", () => {
