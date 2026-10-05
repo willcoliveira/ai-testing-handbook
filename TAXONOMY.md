@@ -21,6 +21,7 @@ engineer should be able to answer after reading it. Two hops from any question t
 | Non-determinism and pass rates | [non-determinism-and-pass-rates](practices/2-application-evals/non-determinism-and-pass-rates.md) | How many runs? What do I gate on? How do I detect a silent model change? |
 | CI gates for LLM apps | [ci-gates-for-llm-apps](practices/2-application-evals/ci-gates-for-llm-apps.md) | What runs per PR, nightly, manually? What must never gate? How do I keep the gate trusted? |
 | Offline probes | [offline-probes](practices/2-application-evals/offline-probes.md) | How do I test model-adjacent code against real configuration without a model call? |
+| RAG evals | [rag-evals](practices/2-application-evals/rag-evals.md) | Is a wrong answer a retrieval or a generation defect? Which metrics need a reference answer? How do I test that it abstains when the documents do not say? |
 
 ## 3. Judging and scoring. Who decides pass or fail, and how do I know the judge is right?
 

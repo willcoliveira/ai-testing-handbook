@@ -2,7 +2,8 @@
 
 Both libraries score the same things under slightly different names. This page maps them, says
 how each is computed according to its own docs, and says what each needs to run. Checked
-2026-09-30. Harness-level notes are in [harnesses.md](harnesses.md).
+2026-09-30; DeepEval recall, relevancy and hallucination rows 2026-10-05. The method behind them
+is in [rag-evals](../practices/2-application-evals/rag-evals.md). Harness-level notes are in [harnesses.md](harnesses.md).
 
 ## The one idea to keep
 Score retrieval and generation separately. A wrong answer with the wrong context is a retrieval
@@ -14,11 +15,12 @@ its "generator" [S330][S329]; Ragas splits its RAG metrics the same way [S335].
 
 | What it asks | DeepEval | Ragas | How it is computed (per the docs) | Inputs |
 |---|---|---|---|---|
-| Is the answer supported by the retrieved context? | Faithfulness [S329] | Faithfulness [S336] | claims in the answer supported by the context / all claims in the answer; DeepEval also returns a reason | question, answer, retrieved context |
+| Is the answer supported by the retrieved context? | Faithfulness [S329] | Faithfulness [S336] | claims in the answer supported by the context / all claims in the answer; DeepEval also returns a reason. DeepEval's page says both that a claim counts if it "does not contradict" the context and that the metric "only rewards claims supported" by it; `penalize_ambiguous_claims` is off by default [S329] | question, answer, retrieved context |
+| Does the answer contradict known-true context? | Hallucination [S393] | none named | aligned contexts / all contexts; the page read 2026-10-05 says "Higher is better" and "Use Faithfulness for RAG" | question, answer, curated `context` (not `retrieval_context`) |
 | Are the relevant chunks ranked first? | Contextual Precision [S330] | Context Precision [S337] | precision at each rank, weighted toward the top (DeepEval: weighted cumulative precision; Ragas: mean of precision@k) | question, retrieved context, and a reference answer (DeepEval requires it; Ragas has variants with and without) |
-| Did retrieval find everything needed? | Contextual Recall [S328] | Context Recall [S338] | Ragas: claims in the reference supported by the retrieved context / claims in the reference; DeepEval's page not read for this table | reference answer, retrieved context |
-| Does the answer address the question? | Answer Relevancy [S328] | Response Relevancy [S339] | Ragas: generate questions from the answer, embed them, cosine similarity to the user input; "without evaluating factual accuracy", and not guaranteed to stay in 0 to 1 | question, answer |
-| Is the retrieved context relevant at all? | Contextual Relevancy [S328] | none named; noise sensitivity is closest [S335] | DeepEval's page not read for this table | question, retrieved context |
+| Did retrieval find everything needed? | Contextual Recall [S394] | Context Recall [S338] | statements (DeepEval) or claims (Ragas) in the reference answer attributable to the retrieved context / all of them | reference answer, retrieved context |
+| Does the answer address the question? | Answer Relevancy [S396] | Response Relevancy [S339] | DeepEval: statements in the answer relevant to the question / all statements [S396]; Ragas: generate questions from the answer, embed them, cosine similarity to the user input; "without evaluating factual accuracy", and not guaranteed to stay in 0 to 1 | question, answer |
+| Is the retrieved context relevant at all? | Contextual Relevancy [S395] | none named; noise sensitivity is closest [S335] | statements in the retrieved context relevant to the question / all statements | question, retrieved context |
 | Custom criteria | G-Eval (criteria or evaluation steps, 1 to 5 normalised by token probabilities), DAG [S331][S328] | custom metrics via decorators [S080] | a judge applies your rubric | your fields |
 | Right tools called? | Tool Correctness: correctly used tools / tools called, against `expected_tools` [S332] | Tool call accuracy, tool call F1 [S335] | comparison with expected calls; options for order and exact match | tools called, expected tools |
 | Did an MCP agent use the server well? | MCP Use (primitives and arguments chosen against those available), MCP Task Completion per interaction [S379][S380] | none named | judge over the MCP calls in the test case | MCP servers and the tools, resources and prompts called [S378] |

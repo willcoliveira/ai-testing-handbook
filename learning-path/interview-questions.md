@@ -81,7 +81,8 @@ retriever, faithfulness and answer relevancy for the generator.
 a generation defect. DeepEval describes contextual precision as measuring the retriever and
 faithfulness the generator [S330][S329]. Faithfulness is claims supported by the context over all
 claims [S329][S336]. Recall needs a reference answer [S338].
-**Read.** [RAG and agent metrics](../tools/rag-and-agent-metrics.md).
+**Read.** [RAG and agent metrics](../tools/rag-and-agent-metrics.md), [rag-evals](../practices/2-application-evals/rag-evals.md),
+[17 Test a RAG application](../how-to/17-test-a-rag-application.md). Questions 26 to 28 go deeper.
 
 ### 8. DeepEval or Ragas?
 **Short answer.** Overlapping metrics; different shape. DeepEval is pytest-style with test cases,
@@ -230,8 +231,40 @@ scores [S377]. So a description change is a behaviour change: rerun the tool-qua
 **The mechanism.** Grade the four failure modes: wrong tool, wrong parameters, too few calls,
 mishandled responses [S377]; use held-out cases so you do not tune to the test set [S377].
 
+## RAG in practice
 
-Phase 5 of this path, then playbooks 01 to 08 and 13 to 14, then the
+### 26. The documents do not answer the question. What should the test expect?
+**Short answer.** Abstention. Write the case with expected behaviour `abstain`; it passes when the
+system says the documents do not cover it and fails on any answer. A demo that marks this case as
+an intended failure has the test inverted: the invented answer is the bug.
+**The mechanism.** Larger models "often output incorrect answers instead of abstaining when the
+context is not" sufficient [S402]. Score abstention as its own check, not as low faithfulness,
+and keep about one unanswerable case for every few answerable ones.
+**Follow-up to expect.** "Would faithfulness catch the invented answer?" Not reliably: DeepEval's
+faithfulness page says a claim counts if it "does not contradict" the context and also that only
+supported claims count [S329]. Plant an invented claim and see.
+**Read.** [17 Test a RAG application](../how-to/17-test-a-rag-application.md).
+
+### 27. Faithfulness or hallucination metric?
+**Short answer.** Faithfulness for RAG. DeepEval's hallucination metric compares the output with a
+curated `context` you supply, not the `retrieval_context` the retriever fetched, and its page says
+to use faithfulness for RAG and not to use hallucination "on a live RAG system" [S393].
+**Follow-up to expect.** "Is a higher hallucination score better?" On the page read 2026-10-05,
+yes: "Higher is better" [S393]. Older material says the opposite, so read the docs for the version
+you run before you set a threshold.
+
+### 28. How do you test retrieval without an LLM judge?
+**Short answer.** Label the chunk ids that answer each question and compute hit rate, MRR or
+recall@k. The OpenAI cookbook uses hit rate and MRR [S411]; Anthropic reports 1 minus recall@20
+as its retrieval failure rate [S405]; Microsoft's document retrieval evaluator reports NDCG
+against labels [S407].
+**The mechanism.** Labels make retrieval deterministic to score, so it can run on every commit and
+compare chunkers and embedding models on the same questions. Anthropic's contextual retrieval
+cut top-20 failures from 5.7 to 1.9 percent with contextual embeddings, BM25 and reranking [S405].
+**Read.** [RAG build project](rag-build-project.md), stage 2.
+
+
+Phase 5 of this path, then playbooks 01 to 08 and 13 to 17, then the
 [AI QA requirements](ai-qa-requirements.md) page for what roles ask for. Know one tool well enough to write a
 test in it live (DeepEval or promptfoo), and be ready to explain one number you reported with
 its interval.
