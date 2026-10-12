@@ -9,14 +9,14 @@ row covers the page yet; add the id when a row is registered from it.
 ## Lab pages (9)
 | Page | Area | Register ids | Notes |
 |---|---|---|---|
-| https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 | research posts |
-| https://www.anthropic.com/engineering | 2, 4 | S032 S040 S079 S166 | engineering posts |
+| https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 S422 S423 | research posts |
+| https://www.anthropic.com/engineering | 2, 4 | S032 S040 S079 S166 | engineering posts; 2026-10-12: the featured post at the top shows no date (it was 2026-05-25), so open it before treating it as new |
 | https://www.anthropic.com/rsp-updates | 5 | S096 S097 | RSP version changes |
-| https://deploymentsafety.openai.com/ | 5 | S103 | system cards and safety evaluations |
+| https://deploymentsafety.openai.com/ | 5 | S103 S416 | system cards and safety evaluations |
 | https://deepmind.google/blog | 5 | S108 S295 | frontier safety framework changes; listing shows month-only dates for recent posts, open a post to confirm its day |
 | https://ai.meta.com/blog | 5, 7 | S113 | model releases and evals |
-| https://metr.org/blog | 1, 5 | S015 S285 S286 S387 | third-party evaluation |
-| https://www.aisi.gov.uk/blog | 4, 5 | S117 S228 S389 | Inspect and evaluations; the home page carries no dates, replaced by /blog on 2026-09-29 |
+| https://metr.org/blog | 1, 5 | S015 S285 S286 S387 S413 | third-party evaluation |
+| https://www.aisi.gov.uk/blog | 4, 5 | S117 S228 S389 S417 | Inspect and evaluations; the home page carries no dates, replaced by /blog on 2026-09-29 |
 | https://www.apolloresearch.ai/science | 5 | S289 S290 | scheming and audit research; /research lagged the /science posts, replaced on 2026-09-29 |
 
 ## Vendor pages for the labs covered in labs/ (9)
@@ -24,9 +24,9 @@ row covers the page yet; add the id when a row is registered from it.
 |---|---|---|---|
 | https://blogs.microsoft.com/on-the-issues/ | 5, 8 | S246 S291 | responsible AI and frontier governance posts |
 | https://www.amazon.science/blog | 5, 7 | S254 S255 | Nova reports and the frontier model safety framework |
-| https://developer.nvidia.com/blog | 4, 5 | | Nemotron, NeMo Evaluator, guardrails |
+| https://developer.nvidia.com/blog | 4, 5 | S420 | Nemotron, NeMo Evaluator, guardrails |
 | https://cohere.com/blog | 5, 7 | S388 | Command releases and the frontier model framework |
-| https://mistral.ai/news | 5, 7 | S259 S262 S292 | model releases and moderation |
+| https://mistral.ai/news | 5, 7 | S259 S262 S292 S412 | model releases and moderation |
 | https://huggingface.co/deepseek-ai | 5, 7 | S297 | model cards with dates; the GitHub org page lists no dates |
 | https://huggingface.co/Qwen | 5, 7 | S221 S222 S223 | model cards with dates; qwen.ai/blog is script-rendered and returns nothing |
 | https://huggingface.co/moonshotai | 5, 7 | S226 | model cards with dates; moonshotai.github.io redirects |
@@ -35,22 +35,23 @@ row covers the page yet; add the id when a row is registered from it.
 ## Tool release pages (10)
 | Repository releases page | Register ids | Register notes to compare |
 |---|---|---|
-| https://github.com/UKGovernmentBEIS/inspect_ai/releases | S066 | inspect_ai version; the repo publishes no GitHub releases, compare PyPI inspect-ai and CHANGELOG.md |
-| https://github.com/promptfoo/promptfoo/releases | S068 | promptfoo version |
+| https://github.com/UKGovernmentBEIS/inspect_ai/releases | S066 | inspect_ai version; the repo publishes no GitHub releases, compare PyPI inspect-ai and CHANGELOG.md; 2026-10-12: blob/main/CHANGELOG.md returns only page chrome, fetch it with `?plain=1` |
+| https://github.com/promptfoo/promptfoo/releases | S068 | promptfoo version; 2026-10-12: the register tracks npm, so also fetch https://registry.npmjs.org/promptfoo/latest (it has no publish time; take the date from the GitHub release) |
 | https://github.com/confident-ai/deepeval/releases | S070 | deepeval version |
 | https://github.com/langfuse/langfuse/releases | S071 | langfuse version |
 | https://github.com/safety-research/petri/releases | S072 S101 | petri version (redirects to meridianlabs-ai/inspect_petri) |
 | https://github.com/safety-research/bloom/releases | S073 | bloom version |
 | https://github.com/sierra-research/tau2-bench/releases | S012 S078 | tau2 version |
 | https://github.com/open-telemetry/semantic-conventions-genai/releases | S136 S203 | GenAI semconv version (the conventions moved to their own repository) |
-| https://github.com/mlcommons/ailuminate/releases | S120 | ailuminate version |
+| https://github.com/mlcommons/ailuminate/releases | S120 | ailuminate version; 2026-10-12: the repo publishes no GitHub releases, the register's v1.0 and v1.1 are benchmark versions, so a "no releases" page is no change |
 | https://github.com/stanford-crfm/helm/releases | S118 | helm version |
 
-## arXiv queries (4), top 5 by date each
-- `cat:cs.CL AND (ti:"LLM-as-a-judge" OR ti:evaluator)`
+## arXiv queries (5), top 5 by date each, one at a time
+- `cat:cs.CL AND abs:"LLM-as-a-judge"` (2026-10-12: replaces `cat:cs.CL AND (ti:"LLM-as-a-judge" OR ti:evaluator)`, whose title search stems `evaluator` to "Evaluation" and returned no judge papers; tested 2026-10-12, 3 of 5 on-target, 1 partly, all from the past ten days)
 - `cat:cs.SE AND ti:agent AND ti:benchmark`
 - `cat:cs.CL AND ti:contamination`
 - `cat:cs.CR AND ti:"prompt injection"`
+- `(cat:cs.AI OR cat:cs.LG OR cat:cs.SE) AND (ti:"reward hacking" OR abs:"evaluation awareness")` (2026-10-12: added for evaluation integrity, agents gaming graders and tests, the theme of S387, S418 and S423; tested 2026-10-12, 5 of 5 on-target, 2026-10-03 to 2026-10-09)
 
 Query form: `https://export.arxiv.org/api/query?search_query=<query>&sortBy=submittedDate&sortOrder=descending&max_results=5`
 

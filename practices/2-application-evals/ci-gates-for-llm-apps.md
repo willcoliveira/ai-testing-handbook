@@ -3,8 +3,8 @@ id: ci-gates-for-llm-apps
 title: CI gates for LLM apps
 area: 2-application-evals
 status: draft
-last_reviewed: 2026-10-02
-sources: [S031, S032, S033, S036, S042, S043, S046, S047, S049, S299, S346, S347]
+last_reviewed: 2026-10-12
+sources: [S031, S032, S033, S036, S042, S043, S046, S047, S049, S068, S299, S346, S347]
 related: [eval-driven-development, non-determinism-and-pass-rates, load-and-latency, regression-on-upgrade, online-evals-and-drift]
 ---
 
@@ -78,6 +78,7 @@ holds only the checks that are stable enough to be believed, and the rest is rep
   for pull-request runs [S046], [S047].
 - **arXiv, 2026-09:** selecting a benchmark subset from agent action-trajectory embeddings cut regression-testing cost by 90 percent in the paper's setting, at an accepted error rate [S299].
 - **Anthropic and OpenAI, 2026-09:** both structured-output docs guarantee schema adherence but name the exceptions: a refusal can take precedence over the schema, and a response cut off at the token limit may not match it [S346][S347].
+- **promptfoo, 2026-10:** 0.124.0 makes a target error that stops the eval fail the exit code and runs coding agents in isolated workspaces; 0.124.1 reports missing target output in red-team runs as errors [S068].
 
 ## Pitfalls
 1. **Gating on a suite that is supposed to fail.** Capability evals start low by design [S032].
@@ -110,3 +111,4 @@ pipeline exactly as it was. See [decision-model-triage-before-an-llm-judge](../.
 - [S299] Trajectory-aware benchmark subset selection for cost-efficient software engineering agent regression testing, arXiv 2609.24928, 2026-09-21
 - [S346] Structured outputs (Claude docs), Anthropic, living
 - [S347] Structured model outputs (OpenAI docs), OpenAI, living
+- [S068] promptfoo documentation, intro, promptfoo, living

@@ -3,8 +3,8 @@ id: benchmark-hygiene
 title: Benchmark hygiene: contamination, gaming and trust
 area: 1-capability
 status: draft
-last_reviewed: 2026-09-28
-sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295, S302]
+last_reviewed: 2026-10-12
+sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295, S302, S418, S419]
 related: [capability-benchmarks, statistical-treatment-of-evals, data-contamination, golden-datasets]
 ---
 
@@ -53,6 +53,8 @@ A contaminated or gamed score is worse than no score, because it carries the aut
 - **xAI, September 2026:** notes that CursorBench 4.0 "scores are not comparable with CursorBench 3.2" and that DeepSWE tasks are "written from scratch rather than mined from existing commits" to keep reference solutions out of the public record [S266].
 - **Google DeepMind, 2026-08:** the double-blind pilot keeps confidential benchmarks inside a cryptographic "box" so they "can't be used by models later to optimize performance", addressing contamination from the evaluator side and weight leakage from the developer side at once [S295].
 - **arXiv, 2026-09:** a contamination-controlled private suite found no consistent advantage between vendor-native and neutral harnesses in agentic coding, which separates the harness effect from the model effect [S302].
+- **arXiv, 2026-10:** TestJack audits agentic coding benchmarks with requirement-targeted tests and finds that about 34.4 percent of trials judged correct break task requirements across 6 model backends and 5 benchmarks, lowering overall resolution from 50.6 to 33.2 percent [S418].
+- **arXiv, 2026-10:** an analysis of 4,782 JetBrains IDE agent sessions, a third with three or more user messages, motivates SWE-TaskFlow, which reshapes issue-derived benchmarks toward real interaction patterns; in a pilot on 700 SWE-Bench Pro tasks, sequential multi-step solving roughly doubled agent cost [S419].
 
 ## Pitfalls
 1. Trusting "verified" as permanent. Human-filtered tasks still carried flawed tests at a rate found only when strong models' failures were audited [S028].
@@ -90,3 +92,5 @@ None yet.
 - [S266] Grok 4.7 Model Card (revision 2026-09-21), xAI (SpaceXAI), 2026-09-21
 - [S295] Piloting the world's first double-blind AI evaluations, Google DeepMind, 2026-08-27
 - [S302] Harness or Model? Isolating the harness effect in agentic coding with a contamination-controlled private suite, arXiv 2609.11987, 2026-09-08
+- [S418] TestJack: agentic coding benchmarks auditing via evaluator evolution, arXiv 2610.10619, 2026-10-07
+- [S419] Coding-agent benchmarks should match their users' task flows (SWE-TaskFlow), arXiv 2610.09633, 2026-10-07

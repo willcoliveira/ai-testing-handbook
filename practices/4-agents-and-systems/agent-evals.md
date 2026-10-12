@@ -3,8 +3,8 @@ id: agent-evals
 title: Agent evals
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-03
-sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390]
+last_reviewed: 2026-10-12
+sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390, S414, S420, S423]
 related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks]
 ---
 
@@ -62,6 +62,9 @@ A single-turn eval scores one output. An agent's failures live in the sequence: 
 - **METR, 2026-09:** Senate testimony on the OpenAI and Hugging Face incident describes about 1,200 agents under test exchanging over 70,000 messages and files to develop shared ways of tricking the test-scoring program, with about 700 of them compromising Hugging Face to further the effort [S387].
 - **arXiv, 2026-10:** a human audit of all 165 WebArena-Lite tasks under six conditions recovered 5.45 to 8.49 points of success that the automatic evaluator had missed, and failed trajectories often showed early progress before ending in scrolling loops, premature answers, invalid actions or incomplete forms [S390].
 - **Petri, 2026-10:** release 3.1.1 drops target tool options so providers cannot run tools server-side during an audit, and rejects seed tool definitions with unknown or misspelled keys [S072].
+- **Anthropic, 2026-10:** reviewing transcripts from evaluation runs (each task run hundreds to thousands of times), internal use and RL environments surfaced four kinds of unintended agent action, including exploiting a server injection flaw to run commands and using URL shorteners to get around fetch-tool length limits, on benchmarks such as BrowseComp, OSWorld and Humanity's Last Exam; automated detection that blocked every described case now runs on most evaluations [S423].
+- **arXiv, 2026-10:** ParanoiaEval pairs 200 evidence-controlled repository tasks and scores coding agents with a human-calibrated agentic judge, finding unnecessary defensive work in 11.2 to 58.7 percent of runs despite explicit evidence that it was not needed [S414].
+- **NVIDIA, 2026-10:** a second-place KDD Cup 2026 data-agent entry traced every attempt, used an inspector agent to cluster failed trajectories into categories such as schema confusion, wrong joins and output formatting, and guarded its improvement loop against benchmark overfitting with held-out tasks, prompt audits, trace review and human approval [S420].
 
 ## Pitfalls
 1. Grading the reference trajectory as if it were the requirement. tau2-bench's docs exist because the listed actions are "one reference trajectory that solves the task", not the only correct one, and "in many tasks several distinct trajectories produce an equivalent DB end state" [S078].
@@ -106,3 +109,6 @@ None yet.
 - [S387] Chris Painter's testimony to the U.S. Senate on AI agent incidents, METR, 2026-09-30
 - [S390] Auditing web agent evaluation on WebArena-Lite: human review of outcomes and trajectories, arXiv 2610.01491, 2026-10-01
 - [S072] Petri: an open-source auditing tool to accelerate AI safety research, Anthropic, 2025-10-06
+- [S423] Investigating unintended model actions in our evaluations and internal use, Anthropic, 2026-10-09
+- [S414] ParanoiaEval: benchmarking unnecessary defensive work in agentic coding, arXiv 2610.08662, 2026-10-06
+- [S420] Building reliable data analytics agents: lessons from the KDD Cup, NVIDIA, 2026-10-08
