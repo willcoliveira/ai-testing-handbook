@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.18 (2026-10-12)
+
+- Follow-ups from the 2026-10-12 refresh: four sources (S426 to S429), NVIDIA OpenShell runtime
+  controls, two LLM-as-a-judge reliability studies and the RH-Detect reward-hacking benchmark, with
+  bullets in guardrails, judge-calibration, rubrics-and-pairwise and agent-evals. GenAI tracing How
+  step 4 now names `gen_ai.client.inference.duration` and the renamed streaming metrics; the
+  refresh's OTel bullet and S136 note are corrected (the old duration metric was narrowed, not
+  replaced).
+
 ## 0.1.17 (2026-10-12)
 
 - `/refresh` keeps its sweep list current: the sweep agents report off-target queries, failed or

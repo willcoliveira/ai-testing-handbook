@@ -3,8 +3,8 @@ id: rubrics-and-pairwise
 title: Rubrics and pairwise
 area: 3-judging
 status: draft
-last_reviewed: 2026-10-02
-sources: [S051, S052, S053, S054, S055, S057, S058, S059, S060, S061]
+last_reviewed: 2026-10-12
+sources: [S051, S052, S053, S054, S055, S057, S058, S059, S060, S061, S427]
 related: [llm-as-judge, judge-calibration, human-annotation, criteria-authoring]
 ---
 
@@ -49,6 +49,7 @@ Pairwise mechanics:
 - **Hamel Husain, October 2024:** he says he uses pass or fail with a critique and avoids 1 to 5 scales because they are not actionable [S052].
 - **Anthropic docs, living:** they show binary (yes or no), Likert (1 to 5) and ordinal (1 to 5) LLM-graded prompts, each ending with an instruction to output only the label [S061].
 - **OpenAI docs, living:** score_model graders return a number in a range and multi graders combine sub-scores with a formula; the guide says to produce a smooth score, not a pass or fail stamp [S055].
+- **arXiv, 2026-10:** comparing 10 reasoning models as judges on rating and classification tasks, the rating scale shifted measured bias by up to 0.93 points on a 1-7 scale, detailed prompts cut leniency by 28.9 percentage points, and switching the judge model moved leniency by up to 56.1 percentage points [S427].
 
 ## Pitfalls
 1. Position bias in pairwise. Default-prompt GPT-4 was consistent across a swap 65.0% of the time; Claude-v1 23.8% [S051].
@@ -76,3 +77,4 @@ reading was kept as advice. See [decision-model-triage-before-an-llm-judge](../.
 - [S059] Prometheus 2, Kim et al., 2024-05-02.
 - [S060] Length-Controlled AlpacaEval, Dubois et al., 2024-04-06.
 - [S061] Create strong empirical evaluations, Anthropic Claude Platform docs, living.
+- [S427] How much do LLM-as-a-judge design choices matter? Prompt designs, rating scales and models compared, arXiv 2610.05094, 2026-10-04
