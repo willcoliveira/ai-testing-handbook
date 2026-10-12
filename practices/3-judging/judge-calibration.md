@@ -3,8 +3,8 @@ id: judge-calibration
 title: Judge calibration
 area: 3-judging
 status: draft
-last_reviewed: 2026-10-03
-sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320, S388, S391]
+last_reviewed: 2026-10-12
+sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320, S388, S391, S429]
 related: [llm-as-judge, human-annotation, rubrics-and-pairwise, statistical-treatment-of-evals, non-determinism-and-pass-rates]
 ---
 
@@ -41,6 +41,7 @@ An uncalibrated judge is an unmeasured guess, and its errors are not symmetric. 
 - **arXiv, 2026-09:** position bias, transitivity and pairwise agreement were dominated by pairs close in rank and correlated only weakly with ranking accuracy against gold; the authors propose rank-gap-conditional metrics, ideally against human rankings [S320].
 - **Cohere, 2026-09:** RCP-nDCG@10 has a calibrated AI judge grade every retrieved document with yes/no rubric questions and pairwise comparisons; in a blind study with 46 expert annotators over 289 contests it picked the system reviewers preferred 77 percent of the time, against 52 percent for nDCG on fixed relevance labels [S388].
 - **arXiv, 2026-10:** across six LLM novelty judges, telling the judge that reviewers found one idea novel flipped verdicts on over half of identical pairs and moved pairwise accuracy by more than 50 points, and two purpose-built novelty evaluators lost to the cheapest prompted baseline [S391].
+- **arXiv, 2026-10:** an audit of six frontier LLM judges across four benchmarks, five prompt formats, two presentation orders, three temperatures and ten repetitions per condition found the most deterministic judge agreed with ground truth only 51 percent of the time, and proposes a trustworthy verdict rate combining reproducibility, order invariance and accuracy [S429].
 
 ## Pitfalls
 1. Raw agreement on imbalanced classes. With a 5% defect rate a judge that always passes scores 95% agreement and zero recall on defects [S052].
@@ -80,3 +81,4 @@ reads the item. See [decision-model-triage-before-an-llm-judge](../../patterns/d
 - [S320] Pair Difficulty Matters: rethinking pairwise LLM-as-a-judge evaluation and consistency, arXiv 2609.37577, 2026-09-29
 - [S388] RCP-nDCG@10: a more complete way to measure retrieval relevance, Cohere, 2026-09-30
 - [S391] Old ideas, novel problems: the instability of LLM-based novelty evaluation, arXiv 2610.02022, 2026-10-01
+- [S429] All verdicts are not equal: rethinking LLM judge reliability, arXiv 2610.12083, 2026-10-08

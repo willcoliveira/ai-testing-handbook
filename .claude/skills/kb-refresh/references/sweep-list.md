@@ -24,7 +24,7 @@ row covers the page yet; add the id when a row is registered from it.
 |---|---|---|---|
 | https://blogs.microsoft.com/on-the-issues/ | 5, 8 | S246 S291 | responsible AI and frontier governance posts |
 | https://www.amazon.science/blog | 5, 7 | S254 S255 | Nova reports and the frontier model safety framework |
-| https://developer.nvidia.com/blog | 4, 5 | S420 | Nemotron, NeMo Evaluator, guardrails |
+| https://developer.nvidia.com/blog | 4, 5 | S420 S426 | Nemotron, NeMo Evaluator, guardrails |
 | https://cohere.com/blog | 5, 7 | S388 | Command releases and the frontier model framework |
 | https://mistral.ai/news | 5, 7 | S259 S262 S292 S412 | model releases and moderation |
 | https://huggingface.co/deepseek-ai | 5, 7 | S297 | model cards with dates; the GitHub org page lists no dates |
