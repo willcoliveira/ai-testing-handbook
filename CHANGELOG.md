@@ -5,8 +5,8 @@
 - Refresh since 2026-10-03: fourteen new sources (S412 to S425) including Anthropic's review of
   unintended agent actions during benchmark runs, UK AISI's Transect transcript tool, OpenAI's
   October GPT-6 Sol and Luna update, TestJack's audit of coding benchmark graders and APEX-Harm;
-  Inspect AI 0.3.278, promptfoo 0.124.1 and Langfuse v4.56.0 recorded; eighteen bullets;
-  `digests/2026-10-12.md`.
+  Inspect AI 0.3.278, promptfoo 0.124.1 and Langfuse v4.56.0 recorded; eighteen bullets; the arXiv
+  judge query fixed and a reward-hacking query added to the sweep list; `digests/2026-10-12.md`.
 
 ## 0.1.15 (2026-10-05)
 

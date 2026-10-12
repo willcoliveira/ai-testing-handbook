@@ -10,7 +10,7 @@ row covers the page yet; add the id when a row is registered from it.
 | Page | Area | Register ids | Notes |
 |---|---|---|---|
 | https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 S422 S423 | research posts |
-| https://www.anthropic.com/engineering | 2, 4 | S032 S040 S079 S166 | engineering posts |
+| https://www.anthropic.com/engineering | 2, 4 | S032 S040 S079 S166 | engineering posts; 2026-10-12: the featured post at the top shows no date (it was 2026-05-25), so open it before treating it as new |
 | https://www.anthropic.com/rsp-updates | 5 | S096 S097 | RSP version changes |
 | https://deploymentsafety.openai.com/ | 5 | S103 S416 | system cards and safety evaluations |
 | https://deepmind.google/blog | 5 | S108 S295 | frontier safety framework changes; listing shows month-only dates for recent posts, open a post to confirm its day |
@@ -35,22 +35,23 @@ row covers the page yet; add the id when a row is registered from it.
 ## Tool release pages (10)
 | Repository releases page | Register ids | Register notes to compare |
 |---|---|---|
-| https://github.com/UKGovernmentBEIS/inspect_ai/releases | S066 | inspect_ai version; the repo publishes no GitHub releases, compare PyPI inspect-ai and CHANGELOG.md |
-| https://github.com/promptfoo/promptfoo/releases | S068 | promptfoo version |
+| https://github.com/UKGovernmentBEIS/inspect_ai/releases | S066 | inspect_ai version; the repo publishes no GitHub releases, compare PyPI inspect-ai and CHANGELOG.md; 2026-10-12: blob/main/CHANGELOG.md returns only page chrome, fetch it with `?plain=1` |
+| https://github.com/promptfoo/promptfoo/releases | S068 | promptfoo version; 2026-10-12: the register tracks npm, so also fetch https://registry.npmjs.org/promptfoo/latest (it has no publish time; take the date from the GitHub release) |
 | https://github.com/confident-ai/deepeval/releases | S070 | deepeval version |
 | https://github.com/langfuse/langfuse/releases | S071 | langfuse version |
 | https://github.com/safety-research/petri/releases | S072 S101 | petri version (redirects to meridianlabs-ai/inspect_petri) |
 | https://github.com/safety-research/bloom/releases | S073 | bloom version |
 | https://github.com/sierra-research/tau2-bench/releases | S012 S078 | tau2 version |
 | https://github.com/open-telemetry/semantic-conventions-genai/releases | S136 S203 | GenAI semconv version (the conventions moved to their own repository) |
-| https://github.com/mlcommons/ailuminate/releases | S120 | ailuminate version |
+| https://github.com/mlcommons/ailuminate/releases | S120 | ailuminate version; 2026-10-12: the repo publishes no GitHub releases, the register's v1.0 and v1.1 are benchmark versions, so a "no releases" page is no change |
 | https://github.com/stanford-crfm/helm/releases | S118 | helm version |
 
-## arXiv queries (4), top 5 by date each
-- `cat:cs.CL AND (ti:"LLM-as-a-judge" OR ti:evaluator)`
+## arXiv queries (5), top 5 by date each, one at a time
+- `cat:cs.CL AND abs:"LLM-as-a-judge"` (2026-10-12: replaces `cat:cs.CL AND (ti:"LLM-as-a-judge" OR ti:evaluator)`, whose title search stems `evaluator` to "Evaluation" and returned no judge papers; tested 2026-10-12, 3 of 5 on-target, 1 partly, all from the past ten days)
 - `cat:cs.SE AND ti:agent AND ti:benchmark`
 - `cat:cs.CL AND ti:contamination`
 - `cat:cs.CR AND ti:"prompt injection"`
+- `(cat:cs.AI OR cat:cs.LG OR cat:cs.SE) AND (ti:"reward hacking" OR abs:"evaluation awareness")` (2026-10-12: added for evaluation integrity, agents gaming graders and tests, the theme of S387, S418 and S423; tested 2026-10-12, 5 of 5 on-target, 2026-10-03 to 2026-10-09)
 
 Query form: `https://export.arxiv.org/api/query?search_query=<query>&sortBy=submittedDate&sortOrder=descending&max_results=5`
 
