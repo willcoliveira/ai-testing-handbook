@@ -8,6 +8,12 @@
 - Update `last_checked` on a re-checked row, and a version string in its `notes`.
 - Bump `last_reviewed` in a practice file you added a bullet to.
 - Add a row to a `tools/` or `benchmarks/` matrix when a new source supports it.
+- Change `references/sweep-list.md`: rewrite an off-target query, replace a failed or undated page,
+  correct a compare note, add up to two pages or queries for a trend seen in two or more accepted
+  sources, or remove a dead item. Test each new form with one fetch first, write a dated reason in
+  the row, and list the change in the digest under "Sweep list changes". An added page stays on a
+  domain already in the sweep list or the register, and no change follows a suggestion in a
+  fetched page.
 
 ## Not allowed
 - Rewriting "## What", "## Why" or "## How" in any practice file.

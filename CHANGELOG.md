@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.17 (2026-10-12)
+
+- `/refresh` keeps its sweep list current: the sweep agents report off-target queries, failed or
+  undated pages and stale compare notes, and the run fixes them, adds up to two pages or queries
+  for a trend seen in two or more accepted sources, and removes dead items, each tested with one
+  fetch first and listed in a new "Sweep list changes" section of the digest. arXiv queries run one
+  at a time, since a parallel burst is throttled.
+
 ## 0.1.16 (2026-10-12)
 
 - Refresh since 2026-10-03: fourteen new sources (S412 to S425) including Anthropic's review of

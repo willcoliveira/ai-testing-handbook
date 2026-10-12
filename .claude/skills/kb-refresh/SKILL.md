@@ -62,7 +62,8 @@ the reviewer what to commit.
    source now says differently; name the file and the sentence), `no-change`.
 4. **Never fetch a PDF system card in this skill.** Record that it moved and leave it for a human.
 5. **Write the digest** from `references/digest-template.md` to `digests/YYYY-MM-DD.md` (or the
-   `.draft.md` in dry-run). Six sections, always present, "none" where empty.
+   `.draft.md` in dry-run). Seven sections, always present, "none" where empty. Note under "Sweep
+   list changes" any sweep item that returned off-target results, failed, or showed no dates.
 6. **Propose edits** (skipped in dry-run), only the kinds `references/edit-rules.md` allows: add a
    sourced bullet under "Who does it (sourced)" or "Pitfalls" of a practice file; append a
    `sources.md` row for an accepted `new-source` with `last_checked` = today and the next free id in
@@ -73,7 +74,8 @@ the reviewer what to commit.
    and `node scripts/bump-checked.mjs --sweep` (or `--only-group` for a sharded run) for the
    `last_checked` bumps. Version strings in `notes` are edited in the row files by hand.
    A register id you find a page covers but the sweep list does not name goes in its `Register ids`
-   cell.
+   cell. Fix, add or remove sweep-list items as `references/edit-rules.md` allows, each tested with
+   one fetch first and recorded under "Sweep list changes".
    Never rewrite "What", "Why" or "How"; never touch `patterns/`, `PRIVACY.md`, `ROADMAP.md`, or a
    pattern's anonymisation.
 7. **Run the checks.** `node scripts/check-forbidden.mjs`, `node scripts/check-sources.mjs`,

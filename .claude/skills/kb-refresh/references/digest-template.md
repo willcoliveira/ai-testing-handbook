@@ -17,6 +17,9 @@ Run: since <date>, areas <list>, sources fetched <n> of <cap>, dry-run <yes|no>
 | file | change | source id |
 |---|---|---|
 
+## Sweep list changes (fixed, added or removed, with the reason and the test result)
+- <item>: <was> to <now>; <reason>; tested <date>, <n> of <m> results on-target
+
 ## Skipped (over cap, fetch failed, or not an allowed edit)
 - <item>: <reason>
 
