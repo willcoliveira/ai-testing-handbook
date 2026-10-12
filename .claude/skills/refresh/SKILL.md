@@ -32,7 +32,8 @@ the group's rows including `Register ids`, `--since`, the WebFetch prompt from k
 report shape: per page result; findings classified `new-source`, `version-moved` (id, was, now),
 `contradicts` (file and sentence), `no-change`; for new sources a register note, suggested areas,
 target practice file and a draft bullet `- **Org, YYYY-MM:** sentence [S0nn].` Items under
-"Checked by hand" are not fetched; list them under Skipped. Each report also ends with `sweep
+"Checked by hand" are not fetched; list them under Skipped. arXiv queries go one at a time, never
+in parallel (the API answers a burst with 429 and 503). Each report also ends with `sweep
 problems`: a query whose results are mostly off-target, a page that failed, redirected or showed no
 dates, a compare note that no longer works, and the form that did work if the agent found one.
 
@@ -63,6 +64,8 @@ The sweep list improves on every run; fix it here rather than leaving it to the 
   domain is not added here but proposed under "For the reviewer".
 - **Test before writing**: a new or rewritten query or page gets one `web-reader` fetch, and goes in
   only if most of its results are on-target and dated. Keep the old form if the test fails, and say so.
+  A 429, 503 or timeout is not a result: retry once, one query at a time, and if it still fails keep
+  the old form and say the test could not run.
 - Write a dated reason in the row's Notes (`YYYY-MM-DD: ...`), give the group heading its new count,
   and list every change in the digest under "Sweep list changes".
 - Only `references/sweep-list.md` changes here. A fix that needs anything else (an agent, a script,
