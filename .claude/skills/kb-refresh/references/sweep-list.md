@@ -9,14 +9,14 @@ row covers the page yet; add the id when a row is registered from it.
 ## Lab pages (9)
 | Page | Area | Register ids | Notes |
 |---|---|---|---|
-| https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 | research posts |
+| https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 S422 S423 | research posts |
 | https://www.anthropic.com/engineering | 2, 4 | S032 S040 S079 S166 | engineering posts |
 | https://www.anthropic.com/rsp-updates | 5 | S096 S097 | RSP version changes |
-| https://deploymentsafety.openai.com/ | 5 | S103 | system cards and safety evaluations |
+| https://deploymentsafety.openai.com/ | 5 | S103 S416 | system cards and safety evaluations |
 | https://deepmind.google/blog | 5 | S108 S295 | frontier safety framework changes; listing shows month-only dates for recent posts, open a post to confirm its day |
 | https://ai.meta.com/blog | 5, 7 | S113 | model releases and evals |
-| https://metr.org/blog | 1, 5 | S015 S285 S286 S387 | third-party evaluation |
-| https://www.aisi.gov.uk/blog | 4, 5 | S117 S228 S389 | Inspect and evaluations; the home page carries no dates, replaced by /blog on 2026-09-29 |
+| https://metr.org/blog | 1, 5 | S015 S285 S286 S387 S413 | third-party evaluation |
+| https://www.aisi.gov.uk/blog | 4, 5 | S117 S228 S389 S417 | Inspect and evaluations; the home page carries no dates, replaced by /blog on 2026-09-29 |
 | https://www.apolloresearch.ai/science | 5 | S289 S290 | scheming and audit research; /research lagged the /science posts, replaced on 2026-09-29 |
 
 ## Vendor pages for the labs covered in labs/ (9)
@@ -24,9 +24,9 @@ row covers the page yet; add the id when a row is registered from it.
 |---|---|---|---|
 | https://blogs.microsoft.com/on-the-issues/ | 5, 8 | S246 S291 | responsible AI and frontier governance posts |
 | https://www.amazon.science/blog | 5, 7 | S254 S255 | Nova reports and the frontier model safety framework |
-| https://developer.nvidia.com/blog | 4, 5 | | Nemotron, NeMo Evaluator, guardrails |
+| https://developer.nvidia.com/blog | 4, 5 | S420 | Nemotron, NeMo Evaluator, guardrails |
 | https://cohere.com/blog | 5, 7 | S388 | Command releases and the frontier model framework |
-| https://mistral.ai/news | 5, 7 | S259 S262 S292 | model releases and moderation |
+| https://mistral.ai/news | 5, 7 | S259 S262 S292 S412 | model releases and moderation |
 | https://huggingface.co/deepseek-ai | 5, 7 | S297 | model cards with dates; the GitHub org page lists no dates |
 | https://huggingface.co/Qwen | 5, 7 | S221 S222 S223 | model cards with dates; qwen.ai/blog is script-rendered and returns nothing |
 | https://huggingface.co/moonshotai | 5, 7 | S226 | model cards with dates; moonshotai.github.io redirects |

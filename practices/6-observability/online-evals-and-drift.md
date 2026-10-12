@@ -3,7 +3,7 @@ id: online-evals-and-drift
 title: Online evals and drift
 area: 6-observability
 status: draft
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-12
 sources: [S071, S136, S138, S140, S149, S237, S247, S251, S254, S257]
 related: [genai-tracing, non-determinism-and-pass-rates, judge-calibration, regression-on-upgrade, llm-as-judge]
 ---
@@ -49,6 +49,7 @@ Cadence: score continuously, review the distribution weekly, and re-baseline on 
 - **Microsoft, 2026-02:** Microsoft says it is "progressing work to further study models when in use and assess the real-world effectiveness of mitigations" [S247].
 - **Google, living:** the safety guidance page asks developers to plan "how you'll spot and deal with problems that arise" through feedback channels and user studies with "a diverse mix of users" [S237].
 - **Langfuse, 2026-10:** v4.50.0 shows seven-day execution health in each evaluator's status and validates evaluator models before saving an evaluator [S071].
+- **Langfuse, 2026-10:** v4.51.0 to v4.56.0 add OpenAI decision-model evaluators, decision-model evaluators through MCP, batch processing on POST /scores, one published generation per evaluator execution, and an INVALID_RESULT return for cyclic Python evaluator results [S071].
 
 ## Pitfalls
 1. **Judging whole traces.** The judge sees the final output and misses which step failed; the trace-centric evaluator is also deprecated in Langfuse v4 [S140].
