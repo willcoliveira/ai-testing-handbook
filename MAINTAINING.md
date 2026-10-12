@@ -25,7 +25,9 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
    body with `check-forbidden --file`. With `git config core.hooksPath .githooks`, the `commit-msg`
    hook checks every commit message the same way.
 3. Read `digests/YYYY-MM-DD.md`, then `git diff`. The skill adds sourced bullets, register rows and date
-   bumps only; anything else is listed under "Skipped" for a human.
+   bumps, and keeps the sweep list current: it fixes off-target queries and failed pages and adds
+   up to two items for new trends, each tested first and listed under "Sweep list changes".
+   Anything else is listed under "Skipped" for a human.
 4. `npm run check`. Commit as `docs(refresh): YYYY-MM-DD digest`. Add one line to `CHANGELOG.md`.
 5. `main` requires the CI and Site checks, so push the branch and open a pull request:
    `git push -u origin HEAD && gh pr create --fill`. The maintainer reviews every pull request
