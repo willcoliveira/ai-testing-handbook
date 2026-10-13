@@ -3,8 +3,8 @@ id: standards-and-regulation
 title: Standards and regulation
 area: 8-governance
 status: draft
-last_reviewed: 2026-09-28
-sources: [S158, S159, S160, S161, S162, S163, S164, S233, S234, S244, S247, S250, S254, S257, S281, S282, S283, S291]
+last_reviewed: 2026-10-13
+sources: [S158, S159, S160, S161, S162, S163, S164, S233, S234, S244, S247, S250, S254, S257, S281, S282, S283, S291, S433]
 related: [model-and-system-cards, frontier-safety-frameworks, red-teaming, prompt-injection, human-in-the-loop, regulated-domain-checks]
 ---
 
@@ -50,6 +50,7 @@ Steps:
 - **Google, living:** SAIF maps 15 AI security risks to named controls, with the caveat that the site "is not a reflection of Google's current technical implementations" [S244].
 - **OWASP GenAI Security Project, 2026-08 and 2026-09:** the LLM Top 10 2026 edition, which "introduces updated rankings, expanded threat coverage, and new research grounded in thousands of real-world AI security incidents" (the ten entries are in the PDF), the Agent Control Standard, and a crosswalk that maps 51 GenAI vulnerabilities to industry frameworks [S281][S282][S283].
 - **Microsoft, 2026-09:** described how its responsible AI practices are adapting in 2026 [S291].
+- **UK AISI, 2026-10:** AISI sets out eight priorities for voluntary technical best practice at frontier developers, among them preserving and evaluating oversight mechanisms, reporting agentic AI incidents, enabling independent auditors and evaluators and measuring alignment, noting that models' growing awareness of being tested may let them mask how they would behave when deployed [S433].
 
 ## Pitfalls
 1. Reading "voluntary" as "optional". Procurement questionnaires quote the NIST functions whether or not anyone signed anything [S159].
@@ -80,3 +81,4 @@ None yet.
 - [S282] Agent Control Standard (ACS), OWASP GenAI Security Project, 2026-09-01
 - [S283] GenAI Security Industry Framework Crosswalk, OWASP GenAI Security Project, 2026-09-01
 - [S291] Responsible AI in 2026: how we are adapting for what's ahead, Microsoft, 2026-09-01
+- [S433] Towards technical best practice for frontier AI development, UK AI Security Institute, 2026-10-12

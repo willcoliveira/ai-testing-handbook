@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.19 (2026-10-13)
+
+- Refresh since 2026-10-12: four new sources (S430 to S433): the GLM-5.3 model card, Anthropic's
+  self-replication evaluation and distillation defences, and UK AISI's priorities for frontier
+  best practice; OTel PR #374 recorded, which removed `gen_ai.client.token.usage` in September;
+  Inspect AI 0.3.279 and Langfuse v4.58.0 recorded; five bullets; the arXiv contamination query
+  rewritten and the OTel compare note extended; `digests/2026-10-13.md`.
+
 ## 0.1.18 (2026-10-12)
 
 - Follow-ups from the 2026-10-12 refresh: four sources (S426 to S429), NVIDIA OpenShell runtime
