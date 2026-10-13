@@ -33,7 +33,10 @@ report shape: per page result; findings classified `new-source`, `version-moved`
 `contradicts` (file and sentence), `no-change`; for new sources a register note, suggested areas,
 target practice file and a draft bullet `- **Org, YYYY-MM:** sentence [S0nn].` Items under
 "Checked by hand" are not fetched; list them under Skipped. arXiv queries go one at a time, never
-in parallel (the API answers a burst with 429 and 503). Each report also ends with `sweep
+in parallel (the API answers a burst with 429 and 503): say so in the prompt as a rule the agent
+must follow, not a preference. The arXiv prompt also asks for figures quoted exactly as the
+abstract writes them, and carries the ids the register and the previous digest already hold, so
+the agent can report results from the three days before `--since` that neither lists. Each report also ends with `sweep
 problems`: a query whose results are mostly off-target, a page that failed, redirected or showed no
 dates, a compare note that no longer works, and the form that did work if the agent found one.
 

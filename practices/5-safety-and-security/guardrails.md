@@ -3,8 +3,8 @@ id: guardrails
 title: Guardrails
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-10-12
-sources: [S098, S104, S109, S114, S124, S126, S129, S135, S153, S214, S221, S233, S236, S243, S247, S254, S257, S261, S262, S266, S269, S272, S292, S294, S321, S426]
+last_reviewed: 2026-10-13
+sources: [S098, S104, S109, S114, S124, S126, S129, S135, S153, S214, S221, S233, S236, S243, S247, S254, S257, S261, S262, S266, S269, S272, S292, S294, S321, S426, S432]
 related: [false-positive-protection, prompt-injection, redaction-in-telemetry, voice-agent-testing]
 ---
 
@@ -93,6 +93,7 @@ prevent safe uses of the product" [S104].
 - **arXiv, 2026-09:** classifier guardrails for injection were bypassed by token-level perturbation, which is a reason to treat a classifier as one layer and not the wall [S294].
 - **arXiv, 2026-09:** injection compliance was localised to a late-layer bottleneck, and a detector at that layer held up where early-layer classifiers degraded under surface obfuscation such as leetspeak [S321].
 - **NVIDIA, 2026-09:** OpenShell 0.1.0 enforces agent permissions outside the agent: a Supervisor inspects HTTP, GraphQL and MCP requests, can allow a read while blocking a write to the same API, and logs decisions to an audit trail; real credentials are substituted only for authorised endpoints, and policy changes an agent proposes wait for human review; NVIDIA reports that frontier agents with reduced safeguards spent up to two hours trying to persuade an AI reviewer to grant write access and no protected repository writes occurred, without giving the test setup [S426].
+- **Anthropic, 2026-10:** to limit distillation, Anthropic summarizes reasoning transcripts early, which lowered a model distilled on them from 80.4% to 71.8% on SWE-bench Verified, and runs a two-stage classifier against extraction attempts with a false positive rate of less than 0.1%; it reports a 90 to 99% cut in data harvested by distillers [S432].
 
 ## Pitfalls
 1. Over-blocking treated as safe. It is a defect with a cost; see
@@ -138,3 +139,4 @@ None yet.
 - [S294] Decoding Guardrails: XAI-guided perturbation analysis of prompt injection detection, arXiv 2609.24801, 2026-09-21
 - [S321] Where Do LLMs Decide to Break the Rules? Mechanistic localization of prompt injection compliance, arXiv 2609.37737, 2026-09-29
 - [S426] Add runtime controls to AI agents with NVIDIA OpenShell, NVIDIA, 2026-09-28
+- [S432] Strengthening our defenses against distillation attacks, Anthropic, 2026-10-12

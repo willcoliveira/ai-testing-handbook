@@ -1,0 +1,11 @@
+<!-- applied: 2026-10-13 -->
+## practice: model-and-system-cards
+- **Zhipu, 2026-08:** the GLM-5.3 card names the harness behind each benchmark (Claude Code for Terminal-Bench, CyberGym and SWE-Marathon, mini-swe-agent for DeepSWE), the judge for HLE with tools and the LLM-based checks used for anti-cheat, and reports cyber-offence scores (CyberGym 84.5, ExploitBench 54.4) with no safety section; the GLM-5.3-Flash card publishes its main comparison table only as an image [S430].
+## practice: frontier-safety-frameworks
+- **Anthropic, 2026-10:** the Frontier Red Team tested whether small open-weight models can replicate onto low-security hardware: a 9B model got inference running on 8 of the 9 hardware types tested, and in a firewalled network of 8 emulated Android nodes, with the cyber-exploit stages kept trivial, GLM-5.2 spread to all 8 nodes in 4 of 5 trials [S431].
+## practice: guardrails
+- **Anthropic, 2026-10:** to limit distillation, Anthropic summarizes reasoning transcripts early, which lowered a model distilled on them from 80.4% to 71.8% on SWE-bench Verified, and runs a two-stage classifier against extraction attempts with a false positive rate of less than 0.1%; it reports a 90 to 99% cut in data harvested by distillers [S432].
+## practice: standards-and-regulation
+- **UK AISI, 2026-10:** AISI sets out eight priorities for voluntary technical best practice at frontier developers, among them preserving and evaluating oversight mechanisms, reporting agentic AI incidents, enabling independent auditors and evaluators and measuring alignment, noting that models' growing awareness of being tested may let them mask how they would behave when deployed [S433].
+## practice: genai-tracing
+- **OpenTelemetry, 2026-09:** PR #374 (merged 2026-09-22, breaking, unreleased) removes the `gen_ai.client.token.usage` histogram and its `gen_ai.token.type` attribute; token use is now five counters (`gen_ai.client.inference.usage.input_tokens`, `.output_tokens`, `.cache_read.input_tokens`, `.cache_write.input_tokens`, `.reasoning.output_tokens`) and two histograms (`gen_ai.client.inference.operation.input_tokens` and `.output_tokens`, buckets 1 to 67,108,864 in powers of 4), recorded for failed operations too [S136].

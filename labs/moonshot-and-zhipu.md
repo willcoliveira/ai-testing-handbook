@@ -1,8 +1,8 @@
 ---
 id: moonshot-and-zhipu
 title: Moonshot AI and Zhipu (Z.ai)
-sources: [S116, S224, S225, S226, S227, S228, S229, S230, S231, S232, S234]
-last_reviewed: 2026-09-27
+sources: [S116, S224, S225, S226, S227, S228, S229, S230, S231, S232, S234, S430]
+last_reviewed: 2026-10-13
 ---
 
 # Moonshot AI and Zhipu (Z.ai)
@@ -17,7 +17,7 @@ each signatory to "internal and external red-teaming of frontier AI models and s
 threats", to thresholds at which risks "would be deemed intolerable", and to "publishing a safety framework
 focused on severe risks" by the France summit of February 2025 [S234]. No such framework is listed on METR's
 tracker as of 2026-09-27 [S116]; whether one exists elsewhere is unknown to us. GLM-4.5's report has a
-SafetyBench table; GLM-5's has no safety section [S229][S230].
+SafetyBench table; GLM-5's has no safety section, and neither has the GLM-5.3 card [S229][S230][S430].
 
 Context for both, from Concordia AI's 2026 survey: "only five of ten leading foundation-model developers
 reported safety evaluation results when releasing models this past year. No company did so consistently" [S232].
@@ -63,6 +63,14 @@ reported safety evaluation results when releasing models this past year. No comp
   environments" across nine languages; CC-Bench-V2 is internal. The card gives temperature 1.0, top-p
   0.95 and 131,072 tokens for reasoning, 0.7, 0.95 and 16,384 for SWE-bench, and a "verified"
   Terminal-Bench 2.0 that "fixes some ambiguous instructions". No safety evaluation [S230].
+- **GLM-5.3, August 2026:** a model card only, no report (it links the GLM-5 paper). Terminal Bench 2.1
+  88.2, DeepSWE 66.9, Toolathlon Verified 73.0 (pass@1 over three runs), and cyber-offence scores:
+  CyberGym 84.5 (single-run Pass@1 over 1,507 tasks) and ExploitBench 54.4 (41 tasks, three revisions).
+  Footnotes name the harness per benchmark (Claude Code for Terminal-Bench, CyberGym, PostTrainBench and
+  SWE-Marathon; mini-swe-agent for DeepSWE), a GPT-5.6-luna judge for HLE with tools, and rule-based
+  plus LLM-based checks for unauthorized actions and cheating. No safety section. The GLM-5.3-Flash card
+  (August 2026) publishes its main comparison table as an image; its text metadata gives
+  Terminal-Bench 2.1 84.3 [S430].
 
 **Third parties, for context, not as evidence of either lab's process.** An independent group tested
 Kimi K2.5 for CBRNE, cyber, misalignment, censorship and harmlessness and reported "significantly
@@ -85,7 +93,8 @@ the Seoul commitments [S234]; we did not register a MiniMax report.
 - The K2 red-teaming taxonomy (five categories, four strategies, a passing-rate metric), reusable as a
   checklist; described, not shipped as code [S224].
 - Run counts and sampling values on the K2.5, K3 and GLM-5 cards, and GLM-5's note that its
-  Terminal-Bench 2.0 is a modified "verified" variant [S225][S226][S230].
+  Terminal-Bench 2.0 is a modified "verified" variant [S225][S226][S230]. The GLM-5.3 card names the
+  harness and judge behind each benchmark [S430].
 - No guard model, red-teaming tool or harness from either lab was found in the pages fetched.
 
 ## What is not public (stated as unknown)
@@ -118,3 +127,4 @@ the Seoul commitments [S234]; we did not register a MiniMax report.
 - [S231] Seed-OSS-36B-Instruct model card, ByteDance Seed, living.
 - [S232] State of AI Safety in China (2026), Concordia AI, 2026-07.
 - [S234] Frontier AI Safety Commitments, AI Seoul Summit 2024, UK DSIT, 2024-05-21.
+- [S430] GLM-5.3 model card, Z.ai, 2026-08.

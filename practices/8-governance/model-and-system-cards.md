@@ -3,8 +3,8 @@ id: model-and-system-cards
 title: Model and system cards
 area: 8-governance
 status: draft
-last_reviewed: 2026-09-27
-sources: [S156, S157, S160, S161, S164, S165, S216, S222, S223, S226, S229, S230, S238, S239, S246, S252, S254, S257, S265, S266, S267, S269, S273]
+last_reviewed: 2026-10-13
+sources: [S156, S157, S160, S161, S164, S165, S216, S222, S223, S226, S229, S230, S238, S239, S246, S252, S254, S257, S265, S266, S267, S269, S273, S430]
 related: [frontier-safety-frameworks, golden-datasets, capability-benchmarks, standards-and-regulation, data-contamination]
 ---
 
@@ -64,6 +64,7 @@ Writing a card for your own application: use a README.md with YAML metadata so t
 - **NVIDIA, March 2026:** the Nemotron-3-Content-Safety card states training window, sample counts (about 86k train, 6k test, 6k eval), collection method and licence alongside the benchmark table [S269]; the risk framework says assessment data "is then stored in our model cards" [S267].
 - **Cohere, October 2024:** the Command R and R+ model card reports a BOLD bias evaluation and a multi-turn toxicity caveat [S273].
 - **Hugging Face, living:** the Hub model card format carries `model-index` evaluation metadata [S165]; Mistral's Large 3 card shows results as images (fetched, not registered).
+- **Zhipu, 2026-08:** the GLM-5.3 card names the harness behind each benchmark (Claude Code for Terminal-Bench, CyberGym and SWE-Marathon, mini-swe-agent for DeepSWE), the judge for HLE with tools and the LLM-based checks used for anti-cheat, and reports cyber-offence scores (CyberGym 84.5, ExploitBench 54.4) with no safety section; the GLM-5.3-Flash card publishes its main comparison table only as an image [S430].
 
 ## Pitfalls
 1. Reading the aggregate and skipping the factors. The point of the format is the disaggregated table [S156].
@@ -99,3 +100,4 @@ None yet.
 - [S269] Nemotron-3-Content-Safety model card, NVIDIA, Hugging Face, living
 - [S267] Frontier AI Risk Assessment, NVIDIA (Simkin, Pope, Derczynski, Parisien), 2025-08
 - [S273] Command R and Command R+ model card (responsible use), Cohere docs, living
+- [S430] GLM-5.3 model card, Z.ai (zai-org, Hugging Face), 2026-08
