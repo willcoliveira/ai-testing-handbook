@@ -2,11 +2,14 @@
 
 ## 0.1.19 (2026-10-13)
 
-- Refresh since 2026-10-12: four new sources (S430 to S433): the GLM-5.3 model card, Anthropic's
-  self-replication evaluation and distillation defences, and UK AISI's priorities for frontier
-  best practice; OTel PR #374 recorded, which removed `gen_ai.client.token.usage` in September;
-  Inspect AI 0.3.279 and Langfuse v4.58.0 recorded; five bullets; the arXiv contamination query
-  rewritten and the OTel compare note extended; `digests/2026-10-13.md`.
+- Refresh since 2026-10-12: five new sources (S430 to S434): the GLM-5.3 model card, Anthropic's
+  self-replication evaluation and distillation defences, UK AISI's priorities for frontier best
+  practice and the Gemini 4 Argon launch; OTel PR #374 recorded, which removed
+  `gen_ai.client.token.usage` in September, and genai-tracing How step 4 updated to the new token
+  metrics; GLM-5.3 added to the Moonshot and Zhipu lab page; Inspect AI 0.3.279 and Langfuse
+  v4.58.0 recorded; six bullets; the arXiv contamination query rewritten, a Gemini launch feed
+  added and arXiv results from the days before `--since` kept when never seen;
+  `digests/2026-10-13.md`.
 
 ## 0.1.18 (2026-10-12)
 

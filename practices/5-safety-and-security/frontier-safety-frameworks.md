@@ -4,7 +4,7 @@ title: Frontier safety frameworks
 area: 5-safety-and-security
 status: draft
 last_reviewed: 2026-10-13
-sources: [S096, S098, S099, S102, S104, S107, S109, S110, S113, S114, S116, S128, S232, S234, S235, S240, S247, S254, S256, S263, S264, S267, S271, S285, S287, S289, S295, S412, S416, S431]
+sources: [S096, S098, S099, S102, S104, S107, S109, S110, S113, S114, S116, S128, S232, S234, S235, S240, S247, S254, S256, S263, S264, S267, S271, S285, S287, S289, S295, S412, S416, S431, S434]
 related: [red-teaming, model-and-system-cards, standards-and-regulation, guardrails]
 ---
 
@@ -98,6 +98,7 @@ them and says plainly that indexing "should not be considered an endorsement of 
 - **OpenAI, 2026-10:** the October GPT-6 Sol and Luna update treats both as High capability in Cybersecurity and in Biological and Chemical, reports persisting past a barrier in 28 and 15.9 percent of maximum-effort rollouts against 34 and 27 percent for GPT-5.6, and records statistically significant regressions on production self-harm benchmarks and on under-18 evaluations [S416].
 - **Mistral, 2026-10:** Mistral reports that Large 4 resists 93.3 percent of attacks on Lakera's B3 agent-security benchmark and scores 93 percent on Cybench, and is red-teaming it with vetted partners and state authorities, using a version with reduced moderation, before releasing the weights [S412].
 - **Anthropic, 2026-10:** the Frontier Red Team tested whether small open-weight models can replicate onto low-security hardware: a 9B model got inference running on 8 of the 9 hardware types tested, and in a firewalled network of 8 emulated Android nodes, with the cyber-exploit stages kept trivial, GLM-5.2 spread to all 8 nodes in 4 of 5 trials [S431].
+- **Google DeepMind, 2026-10:** the Gemini 4 Argon launch post says the model's capabilities were evaluated under the Frontier Safety Framework without stating the outcome, that external bio red teaming unlocked less than 1% of the bio sub-tasks tested, and that attack success on Gray Swan's indirect prompt injection benchmark fell to 0.7% across 15 adaptive attempts; the third-party partners are not named and the model card is a PDF [S434].
 
 ## Pitfalls
 1. Treating a lab's determination as coverage for your product. Meta's Llama 4 card says "testing
@@ -148,3 +149,4 @@ None yet.
 - [S416] GPT-6 Sol and GPT-6 Luna: October 2026 update, OpenAI, 2026-10-07
 - [S412] Introducing Mistral Large 4, Mistral AI, 2026-10-06
 - [S431] AI models may be capable of self-replicating without access to a datacenter, Anthropic, 2026-10-12
+- [S434] Gemini 4 Argon: built to solve your hardest problems, Google DeepMind (blog.google), 2026-10-13

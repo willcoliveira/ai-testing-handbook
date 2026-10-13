@@ -6,7 +6,7 @@ Bounded on purpose. Add a line only with a reason, and remove one when you do.
 sets their `last_checked` to today (or `--only-group "<group heading>"` for one group). Blank means no
 row covers the page yet; add the id when a row is registered from it.
 
-## Lab pages (9)
+## Lab pages (10)
 | Page | Area | Register ids | Notes |
 |---|---|---|---|
 | https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 S422 S423 S431 S432 | research posts |
@@ -14,6 +14,7 @@ row covers the page yet; add the id when a row is registered from it.
 | https://www.anthropic.com/rsp-updates | 5 | S096 S097 | RSP version changes |
 | https://deploymentsafety.openai.com/ | 5 | S103 S416 | system cards and safety evaluations |
 | https://deepmind.google/blog | 5 | S108 S295 | frontier safety framework changes; listing shows month-only dates for recent posts, open a post to confirm its day; 2026-10-13: model launch posts (Gemini 4 Argon) link out to blog.google and developers.googleblog.com, which are not on this list |
+| https://blog.google/innovation-and-ai/models-and-research/gemini-models/rss/ | 5, 7 |  S434 | Gemini model launches (RSS, newest first, full pubDate on every item); 2026-10-13: added on the reviewer's approval because deepmind.google/blog links launches out to blog.google with month-only dates; the listing pages (gemini-models, technology/google-deepmind, products/gemini) show no dates, so the feed is used; tested 2026-10-13, 20 items 2026-08-03 to 2026-10-13, 10 of 20 model launches by title, the rest roundups and showcases to skip |
 | https://ai.meta.com/blog | 5, 7 | S113 | model releases and evals |
 | https://metr.org/blog | 1, 5 | S015 S285 S286 S387 S413 | third-party evaluation |
 | https://www.aisi.gov.uk/blog | 4, 5 | S117 S228 S389 S417 S433 | Inspect and evaluations; the home page carries no dates, replaced by /blog on 2026-09-29 |
@@ -48,7 +49,7 @@ row covers the page yet; add the id when a row is registered from it.
 
 ## arXiv queries (5), top 5 by date each, one at a time
 
-2026-10-13: arXiv announces with a lag; papers submitted Friday to Monday appear on Tuesday evening, so a run early in the week sees nothing from the last few days and the next run gets overlap hits. A result submitted in the three days before `--since` that is in neither the register nor the previous digest was never seen; list it for the reviewer (changing kb-refresh step 2 to keep such results is proposed in the 2026-10-13 digest).
+2026-10-13: arXiv announces with a lag; papers submitted Friday to Monday appear on Tuesday evening, so a run early in the week sees nothing from the last few days and the next run gets overlap hits. A result submitted in the three days before `--since` that is in neither the register nor the previous digest was never seen; it is in the window (kb-refresh step 2, changed 2026-10-13).
 
 - `cat:cs.CL AND abs:"LLM-as-a-judge"` (2026-10-12: replaces `cat:cs.CL AND (ti:"LLM-as-a-judge" OR ti:evaluator)`, whose title search stems `evaluator` to "Evaluation" and returned no judge papers; tested 2026-10-12, 3 of 5 on-target, 1 partly, all from the past ten days)
 - `cat:cs.SE AND ti:agent AND ti:benchmark`
