@@ -16,7 +16,7 @@ a trace per run, a way to inject a fixed model response, and a budget you can se
 | Item | Know | Do | Prove it |
 |---|---|---|---|
 | SDK primitives | sessions, tools, permissions, hooks | build the agent from the workshop | run it end to end once |
-| Long-running work | checkpoints, resumption, idempotent tools | add a checkpoint every N turns | kill the process mid-run and resume |
+| Long-running work | checkpoints, resumption, idempotent tools | add a checkpoint every N turns | kill the process mid-run and resume; assert each write happened once ([side-effects-and-state](../practices/4-agents-and-systems/side-effects-and-state.md)) |
 | The cage | allow-listed tools, budgets, no-go actions | add a deny rule for a destructive tool | show the deny firing in a test |
 | Hooks as test points | pre- and post-tool hooks see arguments and results | log both to a trace file | assert on the trace, not the console |
 | Model injection | a fixed response makes the loop deterministic | add a stub model behind a flag | run the whole suite with the stub in CI |

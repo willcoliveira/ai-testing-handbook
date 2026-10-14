@@ -263,8 +263,76 @@ compare chunkers and embedding models on the same questions. Anthropic's context
 cut top-20 failures from 5.7 to 1.9 percent with contextual embeddings, BM25 and reranking [S405].
 **Read.** [RAG build project](rag-build-project.md), stage 2.
 
+## Design decisions the evals have to back
 
-Phase 5 of this path, then playbooks 01 to 08 and 13 to 17, then the
+Senior and lead interviews move from "how do you test it" to "what would you decide, and what
+evidence would you want". Each answer below names the decision and the test that makes it safe.
+
+### 29. Does this feature need an LLM at all?
+**Short answer.** Not until the simplest version loses to it on your cases. Build the baseline (a
+rule, a lookup, a keyword match), score it on the same golden set, and keep the model only where it
+wins by more than it costs. Google's first rule: "Don't be afraid to launch a product without
+machine learning" [S440]. Anthropic: add agentic steps "only when simpler solutions fall short"
+[S040].
+**The mechanism.** The baseline stays after the decision, as a fallback and as a cheap oracle.
+**Follow-up to expect.** "And what stays deterministic once the model is in?" Everything a code
+assertion can decide: schemas, tool arguments once emitted, routing, persistence, state machines.
+**Read.** [01 Decide what to test](../how-to/01-decide-what-to-test.md), step 2.
+
+### 30. How do you make sure an agent never does the same action twice?
+**Short answer.** Make every tool that writes idempotent with a key derived from the intent, then
+test it under faults: same request twice, effect committed and response lost, crash and resume.
+Count effects in the end state, not tool calls.
+**The mechanism.** Duplicates come from retries, workflow engines that may run an activity "more
+than once" [S438], checkpoint replays that re-execute "API requests" [S325], and the model
+re-calling after a timeout. Stripe replays the first saved response for a reused key and errors
+when the parameters differ [S436]; AWS does the same with a client token [S435].
+**Follow-up to expect.** "Can the model generate the key?" No. A model that retries can produce a
+new key, and a new key is a new request.
+**Read.** [side-effects-and-state](../practices/4-agents-and-systems/side-effects-and-state.md).
+
+### 31. Who owns the state in an agent system, and how do you test it?
+**Short answer.** The system of record, not the context window. The agent reads and writes state
+through tools, and the eval grades the end state of that system [S078].
+**The mechanism.** Seed a conversation that contradicts the database and assert the agent acts on
+the database. Compact the context mid-task and assert nothing committed is repeated. For approvals,
+the pending call and its arguments live in stored run state, as in the OpenAI Agents SDK [S439],
+so test that an approval survives a restart and runs once.
+**Read.** [side-effects-and-state](../practices/4-agents-and-systems/side-effects-and-state.md),
+steps 6 and 7.
+
+### 32. How do you catch a regression after a prompt change, not a model change?
+**Short answer.** The same way as a model upgrade: the prompt version is a pinned build input, and a
+change to it replays the golden set N times on both versions with a paired difference [S004].
+**The mechanism.** In a prompt manager, moving the `production` label is the deploy [S444], so the
+label move is what the gate guards, not only the commit.
+**Read.** [10 Run a model upgrade](../how-to/10-run-a-model-upgrade.md).
+
+### 33. How do you cut cost without losing quality?
+**Short answer.** Treat it as a non-inferiority test. Write the largest quality loss you accept
+before the run; the cheaper version passes when the lower end of the paired interval stays above
+minus that margin [S443] [S004].
+**The mechanism.** Routers and cascades report big savings on their benchmarks, FrugalGPT up to 98
+percent at matched quality [S441] and RouteLLM over 2 times in certain cases [S442]. Your margin is
+tested on your cases, with the hard slice scored separately, because routing easy cases away can
+hold the average and lose the tail.
+**Follow-up to expect.** "What if the interval crosses zero?" That is normal for a non-inferiority
+test; what matters is whether it reaches below minus the margin.
+**Read.** [06 Benchmark your system](../how-to/06-benchmark-your-system.md), step 4.
+
+### 34. How do you explain an eval trade-off to product, and decide which risk waits?
+**Short answer.** One decision sentence with the trade-off in it ("ship B; quality non-inferior at
+a 5-point margin, cost down 30 percent"), the interval under it, and a list of what is not covered.
+Risks are scored on harm and likelihood; the top ones get tests this week, the rest are written
+down with an owner and a trigger to revisit.
+**The mechanism.** Error bars are computable and readers act differently when they see them
+[S004], so the interval goes in the same line as the number. The not-covered list is how a deferred risk stays visible.
+**Read.** [11 Report results](../how-to/11-report-results.md),
+[01 Decide what to test](../how-to/01-decide-what-to-test.md), step 5.
+
+
+Phase 5 of this path, then playbooks 01 to 08 and 13 to 17 and the
+[side-effects-and-state](../practices/4-agents-and-systems/side-effects-and-state.md) practice, then the
 [AI QA requirements](ai-qa-requirements.md) page for what roles ask for. Know one tool well enough to write a
 test in it live (DeepEval or promptfoo), and be ready to explain one number you reported with
 its interval.

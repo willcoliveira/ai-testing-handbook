@@ -55,6 +55,7 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Helpful-only snapshot**: a model variant "where safeguards and other harmlessness training were removed", used by a lab to measure dangerous capability without refusals in the way [S164].
 - **Human in the loop**: the rule that a person takes the decisions that change production, money, data or access, with the model limited to proposing. (general)
 - **Human-AI configuration**: NIST's term for "arrangements of or interactions between a human and an AI system", one of the twelve GAI risks [S160].
+- **Idempotency key**: a unique key the client sends with a request so the server recognises retries of the same request and applies the effect once; reuse with different parameters is an error [S436].
 - **Improper output handling**: OWASP LLM05:2025, insufficient validation or sanitisation of model output before it is passed downstream [S163].
 - **Intended use**: the model card section that states primary uses, intended users and out-of-scope uses [S156].
 - **Kappa**: an agreement statistic (Cohen's or Fleiss') that corrects raw agreement between raters for chance. (general)
@@ -68,6 +69,7 @@ One or two lines per term, alphabetical. A source id in brackets means the defin
 - **Model Spec**: OpenAI's published statement of how its models should behave, used for training and as a target for evaluation [S158].
 - **model-index**: the YAML structure in a Hugging Face model card that records evaluation results per task, dataset and metric so the Hub can render and index them [S165].
 - **Mutation testing**: deliberately changing the code under test and checking that tests fail; a surviving mutant means the tests do not cover that behaviour. (general)
+- **Non-inferiority margin**: the largest quality loss you will accept for another gain, such as cost, fixed before the run; a cheaper version passes when the lower end of the paired difference interval stays above minus the margin. Borrowed from clinical trials [S443].
 - **Pairwise**: scoring two outputs against each other rather than each on its own; less sensitive to scale drift, more sensitive to position bias. (general)
 - **Pass rate**: the share of runs of a case that pass; with a non-deterministic model a case has a pass rate, not a result. (general)
 - **Permission mode**: the setting that decides which agent actions ask for approval; modes include default, acceptEdits, plan, bypassPermissions and auto [S167].
