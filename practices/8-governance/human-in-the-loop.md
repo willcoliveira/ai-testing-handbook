@@ -5,7 +5,7 @@ area: 8-governance
 status: draft
 last_reviewed: 2026-09-26
 sources: [S158, S160, S161, S166, S167, S168, S169, S170]
-related: [autonomous-qa-agents, ai-generated-tests, ci-gates-for-llm-apps, agent-evals, standards-and-regulation]
+related: [autonomous-qa-agents, ai-generated-tests, ci-gates-for-llm-apps, agent-evals, standards-and-regulation, side-effects-and-state]
 ---
 
 # Human in the loop

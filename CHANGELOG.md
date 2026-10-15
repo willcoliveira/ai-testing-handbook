@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.20 (2026-10-14)
+
+- Design decisions the evals have to back: a new practice,
+  `practices/4-agents-and-systems/side-effects-and-state.md`, on proving an agent's action takes
+  effect once under retries, replays and resumes (idempotency keys, fault-injection tests, effects
+  counted in the end state), on testing approval pauses, and on keeping authoritative state in
+  the system of record. Playbook 01 gains a "does this box need a model" step with a scored
+  baseline and a booking-tool row; playbook 06 a non-inferiority step for cost cuts; playbook 10
+  covers prompt version changes and records the margin; playbook 13 treats a replay as a retry.
+  Interview questions 29 to 34, two glossary terms, a knowledge-matrix row, ten sources (S435 to
+  S444) and an S357 note on untrusted tool annotations.
+
 ## 0.1.19 (2026-10-13)
 
 - Refresh since 2026-10-12: five new sources (S430 to S434): the GLM-5.3 model card, Anthropic's

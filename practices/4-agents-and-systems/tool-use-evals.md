@@ -5,7 +5,7 @@ area: 4-agents-and-systems
 status: draft
 last_reviewed: 2026-10-01
 sources: [S066, S070, S077, S078, S083, S088, S089, S215, S220, S224, S229, S260, S268, S272, S319, S373, S377]
-related: [agent-evals, offline-probes, mutation-checking, harnesses, prompt-injection]
+related: [agent-evals, offline-probes, mutation-checking, harnesses, prompt-injection, side-effects-and-state]
 ---
 
 # Tool-use evals

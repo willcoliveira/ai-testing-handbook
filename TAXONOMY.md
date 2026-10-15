@@ -40,6 +40,7 @@ engineer should be able to answer after reading it. Two hops from any question t
 | Harnesses | [harnesses](practices/4-agents-and-systems/harnesses.md) | What is an eval harness? Which ones exist? How do I pick one? |
 | Orchestrators and simulators | [orchestrators-and-simulators](practices/4-agents-and-systems/orchestrators-and-simulators.md) | When does a simulated user help? When does it double the noise? What is agent-to-agent testing good for? |
 | Tool-use evals | [tool-use-evals](practices/4-agents-and-systems/tool-use-evals.md) | How do I test function calling without a model? What is a trajectory assertion? |
+| Side effects and state | [side-effects-and-state](practices/4-agents-and-systems/side-effects-and-state.md) | How do I prove an action happens once under retries and replays? Who owns the state the agent acts on? |
 | Voice agents | [voice-agent-testing](practices/4-agents-and-systems/voice-agent-testing.md) | What is different about voice? What can text harnesses not reach? What are the latency budgets? |
 | Load and latency | [load-and-latency](practices/4-agents-and-systems/load-and-latency.md) | What does a load test prove about an LLM app? What do I stub? What do I gate? |
 | Exploratory testing of agents | [exploratory-testing-of-agents](practices/4-agents-and-systems/exploratory-testing-of-agents.md) | How do I run a session against a probabilistic system? What is the evidence standard? |

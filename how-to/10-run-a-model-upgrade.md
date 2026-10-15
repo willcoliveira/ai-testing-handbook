@@ -1,15 +1,17 @@
 ---
 id: run-a-model-upgrade
 title: Run a model upgrade
-sources: [S004, S041, S146, S147, S148]
-last_reviewed: 2026-09-26
+sources: [S004, S041, S146, S147, S148, S443, S444]
+last_reviewed: 2026-10-14
 ---
 
 # Run a model upgrade
 
 ## When
 A deprecation notice arrives; a newer model is cheaper, faster or better on a benchmark; a
-vendor changes a model behind the same id; or a judge model is being changed.
+vendor changes a model behind the same id; a judge model is being changed; or a prompt version is
+about to move to production. A prompt change uses the same record, with the prompt version as the
+one input that differs.
 
 ## What
 An upgrade record: the deprecation or motivation, the migration notes read, the replay results
@@ -26,9 +28,13 @@ about your task.
 ## How
 1. **Read the deprecation and migration notes** and list every parameter, default and
    behaviour change that could touch your prompts or tools [S146] [S147] [S148].
-2. **Pin both versions** as explicit build inputs; never let "latest" be a version.
+2. **Pin both versions** as explicit build inputs; never let "latest" be a version. Prompts too:
+   Langfuse saves each change under an existing name as a new version and recommends fetching the
+   one labelled `production` [S444], so moving that label is a deploy and gets this record.
 3. **Replay the golden set N times on each,** same cases, same judge, same tools (playbook 06).
-   Report the paired difference with its interval [S004].
+   Report the paired difference with its interval [S004]. If the reason is cost, write the
+   non-inferiority margin before the run and pass on the lower end of the interval [S443]
+   (playbook 06, step 4).
 4. **Run the safety suite** on the new version. Binary. Any must-block or must-not-block change
    is a stop.
 5. **Recalibrate the judge if the judge changed,** or check that judge agreement on the new
@@ -46,12 +52,13 @@ Upgrade record template:
 from: <model id A>      to: <model id B>      reason: deprecation 2026-12 / cost -30%
 notes read: migration guide (params x, y), deprecation page (date)
 replay: cases v3 x10; A 0.88 [0.84, 0.92]; B 0.87 [0.83, 0.91]; paired -0.01 [-0.04, +0.02]
+margin: 0.05, written before the run; lower end -0.04 > -0.05, non-inferior
 safety suite: 24/24 both; injection corpus 18/18 both
 judge: unchanged; agreement on B outputs kappa 0.82 (record #7)
 latency: median 1.2 s -> 1.0 s; p95 5.1 s -> 4.4 s
 cost: -30% per turn
 canary: 10% for 5 days; rollback if pass rate < 0.85 or any safety fail
-decision: proceed; trade-off: quality flat within interval, cost down
+decision: proceed; trade-off: quality non-inferior at margin 0.05, cost down 30%
 ```
 
 ## Done when

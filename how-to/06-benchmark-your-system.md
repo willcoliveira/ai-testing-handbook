@@ -1,8 +1,8 @@
 ---
 id: benchmark-your-system
 title: Benchmark your system
-sources: [S001, S004, S005, S006, S027, S049, S076, S154]
-last_reviewed: 2026-09-26
+sources: [S001, S004, S005, S006, S027, S049, S076, S154, S441, S442, S443]
+last_reviewed: 2026-10-14
 ---
 
 # Benchmark your system
@@ -34,15 +34,25 @@ BetterBench gives the criteria for judging whether a benchmark is worth using at
    computed as the error-bars paper describes (per-question standard error, clustered when
    questions share a source), and the paired difference with its interval [S004]. A difference
    whose interval crosses zero is not a difference.
-4. **Measure latency and cost under load, separately from quality.** A virtual user is one real
+4. **For a cheaper version, test non-inferiority, not difference.** A cost cut (a smaller
+   model, a router, a cascade, a shorter prompt) does not need to beat the current version. It
+   must not lose more than a margin you accept. Write the margin before the run, as
+   non-inferiority trials do [S443]. The cheaper version passes when the lower end of the paired
+   interval stays above minus the margin. An interval that crosses zero is expected here; one
+   that reaches below minus the margin fails, even when the mean looks flat. Published cascades
+   and routers report large savings at matched quality, FrugalGPT up to 98 percent [S441] and
+   RouteLLM over 2 times in certain cases [S442], but on the papers' benchmarks, not your cases.
+   Score the hard slice separately: a router that sends easy cases to the cheap model can hold
+   the average while losing the tail.
+5. **Measure latency and cost under load, separately from quality.** A virtual user is one real
    conversation; stub the model for volume and keep integrations real; run the real model for the
    tail [S076]. Gate the median, report p95 and p99 with the reason, find the breakpoint, and
    publish a ceiling with headroom.
-5. **Consult public benchmarks with a checklist.** For each one you might quote: what it
+6. **Consult public benchmarks with a checklist.** For each one you might quote: what it
    measures, how it is graded, whether the test set is public, its age, and whether the
    maintainer has audited it [S005] [S001]. Quote it only for the capability it measures, with
    its date, and never as evidence about your task.
-6. **Write the recommendation as a decision.** "Ship B", "hold at 25 concurrent", "do not adopt
+7. **Write the recommendation as a decision.** "Ship B", "hold at 25 concurrent", "do not adopt
    until X". State the trade-off accepted.
 
 Benchmark record template:
@@ -60,7 +70,8 @@ decision: ship v12; trade-off: 4% cost for 6 points; recheck p95 after worker tu
 ```
 
 ## Done when
-Two versions differ in one input; N runs each; intervals reported; a paired difference; latency
+Two versions differ in one input; N runs each; intervals reported; a paired difference, and for a
+cost cut a margin written before the run; latency
 and cost stated with what is gated and why; a decision sentence; and any public number quoted
 carries its date and its scope.
 

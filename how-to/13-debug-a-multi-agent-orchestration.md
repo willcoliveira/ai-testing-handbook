@@ -66,7 +66,9 @@ multi-agent systems use about 15 times the tokens of a chat [S322].
    and can re-run from a prior `checkpoint_id`; each subgraph has its own `checkpoint_ns` [S325].
    Replay re-executes later nodes "including any LLM calls, API requests", so point it at stubs or
    a sandbox [S325]. Anthropic built its system to "resume from where the agent was when the errors
-   occurred" rather than restart [S322].
+   occurred" rather than restart [S322]. A resume or a replay is a retry: any tool that writes needs
+   an idempotency key and a test that one replay leaves one effect; see
+   [side-effects-and-state](../practices/4-agents-and-systems/side-effects-and-state.md).
 7. **Evaluate the parts, then the whole.** Score each subagent as a component: DeepEval grades
    "retrievers, tool calls, LLM generations, sub-agents" by attaching metrics to spans marked with
    `@observe` [S334]; tool correctness compares `tools_called` with `expected_tools` [S332]; task
@@ -97,6 +99,7 @@ each subagent has at least one component-level case in the suite.
 Practices: [genai-tracing](../practices/6-observability/genai-tracing.md),
 [agent-evals](../practices/4-agents-and-systems/agent-evals.md),
 [tool-use-evals](../practices/4-agents-and-systems/tool-use-evals.md),
+[side-effects-and-state](../practices/4-agents-and-systems/side-effects-and-state.md),
 [orchestrators-and-simulators](../practices/4-agents-and-systems/orchestrators-and-simulators.md),
 [redaction-in-telemetry](../practices/6-observability/redaction-in-telemetry.md).
 Playbooks: [04 Build an evaluator](04-build-an-evaluator.md), [08 Wire the gates](08-wire-the-gates.md).

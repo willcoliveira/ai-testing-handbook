@@ -5,7 +5,7 @@ area: 4-agents-and-systems
 status: draft
 last_reviewed: 2026-10-12
 sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390, S414, S420, S423, S428]
-related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks]
+related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks, side-effects-and-state]
 ---
 
 # Agent evals
