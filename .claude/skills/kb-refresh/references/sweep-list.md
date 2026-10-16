@@ -12,21 +12,21 @@ row covers the page yet; add the id when a row is registered from it.
 | https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 S422 S423 S431 S432 | research posts |
 | https://www.anthropic.com/engineering | 2, 4 | S032 S040 S079 S166 | engineering posts; the featured post at the top shows no date on the listing and changes (2026-05-25 on 2026-10-12, 2026-10-13 a day later), so open it before treating it as new or old; 2026-10-13: note made generic |
 | https://www.anthropic.com/rsp-updates | 5 | S096 S097 | RSP version changes |
-| https://deploymentsafety.openai.com/ | 5 | S103 S416 | system cards and safety evaluations |
+| https://deploymentsafety.openai.com/ | 5 | S103 S416 S453 | system cards and safety evaluations |
 | https://deepmind.google/blog | 5 | S108 S295 | frontier safety framework changes; listing shows month-only dates for recent posts, open a post to confirm its day; 2026-10-13: model launch posts (Gemini 4 Argon) link out to blog.google and developers.googleblog.com, which are not on this list |
-| https://blog.google/innovation-and-ai/models-and-research/gemini-models/rss/ | 5, 7 |  S434 | Gemini model launches (RSS, newest first, full pubDate on every item); 2026-10-13: added on the reviewer's approval because deepmind.google/blog links launches out to blog.google with month-only dates; the listing pages (gemini-models, technology/google-deepmind, products/gemini) show no dates, so the feed is used; tested 2026-10-13, 20 items 2026-08-03 to 2026-10-13, 10 of 20 model launches by title, the rest roundups and showcases to skip |
+| https://blog.google/innovation-and-ai/models-and-research/gemini-models/rss/ | 5, 7 | S434 S446 | Gemini model launches (and safety posts filed under technology/safety-security, 2026-10-16: S446) (RSS, newest first, full pubDate on every item); 2026-10-13: added on the reviewer's approval because deepmind.google/blog links launches out to blog.google with month-only dates; the listing pages (gemini-models, technology/google-deepmind, products/gemini) show no dates, so the feed is used; tested 2026-10-13, 20 items 2026-08-03 to 2026-10-13, 10 of 20 model launches by title, the rest roundups and showcases to skip |
 | https://ai.meta.com/blog | 5, 7 | S113 | model releases and evals |
 | https://metr.org/blog | 1, 5 | S015 S285 S286 S387 S413 | third-party evaluation |
 | https://www.aisi.gov.uk/blog | 4, 5 | S117 S228 S389 S417 S433 | Inspect and evaluations; the home page carries no dates, replaced by /blog on 2026-09-29 |
-| https://www.apolloresearch.ai/science | 5 | S289 S290 | scheming and audit research; /research lagged the /science posts, replaced on 2026-09-29 |
+| https://www.apolloresearch.ai/science | 5 | S289 S290 S452 | scheming and audit research; /research lagged the /science posts, replaced on 2026-09-29; 2026-10-16: banner items at the top link to undated /blog posts, open each to read its date |
 
 ## Vendor pages for the labs covered in labs/ (9)
 | Page | Area | Register ids | Notes |
 |---|---|---|---|
 | https://blogs.microsoft.com/on-the-issues/ | 5, 8 | S246 S291 | responsible AI and frontier governance posts |
 | https://www.amazon.science/blog | 5, 7 | S254 S255 | Nova reports and the frontier model safety framework |
-| https://developer.nvidia.com/blog | 4, 5 | S420 S426 | Nemotron, NeMo Evaluator, guardrails |
-| https://cohere.com/blog | 5, 7 | S388 | Command releases and the frontier model framework |
+| https://developer.nvidia.com/blog | 4, 5 | S420 S426 S448 | Nemotron, NeMo Evaluator, guardrails |
+| https://cohere.com/blog | 5, 7 | S388 S449 | Command releases and the frontier model framework |
 | https://mistral.ai/news | 5, 7 | S259 S262 S292 S412 | model releases and moderation |
 | https://huggingface.co/deepseek-ai | 5, 7 | S297 | model cards with dates; the GitHub org page lists no dates; 2026-10-13: Hugging Face org pages show relative dates only ("1 day ago"), so resolve them against the run date, and open a model's `/commits/main` to see whether the card or only code changed |
 | https://huggingface.co/Qwen | 5, 7 | S221 S222 S223 | model cards with dates; qwen.ai/blog is script-rendered and returns nothing |
@@ -39,7 +39,7 @@ row covers the page yet; add the id when a row is registered from it.
 | https://github.com/UKGovernmentBEIS/inspect_ai/releases | S066 | inspect_ai version; the repo publishes no GitHub releases, compare PyPI inspect-ai and CHANGELOG.md; 2026-10-12: blob/main/CHANGELOG.md returns only page chrome, fetch it with `?plain=1`; 2026-10-13: https://pypi.org/pypi/inspect-ai/json is truncated before the upload times, use https://pypi.org/pypi/inspect-ai/<version>/json for a release date |
 | https://github.com/promptfoo/promptfoo/releases | S068 | promptfoo version; 2026-10-12: the register tracks npm, so also fetch https://registry.npmjs.org/promptfoo/latest (it has no publish time; take the date from the GitHub release) |
 | https://github.com/confident-ai/deepeval/releases | S070 | deepeval version; 2026-10-13: GitHub releases stop at python-v4.2.4, PyPI is ahead, so compare https://pypi.org/pypi/deepeval/<version>/json (the unversioned JSON is truncated) |
-| https://github.com/langfuse/langfuse/releases | S071 | langfuse version |
+| https://github.com/langfuse/langfuse/releases | S071 | langfuse version; 2026-10-16: the releases page shows day and month with no year, and several versions can ship on one day |
 | https://github.com/safety-research/petri/releases | S072 S101 | petri version (redirects to meridianlabs-ai/inspect_petri) |
 | https://github.com/safety-research/bloom/releases | S073 | bloom version; 2026-10-13: the releases page is empty, the v1.1.0 tag is on https://github.com/safety-research/bloom/tags |
 | https://github.com/sierra-research/tau2-bench/releases | S012 S078 | tau2 version |

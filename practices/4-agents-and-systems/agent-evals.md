@@ -3,8 +3,8 @@ id: agent-evals
 title: Agent evals
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-12
-sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390, S414, S420, S423, S428]
+last_reviewed: 2026-10-16
+sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390, S414, S420, S423, S428, S448]
 related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks, side-effects-and-state]
 ---
 
@@ -66,6 +66,7 @@ A single-turn eval scores one output. An agent's failures live in the sequence: 
 - **arXiv, 2026-10:** ParanoiaEval pairs 200 evidence-controlled repository tasks and scores coding agents with a human-calibrated agentic judge, finding unnecessary defensive work in 11.2 to 58.7 percent of runs despite explicit evidence that it was not needed [S414].
 - **NVIDIA, 2026-10:** a second-place KDD Cup 2026 data-agent entry traced every attempt, used an inspector agent to cluster failed trajectories into categories such as schema confusion, wrong joins and output formatting, and guarded its improvement loop against benchmark overfitting with held-out tasks, prompt audits, trace review and human approval [S420].
 - **arXiv, 2026-10:** RH-Detect unifies reward-hacking data from eleven public datasets into 5,021 evaluation units; the best of six off-the-shelf detectors reached a pooled AUROC of 0.962, but the four strongest were 10.7 to 15.9 percentage points less accurate on the multi-turn tool-use sources MALT and TRACE [S428].
+- **NVIDIA with Siemens, 2026-10:** NeMo Gym defined the task, tools, state and verifier for each rollout of a chip-design agent so every attempt started from a clean state, and scored it with a composite that is zero if any of five gates fails; over about 25 rollouts the score rose from about 55% to about 95% while agent turns fell from 155 to 53 [S448].
 
 ## Pitfalls
 1. Grading the reference trajectory as if it were the requirement. tau2-bench's docs exist because the listed actions are "one reference trajectory that solves the task", not the only correct one, and "in many tasks several distinct trajectories produce an equivalent DB end state" [S078].
@@ -114,3 +115,4 @@ None yet.
 - [S414] ParanoiaEval: benchmarking unnecessary defensive work in agentic coding, arXiv 2610.08662, 2026-10-06
 - [S420] Building reliable data analytics agents: lessons from the KDD Cup, NVIDIA, 2026-10-08
 - [S428] RH-Detect: a unified benchmark for reward hacking detection, arXiv 2610.10947, 2026-10-07
+- [S448] Optimizing agent reliability and tool calling efficiency for chip design using NVIDIA NeMo Gym, NVIDIA (with Siemens), 2026-10-14

@@ -3,8 +3,8 @@ id: orchestrators-and-simulators
 title: Orchestrators and simulators
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-03
-sources: [S072, S073, S078, S079, S093, S094, S095, S325, S326, S392]
+last_reviewed: 2026-10-16
+sources: [S072, S073, S078, S079, S093, S094, S095, S325, S326, S392, S449]
 related: [agent-evals, voice-agent-testing, non-determinism-and-pass-rates, red-teaming, ci-gates-for-llm-apps]
 ---
 
@@ -44,6 +44,7 @@ A scripted multi-turn test breaks the moment the agent rephrases. A simulated us
 - **Anthropic, 2026-09:** in the Claude Agent SDK a subagent's intermediate tool calls stay inside it and only its final message returns to the parent; transcripts are stored per subagent, and depth, concurrency and budget are capped [S326].
 - **LangChain, 2026-09:** LangGraph checkpoints graph state at each super-step under a thread id, lists the history, and can re-run from a prior checkpoint, re-executing later nodes including LLM and API calls [S325].
 - **arXiv, 2026-10:** Argo-Bench grades data agents by the simulated consequences of the actions they file against a 235-table warehouse with ground truth withheld, with an executable reference solution per task; the best of 14 models averaged 59.5 and scored 95 or more on 34.8 percent of tasks [S392].
+- **Cohere, 2026-10:** on ProgramBench, a team of coding agents passed 61.8% of hidden tests against 52.1% for a solo agent, and a lead that delegated only planning matched one that delegated every stage (63.6% against 63.2%) at half the cost ($249 against $510); a strong lead with 16 cheaper planning workers reached 61.8% for $155 [S449].
 
 ## Pitfalls
 1. Gating on a simulator you have not measured. A simulator can leave zero scenarios reliably stable after days of tuning, and scenarios at 100 percent can regress the moment the team tunes its own prompt.
@@ -66,3 +67,4 @@ None yet.
 - [S326] Subagents in the SDK (Claude Agent SDK), Anthropic, living
 - [S325] Checkpointers (LangGraph), LangChain, living
 - [S392] Argo-Bench: evaluating data agents on enterprise-scale workflows, arXiv 2610.02122, 2026-10-01
+- [S449] Lessons from scaling teams of coding agents: reach the frontier at 30% of the cost, Cohere (Samway, D'souza, Dziri), 2026-10-14

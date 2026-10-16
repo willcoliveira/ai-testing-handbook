@@ -3,8 +3,8 @@ id: llm-as-judge
 title: LLM-as-judge
 area: 3-judging
 status: draft
-last_reviewed: 2026-10-02
-sources: [S051, S052, S053, S054, S055, S056, S057, S058, S059, S060, S061, S066, S070, S071, S153, S213, S221, S229, S230, S252, S253, S255, S265, S270, S272, S278, S303]
+last_reviewed: 2026-10-16
+sources: [S051, S052, S053, S054, S055, S056, S057, S058, S059, S060, S061, S066, S070, S071, S153, S213, S221, S229, S230, S252, S253, S255, S265, S270, S272, S278, S303, S445]
 related: [judge-calibration, rubrics-and-pairwise, human-annotation, criteria-authoring, non-determinism-and-pass-rates]
 ---
 
@@ -50,6 +50,7 @@ Human grading does not scale and code checks cannot read prose. Zheng et al. fou
 - **Langfuse, 2026-08 and 2026-09:** versions 4.42 to 4.44 surfaced decision-model evaluators in the template gallery and added them as a judge option [S071].
 - **arXiv, 2026-09:** a model used as a document auditor at scale fabricated findings and degraded as batch size grew, a warning for any judge asked to review many items in one call [S303].
 - **Inspect AI, 2026-09:** version 0.3.273 fixed `self_critique()`, and `model_graded_qa()` and `model_graded_fact()` with `model_role=None`, which did not grade with the correct model when one task was evaluated against several models [S066].
+- **arXiv, 2026-10:** across seven public benchmarks, changing only what the judge was shown mattered more than which of three judges was used, though their prices differed 10- to 17-fold; about a tenth of the source did almost all of the work, and systems revised on the verdicts of judges that lacked the key source got worse; of 81 pre-registered predictions that ran, 32 met their bar [S445].
 
 ## Pitfalls
 1. Position bias. With the default prompt GPT-4 gave the same verdict across a swap only 65.0% of the time and Claude-v1 23.8%; most judges favoured the first position [S051]. The survey lists position bias as task-agnostic and swapping as the standard fix [S058].
@@ -94,3 +95,4 @@ was kept as an advisory line beside the judge and never in its place. See [decis
 - [S071] Langfuse evaluation overview, Langfuse, living
 - [S303] When Auditors Fabricate: batch-size degradation and confident hallucination in LLM detection of planted document contamination, arXiv 2609.09696, 2026-09-09
 - [S066] Inspect AI documentation and repository, UK AI Security Institute, living
+- [S445] The anatomy of a blind spot: what an LLM judge must be shown, and how much, arXiv 2610.15938, 2026-10-11
