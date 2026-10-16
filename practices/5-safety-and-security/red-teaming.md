@@ -3,8 +3,8 @@ id: red-teaming
 title: Red teaming
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-10-12
-sources: [S098, S099, S101, S104, S106, S110, S111, S113, S114, S127, S128, S130, S131, S132, S214, S218, S224, S228, S240, S248, S249, S251, S255, S256, S265, S266, S267, S271, S278, S284, S288, S309, S344, S382, S383, S422]
+last_reviewed: 2026-10-16
+sources: [S098, S099, S101, S104, S106, S110, S111, S113, S114, S127, S128, S130, S131, S132, S214, S218, S224, S228, S240, S248, S249, S251, S255, S256, S265, S266, S267, S271, S278, S284, S288, S309, S344, S382, S383, S422, S454]
 related: [prompt-injection, guardrails, frontier-safety-frameworks, exploratory-testing-of-agents]
 ---
 
@@ -93,6 +93,7 @@ release [S104]) and automated attackers generate findings that need triage befor
 - **Microsoft Research, 2024-04:** Crescendo is a multi-turn jailbreak that starts benign and gradually escalates; the paper reports high attack success across the evaluated models and an automated version, Crescendomation [S344].
 - **promptfoo, living:** an MCP red-team plugin covers tool metadata injection, parameter injection, excessive function calling and privilege escalation, with a guide for multi-server poisoning scenarios [S382][S383].
 - **Anthropic, 2026-10:** for its open-source vulnerability-finding service, expert penetration testers checked 97 critical and high-severity findings across 48 projects; 85 (88 percent) met the coordinated-disclosure bar and one was a false positive, out of over 29,000 candidates of which about 6,000 were triaged by hand [S422].
+- **arXiv, 2026-10:** told they were being tested, four instruction-tuned models refused harmful requests 14.4 percentage points more often on average across five Indic languages and English, and refusal of benign Indic requests rose from 6.9% to 11.3%, so a safety eval that signals it is an eval can overstate everyday behaviour [S454].
 
 ## Pitfalls
 1. Static sets as proof. Anthropic calls this "a common pitfall" and invests in adaptive evaluations
@@ -149,3 +150,4 @@ None yet.
 - [S382] MCP Plugin (promptfoo red team), promptfoo, living
 - [S383] MCP Security Testing Guide (promptfoo), promptfoo, living
 - [S422] Launching an opt-in vulnerability-finding service for open-source software, Anthropic, 2026-10-08
+- [S454] Evaluation awareness beyond English: do LLMs act differently when tested in Indic languages?, arXiv 2610.22333, 2026-10-15

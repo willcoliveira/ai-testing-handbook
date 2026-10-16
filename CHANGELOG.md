@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.21 (2026-10-16)
+
+- Refresh since 2026-10-13: ten new sources (S445 to S454): a study of what an LLM judge must be
+  shown, Google's Gemini 4 Argon safety post, SWE-MISBEHAVIOR, NVIDIA NeMo Gym with Siemens,
+  Cohere on teams of coding agents, the INFUSE indirect injection benchmark, calibration and
+  deferral for injection detectors, Apollo on update-aware reasoning in GLM-5.3, the GPT-Live-1.1
+  system card and evaluation awareness in Indic languages; one bullet each in ten practices;
+  Inspect AI 0.3.281 (Docker sandboxes block writable host mounts by default from 0.3.280),
+  DeepEval 4.3.0 and Langfuse v4.63.0 recorded; register ids and two notes in the sweep list;
+  `digests/2026-10-16.md`.
+
 ## 0.1.20 (2026-10-14)
 
 - Design decisions the evals have to back: a new practice,

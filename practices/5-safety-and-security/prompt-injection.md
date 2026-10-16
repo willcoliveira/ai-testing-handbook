@@ -3,8 +3,8 @@ id: prompt-injection
 title: Prompt injection
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-10-12
-sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371, S415, S421, S425]
+last_reviewed: 2026-10-16
+sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371, S415, S421, S425, S450]
 related: [red-teaming, guardrails, tool-use-evals, agent-evals]
 ---
 
@@ -96,6 +96,7 @@ unusual user prompts, and a model trained to trust the user turn can follow what
 - **arXiv, 2026-10:** APEX-Harm tests prompt and script injection against long-horizon agents doing finance, consulting and legal work in workspaces of 115 to 328 files across 12 frontier models; the lowest attack success rates were 8 percent (Opus 5) and 20 percent (Sonnet 5), and Gemini 3.8 Flash had the top mean task score (0.877) with 33 percent attack success, so completing the task was not evidence of safe behaviour [S425].
 - **arXiv, 2026-10:** LTBD adds learnable trust-boundary delimiters to a model without changing its parameters and reports 0.00 percent attack success on AlpacaFarm and 0.11 to 0.19 percent on TaskTracker [S421].
 - **arXiv, 2026-10:** RAG-PIBench provides 4,876 RAG-context prompt-injection examples with frozen train, validation and protected-test splits that avoid leakage; among keyword, TF-IDF, semantic and transformer detectors, DistilBERT scored best on the protected test (F1 0.896, PR-AUC 0.968) [S415].
+- **arXiv, 2026-10:** INFUSE runs indirect prompt injection across the lifecycle of 40 long-running agent tasks with 56 attack scenarios against 19 models, 41,824 adversarial trajectories and 720 benign reference runs; mean attack success was 19.6% (3.2% to 41.9% per model), guard models helped little, and strong prompt-level hardening cut success from 58.2% to 14.3% at some cost to utility [S450].
 
 ## Pitfalls
 1. Trusting everything in the user turn. Anthropic's model "often reasoned that anything in the user's
@@ -138,3 +139,4 @@ None yet.
 - [S425] APEX-Harm: evaluating agent safety in shared professional workspaces, arXiv 2610.13623, 2026-10-09
 - [S421] LTBD: learnable trust-boundary delimiters for prompt injection defense, arXiv 2610.11634, 2026-10-08
 - [S415] RAG-PIBench: a leakage-aware benchmark for prompt-injection detection in RAG systems, arXiv 2610.08571, 2026-10-06
+- [S450] INFUSE: a unified surface benchmark for indirect prompt injection in agentic systems, arXiv 2610.20776, 2026-10-14

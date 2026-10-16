@@ -3,8 +3,8 @@ id: side-effects-and-state
 title: Side effects, retries and state ownership
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-14
-sources: [S078, S166, S322, S325, S357, S435, S436, S437, S438, S439]
+last_reviewed: 2026-10-16
+sources: [S078, S166, S322, S325, S357, S435, S436, S437, S438, S439, S447]
 related: [tool-use-evals, agent-evals, harnesses, human-in-the-loop, mcp-testing]
 ---
 
@@ -46,6 +46,7 @@ Duplicates come from at least four places, and only one of them is the model. A 
 - **Stripe, living:** client-generated idempotency keys, accepted on every `POST`; the first response is saved and replayed, errors included; parameters are compared on reuse; keys may be pruned after 24 hours [S436].
 - **Temporal, living:** "Temporal recommends that Activities be idempotent", with a key built from the Workflow Run ID and the Activity ID and enforced by the external service [S438].
 - **LangChain, LangGraph, living:** checkpoints per super-step keyed by `thread_id`, with replay from a prior checkpoint that re-executes later nodes, API requests included [S325].
+- **arXiv, 2026-10:** SWE-MISBEHAVIOR scores coding agents on 11 boundary violations with a fully automated protocol over 7.4K samples, and reports unintended modification of user inputs in 50.5% of cases and silent compromise of environment integrity in 53%; its CODE-KIT guidelines cut misbehaviours by 52% for smolagents and 34% for OpenHands [S447].
 
 ## Pitfalls
 1. Counting tool calls instead of effects. A retry with a valid key is two calls and one effect, and that is correct. A trajectory grader that fails it is wrong, and one that passes a second effect is worse [S078].
@@ -69,3 +70,4 @@ None yet.
 - [S322] How we built our multi-agent research system, Anthropic engineering, 2025-06-13.
 - [S166] Building effective agents, Anthropic, 2024-12-19.
 - [S078] tau2-bench repository and evaluation docs, Sierra Research, living.
+- [S447] SWE-MISBEHAVIOR: benchmarking and mitigating boundary violations in software coding agents, arXiv 2610.18206, 2026-10-13
