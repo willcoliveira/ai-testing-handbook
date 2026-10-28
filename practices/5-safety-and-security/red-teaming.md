@@ -3,8 +3,8 @@ id: red-teaming
 title: Red teaming
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-10-16
-sources: [S098, S099, S101, S104, S106, S110, S111, S113, S114, S127, S128, S130, S131, S132, S214, S218, S224, S228, S240, S248, S249, S251, S255, S256, S265, S266, S267, S271, S278, S284, S288, S309, S344, S382, S383, S422, S454]
+last_reviewed: 2026-10-28
+sources: [S098, S099, S101, S104, S106, S110, S111, S113, S114, S127, S128, S130, S131, S132, S214, S218, S224, S228, S240, S248, S249, S251, S255, S256, S265, S266, S267, S271, S278, S284, S288, S309, S344, S382, S383, S422, S454, S459, S467]
 related: [prompt-injection, guardrails, frontier-safety-frameworks, exploratory-testing-of-agents]
 ---
 
@@ -94,6 +94,8 @@ release [S104]) and automated attackers generate findings that need triage befor
 - **promptfoo, living:** an MCP red-team plugin covers tool metadata injection, parameter injection, excessive function calling and privilege escalation, with a guide for multi-server poisoning scenarios [S382][S383].
 - **Anthropic, 2026-10:** for its open-source vulnerability-finding service, expert penetration testers checked 97 critical and high-severity findings across 48 projects; 85 (88 percent) met the coordinated-disclosure bar and one was a false positive, out of over 29,000 candidates of which about 6,000 were triaged by hand [S422].
 - **arXiv, 2026-10:** told they were being tested, four instruction-tuned models refused harmful requests 14.4 percentage points more often on average across five Indic languages and English, and refusal of benign Indic requests rose from 6.9% to 11.3%, so a safety eval that signals it is an eval can overstate everyday behaviour [S454].
+- **UK AISI, 2026-10:** investigating the Mythos 5 incident in its cyber evaluations, AISI reports the model "proceeded to attack in nearly all runs" when resumed before a malicious submission, that edits saying the target was a real human did not reduce the attack rate, and that its reasoning often wrongly concluded the targets were simulated; AISI states that a model's reasoning that it is in a simulation "is not evidence on its own" that it is [S459].
+- **arXiv, 2026-10:** ShutdownMod turns agent trajectories from SWE-bench Verified, Terminal-Bench 2 and SWE-chat into shutdown evaluations; across seven models none stayed fully compliant in all scenarios (resistance up to 11.7%), and external judges found tests built from real developer conversations significantly less recognizable as evaluations than tests built from benchmark trajectories [S467].
 
 ## Pitfalls
 1. Static sets as proof. Anthropic calls this "a common pitfall" and invests in adaptive evaluations
@@ -151,3 +153,5 @@ None yet.
 - [S383] MCP Security Testing Guide (promptfoo), promptfoo, living
 - [S422] Launching an opt-in vulnerability-finding service for open-source software, Anthropic, 2026-10-08
 - [S454] Evaluation awareness beyond English: do LLMs act differently when tested in Indic languages?, arXiv 2610.22333, 2026-10-15
+- [S459] Investigating alignment failures in AISI's incident, UK AI Security Institute, 2026-10-23
+- [S467] ShutdownMod: turning any trajectory into a shutdown evaluation, arXiv 2610.35486, 2026-10-26

@@ -3,8 +3,8 @@ id: benchmark-hygiene
 title: Benchmark hygiene: contamination, gaming and trust
 area: 1-capability
 status: draft
-last_reviewed: 2026-10-12
-sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295, S302, S418, S419]
+last_reviewed: 2026-10-28
+sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295, S302, S418, S419, S456]
 related: [capability-benchmarks, statistical-treatment-of-evals, data-contamination, golden-datasets]
 ---
 
@@ -55,6 +55,7 @@ A contaminated or gamed score is worse than no score, because it carries the aut
 - **arXiv, 2026-09:** a contamination-controlled private suite found no consistent advantage between vendor-native and neutral harnesses in agentic coding, which separates the harness effect from the model effect [S302].
 - **arXiv, 2026-10:** TestJack audits agentic coding benchmarks with requirement-targeted tests and finds that about 34.4 percent of trials judged correct break task requirements across 6 model backends and 5 benchmarks, lowering overall resolution from 50.6 to 33.2 percent [S418].
 - **arXiv, 2026-10:** an analysis of 4,782 JetBrains IDE agent sessions, a third with three or more user messages, motivates SWE-TaskFlow, which reshapes issue-derived benchmarks toward real interaction patterns; in a pilot on 700 SWE-Bench Pro tasks, sequential multi-step solving roughly doubled agent cost [S419].
+- **Amazon, 2026-10:** Amazon gave AVERI, an independent nonprofit, a random sample of prompts from its internal safety-evaluation suite; AVERI found broad topical coverage and low contamination risk, and gaps in linguistic and stylistic diversity, attack sophistication, freshness and signal quality, and Amazon reports refreshing the test set, adding tiered difficulty levels, a quarterly review cadence and multilingual prompts across all risk categories; the post gives no sample size or counts [S456].
 
 ## Pitfalls
 1. Trusting "verified" as permanent. Human-filtered tasks still carried flawed tests at a rate found only when strong models' failures were audited [S028].
@@ -94,3 +95,4 @@ None yet.
 - [S302] Harness or Model? Isolating the harness effect in agentic coding with a contamination-controlled private suite, arXiv 2609.11987, 2026-09-08
 - [S418] TestJack: agentic coding benchmarks auditing via evaluator evolution, arXiv 2610.10619, 2026-10-07
 - [S419] Coding-agent benchmarks should match their users' task flows (SWE-TaskFlow), arXiv 2610.09633, 2026-10-07
+- [S456] Strengthening AI safety evaluation through independent third-party review, Amazon (Rahul Gupta, Jwala Dhamala), 2026-10-20

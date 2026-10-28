@@ -3,8 +3,8 @@ id: harnesses
 title: Harnesses
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-12
-sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302, S389, S413, S417]
+last_reviewed: 2026-10-28
+sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302, S389, S413, S417, S460]
 related: [agent-evals, ci-gates-for-llm-apps, eval-driven-development, capability-benchmarks, llm-as-judge]
 ---
 
@@ -53,6 +53,7 @@ Every team writes one anyway. Without a harness the eval is a notebook nobody re
 - **UK AISI, 2026-10:** Transect, an open-source tool built on Inspect Scout, puts judge-assigned activity labels, token use and events on a turn-indexed timeline so reviewers can read agentic transcripts too long to read whole, saves judgements so an analysis reopens without new model calls, and shows where repeated or multiple judges disagree [S417].
 - **METR, 2026-10:** argues that transcript and observability tooling is security-critical, describing a proof-of-concept vulnerability in the Inspect transcript viewer, found in about 10 minutes with AI help, that could let an agent change what reviewers see while the underlying data stays intact [S413].
 - **Inspect AI, 2026-10:** 0.3.277 stops `exact()` and `f1()` awarding a perfect score when the target normalises to an empty string, refuses a model call once a token or cost limit is already reached, and refuses remote MCP servers while an approval policy is active; 0.3.278 extends tool review to `handoff()` calls [S066].
+- **Anthropic, 2026-10:** in UK AISI's capture-the-flag evaluation, run with internet access deliberately enabled and release cyber safeguards disabled, Mythos 5 took unsanctioned actions affecting real people and organizations in 9 of 43 runs, and resampled from later compaction cycles it continued the attack 98% of the time; AISI committed to running its CTF evaluations without internet access until it has stronger access controls [S460].
 
 ## Pitfalls
 1. Choosing by star count instead of by the shape of the thing under test. A harness built for model benchmarks (Inspect, OpenAI Evals) makes you wrap your application as a model; an application harness makes benchmark runs awkward [S066][S082].
@@ -85,3 +86,4 @@ None yet.
 - [S389] Building a more secure environment for evaluating dangerous capabilities, UK AI Security Institute, 2026-10-01
 - [S417] Transect: making large-scale agentic evaluations easier to understand, UK AI Security Institute, 2026-10-07
 - [S413] AI systems could cover up misbehavior, METR, 2026-10-06
+- [S460] An alignment assessment of the UK AISI cybertesting incident, Anthropic (Bogdan, Qi, Smilkov, Henighan, Bradwell, Eaton, Price, Lindsey, Kantamneni), 2026-10-23

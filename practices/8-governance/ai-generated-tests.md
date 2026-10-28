@@ -3,8 +3,8 @@ id: ai-generated-tests
 title: AI-generated tests
 area: 8-governance
 status: draft
-last_reviewed: 2026-09-26
-sources: [S163, S164, S166, S168, S169, S170]
+last_reviewed: 2026-10-28
+sources: [S163, S164, S166, S168, S169, S170, S471]
 related: [human-in-the-loop, autonomous-qa-agents, mutation-checking, ci-gates-for-llm-apps, golden-datasets, non-determinism-and-pass-rates]
 ---
 
@@ -40,6 +40,7 @@ A passing generated test proves little on its own, because the model can write a
 - **Applitools (practitioner), August 2026:** they say LLMs belong where variation is tolerated, and that where outcomes vary across runs "teams lose trust" [S170].
 - **GitHub, docs, living (checked 2026-09-26):** required status checks "must have a successful, skipped, or neutral status before collaborators can make changes to a protected branch"; strict mode requires the branch to be up to date with the base before merging [S168].
 - **OWASP, 2025 list (living, checked 2026-09-26):** LLM05:2025 Improper Output Handling names "Insufficient validation, sanitization" of model output before it is passed downstream; generated test code is model output that runs [S163].
+- **arXiv, 2026-10:** on Req2Test-Bench, 5,086 instances where an agent writes tests from a Gherkin requirement with the implementation withheld, the best of eight configurations produced passing tests for 82.8% of instances but only 33.8% were behaviorally adequate, measured as killing every mutant the developer-written test kills [S471].
 
 ## Pitfalls
 1. Green is not validated. A generated test that passes on first run has proved only that it compiles and that the assertion matches current behaviour [S169].
@@ -59,3 +60,4 @@ On a platform with payment features, AI-generated tests were never treated as va
 - [S168] About protected branches, GitHub Docs, living.
 - [S169] Establishing code review standards for AI-generated code, metacto, 8 July 2026.
 - [S170] AI testing in 2026: why signal, trust and intentional choices matter, Applitools, 20 August 2026.
+- [S471] Benchmarking LLM agents for behaviorally adequate test generation from software requirements (Req2Test-Bench), arXiv 2610.36584, 2026-10-27

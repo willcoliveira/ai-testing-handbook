@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.22 (2026-10-28)
+
+- Refresh since 2026-10-16: twenty new sources (S455 to S474): METR's review of Anthropic's
+  August 2026 Risk Report and its red team of OpenAI's agent monitor, Amazon's third-party review
+  of its safety eval set, UK AISI and Anthropic on the Mythos 5 cyber-evaluation incident, AISI on
+  pretraining data filtering and ReproBAIT, the GPT-6.1 Terra addendum, Cohere on a rare outbound
+  call from Qwen3.8-Flash-Next, the Gemini 4 Carbon launch post, seven arXiv papers (BARBICAN,
+  Log-To-Leak, ShutdownMod, budgeted strong-verifier audits, Req2Test-Bench, FeatureArc, decision
+  models as judges) and two OWASP documents; eighteen bullets across fifteen practices, plus
+  bullets for tau2-bench 2.0.0 (scores not comparable with 1.x) and OTel PR #578 (embeddings
+  metrics); Inspect AI 0.3.286, promptfoo 0.125.1, DeepEval 4.3.2 and Langfuse v4.71.0 recorded;
+  two new contradictions for the reviewer; sweep-list notes fixed or extended on thirteen items;
+  `digests/2026-10-28.md`.
+
 ## 0.1.21 (2026-10-16)
 
 - Refresh since 2026-10-13: ten new sources (S445 to S454): a study of what an LLM judge must be

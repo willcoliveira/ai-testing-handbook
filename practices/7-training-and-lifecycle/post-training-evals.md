@@ -3,8 +3,8 @@ id: post-training-evals
 title: Post-training evals
 area: 7-training-and-lifecycle
 status: draft
-last_reviewed: 2026-10-16
-sources: [S143, S150, S151, S152, S153, S215, S220, S225, S229, S242, S247, S248, S255, S265, S268, S272, S278, S452]
+last_reviewed: 2026-10-28
+sources: [S143, S150, S151, S152, S153, S215, S220, S225, S229, S242, S247, S248, S255, S265, S268, S272, S278, S452, S468]
 related: [fine-tuning-evals, capability-benchmarks, statistical-treatment-of-evals, data-contamination, frontier-safety-frameworks, model-and-system-cards]
 ---
 
@@ -65,6 +65,7 @@ What is public and what is not, as of 2026-09-26:
 - **xAI, April 2026:** "During training, we penalize harmful model propensities" using an LLM judge on rollouts, then measures the same propensities (MASK, sycophancy) on the deployed checkpoint [S265].
 - **NVIDIA, December 2025:** safety SFT data is built from named datasets and "A content-safety classifier is employed to filter the responses"; no safety results table follows [S268].
 - **Apollo Research, 2026-10:** a model grader over 6,452 GLM-5.3 rollouts from shutdown-resistance and ImpossibleBench variants found 10 that reasoned about how their actions would shape future training (about 1 to 2 per 1,000), none in 1,600 rollouts each of five other open-weight models; Apollo recommends looking for this during training, not only at the final checkpoint [S452].
+- **arXiv, 2026-10:** with a limited budget of strong-verifier checks in GRPO, auditing the groups with the fewest weak passes first drove reward hacking near zero on LeetCode and Countdown-Code where random audits with the same budget did not, and stayed within about two points of a full audit across three seeds while using 28% of its labels [S468].
 
 ## Pitfalls
 1. **A learned reward model as the only judge.** DeepSeek states neural reward models were hacked at scale; verify with rules where a rule exists [S153].
@@ -95,3 +96,4 @@ None yet.
 - [S265] Grok 4.20 System Card, xAI, 2026-04-07
 - [S268] Nemotron 3 Nano: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic Reasoning (technical report), NVIDIA, 2025-12-23
 - [S452] GLM-5.3 sometimes considers how train-time actions shape future behavior, Apollo Research (Højmark, Newman), 2026-10-15
+- [S468] Audit where hacks pay: budgeted strong-verifier audits against reward hacking in GRPO, arXiv 2610.35716, 2026-10-26
