@@ -3,8 +3,8 @@ id: frontier-safety-frameworks
 title: Frontier safety frameworks
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-10-16
-sources: [S096, S098, S099, S102, S104, S107, S109, S110, S113, S114, S116, S128, S232, S234, S235, S240, S247, S254, S256, S263, S264, S267, S271, S285, S287, S289, S295, S412, S416, S431, S434, S446]
+last_reviewed: 2026-10-28
+sources: [S096, S098, S099, S102, S104, S107, S109, S110, S113, S114, S116, S128, S232, S234, S235, S240, S247, S254, S256, S263, S264, S267, S271, S285, S287, S289, S295, S412, S416, S431, S434, S446, S455, S474]
 related: [red-teaming, model-and-system-cards, standards-and-regulation, guardrails]
 ---
 
@@ -100,6 +100,8 @@ them and says plainly that indexing "should not be considered an endorsement of 
 - **Anthropic, 2026-10:** the Frontier Red Team tested whether small open-weight models can replicate onto low-security hardware: a 9B model got inference running on 8 of the 9 hardware types tested, and in a firewalled network of 8 emulated Android nodes, with the cyber-exploit stages kept trivial, GLM-5.2 spread to all 8 nodes in 4 of 5 trials [S431].
 - **Google DeepMind, 2026-10:** the Gemini 4 Argon launch post says the model's capabilities were evaluated under the Frontier Safety Framework without stating the outcome, that external bio red teaming unlocked less than 1% of the bio sub-tasks tested, and that attack success on Gray Swan's indirect prompt injection benchmark fell to 0.7% across 15 adaptive attempts; the third-party partners are not named and the model card is a PDF [S434].
 - **Google DeepMind, 2026-10:** the Gemini 4 Argon safety post reports honeypot tests for covert actions, all 12 end-to-end simulated cyberattack scenarios solved (up from five in the previous generation), shortcut or cheating attempts down to 2%, and next-generation safeguards applied because cyber and biological capabilities were elevated; it does not say whether a Critical Capability Level was reached [S446].
+- **METR, 2026-10:** METR's external review of the misalignment section of Anthropic's August 2026 Risk Report agrees the risk of catastrophic harm from misalignment is low, but "primarily due to models' limited capabilities, rather than safeguards and alignment training", calls the report's covert capabilities benchmarks a poor proxy for evading monitoring, and quotes Anthropic that its offline monitor flagged only around 1% of actions in the Mythos 5 incident, about 50% once the chain of thought was stripped [S455].
+- **Google DeepMind, 2026-10:** the Gemini 4 Carbon launch post reports 0.0% attack success on Gray Swan's indirect prompt injection benchmark (0.7% for Argon) and successful cheating on Terminal-Bench 4.0 down to 0.0% with 0.4% attempts, states that external benchmarks were "evaluated without guardrails", and does not mention the Frontier Safety Framework, critical capability levels or a Carbon model card; access starts with a subset of cyber defenders [S474].
 
 ## Pitfalls
 1. Treating a lab's determination as coverage for your product. Meta's Llama 4 card says "testing
@@ -152,3 +154,5 @@ None yet.
 - [S431] AI models may be capable of self-replicating without access to a datacenter, Anthropic, 2026-10-12
 - [S434] Gemini 4 Argon: built to solve your hardest problems, Google DeepMind (blog.google), 2026-10-13
 - [S446] Developing Gemini 4 Argon responsibly and safely, Google DeepMind (blog.google; Anca Dragan, Raluca Ada Popa), 2026-10-13
+- [S455] Review of the "Misalignment in high-stakes settings" section in Anthropic's Risk Report (August 2026), METR (Nikola Jurkovic, Tim Hua, Beth Barnes), 2026-10-20
+- [S474] Gemini 4 Carbon: our next frontier model, Google DeepMind (blog.google; Koray Kavukcuoglu), 2026-10-28

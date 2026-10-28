@@ -3,8 +3,8 @@ id: mcp-testing
 title: MCP testing
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-01
-sources: [S123, S136, S355, S356, S357, S358, S359, S360, S361, S362, S363, S364, S365, S366, S367, S368, S369, S371, S372, S373, S374, S375, S376, S377, S378, S379, S381, S382, S383, S384, S385, S386]
+last_reviewed: 2026-10-28
+sources: [S123, S136, S355, S356, S357, S358, S359, S360, S361, S362, S363, S364, S365, S366, S367, S368, S369, S371, S372, S373, S374, S375, S376, S377, S378, S379, S381, S382, S383, S384, S385, S386, S466]
 related: [tool-use-evals, agent-evals, prompt-injection, red-teaming, genai-tracing, harnesses]
 ---
 
@@ -98,6 +98,7 @@ second and third jobs, which brings back non-determinism and cost.
 - **Confident AI, living:** DeepEval MCP use and MCP task completion metrics [S378][S379].
 - **OpenTelemetry, living:** MCP semantic conventions for client and server spans and duration metrics [S384].
 - **arXiv, 2025-08:** MCPSecBench identifies 17 attack types across four surfaces and finds current protections under 30 percent average success [S372]; MCP-Universe benchmarks agents on 11 real servers with execution-based evaluators [S373].
+- **arXiv, 2026-10:** Log-To-Leak poisons MCP tool metadata to add an attacker-controlled logging call after the last legitimate call; across 18 model-server pairs attack success was 62.64% to 100% while 16 pairs changed target-task completion by at most 6.63 points, three defences left residual attack success above 55% on GitHub MCP with GPT-4o, and an instruction detector flagged 85.53% of benign tool descriptions [S466].
 
 ## Pitfalls
 1. Testing only the code. A server can pass every contract test and still be the channel for an injection that leaks data, because the flaw is in what the agent does with the text [S366].
@@ -144,3 +145,4 @@ None yet.
 - [S384] Semantic conventions for MCP, OpenTelemetry, living.
 - [S385] Model context protocol, OpenAI Agents SDK, living.
 - [S386] Connect to external tools with MCP, Claude Agent SDK, living.
+- [S466] Log-To-Leak: prompt injection attacks on tool-using LLM agents via the Model Context Protocol, arXiv 2610.36108, 2026-10-26

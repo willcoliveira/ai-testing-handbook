@@ -3,8 +3,8 @@ id: human-in-the-loop
 title: Human in the loop
 area: 8-governance
 status: draft
-last_reviewed: 2026-09-26
-sources: [S158, S160, S161, S166, S167, S168, S169, S170]
+last_reviewed: 2026-10-28
+sources: [S158, S160, S161, S166, S167, S168, S169, S170, S469]
 related: [autonomous-qa-agents, ai-generated-tests, ci-gates-for-llm-apps, agent-evals, standards-and-regulation, side-effects-and-state]
 ---
 
@@ -43,6 +43,7 @@ Models produce plausible changes quickly and are poor at knowing when they are w
 - **EU AI Office, July 2025:** the General-Purpose AI Code of Practice, Measure 4.2, says a provider proceeds only if systemic risk is acceptable, otherwise mitigates or does "not make the model available on the market"; Commitment 8 requires clear allocation of responsibility across organisational levels [S161].
 - **metacto (practitioner), July 2026:** a review checklist that keeps final approval of red-lane changes, dependency approval and waiving of CI, security or test requirements as human-only, and requires the author to state what they verified after generation [S169].
 - **Applitools (practitioner), August 2026:** LLMs "excel at tasks that tolerate variation: generating test ideas, creating data, summarizing results", while "test execution and release decisions demand consistency, repeatability, and explainability" [S170].
+- **Anthropic, 2026-10:** when a coin flip set Claude Code's lean on each decision, 50 professional analysts went with the agent's lean 86% of the time across four analytical choices, and 77% reused the agent's arguments while 15% credited it; the authors write that "a human reviewer is only an independent check if their judgment is their own" [S469].
 
 ## Pitfalls
 1. Gating in the prompt. A line in CLAUDE.md saying "never push to main" is advice. "Permission rules are enforced by Claude Code, not by the model" [S167]. Put the rule in branch protection or a deny rule.
@@ -64,3 +65,4 @@ On a platform with payment features the org's rule was "agents propose, humans m
 - [S168] About protected branches, GitHub Docs, living.
 - [S169] Establishing code review standards for AI-generated code, metacto, 8 July 2026.
 - [S170] AI testing in 2026: why signal, trust and intentional choices matter, Applitools, 20 August 2026.
+- [S469] How AI agents shape experts' judgment calls, Anthropic (Amaç Herdağdelen, Hailey Joren, Alex Tamkin), 2026-10-27

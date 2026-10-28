@@ -9,27 +9,27 @@ row covers the page yet; add the id when a row is registered from it.
 ## Lab pages (10)
 | Page | Area | Register ids | Notes |
 |---|---|---|---|
-| https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 S422 S423 S431 S432 | research posts |
-| https://www.anthropic.com/engineering | 2, 4 | S032 S040 S079 S166 | engineering posts; the featured post at the top shows no date on the listing and changes (2026-05-25 on 2026-10-12, 2026-10-13 a day later), so open it before treating it as new or old; 2026-10-13: note made generic |
+| https://www.anthropic.com/research | 5, 4 | S038 S072 S073 S100 S101 S287 S288 S422 S423 S431 S432 S460 S469 | research posts; 2026-10-28: a summarising fetch of the listing miscounted (said eleven posts, listed eight); "List every post dated <month> in page order, with its exact date and URL. Do not summarise and do not skip any." returned all twelve October posts |
+| https://www.anthropic.com/engineering | 2, 4 | S032 S040 S079 S166 | engineering posts; the featured post at the top shows no date on the listing and changes (2026-05-25 on 2026-10-12, 2026-10-13 a day later), so open it before treating it as new or old; 2026-10-13: note made generic; 2026-10-28: the featured post was at a /research/ URL (Redesigning source control, 2026-10-13, updated 2026-10-15) and the listing now shows its date |
 | https://www.anthropic.com/rsp-updates | 5 | S096 S097 | RSP version changes |
-| https://deploymentsafety.openai.com/ | 5 | S103 S416 S453 | system cards and safety evaluations |
+| https://deploymentsafety.openai.com/ | 5 | S103 S416 S453 S464 | system cards and safety evaluations; 2026-10-28: listing links are relative to the host, and each card is an HTML page with a View PDF link; the HTML carries the text and tables |
 | https://deepmind.google/blog | 5 | S108 S295 | frontier safety framework changes; listing shows month-only dates for recent posts, open a post to confirm its day; 2026-10-13: model launch posts (Gemini 4 Argon) link out to blog.google and developers.googleblog.com, which are not on this list |
-| https://blog.google/innovation-and-ai/models-and-research/gemini-models/rss/ | 5, 7 | S434 S446 | Gemini model launches (and safety posts filed under technology/safety-security, 2026-10-16: S446) (RSS, newest first, full pubDate on every item); 2026-10-13: added on the reviewer's approval because deepmind.google/blog links launches out to blog.google with month-only dates; the listing pages (gemini-models, technology/google-deepmind, products/gemini) show no dates, so the feed is used; tested 2026-10-13, 20 items 2026-08-03 to 2026-10-13, 10 of 20 model launches by title, the rest roundups and showcases to skip |
-| https://ai.meta.com/blog | 5, 7 | S113 | model releases and evals |
-| https://metr.org/blog | 1, 5 | S015 S285 S286 S387 S413 | third-party evaluation |
-| https://www.aisi.gov.uk/blog | 4, 5 | S117 S228 S389 S417 S433 | Inspect and evaluations; the home page carries no dates, replaced by /blog on 2026-09-29 |
+| https://blog.google/innovation-and-ai/models-and-research/gemini-models/rss/ | 5, 7 | S434 S446 S474 | Gemini model launches (and safety posts filed under technology/safety-security, 2026-10-16: S446) (RSS, newest first, full pubDate on every item); 2026-10-13: added on the reviewer's approval because deepmind.google/blog links launches out to blog.google with month-only dates; the listing pages (gemini-models, technology/google-deepmind, products/gemini) show no dates, so the feed is used; tested 2026-10-13, 20 items 2026-08-03 to 2026-10-13, 10 of 20 model launches by title, the rest roundups and showcases to skip |
+| https://ai.meta.com/blog | 5, 7 | S113 | model releases and evals; 2026-10-28: no post since 2026-07-27 and nothing accepted in the last three digests; kept because it is the only Meta item (see the 2026-10-28 digest) |
+| https://metr.org/blog | 1, 5 | S015 S285 S286 S387 S413 S455 S458 | third-party evaluation |
+| https://www.aisi.gov.uk/blog | 4, 5 | S117 S228 S389 S417 S433 S459 S462 S463 | Inspect and evaluations; the home page carries no dates, replaced by /blog on 2026-09-29 |
 | https://www.apolloresearch.ai/science | 5 | S289 S290 S452 | scheming and audit research; /research lagged the /science posts, replaced on 2026-09-29; 2026-10-16: banner items at the top link to undated /blog posts, open each to read its date |
 
 ## Vendor pages for the labs covered in labs/ (9)
 | Page | Area | Register ids | Notes |
 |---|---|---|---|
 | https://blogs.microsoft.com/on-the-issues/ | 5, 8 | S246 S291 | responsible AI and frontier governance posts |
-| https://www.amazon.science/blog | 5, 7 | S254 S255 | Nova reports and the frontier model safety framework |
+| https://www.amazon.science/blog | 5, 7 | S254 S255 S456 | Nova reports and the frontier model safety framework; 2026-10-28: the listing is cut at 100,000 characters but runs newest first, so recent posts are in the part read |
 | https://developer.nvidia.com/blog | 4, 5 | S420 S426 S448 | Nemotron, NeMo Evaluator, guardrails |
-| https://cohere.com/blog | 5, 7 | S388 S449 | Command releases and the frontier model framework |
-| https://mistral.ai/news | 5, 7 | S259 S262 S292 S412 | model releases and moderation |
-| https://huggingface.co/deepseek-ai | 5, 7 | S297 | model cards with dates; the GitHub org page lists no dates; 2026-10-13: Hugging Face org pages show relative dates only ("1 day ago"), so resolve them against the run date, and open a model's `/commits/main` to see whether the card or only code changed |
-| https://huggingface.co/Qwen | 5, 7 | S221 S222 S223 | model cards with dates; qwen.ai/blog is script-rendered and returns nothing |
+| https://cohere.com/blog | 5, 7 | S388 S449 S465 | Command releases and the frontier model framework; 2026-10-28: the listing is not strictly in date order and showed a post dated a day after the run, so read each item's date |
+| https://mistral.ai/news | 5, 7 | S259 S262 S292 S412 | model releases and moderation; 2026-10-28: the listing gives relative links, and a post page may show no date (Voxtral 3), so take the date from the listing |
+| https://huggingface.co/deepseek-ai | 5, 7 | S297 | model cards with dates; the GitHub org page lists no dates; 2026-10-13: Hugging Face org pages show relative dates only ("1 day ago"), so resolve them against the run date, and open a model's `/commits/main` to see whether the card or only code changed; 2026-10-28: the relative date can be a day off ("12 days ago" for a repo whose commits are all 2026-10-17), so take dates from `/commits/main`, which shows commit titles but not the files changed |
+| https://huggingface.co/Qwen | 5, 7 | S221 S222 S223 | model cards with dates; qwen.ai/blog is script-rendered and returns nothing; 2026-10-28: the org page shows only the ten most recently updated models |
 | https://huggingface.co/moonshotai | 5, 7 | S226 | model cards with dates; moonshotai.github.io redirects |
 | https://huggingface.co/zai-org | 5, 7 | S430 | model cards with dates; z.ai/blog is a 404 |
 
@@ -37,23 +37,23 @@ row covers the page yet; add the id when a row is registered from it.
 | Repository releases page | Register ids | Register notes to compare |
 |---|---|---|
 | https://github.com/UKGovernmentBEIS/inspect_ai/releases | S066 | inspect_ai version; the repo publishes no GitHub releases, compare PyPI inspect-ai and CHANGELOG.md; 2026-10-12: blob/main/CHANGELOG.md returns only page chrome, fetch it with `?plain=1`; 2026-10-13: https://pypi.org/pypi/inspect-ai/json is truncated before the upload times, use https://pypi.org/pypi/inspect-ai/<version>/json for a release date |
-| https://github.com/promptfoo/promptfoo/releases | S068 | promptfoo version; 2026-10-12: the register tracks npm, so also fetch https://registry.npmjs.org/promptfoo/latest (it has no publish time; take the date from the GitHub release) |
-| https://github.com/confident-ai/deepeval/releases | S070 | deepeval version; 2026-10-13: GitHub releases stop at python-v4.2.4, PyPI is ahead, so compare https://pypi.org/pypi/deepeval/<version>/json (the unversioned JSON is truncated) |
-| https://github.com/langfuse/langfuse/releases | S071 | langfuse version; 2026-10-16: the releases page shows day and month with no year, and several versions can ship on one day |
+| https://github.com/promptfoo/promptfoo/releases | S068 | promptfoo version; 2026-10-12: the register tracks npm, so also fetch https://registry.npmjs.org/promptfoo/latest (it has no publish time; take the date from the GitHub release); 2026-10-28: the releases list cuts notes at "Read more", so open https://github.com/promptfoo/promptfoo/releases/tag/<version> for the full notes |
+| https://github.com/confident-ai/deepeval/releases | S070 | deepeval version; 2026-10-13: GitHub releases stop at python-v4.2.4, PyPI is ahead, so compare https://pypi.org/pypi/deepeval/<version>/json (the unversioned JSON is truncated); 2026-10-28: https://pypi.org/project/deepeval/ shows a date for every version, enough when no upload time is needed |
+| https://github.com/langfuse/langfuse/releases | S071 | langfuse version; 2026-10-16: the releases page shows day and month with no year, and several versions can ship on one day; 2026-10-28: page 1 shows ten releases, so when the window is longer than a few days also fetch `?page=2` (tested 2026-10-28: v4.56.0 to v4.64.0, 2026-10-09 to 2026-10-19) |
 | https://github.com/safety-research/petri/releases | S072 S101 | petri version (redirects to meridianlabs-ai/inspect_petri) |
 | https://github.com/safety-research/bloom/releases | S073 | bloom version; 2026-10-13: the releases page is empty, the v1.1.0 tag is on https://github.com/safety-research/bloom/tags |
-| https://github.com/sierra-research/tau2-bench/releases | S012 S078 | tau2 version |
-| https://github.com/open-telemetry/semantic-conventions-genai/releases | S136 S203 | GenAI semconv version (the conventions moved to their own repository); 2026-10-13: there are no releases, and PR #374 (2026-09-22) went unnoticed for three runs because only releases and recent PRs were compared, so also read the metric names in https://raw.githubusercontent.com/open-telemetry/semantic-conventions-genai/main/docs/gen-ai/gen-ai-token-metrics.md and .../docs/gen-ai/client-inference.md (about 116k characters, read in two parts) against the S136 note, and list the new files in https://github.com/open-telemetry/semantic-conventions-genai/tree/main/changelog.d (`*.breaking.md`) |
+| https://github.com/sierra-research/tau2-bench/releases | S012 S078 | tau2 version; 2026-10-28: the v2.0.0 notes defer the full list of changes to the CHANGELOG's "Upgrading from 1.x" section, so read it when the notes do not say what the reward counts |
+| https://github.com/open-telemetry/semantic-conventions-genai/releases | S136 S203 | GenAI semconv version (the conventions moved to their own repository); 2026-10-13: there are no releases, and PR #374 (2026-09-22) went unnoticed for three runs because only releases and recent PRs were compared, so also read the metric names in https://raw.githubusercontent.com/open-telemetry/semantic-conventions-genai/main/docs/gen-ai/gen-ai-token-metrics.md and .../docs/gen-ai/client-inference.md (about 116k characters, read in two parts) against the S136 note, and list the new files in https://github.com/open-telemetry/semantic-conventions-genai/tree/main/changelog.d (`*.breaking.md`); 2026-10-28: client-inference.md is now about 124.5k characters with every metric definition in the first 100,000, so one fetch covers the metrics; `gen_ai.client.operation.duration` and its reporting rule are in .../docs/gen-ai/gen-ai-metrics.md and embeddings in .../docs/gen-ai/client-embeddings.md (PR #578), so read those too; the merged-PR list sorts by creation, not merge date, so scan the whole first page; changelog.d shows no dates, so diff the file names against the S136 note |
 | https://github.com/mlcommons/ailuminate/releases | S120 | ailuminate version; 2026-10-12: the repo publishes no GitHub releases, the register's v1.0 and v1.1 are benchmark versions, so a "no releases" page is no change |
 | https://github.com/stanford-crfm/helm/releases | S118 | helm version |
 
 ## arXiv queries (5), top 5 by date each, one at a time
 
-2026-10-13: arXiv announces with a lag; papers submitted Friday to Monday appear on Tuesday evening, so a run early in the week sees nothing from the last few days and the next run gets overlap hits. A result submitted in the three days before `--since` that is in neither the register nor the previous digest was never seen; it is in the window (kb-refresh step 2, changed 2026-10-13).
+2026-10-13: arXiv announces with a lag; papers submitted Friday to Monday appear on Tuesday evening, so a run early in the week sees nothing from the last few days and the next run gets overlap hits. 2026-10-28: over a twelve-day window the top 5 by date reached back only to 2026-10-21 (reward hacking), 2026-10-23 (agent benchmark, prompt injection) and 2026-10-25 (judge), so earlier papers in the window were not seen; the fix (more results, or a submittedDate range, when the window is long) changes kb-refresh step 2 and is proposed for a separate PR. A result submitted in the three days before `--since` that is in neither the register nor the previous digest was never seen; it is in the window (kb-refresh step 2, changed 2026-10-13).
 
 - `cat:cs.CL AND abs:"LLM-as-a-judge"` (2026-10-12: replaces `cat:cs.CL AND (ti:"LLM-as-a-judge" OR ti:evaluator)`, whose title search stems `evaluator` to "Evaluation" and returned no judge papers; tested 2026-10-12, 3 of 5 on-target, 1 partly, all from the past ten days)
 - `cat:cs.SE AND ti:agent AND ti:benchmark`
-- `(cat:cs.CL OR cat:cs.LG) AND (ti:"data contamination" OR ti:"benchmark contamination" OR ti:"test set contamination")` (2026-10-13: replaces `cat:cs.CL AND ti:contamination`, 2 of 5 on-target, where "contamination" mostly meant prompt distractors or false premises, and nothing accepted in three digests; `cat:cs.CL AND (abs:"data contamination" OR abs:"benchmark contamination")` tested 1 of 5 and `(cat:cs.CL OR cat:cs.LG) AND ti:contamination AND (abs:benchmark OR abs:"training data")` 0 of 5; this form tested 3 of 5 on-target, 2026-08-11 to 2026-09-11)
+- `(cat:cs.CL OR cat:cs.LG) AND (ti:"data contamination" OR ti:"benchmark contamination" OR ti:"test set contamination")` (2026-10-13: replaces `cat:cs.CL AND ti:contamination`, 2 of 5 on-target, where "contamination" mostly meant prompt distractors or false premises, and nothing accepted in three digests; `cat:cs.CL AND (abs:"data contamination" OR abs:"benchmark contamination")` tested 1 of 5 and `(cat:cs.CL OR cat:cs.LG) AND ti:contamination AND (abs:benchmark OR abs:"training data")` 0 of 5; this form tested 3 of 5 on-target, 2026-08-11 to 2026-09-11; 2026-10-28: nothing in the window for the second run running, newest result 2026-09-11; a form adding `ti:"benchmark leakage"`, `ti:"test set leakage"` and `ti:contaminated` tested 0 of 5 on-target (statistical outliers, label noise, prompt distractors), so this form stays)
 - `cat:cs.CR AND ti:"prompt injection"`
 - `(cat:cs.AI OR cat:cs.LG OR cat:cs.SE) AND (ti:"reward hacking" OR abs:"evaluation awareness")` (2026-10-12: added for evaluation integrity, agents gaming graders and tests, the theme of S387, S418 and S423; tested 2026-10-12, 5 of 5 on-target, 2026-10-03 to 2026-10-09)
 
@@ -62,7 +62,7 @@ Query form: `https://export.arxiv.org/api/query?search_query=<query>&sortBy=subm
 ## Standards (3)
 | Page | Register ids |
 |---|---|
-| https://genai.owasp.org/resources/ | S121 S122 S163 S281 S282 S283 S284 |
+| https://genai.owasp.org/resources/ | S121 S122 S163 S281 S282 S283 S284 S457 S470 |
 | https://www.nist.gov/itl/ai-risk-management-framework | S127 S159 |
 | https://code-of-practice.ai/ | S128 S161 |
 

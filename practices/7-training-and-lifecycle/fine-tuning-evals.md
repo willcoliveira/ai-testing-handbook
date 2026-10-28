@@ -3,8 +3,8 @@ id: fine-tuning-evals
 title: Fine-tuning evals
 area: 7-training-and-lifecycle
 status: draft
-last_reviewed: 2026-09-27
-sources: [S143, S144, S145, S148, S152, S155, S247, S254, S257]
+last_reviewed: 2026-10-28
+sources: [S143, S144, S145, S148, S152, S155, S247, S254, S257, S462]
 related: [post-training-evals, golden-datasets, eval-driven-development, regression-on-upgrade, data-contamination, statistical-treatment-of-evals, judge-calibration]
 ---
 
@@ -49,6 +49,7 @@ Ship C only if C beats A on the held-out set by more than the run-to-run spread,
 - **Microsoft, 2026-02:** a leading indicator assessment is triggered when Microsoft "substantially fine-tunes first- or third-party models, where the compute used for fine-tuning is more than 1/3 of the base model", defaulting to a third of 10^25 FLOPs when base compute is unknown [S247].
 - **Amazon, 2025-12:** the service card says customization "can impact safety, fairness and other properties of the new model", that Amazon's adaptation method aims to minimise changes to built-in protections, and that "After any customization, customers should test their model according to their own responsible AI policies" [S257].
 - **Amazon, 2026-09:** the framework lists "Fine-tuning Safeguards" and says Amazon observes "signals in the fine-tuning recipe" that could raise misalignment and takes "corrective actions" [S254].
+- **UK AISI, 2026-10:** filtering viral sequences out of pretraining for protein models from 8M to 3B parameters reduced viral-protein performance, but continued fine-tuning on the withheld data completely restored it for about $80 of H100 compute at 3B; AISI concludes that "filtering raises the cost of recovering a capability rather than removing it permanently" [S462].
 
 ## Pitfalls
 1. **No base-plus-prompt arm.** The delta is measured against nothing [S145].
@@ -70,3 +71,4 @@ None yet.
 - [S247] Frontier Governance Framework, Microsoft, 2026-02
 - [S257] Amazon Nova 2 Lite, AWS AI Service Card, AWS, living
 - [S254] Amazon's Frontier Model Safety Framework (September 2026 update), Amazon, 2026-09-17
+- [S462] Pretraining data filtering in open-weight biological models, UK AI Security Institute, 2026-10-26

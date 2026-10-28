@@ -3,8 +3,8 @@ id: mutation-checking
 title: Mutation checking
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-26
-sources: [S091, S092, S078]
+last_reviewed: 2026-10-28
+sources: [S078, S091, S092, S461]
 related: [tool-use-evals, offline-probes, ai-generated-tests, ci-gates-for-llm-apps]
 ---
 
@@ -44,6 +44,7 @@ Coverage says a line ran. It does not say a test would fail if the line changed,
 - **Stryker team, FOSDEM 2024:** the docs reference the talk "Who's testing the tests? Mutation testing with StrykerJS" as the introduction to the practice [S091].
 - **mutmut, 3.8.0, 2026-09:** Python mutation testing with killed and survived states, incremental caching, parallel execution with an interactive terminal UI, coverage.py and type-checker filtering, and a requirement for fork support: "if you want to run on windows, you must run inside WSL" [S092].
 - **Sierra Research, tau2-bench, 2026-07:** an example of the same idea applied to a grader rather than to tests: the v1.0.1 changelog records that a prudent extra read call zeroed the reward, a defect found by inspecting what the grader was and was not sensitive to [S078].
+- **arXiv, 2026-10:** in the BARBICAN prompt-injection gateway, a classifier stage fed text mangled by a misconfigured tokenizer failed without moving end-to-end recall: fixing it lifted the stage AUC from 0.392 to 0.855 while system recall went from 80.67% to 80.34%, and a stub answering "malicious" scored 80.77%; the authors argue that deletion experiments need substitution experiments beside them [S461].
 
 ## Pitfalls
 1. Reading every survivor as a test gap. A mutation can survive because the branch is unreachable, in which case the finding is that a test's name overstates its guard, not that an assertion is missing.
@@ -59,3 +60,4 @@ None yet.
 - [S091] Stryker mutator documentation, Stryker team, living (StrykerJS v10.0.0, 2026-08-14).
 - [S092] mutmut documentation, mutmut, living (3.8.0, 2026-09-12).
 - [S078] tau2-bench repository and changelog, Sierra Research, living (v1.0.1, 2026-07).
+- [S461] Deletion, Substitution, Repair and Transplant: component attribution in BARBICAN, a layered prompt-injection gateway for MCP, arXiv 2610.33198, 2026-10-23
