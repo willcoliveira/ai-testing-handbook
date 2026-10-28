@@ -118,9 +118,12 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   tests on purpose.
 - Windows: CI builds and tests the site on Linux and Windows (`.github/workflows/site.yml`).
   `.gitattributes` keeps LF line endings and the parsers in `.vitepress/read.mjs` accept CRLF.
-- Dependencies: `package.json` overrides Vite to 6.4.3, because VitePress 1.6.4 ships Vite 5, which
+- Dependencies: `package.json` overrides Vite to 6.4.5, because VitePress 1.6.4 ships Vite 5, which
   has dev-server advisories (one high, Windows paths) with no fix in Vite 5. CI fails on any
   moderate or higher advisory. Drop the override once a VitePress release depends on a fixed Vite.
+  The override was 6.4.3 until the 2026-10-20 and 2026-10-21 advisories (Vite dev-server
+  middleware and `server.fs.allow`, and launch-editor), which 6.4.4 fixes; an exact pin does not
+  move on its own, so bump it when `npm audit` names Vite.
 - Browser tests: Playwright specs in `tests/site/e2e/` with one page object,
   `tests/site/pages/book.page.ts` (setup from `willcoliveira/playwright-ts-template`). Once:
   `npx playwright install chromium webkit` (`npm run pw:setup`; CI adds `--with-deps`). Then
