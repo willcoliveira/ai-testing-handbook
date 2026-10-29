@@ -88,6 +88,15 @@ VitePress reads the Markdown files in place; nothing in the content is written f
 - Add a part: create `practices/N-name/`, add a `## N. Name. Question?` area with its table to
   `TAXONOMY.md`, and add the practice files. The intro page and sidebar group follow from those.
 - Citations: `[S0nn]` becomes a link to the register row; an id missing from `sources.md` fails the build.
+- Accessibility: `tests/site/e2e/a11y.spec.ts` runs axe (WCAG 2.x A and AA) on six pages in both
+  themes, no rule disabled and nothing excluded, so an axe release that turns on a rule can fail a
+  Dependabot PR (axe 4.14 did, with `label-content-name-mismatch`: a control's visible text must be
+  part of its accessible name, and axe compares the text visually on screen). The search button is
+  VitePress 1.6's component with its shortcut keys drawn by CSS and `aria-hidden`
+  (`.vitepress/theme/VPNavBarSearchButton.vue`, swapped in by the alias in `config.mjs`), which is
+  how VitePress itself renders them only from 2.0. `search-button-override.test.mjs` fails when a
+  VitePress bump changes that component: update the copy, or delete it and the alias once the
+  upstream keys render that way.
 - Privacy: `tests/site/post-build.mjs` runs `check-forbidden --dir .vitepress/dist` on the built
   HTML. In CI only the example list is present (the real list is gitignored), so that check is fully
   effective only locally and in the pre-commit hook. Nothing new is exposed: the repository is public.

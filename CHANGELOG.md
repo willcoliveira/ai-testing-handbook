@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.25 (2026-10-29)
+
+- Site accessibility, found by axe 4.14's `label-content-name-mismatch` rule (WCAG 2.5.3, Label in
+  Name) on the Dependabot PR that bumps it: the `[S0nn]` placeholder link's accessible name now
+  opens with its visible text, and the search button's shortcut keys are drawn by CSS and hidden
+  from assistive technology, as VitePress 2.0 renders them (axe compares the text visually on
+  screen, so the `K` text node made the visible text "Search K" against the name "Search"), through
+  a theme copy of VitePress 1.6's button (`.vitepress/theme/VPNavBarSearchButton.vue`) held to the
+  installed original by a unit test.
+
 ## 0.1.24 (2026-10-29)
 
 - Refresh process, from the 2026-10-28 run: a figure is read a second time from its page or

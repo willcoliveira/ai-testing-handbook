@@ -76,6 +76,15 @@ export default defineConfig({
   srcExclude: site.srcExclude,
   rewrites: site.rewrites,
   sitemap: { hostname: SITE },
+  vite: {
+    resolve: {
+      alias: [
+        // the search button with its shortcut keys aria-hidden (theme/VPNavBarSearchButton.vue, the
+        // reason inside); only the relative import inside VitePress's VPNavBarSearch.vue is redirected
+        { find: /^\.\/VPNavBarSearchButton\.vue$/, replacement: fileURLToPath(new URL("./theme/VPNavBarSearchButton.vue", import.meta.url)) },
+      ],
+    },
+  },
   markdown: {
     html: false,
     // no `{...}` attribute syntax and no GitHub alerts: both let content set raw attributes or HTML

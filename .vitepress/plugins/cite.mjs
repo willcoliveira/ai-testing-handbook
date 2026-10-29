@@ -22,11 +22,12 @@ export default function citePlugin(md, { sources, base = "/", registerPage = "so
         if (m) tok.attrSet("id", m[0].toLowerCase());
       }
       if (tok.type !== "inline" || !tok.children) continue;
-      // the placeholder `[S0nn]` (any source id) links to the register; on the register, to its first row
+      // the placeholder `[S0nn]` (any source id) links to the register; on the register, to its first row.
+      // The label opens with the visible text: an accessible name must contain it (WCAG 2.5.3)
       for (const child of tok.children) {
         if (child.type !== "code_inline" || !PLACEHOLDER.test(child.content)) continue;
         child.type = "html_inline";
-        child.content = `<a class="cite-ref" href="${base}sources${page === registerPage ? "#s001" : ""}" aria-label="A source id: every one is listed in the sources register"><code>${esc(child.content)}</code></a>`;
+        child.content = `<a class="cite-ref" href="${base}sources${page === registerPage ? "#s001" : ""}" aria-label="${esc(child.content)}, a source id: every one is listed in the sources register"><code>${esc(child.content)}</code></a>`;
       }
       const kids = [];
       let inLink = 0;
