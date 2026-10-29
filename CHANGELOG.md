@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.24 (2026-10-29)
+
+- Refresh process, from the 2026-10-28 run: a figure is read a second time from its page or
+  abstract before it goes into a bullet, asked for by quantity and never by expected value, and a
+  figure the page gives twice or that cannot be paired with its comparison stays out (`/refresh`
+  step 2b, kb-refresh step 6); arXiv queries take the top 10 when `--since` is more than seven days
+  back, since the top 5 covered only the last three to seven days of a twelve-day window; the
+  one-at-a-time rule for arXiv opens every prompt that fetches there and is repeated per part.
+
 ## 0.1.23 (2026-10-29)
 
 - Site gates, from the 2026-10-28 repository audit: the content lint rejects a symlink in a content

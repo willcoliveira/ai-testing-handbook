@@ -47,9 +47,9 @@ row covers the page yet; add the id when a row is registered from it.
 | https://github.com/mlcommons/ailuminate/releases | S120 | ailuminate version; 2026-10-12: the repo publishes no GitHub releases, the register's v1.0 and v1.1 are benchmark versions, so a "no releases" page is no change |
 | https://github.com/stanford-crfm/helm/releases | S118 | helm version |
 
-## arXiv queries (5), top 5 by date each, one at a time
+## arXiv queries (5), top 5 by date each (top 10 when `--since` is more than seven days back), one at a time
 
-2026-10-13: arXiv announces with a lag; papers submitted Friday to Monday appear on Tuesday evening, so a run early in the week sees nothing from the last few days and the next run gets overlap hits. 2026-10-28: over a twelve-day window the top 5 by date reached back only to 2026-10-21 (reward hacking), 2026-10-23 (agent benchmark, prompt injection) and 2026-10-25 (judge), so earlier papers in the window were not seen; the fix (more results, or a submittedDate range, when the window is long) changes kb-refresh step 2 and is proposed for a separate PR. A result submitted in the three days before `--since` that is in neither the register nor the previous digest was never seen; it is in the window (kb-refresh step 2, changed 2026-10-13).
+2026-10-13: arXiv announces with a lag; papers submitted Friday to Monday appear on Tuesday evening, so a run early in the week sees nothing from the last few days and the next run gets overlap hits. 2026-10-28: over a twelve-day window the top 5 by date reached back only to 2026-10-21 (reward hacking), 2026-10-23 (agent benchmark, prompt injection) and 2026-10-25 (judge), so earlier papers in the window were not seen; changed 2026-10-29: `max_results=10` when `--since` is more than seven days back (kb-refresh step 2, refresh step 2). A result submitted in the three days before `--since` that is in neither the register nor the previous digest was never seen; it is in the window (kb-refresh step 2, changed 2026-10-13).
 
 - `cat:cs.CL AND abs:"LLM-as-a-judge"` (2026-10-12: replaces `cat:cs.CL AND (ti:"LLM-as-a-judge" OR ti:evaluator)`, whose title search stems `evaluator` to "Evaluation" and returned no judge papers; tested 2026-10-12, 3 of 5 on-target, 1 partly, all from the past ten days)
 - `cat:cs.SE AND ti:agent AND ti:benchmark`
@@ -57,7 +57,7 @@ row covers the page yet; add the id when a row is registered from it.
 - `cat:cs.CR AND ti:"prompt injection"`
 - `(cat:cs.AI OR cat:cs.LG OR cat:cs.SE) AND (ti:"reward hacking" OR abs:"evaluation awareness")` (2026-10-12: added for evaluation integrity, agents gaming graders and tests, the theme of S387, S418 and S423; tested 2026-10-12, 5 of 5 on-target, 2026-10-03 to 2026-10-09)
 
-Query form: `https://export.arxiv.org/api/query?search_query=<query>&sortBy=submittedDate&sortOrder=descending&max_results=5`
+Query form: `https://export.arxiv.org/api/query?search_query=<query>&sortBy=submittedDate&sortOrder=descending&max_results=5` (`max_results=10` when `--since` is more than seven days back)
 
 ## Standards (3)
 | Page | Register ids |
