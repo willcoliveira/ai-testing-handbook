@@ -28,7 +28,7 @@ test("real repo: sidebar is the plan's reading order", () => {
     "/patterns/", ...md("patterns").map((f) => `/patterns/${f.slice(0, -3)}`),
     ...folder("labs"), ...folder("tools"), ...folder("benchmarks"), ...folder("datasets"), ...folder("training"),
     "/GLOSSARY", "/sources",
-    "/ROADMAP", "/CHANGELOG", ...folder("digests").filter((l) => !l.endsWith(".draft")), "/PRIVACY", "/CONTRIBUTING", "/MAINTAINING",
+    "/ROADMAP", "/CHANGELOG", ...folder("digests").filter((l) => !l.endsWith(".draft")), "/PRIVACY", "/SECURITY", "/CONTRIBUTING", "/MAINTAINING",
   ];
   assert.deepEqual(flatten(sidebar), expected);
   assert.equal(parts.length, 8);

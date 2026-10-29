@@ -1,7 +1,7 @@
 // Prebuild: writes the part intro pages (practices/_part.md, practices/N-*/_part.md,
 // patterns/_part.md) and .vitepress/data/{sources,ids}.json. All outputs are gitignored and
 // byte-identical across runs. _part.md is skipped by check-sources and apply-bullets.
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, lstatSync } from "node:fs";
 import { join, dirname, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import { frontmatter, titleOf, mdFiles, partDirs, parseTaxonomy, parseSources, roman } from "./read.mjs";
@@ -85,6 +85,9 @@ export function write(root, out) {
 // (round four: a nested `sources/` folder was built but never linted). Content folders hold Markdown
 // only: code, VitePress route and data loaders (`[param].md`, `*.paths.js`, `*.data.js`) and a
 // `public/` folder all run or publish something no reviewer reads as content, so they fail here.
+// So do a symlink (the glob, the sidebar and Vite follow it, so an excluded file builds as a page
+// under the link's name) and a root `404.md` (VitePress's custom not-found page, outside the
+// sidebar, rendered in the browser where post-build never parses it); audit of 2026-10-28.
 const ROOT_SKIP = new Set([".git", "node_modules", "sources", ".claude", ".vitepress", "test-results", "playwright-report", "blob-report"]);
 const CODE_ROOTS = new Set([".vitepress", "scripts", "tests", ".githooks", ".github", ".claude", "node_modules"]);
 const ROOT_CODE_FILES = new Set(["playwright.config.ts", "eslint.config.mjs"]);
@@ -94,13 +97,19 @@ export function lintAll(root, dir = root, n = { files: 0 }) {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
     const rel = p.slice(root.length + 1).split("\\").join("/");
-    if (statSync(p).isDirectory()) {
+    const st = lstatSync(p);
+    if (st.isSymbolicLink()) {
+      if (top && (name === "node_modules" || ROOT_SKIP.has(name) || CODE_ROOTS.has(name))) continue;
+      throw new Error(`${rel}: a symlink is not allowed in content folders (it publishes its target under this name)`);
+    }
+    if (st.isDirectory()) {
       if (name === "node_modules" || (top && ROOT_SKIP.has(name))) continue;
       if (name === "public") throw new Error(`${rel}: a public/ folder is published as-is; it is not allowed`);
       if (top && CODE_ROOTS.has(name)) continue;
       lintAll(root, p, n);
       continue;
     }
+    if (top && name === "404.md") throw new Error(`${rel}: a root 404.md is VitePress's custom not-found page, built outside the sidebar; not allowed`);
     if (/[[\]]/.test(name)) throw new Error(`${rel}: a [param] file is a VitePress dynamic route; not allowed in content`);
     if (/\.(paths|data)\.[a-z]+$/i.test(name)) throw new Error(`${rel}: a VitePress paths or data loader runs code at build time; not allowed in content`);
     if (CODE.test(name) && !(top && ROOT_CODE_FILES.has(name))) throw new Error(`${rel}: code is not allowed in content folders`);

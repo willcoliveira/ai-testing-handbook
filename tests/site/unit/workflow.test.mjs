@@ -49,6 +49,15 @@ export function deployProblems(wf) {
     const writes = Object.entries(p).filter(([, v]) => !READ_ONLY.has(v)).map(([k]) => k);
     if (id === "deploy") {
       if (JSON.stringify(Object.keys(p).sort()) !== JSON.stringify(["id-token", "pages"]) || p.pages !== "write" || p["id-token"] !== "write") out.push("deploy permissions must be exactly pages: write and id-token: write");
+    } else if (id === "notify") {
+      // the one job besides deploy with a write permission: it opens an issue when the weekly run
+      // fails (audit 2026-10-28). Exactly issues: write, only on the schedule, after the gates, and
+      // no checkout, no action and no project code, so nothing a pull request controls runs under it
+      if (JSON.stringify(p) !== JSON.stringify({ issues: "write" })) out.push("notify permissions must be exactly issues: write");
+      if (!/github\.event_name == 'schedule'/.test(String(job.if || ""))) out.push("notify must run only on the schedule");
+      if (![].concat(job.needs || []).length) out.push("notify must need the gate jobs");
+      if (steps(job).some((s) => s.uses)) out.push("notify may not use an action");
+      if (steps(job).some((s) => /\b(npm|npx|node|git|docker)\b/.test(s.run || ""))) out.push("notify may not run project code");
     } else if (writes.length) out.push(`${id} has write permissions: ${writes.join(", ")}`);
   }
   for (const [id, job] of [["build", build], ["deploy", deploy]]) {
@@ -112,6 +121,13 @@ const MUTATIONS = {
   "an extra command in build": (w) => { w.jobs.build.steps.splice(3, 0, { run: "node -e 1" }); },
   "post-build removed from build": (w) => { w.jobs.build.steps = w.jobs.build.steps.filter((s) => s.run !== "node tests/site/post-build.mjs"); },
   "a different upload path": (w) => { w.jobs.build.steps.find((s) => String(s.uses).startsWith("actions/upload-pages-artifact")).with.path = "."; },
+  // audit 2026-10-28: the notify job keeps its shape, and no other job takes its permission
+  "notify gains contents write": (w) => { w.jobs.notify.permissions.contents = "write"; },
+  "notify runs on every failure, not only the schedule": (w) => { w.jobs.notify.if = "failure()"; },
+  "notify checks out the repository": (w) => { w.jobs.notify.steps.unshift({ uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1", with: { "persist-credentials": false } }); },
+  "notify runs project code": (w) => { w.jobs.notify.steps.push({ run: "npm ci --ignore-scripts" }); },
+  "notify needs nothing": (w) => { delete w.jobs.notify.needs; },
+  "another job takes issues write": (w) => { w.jobs.lint.permissions = { contents: "read", issues: "write" }; },
 };
 for (const [name, mutate] of Object.entries(MUTATIONS)) {
   test(`rejected: ${name}`, () => {

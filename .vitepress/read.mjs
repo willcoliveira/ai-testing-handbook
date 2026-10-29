@@ -1,5 +1,5 @@
 // Readers shared by gen, book and config: frontmatter, titles, TAXONOMY, the sources register.
-import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, lstatSync } from "node:fs";
 import { join, basename } from "node:path";
 
 // Windows checkouts and editors may write CRLF; every parser sees LF only.
@@ -36,15 +36,16 @@ export function titleOf(path) {
   return h ? h[1].trim() : basename(path, ".md");
 }
 
-// .md files directly in dir, sorted, without _* files
+// .md files directly in dir, sorted, without _* files. lstat, not stat: a symlink is not a page
+// (it would list its target under the link's name; the lint in gen.mjs rejects it, audit 2026-10-28)
 export function mdFiles(dir) {
   if (!existsSync(dir)) return [];
-  return readdirSync(dir).filter((n) => n.endsWith(".md") && !n.startsWith("_") && statSync(join(dir, n)).isFile()).sort();
+  return readdirSync(dir).filter((n) => n.endsWith(".md") && !n.startsWith("_") && lstatSync(join(dir, n)).isFile()).sort();
 }
 
 export function partDirs(root) {
   const dir = join(root, "practices");
-  return readdirSync(dir).filter((n) => /^\d+-/.test(n) && statSync(join(dir, n)).isDirectory())
+  return readdirSync(dir).filter((n) => /^\d+-/.test(n) && lstatSync(join(dir, n)).isDirectory())
     .sort((a, b) => parseInt(a) - parseInt(b));
 }
 
