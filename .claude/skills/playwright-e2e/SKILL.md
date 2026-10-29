@@ -4,10 +4,34 @@ description: "Playwright end-to-end testing skills for ai-testing-handbook: plan
 allowed-tools: "Bash(playwright-cli:*), Bash(npx playwright:*), Read, Write, Edit, Glob, Grep"
 metadata:
   generator: wico-playwright-agent-skills
-  generator-version: 2.4.1
+  generator-version: 2.5.0
 ---
 
 # Playwright E2E Skills
+
+## What a finished spec looks like
+
+```typescript
+import { test, expect } from '../fixtures' // the project fixtures, never '@playwright/test'
+
+test.describe('Checkout', { tag: ['@smoke'] }, () => {           // one selection tag, in the options object
+  test('a signed-in shopper places an order for one item', async ({ checkoutPage }) => {
+    await checkoutPage.goto()
+    await expect(checkoutPage.placeOrderButton).toBeEnabled()    // web-first: retries until true
+
+    await checkoutPage.placeOrder()                              // page-object action, wrapped in test.step()
+
+    await expect(checkoutPage.confirmation).toHaveText(/Order #\d+ placed/) // the outcome, not "the page loaded"
+    await expect(checkoutPage.headerBasketCount).toHaveText('0') // every place the change shows up
+    await expect(checkoutPage.placeOrderButton).toBeHidden()     // absence, anchored: it matched above
+  })
+})
+```
+
+Locators live on the page object as readonly properties, each one resolved against the real page.
+No `page.waitForTimeout()`, no `{ force: true }`, no XPath, no retry that turns a failure green. The
+rules behind each line are in `references/conventions.md`; the test is verified by watching it fail
+once, not only by watching it pass.
 
 ## Operating Procedure
 

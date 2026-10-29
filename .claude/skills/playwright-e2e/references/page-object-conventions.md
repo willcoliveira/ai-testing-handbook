@@ -114,6 +114,12 @@ constructor(readonly root: Locator) {
 // new Basket(page.getByRole('region', { name: 'Your basket' }))
 ```
 
+A scoped component builds every one of its locators by composition, so none of them came from
+`generate-locator`. Count each one on the live page before a test relies on it — the command is in
+`locators-and-assertions.md` — and expect 1. A root that matches two regions makes every locator
+under it a strict-mode violation; a root that matches none makes every absence assertion under it
+pass.
+
 <!-- YOUR PROJECT: Add your component inventory here -->
 <!-- Example:
 | Component | File | Used In |
