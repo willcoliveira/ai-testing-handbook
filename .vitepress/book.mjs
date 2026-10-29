@@ -93,6 +93,7 @@ export function buildSidebar(root) {
       page("CHANGELOG.md", "Changelog"),
       { text: "Digests", link: "/digests/", collapsed: true, items: digests.map((f) => page(`digests/${f}`)) },
       page("PRIVACY.md", "Privacy"),
+      page("SECURITY.md", "Security"),
       page("CONTRIBUTING.md", "Contributing"),
       page("MAINTAINING.md", "Maintaining"),
     ] },
