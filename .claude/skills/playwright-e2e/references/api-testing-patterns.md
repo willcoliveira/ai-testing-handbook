@@ -149,6 +149,8 @@ time, say so in the README as a known blind spot rather than pretending the asse
 ## Test data
 
 ```typescript
+import { randomInt } from 'node:crypto'
+
 export const freshCustomer = (): string => `2547${String(randomInt(0, 1e8)).padStart(8, '0')}`
 ```
 

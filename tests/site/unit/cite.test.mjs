@@ -54,7 +54,8 @@ test("sources.md register rows get id=sNNN", () => {
 });
 
 test("the `[S0nn]` placeholder links to the register, and to its first row on the register", () => {
-  assert.match(render("Cite it as `[S0nn]`."), /<a class="cite-ref" href="\/ai-testing-handbook\/sources" aria-label="[^"]+"><code>\[S0nn\]<\/code><\/a>/);
+  // the aria-label opens with the visible text (axe label-content-name-mismatch, WCAG 2.5.3)
+  assert.match(render("Cite it as `[S0nn]`."), /<a class="cite-ref" href="\/ai-testing-handbook\/sources" aria-label="\[S0nn\], [^"]+"><code>\[S0nn\]<\/code><\/a>/);
   assert.match(render("Every `[S0nn]` resolves here.", "sources.md"), /<a class="cite-ref" href="\/ai-testing-handbook\/sources#s001"/);
   assert.doesNotMatch(render("`other code`"), /cite-ref/);
 });
