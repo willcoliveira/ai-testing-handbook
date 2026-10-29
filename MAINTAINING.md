@@ -120,12 +120,15 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   folders (the lint rejects both; audit of 2026-10-28).
 - Windows: CI builds and tests the site on Linux and Windows (`.github/workflows/site.yml`).
   `.gitattributes` keeps LF line endings and the parsers in `.vitepress/read.mjs` accept CRLF.
-- Dependencies: `package.json` overrides Vite to 6.4.5, because VitePress 1.6.4 ships Vite 5, which
-  has dev-server advisories (one high, Windows paths) with no fix in Vite 5. CI fails on any
-  moderate or higher advisory. Drop the override once a VitePress release depends on a fixed Vite.
-  The override was 6.4.3 until the 2026-10-20 and 2026-10-21 advisories (Vite dev-server
-  middleware and `server.fs.allow`, and launch-editor), which 6.4.4 fixes; an exact pin does not
-  move on its own, so bump it when `npm audit` names Vite.
+- Dependencies: `package.json` overrides Vite to `^6.4.4` (the lockfile resolves it; 6.4.5 on
+  2026-10-29), because VitePress 1.6.4 ships Vite 5, which has dev-server advisories (one high,
+  Windows paths) with no fix in Vite 5. CI fails on any moderate or higher advisory. Drop the
+  override once a VitePress release depends on a fixed Vite. The override was the exact pin 6.4.3
+  until the 2026-10-20 and 2026-10-21 advisories (Vite dev-server middleware and `server.fs.allow`,
+  and launch-editor), which 6.4.4 fixes, and an exact pin cannot move without a `package.json`
+  change; Dependabot version updates never touch `overrides`. The range lets `npm audit fix` or a
+  Dependabot security update move the lockfile within 6.4 (whether Dependabot does so on its own is
+  unconfirmed until the next advisory); `npm audit` in CI still fails on anything unfixed.
 - Browser tests: Playwright specs in `tests/site/e2e/` with one page object,
   `tests/site/pages/book.page.ts` (setup from `willcoliveira/playwright-ts-template`). Once:
   `npx playwright install chromium webkit` (`npm run pw:setup`; CI adds `--with-deps`). Then
@@ -151,7 +154,10 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   Playwright version); a push to `main` runs `e2e` too, because `deploy` waits for it. A push to
   `main` and the weekly schedule (Mondays) run the `full` job: all four
   projects in Chromium and WebKit, including the every-page sweep. A failing browser job uploads the
-  HTML report as an artifact.
+  HTML report as an artifact. A failed scheduled run opens or updates the issue "Weekly Site run
+  failed" (the `notify` job: the only job besides `deploy` with a write permission, `issues: write`,
+  no checkout, no action, no project code; `workflow.test.mjs` pins that shape), because the
+  failure mail alone went unnoticed for two days in 2026-10.
 - Type specimen: `tests/site/fixtures/specimen.md` holds every element the theme styles (headings,
   lists, citations, the `[S0nn]` text, a normal and a wide table, code, a blockquote, the meta line
   and See also). It is built only with `SITE_TEST=1 npm run docs:build`, at `/specimen`, with a fixed
