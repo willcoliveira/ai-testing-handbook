@@ -206,4 +206,6 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   and `wico-playwright-agent-skills` always come alone, because each needs a follow-up commit on
   the PR: the Dockerfile tag and usually new baselines for Playwright, `npm run skills:sync` for the
   skill. Major updates of `typescript` (until `typescript-eslint` supports it) and `@types/node`
-  (the site runs on Node 22) are ignored.
+  (the site runs on Node 22) are ignored. The docker ecosystem watches the digest pinned in
+  `tests/site/Dockerfile` and ignores tag version updates, since the tag follows `@playwright/test`
+  by hand (the Dockerfile comment has the command that prints a tag's digest).

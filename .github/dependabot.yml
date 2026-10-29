@@ -5,8 +5,19 @@
 #   regenerate the visual baselines (MAINTAINING.md, "## Site").
 # - wico-playwright-agent-skills: run `npm run skills:sync` and commit .claude/skills/playwright-e2e
 #   (`skills:check` fails until then).
+# The docker ecosystem watches the digest pinned in tests/site/Dockerfile. Version updates of the
+# tag are ignored on purpose: the tag must equal @playwright/test (the lint job checks it) and moves
+# with that package, by hand; only digest updates for the pinned tag are wanted. Confirm on the first
+# run that digest updates still arrive with the ignore in place; drop the ignore if they never do.
 version: 2
 updates:
+  - package-ecosystem: docker
+    directory: /tests/site
+    schedule:
+      interval: monthly
+    ignore:
+      - dependency-name: "mcr.microsoft.com/playwright"
+        update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
   - package-ecosystem: npm
     directory: /
     schedule:
