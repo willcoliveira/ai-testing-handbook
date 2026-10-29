@@ -103,3 +103,15 @@ test("budgets are named constants", () => {
   assert.equal(BUDGETS.JS_MAX_BYTES, 2 * 1024 * 1024);
 });
 test("negative: a scheme hidden with a tab still fails", () => fails({ "a.html": page(`<img src="java\tscript:alert(1)">`) }, /javascript: URL/));
+
+// audit 2026-10-28: a page carries only the scripts a VitePress build emits, and no 404.md is built
+const VP_SCRIPTS = `<script type="module" src="${B}assets/app.js"></script><script id="check-dark-mode">(()=>{})()</script><script id="check-mac-os">0</script><script>window.__VP_HASH_MAP__=JSON.parse("{}");window.__VP_SITE_DATA__=JSON.parse("{}")</script>`;
+test("the four scripts a VitePress build emits pass", () => {
+  const d = dist({ "a.html": `<!doctype html><html><head>${VP_SCRIPTS}</head><body><h2 id="why">Why</h2></body></html>` });
+  try { assert.deepEqual(run(d).errors, []); } finally { d.done(); }
+});
+test("negative: an inline script that is not VitePress's own fails", () => fails({ "a.html": page(`<h2 id="why">Why</h2><script>document.title=1</script>`) }, /unexpected <script>/));
+test("negative: an inline script with an unknown id fails", () => fails({ "a.html": page(`<h2 id="why">Why</h2><script id="x">0</script>`) }, /unexpected <script id="x">/));
+test("negative: a non-module script with a same-site src fails", () => fails({ "a.html": page(`<h2 id="why">Why</h2><script src="${B}assets/x.js"></script>`) }, /unexpected <script src=/));
+test("negative: a built 404.md chunk fails", () => fails({ "assets/404.md.B1-Q9mtn.js": "export default {}\n" }, /404\.md page was built/));
+test("negative: hashmap.json listing 404.md fails", () => fails({ "hashmap.json": JSON.stringify({ "404.md": "B1-Q9mtn" }) }, /hashmap\.json lists 404\.md/));

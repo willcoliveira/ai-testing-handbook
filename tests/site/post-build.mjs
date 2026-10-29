@@ -54,6 +54,10 @@ const CONTENT_TAGS = new Set(["h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "em"
 // a URL with any scheme (http:, data:, javascript:, ...) or a protocol-relative one
 const EXTERNAL = /^\s*([a-z][a-z0-9+.-]*:|\/\/)/i;
 const LABEL_CLASSES = /(^|\s)(text|title|custom-block-title)(\s|$)/;
+// the inline scripts a VitePress build adds by id; with the module entry and the hash-map block,
+// the only scripts a page may carry (audit 2026-10-28: the raw `dir` and `description` sinks in
+// VitePress's page template would land outside hb-content, where nothing above would see them)
+const INLINE_SCRIPT_IDS = new Set(["check-dark-mode", "check-mac-os"]);
 export function domErrors(html) {
   const out = [];
   const walk = (node, inContent = false) => {
@@ -69,6 +73,11 @@ export function domErrors(html) {
         if (name === "style" && /url\(\s*['"]?\s*([a-z][a-z0-9+.-]*:|\/\/)/i.test(attrs[name])) out.push(`style attribute loads a URL on <${tag}>`);
       }
       if (BANNED.has(tag)) out.push(`<${tag}> is not allowed`);
+      if (tag === "script") {
+        const text = (node.childNodes || []).map((c) => c.value || "").join("").trim();
+        const ok = attrs.src !== undefined ? attrs.type === "module" : INLINE_SCRIPT_IDS.has(attrs.id || "") || /^window\.__VP_HASH_MAP__=/.test(text);
+        if (!ok) out.push(`unexpected <script${attrs.id ? ` id="${attrs.id}"` : ""}${attrs.src !== undefined ? ` src="${attrs.src}"` : ""}>`);
+      }
       if (attrs.target === "_blank" && !/\b(noopener|noreferrer)\b/.test(attrs.rel || "")) out.push(`<${tag} target=_blank> without rel=noopener or noreferrer`);
       if (tag === "meta" && /refresh/i.test(attrs["http-equiv"] || "")) out.push("meta refresh is not allowed");
       // anything but a link may only load from this site
@@ -141,6 +150,12 @@ export function check({ dist, base = "/ai-testing-handbook/", sidebar, budgets =
     const ok = rel.endsWith(".html") || ROOT_FILES.has(rel) || /^assets\/(chunks\/)?[\w.@-]+\.(js|css|woff2?)$/.test(rel);
     if (!ok) errors.push(`unexpected file in the built site: ${rel}`);
   }
+
+  // a root 404.md replaces the not-found page with content rendered only in the browser, outside the
+  // sidebar rule below and never parsed above (audit 2026-10-28): the build holds no 404 chunk
+  if (files.some((f) => /^assets\/(chunks\/)?404\.md\./.test(relative(dist, f).split("\\").join("/")))) errors.push("a 404.md page was built: the not-found page must be VitePress's default");
+  const hashmap = join(dist, "hashmap.json");
+  if (existsSync(hashmap) && Object.hasOwn(JSON.parse(readFileSync(hashmap, "utf8")), "404.md")) errors.push("hashmap.json lists 404.md: the not-found page must be VitePress's default");
 
   // no third-party url() or @import in built CSS
   for (const f of files.filter((x) => x.endsWith(".css"))) {

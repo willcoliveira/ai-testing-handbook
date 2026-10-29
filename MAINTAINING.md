@@ -115,7 +115,9 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   the parsed YAML; the build job re-runs the post-build checks on the exact artifact, and every action
   is GitHub's own, pinned to a commit SHA (Dependabot updates the pins). Checkouts keep no credentials, every job has a timeout, superseded PR runs are
   cancelled. Adding a Markdown feature or a frontmatter key means changing `lockdown.mjs` and these
-  tests on purpose.
+  tests on purpose; so does a VitePress upgrade that adds an inline script (post-build allows only
+  the four scripts the current build emits), and a symlink or a root `404.md` in the content
+  folders (the lint rejects both; audit of 2026-10-28).
 - Windows: CI builds and tests the site on Linux and Windows (`.github/workflows/site.yml`).
   `.gitattributes` keeps LF line endings and the parsers in `.vitepress/read.mjs` accept CRLF.
 - Dependencies: `package.json` overrides Vite to 6.4.5, because VitePress 1.6.4 ships Vite 5, which

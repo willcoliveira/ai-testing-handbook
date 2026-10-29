@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.23 (2026-10-29)
+
+- Site gates, from the 2026-10-28 repository audit: the content lint rejects a symlink in a content
+  folder (it published an excluded file, such as a test fixture or a draft digest, as a page under
+  the link's name, with a canonical URL for a route that does not exist) and a root `404.md`
+  (VitePress builds it as the not-found page, outside the sidebar, with content the HTML gate never
+  parses); post-build fails on a built `404.md` chunk and on any `<script>` that is not one of the
+  four a VitePress build emits. Regression tests in `tests/site/unit/`; the record is
+  `repo-audit-2026-10-28.md` in the maintainer's plan records.
+
 ## 0.1.22 (2026-10-28)
 
 - Refresh since 2026-10-16: twenty new sources (S455 to S474): METR's review of Anthropic's
