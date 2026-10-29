@@ -208,4 +208,6 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   skill. Major updates of `typescript` (until `typescript-eslint` supports it) and `@types/node`
   (the site runs on Node 22) are ignored. The docker ecosystem watches the digest pinned in
   `tests/site/Dockerfile` and ignores tag version updates, since the tag follows `@playwright/test`
-  by hand (the Dockerfile comment has the command that prints a tag's digest).
+  by hand (the Dockerfile comment has the command that prints a tag's digest); the ignore names the
+  image `playwright`, its repository path without the registry host, because Dependabot matches on
+  that form and an ignore written with the host matches nothing.
