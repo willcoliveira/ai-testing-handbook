@@ -160,6 +160,36 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
+  # A failed weekly run otherwise reaches only the mailbox of whoever last edited this file (the
+  # 2026-10-26 dependency-advisory failure went unnoticed for two days). This job opens or updates
+  # an issue instead. It holds the one write permission outside deploy, so it checks out nothing,
+  # uses no action and runs no project code; tests/site/unit/workflow.test.mjs pins that shape.
+  notify:
+    name: Open an issue when the weekly run fails
+    needs: [test, lint, full]
+    if: failure() && github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    steps:
+      - name: Open or update the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          TITLE: Weekly Site run failed
+        run: |
+          body="The scheduled Site run failed: $RUN_URL
+
+          Usually a new dependency advisory or a browser test; see MAINTAINING.md, \"## Site\"."
+          number="$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number')"
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body "$body"
+          else
+            gh issue create --title "$TITLE" --body "$body"
+          fi
+
   # Does this PR touch what the visual spec renders? Content-only PRs (refreshes) skip the visual
   # job: its screenshots are of the fixed specimen and the chrome, which content cannot change.
   changes:

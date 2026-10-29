@@ -31,7 +31,7 @@ export function miniRepo(extra = {}) {
     "how-to/README.md": "# How\n",
     "how-to/01-first.md": "# First\n",
     ...Object.fromEntries(["labs", "tools", "benchmarks", "datasets", "training", "digests"].map((d) => [`${d}/README.md`, `# ${d}\n`])),
-    ...Object.fromEntries(["GLOSSARY", "ROADMAP", "CHANGELOG", "PRIVACY", "CONTRIBUTING", "MAINTAINING"].map((n) => [`${n}.md`, `# ${n}\n`])),
+    ...Object.fromEntries(["GLOSSARY", "ROADMAP", "CHANGELOG", "PRIVACY", "SECURITY", "CONTRIBUTING", "MAINTAINING"].map((n) => [`${n}.md`, `# ${n}\n`])),
     "sources.md": "# Sources\n\n| id | title | publisher | published | type | url | areas | last_checked | notes |\n|----|-------|-----------|-----------|------|-----|-------|--------------|-------|\n| S001 | First \"source\" <x> | Pub | 2026-01-01 | paper | https://example.com/1 | 1 | 2026-01-02 | n |\n",
     ...extra,
   });
