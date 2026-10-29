@@ -11,3 +11,11 @@ digests/*.draft.md
 test-results/
 playwright-report/
 blob-report/
+
+# Local secrets and per-machine tool state (security review 2026-10-04, item 11; audit 2026-10-28)
+.env
+.env.*
+.mcp.json
+.claude/settings*.json
+.claude/worktrees/
+.playwright-cli/
