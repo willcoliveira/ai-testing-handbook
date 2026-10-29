@@ -33,12 +33,30 @@ report shape: per page result; findings classified `new-source`, `version-moved`
 `contradicts` (file and sentence), `no-change`; for new sources a register note, suggested areas,
 target practice file and a draft bullet `- **Org, YYYY-MM:** sentence [S0nn].` Items under
 "Checked by hand" are not fetched; list them under Skipped. arXiv queries go one at a time, never
-in parallel (the API answers a burst with 429 and 503): say so in the prompt as a rule the agent
-must follow, not a preference. The arXiv prompt also asks for figures quoted exactly as the
-abstract writes them, and carries the ids the register and the previous digest already hold, so
-the agent can report results from the three days before `--since` that neither lists. Each report also ends with `sweep
-problems`: a query whose results are mostly off-target, a page that failed, redirected or showed no
-dates, a compare note that no longer works, and the form that did work if the agent found one.
+in parallel (the API answers a burst with 429 and 503): the rule is the first line of any prompt
+that touches arXiv, the API query and an `abs` page alike, and is repeated before each part of the
+prompt that fetches there, because a rule stated once in the middle was broken on 2026-10-28 by an
+agent that batched two abstract pages. The arXiv prompt uses `max_results=10` when `--since` is
+more than seven days back (kb-refresh step 2), asks for figures quoted exactly as the abstract
+writes them, and carries the ids the register and the previous digest already hold, so the agent
+can report results from the three days before `--since` that neither lists. Each report also ends
+with `sweep problems`: a query whose results are mostly off-target, a page that failed, redirected
+or showed no dates, a compare note that no longer works, and the form that did work if the agent
+found one.
+
+## 2b. Verify the figures (main session decides, web-reader reads)
+After the reports are in and before anything is written, the main session lists the candidates it
+intends to accept and the figures each bullet would carry, then launches one `web-reader` per
+group of about twelve pages (lab, vendor and standards pages in one; arXiv abstracts, tool release
+pages and compare notes in another, with the one-at-a-time rule as above). Each prompt names the
+page and the quantities to quote (the sentence that gives the number of runs, the rate, the date,
+who is speaking), never the value expected, so the reader cannot confirm a number it was handed;
+it asks for the exact sentence in quotation marks, "not stated" where the page is silent, and both
+values where the page gives two. The main session writes only figures this round returned. A figure
+the page gives twice, or that the round could not pair with its comparison, stays out of the bullet
+and is listed under Skipped with both values. The first run of this step (2026-10-28) caught a
+monitor figure that one lab was quoting from another, a stop rate given as 62% and 67% on one page,
+and a rate whose baseline the fetch could not pair.
 
 ## 3. Apply (main session only, kb-refresh edit rules)
 - Accept a new source only if it bears on testing, evaluation or safety practice; say why for
