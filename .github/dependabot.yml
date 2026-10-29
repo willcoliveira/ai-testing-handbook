@@ -7,8 +7,12 @@
 #   (`skills:check` fails until then).
 # The docker ecosystem watches the digest pinned in tests/site/Dockerfile. Version updates of the
 # tag are ignored on purpose: the tag must equal @playwright/test (the lint job checks it) and moves
-# with that package, by hand; only digest updates for the pinned tag are wanted. Confirm on the first
-# run that digest updates still arrive with the ignore in place; drop the ignore if they never do.
+# with that package, by hand; only digest updates for the pinned tag are wanted. Dependabot names a
+# docker image by its repository path without the registry host (the options reference calls it
+# "the full name of the repository": base/foo/bar/ruby for an ECR image), so the ignore below says
+# `playwright`; written with the host it matched nothing, and the first run (2026-10-29) opened a
+# tag bump to v1.64.1 that the lint job rejected. Still to confirm on a later run: that digest
+# updates arrive with the ignore in place; drop the ignore if they never do.
 version: 2
 updates:
   - package-ecosystem: docker
@@ -16,7 +20,7 @@ updates:
     schedule:
       interval: monthly
     ignore:
-      - dependency-name: "mcr.microsoft.com/playwright"
+      - dependency-name: "playwright"
         update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
   - package-ecosystem: npm
     directory: /
