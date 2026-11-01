@@ -3,8 +3,8 @@ id: load-and-latency
 title: Load and latency
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-09-30
-sources: [S074, S076, S088, S089, S094, S341, S342, S343, S345]
+last_reviewed: 2026-11-01
+sources: [S074, S076, S088, S089, S094, S136, S341, S342, S343, S345]
 related: [voice-agent-testing, ci-gates-for-llm-apps, non-determinism-and-pass-rates, genai-tracing]
 ---
 
@@ -50,6 +50,7 @@ An LLM app has two latency budgets: the model's, which you can only choose, and 
 - **Anthropic, 2026-09:** the latency guide defines time to first token and says streaming improves perceived responsiveness; the prompt caching docs say a prompt below the minimum length is processed without caching and without an error, and usage fields show whether a request hit the cache [S341][S342].
 - **OpenAI, 2026-09:** the latency guide lists seven principles and says halving output tokens may cut about half the latency while halving the prompt may give 1 to 5 percent [S343].
 - **Locust, 2026-09:** load scenarios are plain Python user classes, one per type of user, run headless with a user count and spawn rate [S345].
+- **OpenTelemetry, 2026-10:** the GenAI conventions (PR #617, merged 2026-10-31) define a chunk for time to first chunk as a decoded provider stream event carrying new, non-empty output, rule out empty start events and events carrying only usage, keep-alives or status updates, and say the measurement should start before authentication and the first attempt and include failed attempts and retry backoff; the metric is reported for streaming calls only [S136].
 
 ## Pitfalls
 1. Gating p95 on a system whose tail belongs to the vendor. Report the tail as a miss with the reason written down and gate the median; a gate that fails every run stops being trusted.
@@ -71,3 +72,4 @@ None yet.
 - [S342] Prompt caching (Claude docs), Anthropic, living
 - [S343] Latency optimization (OpenAI docs), OpenAI, living
 - [S345] Locust documentation, Locust, living
+- [S136] Semantic Conventions for Generative AI (spans, metrics, events, agent spans), OpenTelemetry, living

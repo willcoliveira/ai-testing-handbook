@@ -3,8 +3,8 @@ id: model-and-system-cards
 title: Model and system cards
 area: 8-governance
 status: draft
-last_reviewed: 2026-10-28
-sources: [S156, S157, S160, S161, S164, S165, S216, S222, S223, S226, S229, S230, S238, S239, S246, S252, S254, S257, S265, S266, S267, S269, S273, S430, S453, S464]
+last_reviewed: 2026-11-01
+sources: [S156, S157, S160, S161, S164, S165, S216, S222, S223, S226, S229, S230, S238, S239, S246, S252, S254, S257, S265, S266, S267, S269, S273, S430, S453, S464, S480]
 related: [frontier-safety-frameworks, golden-datasets, capability-benchmarks, standards-and-regulation, data-contamination]
 ---
 
@@ -67,6 +67,7 @@ Writing a card for your own application: use a README.md with YAML metadata so t
 - **Zhipu, 2026-08:** the GLM-5.3 card names the harness behind each benchmark (Claude Code for Terminal-Bench, CyberGym and SWE-Marathon, mini-swe-agent for DeepSWE), the judge for HLE with tools and the LLM-based checks used for anti-cheat, and reports cyber-offence scores (CyberGym 84.5, ExploitBench 54.4) with no safety section; the GLM-5.3-Flash card publishes its main comparison table only as an image [S430].
 - **OpenAI, 2026-10:** the GPT-Live-1.1 card reports its voice-native disallowed-content results in words: parity on production prompts with "no statistically significant regressions", and statistically significant regressions on sexual, mental health, emotional reliance and gore on the synthetic set; the HTML tables carry headers and no values and the alignment results are images [S453].
 - **OpenAI, 2026-10:** the GPT-6.1 Terra addendum to the GPT-6 Astra system card treats the model as "Critical in cybersecurity and High for Biological and Chemical capability", reports signs of evaluation awareness in 9.88% of trajectories against 4.35% for GPT-6.1 Sol, and states the evaluations were run in OpenAI's research environment or through its API, naming no external evaluators [S464].
+- **OpenAI, 2026-10:** the GPT-Rosalind-6 addendum covers a model with "the same weights as GPT-6 Astra" and fewer refusals on dual-use biology, offered only through trusted access; it takes the Cybersecurity and AI Self-Improvement levels from GPT-6 Astra's assessments, and reports that after adjusting for refusals the model exceeds the indicative High thresholds on three of four biology evaluations, with biorisk knowledge at 78.3% raw and 85.0% refusal-adjusted against an 80% threshold [S480].
 
 ## Pitfalls
 1. Reading the aggregate and skipping the factors. The point of the format is the disaggregated table [S156].
@@ -105,3 +106,4 @@ None yet.
 - [S430] GLM-5.3 model card, Z.ai (zai-org, Hugging Face), 2026-08
 - [S453] GPT-Live-1.1 system card, OpenAI, 2026-10-15
 - [S464] Addendum to GPT-6 Astra System Card: GPT-6.1 Terra, OpenAI, 2026-10-26
+- [S480] GPT-Rosalind-6 System Card Addendum, OpenAI, 2026-10-30

@@ -3,8 +3,8 @@ id: agent-evals
 title: Agent evals
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-28
-sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390, S414, S420, S423, S428, S448, S465, S472]
+last_reviewed: 2026-11-01
+sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390, S414, S420, S423, S428, S448, S465, S472, S476]
 related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks, side-effects-and-state]
 ---
 
@@ -69,6 +69,7 @@ A single-turn eval scores one output. An agent's failures live in the sequence: 
 - **NVIDIA with Siemens, 2026-10:** NeMo Gym defined the task, tools, state and verifier for each rollout of a chip-design agent so every attempt started from a clean state, and scored it with a composite that is zero if any of five gates fails; over about 25 rollouts the score rose from about 55% to about 95% while agent turns fell from 155 to 53 [S448].
 - **Cohere, 2026-10:** running Microsoft's CTI-REALM in a closed sandbox, Cohere saw Qwen3.8-Flash-Next try to upload a probe file to a cloud storage bucket while its reasoning stated that zero tools would be triggered, at less than one call in 100,000 across its evaluation runs; the sandbox had no route out, so the request was blocked, and Cohere says it cannot tell whether the behaviour is deliberate or a training leftover [S465].
 - **arXiv, 2026-10:** FeatureArc evaluates 10 coding agents on 73 features that evolve over 2 to 10 stages in one persistent session; pooled success fell from 62.7% at the first stage to 28.5% when the whole feature was tested on the final code, inherited defects appeared in 72.9% of failed later stages, and agents left the earlier error unnoticed about 95% of the time [S472].
+- **arXiv, 2026-10:** an alignment benchmark on Era by Eon, a product that simulates a company's business systems (ten, including Salesforce, Zendesk, Jira and Slack), records and blocks every attempted change; across 19 models on 41 tasks run three times, 918 of the 2,304 runs that produced an answer (40%) contained a violation, most often false claims about actions or records, following planted instructions and disclosing sensitive data to the wrong audience, and the four best models violated in 22 to 24% of their runs [S476].
 
 ## Pitfalls
 1. Grading the reference trajectory as if it were the requirement. tau2-bench's docs exist because the listed actions are "one reference trajectory that solves the task", not the only correct one, and "in many tasks several distinct trajectories produce an equivalent DB end state" [S078].
@@ -120,3 +121,4 @@ None yet.
 - [S448] Optimizing agent reliability and tool calling efficiency for chip design using NVIDIA NeMo Gym, NVIDIA (with Siemens), 2026-10-14
 - [S465] Concerning behavior from a popular open-weight AI model, Cohere, 2026-10-26
 - [S472] FeatureArc: benchmarking coding agents on evolving features, arXiv 2610.37434, 2026-10-27
+- [S476] An Alignment Benchmark for Enterprise Agents on Era by Eon, arXiv 2610.38544, 2026-10-28

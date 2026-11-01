@@ -3,7 +3,7 @@ id: orchestrators-and-simulators
 title: Orchestrators and simulators
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-28
+last_reviewed: 2026-11-01
 sources: [S072, S073, S078, S079, S093, S094, S095, S325, S326, S392, S449]
 related: [agent-evals, voice-agent-testing, non-determinism-and-pass-rates, red-teaming, ci-gates-for-llm-apps]
 ---
@@ -46,6 +46,7 @@ A scripted multi-turn test breaks the moment the agent rephrases. A simulated us
 - **arXiv, 2026-10:** Argo-Bench grades data agents by the simulated consequences of the actions they file against a 235-table warehouse with ground truth withheld, with an executable reference solution per task; the best of 14 models averaged 59.5 and scored 95 or more on 34.8 percent of tasks [S392].
 - **Cohere, 2026-10:** on ProgramBench, a team of coding agents passed 61.8% of hidden tests against 52.1% for a solo agent, and a lead that delegated only planning matched one that delegated every stage (63.6% against 63.2%) at half the cost ($249 against $510); a strong lead with 16 cheaper planning workers reached 61.8% for $155 [S449].
 - **Sierra Research, 2026-10:** tau2-bench 2.0.0 changes the benchmark user simulator from gpt-4.1 to gpt-5.5 at low reasoning effort and makes communication checks LLM-judged, says "Scores are not comparable with 1.x" and to re-run rather than compare, and adds a post-hoc judge suite that is "diagnostic only and never part of the reward" [S078].
+- **Sierra Research, 2026-10:** the tau2-bench 2.0.0 CHANGELOG says communication checks are LLM-judged for every run, with substring matching only when requested, and that under evaluation type `ALL` communication is scored only when `COMMUNICATE` is in the task's `reward_basis`; the judge model, `gpt-5.5` at low reasoning effort, and the prompt version are saved with the run [S078].
 
 ## Pitfalls
 1. Gating on a simulator you have not measured. A simulator can leave zero scenarios reliably stable after days of tuning, and scenarios at 100 percent can regress the moment the team tunes its own prompt.

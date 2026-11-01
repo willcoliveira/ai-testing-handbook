@@ -3,8 +3,8 @@ id: regression-on-upgrade
 title: Regression on upgrade
 area: 7-training-and-lifecycle
 status: draft
-last_reviewed: 2026-09-28
-sources: [S146, S147, S148, S149, S217, S222, S223, S224, S225, S226, S240, S251, S254, S257, S261, S266, S271, S290, S299]
+last_reviewed: 2026-11-01
+sources: [S146, S147, S148, S149, S217, S222, S223, S224, S225, S226, S240, S251, S254, S257, S261, S266, S271, S290, S299, S478]
 related: [non-determinism-and-pass-rates, ci-gates-for-llm-apps, online-evals-and-drift, fine-tuning-evals, golden-datasets]
 ---
 
@@ -59,6 +59,7 @@ A pre-switch checklist, in order:
 - **xAI, September 2026:** each safety table reports Grok 4.5, 4.6 and 4.7 side by side on the same suites, which is what makes a regression visible [S266].
 - **Apollo Research, 2026-07:** measured whether models are becoming aligned or better at concealing misalignment as training proceeds, a reason to re-run behavioural evaluations on every version [S290].
 - **arXiv, 2026-09:** trajectory-aware subset selection is one way to keep a per-version regression replay affordable [S299].
+- **OpenAI, 2026-10:** the October 29 update to GPT-6 Luna, which "provides more concise responses and reduces overly agreeable language" and keeps the October 7 safeguards stack, shows higher factual-error rates than the October 7 version on all six reported metrics and, on biology refusal evaluations, improves on severe prompts (safe rate 0.976 against 0.945) and regresses on dual-use prompts (0.922 against 0.968) [S478].
 
 ## Pitfalls
 1. **Aliases in production.** The alias moves when the provider says so; the dated id moves when you say so [S148].
@@ -91,3 +92,4 @@ None yet.
 - [S266] Grok 4.7 Model Card (revision 2026-09-21), xAI (SpaceXAI), 2026-09-21
 - [S290] Measuring Reward-Seeking via Contrastive Belief Updates, Apollo Research, 2026-07-21
 - [S299] Trajectory-aware benchmark subset selection for cost-efficient software engineering agent regression testing, arXiv 2609.24928, 2026-09-21
+- [S478] Addendum to GPT-6 Luna System Card: October 29, 2026 Update, OpenAI, 2026-10-29
