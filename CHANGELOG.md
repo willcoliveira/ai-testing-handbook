@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.26 (2026-11-01)
+
+- Refresh since 2026-10-28: six new sources (S475 to S480): OpenAI's GPT-6 Luna update addendum
+  (factuality and dual-use refusal regressions) and the GPT-Rosalind-6 addendum (refusal-adjusted
+  biology thresholds), Mistral's Large 4 open-weights post, and three arXiv papers (judge prompt
+  rephrasing, an enterprise-agent violation benchmark, self-evolving agents losing prompt-injection
+  robustness); eight bullets across eight practices, including the tau2-bench 2.0.0 CHANGELOG's
+  reward rule for LLM-judged communication checks and OTel PR #617 on time to first chunk; Inspect
+  AI 0.3.287 and Langfuse v4.72.0 recorded; the tau2-bench contradiction settled for the reviewer;
+  ai.meta.com/blog and the data contamination query removed under the removal rule, and sweep-list
+  notes fixed on seven items; `digests/2026-11-01.md`.
+
 ## 0.1.25 (2026-10-29)
 
 - Site accessibility, found by axe 4.14's `label-content-name-mismatch` rule (WCAG 2.5.3, Label in
