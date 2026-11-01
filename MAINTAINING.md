@@ -138,6 +138,10 @@ VitePress reads the Markdown files in place; nothing in the content is written f
   change; Dependabot version updates never touch `overrides`. The range lets `npm audit fix` or a
   Dependabot security update move the lockfile within 6.4 (whether Dependabot does so on its own is
   unconfirmed until the next advisory); `npm audit` in CI still fails on anything unfixed.
+  It also overrides minimatch to `^11.0.1` for GHSA-g3hv-75wg-m249 (2026-10-30, moderate, fixed in
+  11.0.1). Only the lint tooling uses minimatch (eslint, `@eslint/config-array` and
+  `@typescript-eslint/typescript-estree`), and on 2026-11-01 their latest releases still declared
+  `^10.2`. Lint checks the same files under 11. Drop this override once all three accept minimatch 11.
 - Browser tests: Playwright specs in `tests/site/e2e/` with one page object,
   `tests/site/pages/book.page.ts` (setup from `willcoliveira/playwright-ts-template`). Once:
   `npx playwright install chromium webkit` (`npm run pw:setup`; CI adds `--with-deps`). Then
