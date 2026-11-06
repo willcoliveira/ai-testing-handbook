@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.30 (2026-11-06)
+
+- `/refresh` step 2c and kb-refresh step 6: every drafted bullet is audited claim by claim against
+  its page by a reader asked to find faults (supported, overstated, unsupported, contradicted,
+  added inference, omitted caveats) and is reworded from the quoted sentences or dropped; the
+  digest reports the counts. Prompted by the 2026-11-06 audit, where 19 of 46 recent bullets needed
+  a fix although their figures were right.
+
 ## 0.1.27 (2026-11-06)
 
 - Refresh since 2026-11-01: eighteen new sources (S481 to S498): OpenAI's GPT-6 Cyber and ChatGPT
