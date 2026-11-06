@@ -3,8 +3,8 @@ id: frontier-safety-frameworks
 title: Frontier safety frameworks
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-11-01
-sources: [S096, S098, S099, S102, S104, S107, S109, S110, S113, S114, S116, S128, S232, S234, S235, S240, S247, S254, S256, S263, S264, S267, S271, S285, S287, S289, S295, S412, S416, S431, S434, S446, S455, S474, S479]
+last_reviewed: 2026-11-06
+sources: [S096, S098, S099, S102, S104, S107, S109, S110, S113, S114, S116, S128, S232, S234, S235, S240, S247, S254, S256, S263, S264, S267, S271, S285, S287, S289, S295, S412, S416, S431, S434, S446, S455, S474, S479, S496, S497]
 related: [red-teaming, model-and-system-cards, standards-and-regulation, guardrails]
 ---
 
@@ -103,6 +103,8 @@ them and says plainly that indexing "should not be considered an endorsement of 
 - **METR, 2026-10:** METR's external review of the misalignment section of Anthropic's August 2026 Risk Report agrees the risk of catastrophic harm from misalignment is low, but "primarily due to models' limited capabilities, rather than safeguards and alignment training", calls the report's covert capabilities benchmarks a poor proxy for evading monitoring, and quotes Anthropic that its offline monitor flagged only around 1% of actions in the Mythos 5 incident, about 50% once the chain of thought was stripped [S455].
 - **Google DeepMind, 2026-10:** the Gemini 4 Carbon launch post reports 0.0% attack success on Gray Swan's indirect prompt injection benchmark (0.7% for Argon) and successful cheating on Terminal-Bench 4.0 down to 0.0% with 0.4% attempts, states that external benchmarks were "evaluated without guardrails", and does not mention the Frontier Safety Framework, critical capability levels or a Carbon model card; access starts with a subset of cyber defenders [S474].
 - **Mistral, 2026-10:** releasing the Large 4 weights, Mistral reports an average refusal rate of 96.6% on the cyber-related prompts of JailbreakBench, StrongREJECT and AgentHarm and 97.1% of attacks resisted on B3 (93.3% for the preview), says "we see a potential for uplift to conduct real attacks" and that it is modifying its guardrails, and limits a specialised cybersecurity variant to vetted design partners testing owned or explicitly authorized systems [S479].
+- **OpenAI, 2026-11:** GPT-6 Cyber keeps GPT-6 Astra's Critical cybersecurity designation, scores 87.02% pass@1 on SEC-Bench Pro against 85.38% for Astra, exploited a honeypot in 0.07% of graded rollouts without deployment safety instructions, and is available only to approved Daybreak Red users and organizations [S496].
+- **METR, 2026-11:** reviewing Anthropic's August 2026 Risk Report, METR finds it plausible that the 2x AI R&D acceleration threshold was crossed by July 15, gives leading-indicator estimates between 1.3 and 2.8 with substantial methodological uncertainty, and says the public report understates the acceleration [S497].
 
 ## Pitfalls
 1. Treating a lab's determination as coverage for your product. Meta's Llama 4 card says "testing
@@ -158,3 +160,5 @@ None yet.
 - [S455] Review of the "Misalignment in high-stakes settings" section in Anthropic's Risk Report (August 2026), METR (Nikola Jurkovic, Tim Hua, Beth Barnes), 2026-10-20
 - [S474] Gemini 4 Carbon: our next frontier model, Google DeepMind (blog.google; Koray Kavukcuoglu), 2026-10-28
 - [S479] Mistral Large 4 (Le Chonk) is now open weight, Mistral AI, 2026-10-29
+- [S496] GPT-6 Cyber System Card, OpenAI, 2026-11-05
+- [S497] Review of the "Risks from automated R&D" section in Anthropic's Risk Report (August 2026), METR, 2026-11-05

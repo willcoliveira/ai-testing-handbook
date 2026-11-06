@@ -1,0 +1,27 @@
+<!-- applied: 2026-11-06 -->
+## practice: prompt-injection
+- **arXiv, 2026-10:** adversarial training with the SecPO loss on Qwen3.6-27B gives 8.8% AgentDojo attack success at 800 attempts under an attacker that moves second, against 78.8% for Meta-SecAlign; the abstract does not state the base model of the comparison [S481].
+- **arXiv, 2026-11:** malicious functionality hidden in updates of initially benign tools, with no adversarial prompt, reached a 97.6% attack success rate while keeping a 95.9% legitimate task completion rate across seven agent frameworks, a path that prompt-level defenses do not see [S486].
+- **arXiv, 2026-11:** a low-confidence monitor on typed decision models ranks injection hijacks above clean answers (AUROC 0.86-0.90 on four of five systems), yet at a threshold where at most 5% of clean answers alarm it misses 51-70% of hijacks from a plain injected note and 99-100% when the note claims certainty [S489].
+- **arXiv, 2026-11:** on 90 validated task-tampering cases in three tool-use environments, a detection-and-removal defense still leaves observation-targeting attacks at 9.5% and state-targeting attacks at 12.1% success [S498].
+## practice: judge-calibration
+- **arXiv, 2026-10:** streaming quantile matching calibrates judge scores to the human score distribution through an optimal-transport map, keeping the ordinal scale, and the authors report that post-hoc calibration narrows the raw error gap between smaller and larger judges; the abstract gives no figures [S482].
+- **arXiv, 2026-11:** AGORA aggregates several LLM judges with item-response theory, estimating each judge's sensitivity and rating thresholds without human labels; across three benchmarks it matches or exceeds Dawid-Skene, and its advantage widens as the set shrinks toward a few hundred items; the abstract gives no figures [S491].
+## practice: agent-evals
+- **arXiv, 2026-10:** in five pre-registered studies a Gemini 3.1 Flash-Lite monitor separated reward hacking from honest failure with AUC 0.80 (95% interval 0.66 to 0.93) on 14 exploit episodes, which the author calls uncertain, while the pre-registered primary monitor reached AUC 0.64 and small Llama 3B and 8B monitors did not separate them [S483].
+- **NVIDIA, 2026-11:** NVIDIA's NemoClaw blueprint finds recurring failures in stored agent traces (NeMo Compass), writes evaluations that reproduce them (NeMo Eval Author) and accepts a harness change only when it improves both the test cases and a held-out set; in its example, two tasks run three times each went from 3/6 to 6/6 on development and 4/6 to 6/6 held out [S494].
+## practice: post-training-evals
+- **arXiv, 2026-10:** on 900 frozen questions across open-weights checkpoints at four post-training stages, post-training raised citation fabrication overall from 4.8% to 56.7%, and asking for citations raised it in post-trained but not base models (a 47.8-point interaction on twelve checkpoints); the author calls reward causation "possibly, but not proven" [S484].
+## practice: capability-benchmarks
+- **arXiv, 2026-11:** CrossSWE's 171 cross-repository tasks over 165 repositories leave the strongest of five models, GPT-6.1 Sol, at 58.48% Pass@1, with cross-repository inconsistency the most common failure (44.2%) [S485].
+- **arXiv, 2026-11:** SLATE runs about 1,000 e-commerce tools against a deterministic simulator that returns recorded outputs for matching calls, and the best of six open decision models (3B to 12B) completes 5.0% of tasks [S488].
+## practice: benchmark-hygiene
+- **arXiv, 2026-11:** a construct-validity analysis of nine benchmarks used for agentic coding tools finds broad concepts such as coding capability measured with only a small set of metrics, and the attributes reported as possible confounders varying between benchmarks [S492].
+## practice: regression-on-upgrade
+- **Anthropic, 2026-11:** Anthropic's Frontier Red Team, with EPFL and StarkWare authors, generated proofs that served outputs came from Llama 4 Maverick's public 4-bit weights at 110 tokens per second on one H100, with a proof checked in 17 seconds on 24 threads, for contexts up to 1,024 tokens and greedy decoding only [S487].
+## practice: model-and-system-cards
+- **Moonshot AI, 2026-11:** the Kimi K3.1 Pro card (open weights, 2.8T total and 104B activated parameters) has no safety section, and its hallucination benchmarks, with and without tools, are marked internal [S490].
+- **OpenAI, 2026-11:** the ChatGPT Images 2.6 card runs 3,077 challenging requests against each model's GPT-Image-2.5 baseline, reports a statistically significant drop in Flare's non-violative outputs before moderation (78.36% to 75.04%), and says the results are not representative of how often violative requests or outputs arise in production traffic [S495].
+## practice: frontier-safety-frameworks
+- **OpenAI, 2026-11:** GPT-6 Cyber keeps GPT-6 Astra's Critical cybersecurity designation, scores 87.02% pass@1 on SEC-Bench Pro against 85.38% for Astra, exploited a honeypot in 0.07% of graded rollouts without deployment safety instructions, and is available only to approved Daybreak Red users and organizations [S496].
+- **METR, 2026-11:** reviewing Anthropic's August 2026 Risk Report, METR finds it plausible that the 2x AI R&D acceleration threshold was crossed by July 15, gives leading-indicator estimates between 1.3 and 2.8 with substantial methodological uncertainty, and says the public report understates the acceleration [S497].

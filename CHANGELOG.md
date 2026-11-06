@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.27 (2026-11-06)
+
+- Refresh since 2026-11-01: eighteen new sources (S481 to S498): OpenAI's GPT-6 Cyber and ChatGPT
+  Images 2.6 cards, METR's review of Anthropic's R&D risk section, Anthropic's provable inference,
+  NVIDIA's traces-to-tests loop, the Kimi K3.1 Pro card, OWASP's data security playbook part 1, and
+  eleven arXiv papers on prompt injection, judge calibration, agent benchmarks and reward hacking;
+  17 bullets across nine practices; DeepEval 4.3.3, Langfuse v4.76.0 and 24 OTel GenAI PRs
+  recorded; blogs.microsoft.com removed under the removal rule, notes fixed on three sweep items;
+  `digests/2026-11-06.md`.
+
 ## 0.1.26 (2026-11-01)
 
 - Refresh since 2026-10-28: six new sources (S475 to S480): OpenAI's GPT-6 Luna update addendum

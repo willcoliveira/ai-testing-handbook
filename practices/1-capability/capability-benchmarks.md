@@ -3,8 +3,8 @@ id: capability-benchmarks
 title: Capability benchmarks and leaderboards
 area: 1-capability
 status: draft
-last_reviewed: 2026-10-28
-sources: [S001, S002, S003, S006, S007, S008, S009, S010, S011, S012, S013, S014, S015, S016, S017, S018, S019, S020, S021, S022, S023, S024, S026, S027, S028, S029, S215, S219, S220, S225, S230, S239, S241, S247, S248, S255, S260, S266, S272, S274, S276, S277, S278, S318, S424, S463]
+last_reviewed: 2026-11-06
+sources: [S001, S002, S003, S006, S007, S008, S009, S010, S011, S012, S013, S014, S015, S016, S017, S018, S019, S020, S021, S022, S023, S024, S026, S027, S028, S029, S215, S219, S220, S225, S230, S239, S241, S247, S248, S255, S260, S266, S272, S274, S276, S277, S278, S318, S424, S463, S485, S488]
 related: [statistical-treatment-of-evals, benchmark-hygiene, agent-evals, tool-use-evals]
 ---
 
@@ -68,6 +68,8 @@ Then map the benchmark to your need. Knowledge and reasoning: MMLU-Pro, GPQA, HL
 - **arXiv, 2026-09:** LoLBench pairs long enhancement proposals with systems averaging 2.4M lines of code; the best of 28 agents resolved 14 percent of tasks, with incomplete code localisation named as a major bottleneck [S318].
 - **arXiv, 2026-10:** CRBugBench builds 1,000 code-review tasks from bug-introducing pull requests across 98 open-source repositories; the best agent setup catches 71.9 percent of bugs within its top-5 comments, and prompts that nudge exploration add up to 5.8 percent at 10 percent higher cost [S424].
 - **UK AISI, 2026-10:** ReproBAIT asks coding agents in offline single-GPU sandboxes to rebuild biological AI tools from a paper, scores fidelity as the rebuilt tool's score as a percentage of the original's on the same metric, and keeps the best of three runs per configuration; Claude Opus 5 reached 96.5% fidelity on ProteinMPNN, no agent reproduced RFdiffusion3 within budget, and giving the full paper rather than the abstract did not consistently help [S463].
+- **arXiv, 2026-11:** CrossSWE's 171 cross-repository tasks over 165 repositories leave the strongest of five models, GPT-6.1 Sol, at 58.48% Pass@1, with cross-repository inconsistency the most common failure (44.2%) [S485].
+- **arXiv, 2026-11:** SLATE runs about 1,000 e-commerce tools against a deterministic simulator that returns recorded outputs for matching calls, and the best of six open decision models (3B to 12B) completes 5.0% of tasks [S488].
 
 ## Pitfalls
 1. Mixing versions of one family. SWE-bench full, Verified and Pro are three different task sets with three different difficulty profiles [S007] [S008] [S026].
@@ -127,3 +129,5 @@ None yet.
 - [S318] LoLBench: evaluating coding agents with long-horizon proposals on large software systems, arXiv 2609.37143, 2026-09-29
 - [S424] Benchmarking code review agents on bug detection (CRBugBench), arXiv 2610.13668, 2026-10-09
 - [S463] Can AI coding agents rebuild biological AI tools from a paper?, UK AI Security Institute (with SecureBio; arXiv 2610.19810), 2026-10-26
+- [S485] CrossSWE: Benchmarking Cross-Repository Joint Development for Coding Agents, arXiv 2611.01484, 2026-11-01
+- [S488] SLATE: A Large-Scale Benchmark for Long-Horizon API Selection in E-commerce Tool Use, arXiv 2611.03982, 2026-11-02
