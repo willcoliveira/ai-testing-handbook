@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.29 (2026-11-06)
+
+- Claim audit of the 46 sourced bullets added by the refreshes of October and November (S450 to
+  S498): each bullet split into claims and checked against its page by a reader asked to find
+  faults. 19 bullets corrected across nine practices: 15 with overstated, unsupported, contradicted or
+  added-inference claims (scope dropped, a hedge removed, a quote attached to the wrong claim, a
+  page edited after capture) and 4 omissions that changed the reading; dated audit notes on six
+  register rows (S451, S454, S458, S460, S484, S491).
+
 ## 0.1.28 (2026-11-06)
 
 - Generating tests from manual cases: playbook 18 (triage the source cases, index the step library,
