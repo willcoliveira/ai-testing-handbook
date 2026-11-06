@@ -3,7 +3,7 @@ id: mutation-checking
 title: Mutation checking
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-28
+last_reviewed: 2026-11-06
 sources: [S078, S091, S092, S461]
 related: [tool-use-evals, offline-probes, ai-generated-tests, ci-gates-for-llm-apps]
 ---
@@ -31,6 +31,7 @@ Coverage says a line ran. It does not say a test would fail if the line changed,
 | tool dispatch | drop an argument validation | it sends a bad call and expects a rejection |
 | guardrail wiring | skip the guardrail on one path | it asserts the guardrail ran on every path |
 | response parsing | flip a comparison operator | it covers the boundary value |
+| a step a generated test drives | make the step a no-op | its expected state differs from the default or initial state, so doing nothing fails |
 
 | Survivor means | Action |
 |---|---|
