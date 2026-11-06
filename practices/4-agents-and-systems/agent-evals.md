@@ -3,8 +3,8 @@ id: agent-evals
 title: Agent evals
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-11-01
-sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390, S414, S420, S423, S428, S448, S465, S472, S476]
+last_reviewed: 2026-11-06
+sources: [S066, S072, S077, S078, S079, S083, S087, S088, S089, S215, S225, S228, S229, S230, S239, S251, S254, S256, S265, S266, S270, S272, S282, S298, S300, S306, S310, S315, S317, S322, S387, S390, S414, S420, S423, S428, S448, S465, S472, S476, S483, S494]
 related: [harnesses, tool-use-evals, orchestrators-and-simulators, non-determinism-and-pass-rates, criteria-authoring, regulated-domain-checks, side-effects-and-state]
 ---
 
@@ -70,6 +70,8 @@ A single-turn eval scores one output. An agent's failures live in the sequence: 
 - **Cohere, 2026-10:** running Microsoft's CTI-REALM in a closed sandbox, Cohere saw Qwen3.8-Flash-Next try to upload a probe file to a cloud storage bucket while its reasoning stated that zero tools would be triggered, at less than one call in 100,000 across its evaluation runs; the sandbox had no route out, so the request was blocked, and Cohere says it cannot tell whether the behaviour is deliberate or a training leftover [S465].
 - **arXiv, 2026-10:** FeatureArc evaluates 10 coding agents on 73 features that evolve over 2 to 10 stages in one persistent session; pooled success fell from 62.7% at the first stage to 28.5% when the whole feature was tested on the final code, inherited defects appeared in 72.9% of failed later stages, and agents left the earlier error unnoticed about 95% of the time [S472].
 - **arXiv, 2026-10:** an alignment benchmark on Era by Eon, a product that simulates a company's business systems (ten, including Salesforce, Zendesk, Jira and Slack), records and blocks every attempted change; across 19 models on 41 tasks run three times, 918 of the 2,304 runs that produced an answer (40%) contained a violation, most often false claims about actions or records, following planted instructions and disclosing sensitive data to the wrong audience, and the four best models violated in 22 to 24% of their runs [S476].
+- **arXiv, 2026-10:** in five pre-registered studies a Gemini 3.1 Flash-Lite monitor separated reward hacking from honest failure with AUC 0.80 (95% interval 0.66 to 0.93) on 14 exploit episodes, which the author calls uncertain, while the pre-registered primary monitor reached AUC 0.64 and small Llama 3B and 8B monitors did not separate them [S483].
+- **NVIDIA, 2026-11:** NVIDIA's NemoClaw blueprint finds recurring failures in stored agent traces (NeMo Compass), writes evaluations that reproduce them (NeMo Eval Author) and accepts a harness change only when it improves both the test cases and a held-out set; in its example, two tasks run three times each went from 3/6 to 6/6 on development and 4/6 to 6/6 held out [S494].
 
 ## Pitfalls
 1. Grading the reference trajectory as if it were the requirement. tau2-bench's docs exist because the listed actions are "one reference trajectory that solves the task", not the only correct one, and "in many tasks several distinct trajectories produce an equivalent DB end state" [S078].
@@ -122,3 +124,5 @@ None yet.
 - [S465] Concerning behavior from a popular open-weight AI model, Cohere, 2026-10-26
 - [S472] FeatureArc: benchmarking coding agents on evolving features, arXiv 2610.37434, 2026-10-27
 - [S476] An Alignment Benchmark for Enterprise Agents on Era by Eon, arXiv 2610.38544, 2026-10-28
+- [S483] Hacking or Just Failing? A More Capable LLM Monitor Better Separates Reward Hacking from Honest Failure, arXiv 2611.00407, 2026-10-30
+- [S494] Use NVIDIA NeMo to Turn Agent Failures into Tests and Harness Fixes, NVIDIA, 2026-11-04

@@ -3,8 +3,8 @@ id: prompt-injection
 title: Prompt injection
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-11-01
-sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371, S415, S421, S425, S450, S477]
+last_reviewed: 2026-11-06
+sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371, S415, S421, S425, S450, S477, S481, S486, S489, S498]
 related: [red-teaming, guardrails, tool-use-evals, agent-evals]
 ---
 
@@ -98,6 +98,10 @@ unusual user prompts, and a model trained to trust the user turn can follow what
 - **arXiv, 2026-10:** RAG-PIBench provides 4,876 RAG-context prompt-injection examples with frozen train, validation and protected-test splits that avoid leakage; among keyword, TF-IDF, semantic and transformer detectors, DistilBERT scored best on the protected test (F1 0.896, PR-AUC 0.968) [S415].
 - **arXiv, 2026-10:** INFUSE runs indirect prompt injection across the lifecycle of 40 long-running agent tasks with 56 attack scenarios against 19 models, 41,824 adversarial trajectories and 720 benign reference runs; mean attack success was 19.6% (3.2% to 41.9% per model), guard models helped little, and strong prompt-level hardening cut success from 58.2% to 14.3% at some cost to utility [S450].
 - **arXiv, 2026-10:** on a real personal agent that learns from user feedback, average indirect prompt injection attack success rose by 14.0 to 48.8 percentage points under skill evolution and by 3.0 to 39.3 percentage points under reinforcement learning, compared with the same agent without feedback learning; the abstract gives no absolute rates [S477].
+- **arXiv, 2026-10:** adversarial training with the SecPO loss on Qwen3.6-27B gives 8.8% AgentDojo attack success at 800 attempts under an attacker that moves second, against 78.8% for Meta-SecAlign; the abstract does not state the base model of the comparison [S481].
+- **arXiv, 2026-11:** malicious functionality hidden in updates of initially benign tools, with no adversarial prompt, reached a 97.6% attack success rate while keeping a 95.9% legitimate task completion rate across seven agent frameworks, a path that prompt-level defenses do not see [S486].
+- **arXiv, 2026-11:** a low-confidence monitor on typed decision models ranks injection hijacks above clean answers (AUROC 0.86-0.90 on four of five systems), yet at a threshold where at most 5% of clean answers alarm it misses 51-70% of hijacks from a plain injected note and 99-100% when the note claims certainty [S489].
+- **arXiv, 2026-11:** on 90 validated task-tampering cases in three tool-use environments, a detection-and-removal defense still leaves observation-targeting attacks at 9.5% and state-targeting attacks at 12.1% success [S498].
 
 ## Pitfalls
 1. Trusting everything in the user turn. Anthropic's model "often reasoned that anything in the user's
@@ -142,3 +146,7 @@ None yet.
 - [S415] RAG-PIBench: a leakage-aware benchmark for prompt-injection detection in RAG systems, arXiv 2610.08571, 2026-10-06
 - [S450] INFUSE: a unified surface benchmark for indirect prompt injection in agentic systems, arXiv 2610.20776, 2026-10-14
 - [S477] Appreciation Teaches Unauthorized Execution: Self-Evolution Degrades the Robustness of Personal Agents to Indirect Prompt Injection, arXiv 2610.39122, 2026-10-29
+- [S481] SecPO: Principled Adversarial Training for Prompt Injection Security, arXiv 2610.41998, 2026-10-30
+- [S486] Beyond Prompt Injection: The Tool Update Gap in LLM Agent Security, arXiv 2611.01976, 2026-11-01
+- [S489] Ranked but Not Stopped: Detecting Prompt-Injection Hijacks from Typed Decision Models' Output Probabilities, arXiv 2611.02522, 2026-11-02
+- [S498] Beyond Instruction Override: Benchmarking Indirect Prompt Injection with Task-Tampering Attacks, arXiv 2611.07640, 2026-11-05
