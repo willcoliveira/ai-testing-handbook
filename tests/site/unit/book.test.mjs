@@ -33,7 +33,7 @@ test("real repo: sidebar is the plan's reading order", () => {
   assert.deepEqual(flatten(sidebar), expected);
   assert.equal(parts.length, 8);
   const playbooks = flatten(sidebar).filter((l) => /^\/how-to\/\d\d-/.test(l)).map((l) => l.slice(8, 10));
-  assert.deepEqual(playbooks, Array.from({ length: 17 }, (_, i) => String(i + 1).padStart(2, "0")));
+  assert.deepEqual(playbooks, Array.from({ length: 18 }, (_, i) => String(i + 1).padStart(2, "0")));
 });
 
 test("real repo: Parts I to VIII are collapsible groups opening with the intro page", () => {
