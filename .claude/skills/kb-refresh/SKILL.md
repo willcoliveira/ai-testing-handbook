@@ -80,9 +80,10 @@ the reviewer what to commit.
    (2026-10-28: this caught a figure a post quoted from a third party, a stop rate given as 62% and
    67% on one page, and a rate the fetch could not pair with its baseline).
    Then audit each drafted bullet claim by claim against its page, asking the reader to find
-   faults rather than confirm (verdicts and rule in `/refresh` step 2c); reword or drop any bullet
-   with a claim that is not fully supported, because the figure check misses dropped scope and
-   hedges (2026-11-06: 19 of 46 recent bullets needed a fix with their figures right).
+   faults rather than confirm, by a `web-reader` and never by the session that drafted it (verdicts
+   and rules in `/refresh` step 2c); reword or drop any bullet with a claim that is not fully
+   supported, because the figure check misses dropped scope and hedges (2026-11-06: 19 of 46
+   recent bullets needed a fix with their figures right).
    Use the scripts rather than hand edits: new rows go in `sources/_refresh-YYYY-MM-DD.rows.md` and
    bullets in `sources/_vendor-bullets-refresh-YYYYMMDD.md`; then `node scripts/merge-sources.mjs`,
    `node scripts/apply-bullets.mjs` (it stamps each bullet file once applied and skips stamped files),

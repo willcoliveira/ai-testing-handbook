@@ -8,6 +8,25 @@
   digest reports the counts. Prompted by the 2026-11-06 audit, where 19 of 46 recent bullets needed
   a fix although their figures were right.
 
+## 0.1.29 (2026-11-06)
+
+- Claim audit of the 46 sourced bullets added by the refreshes of October and November (S450 to
+  S498): each bullet split into claims and checked against its page by a reader asked to find
+  faults. 19 bullets corrected across nine practices: 15 with overstated, unsupported, contradicted or
+  added-inference claims (scope dropped, a hedge removed, a quote attached to the wrong claim, a
+  page edited after capture) and 4 omissions that changed the reading; dated audit notes on six
+  register rows (S451, S454, S458, S460, S484, S491).
+
+## 0.1.28 (2026-11-06)
+
+- Generating tests from manual cases: playbook 18 (triage the source cases, index the step library,
+  context per case, cheap gates before the environment, a meaning check against the source case,
+  proving each test can fail, blocked versus failed, per-gate rates on a fixed set); a How step and
+  three pitfalls on `ai-generated-tests` (default-value assertions, stale source cases, invented
+  steps); a no-op row on `mutation-checking`; interview questions 35 to 38 with the hypothesis
+  form of answer; sources S499 to S508 (Cucumber docs, PIT, BDD and acceptance-test generation
+  studies, a Gherkin judge study, pseudo-tested methods, test deletion).
+
 ## 0.1.27 (2026-11-06)
 
 - Refresh since 2026-11-01: eighteen new sources (S481 to S498): OpenAI's GPT-6 Cyber and ChatGPT

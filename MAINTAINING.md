@@ -28,6 +28,9 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
    bumps, and keeps the sweep list current: it fixes off-target queries and failed pages and adds
    up to two items for new trends, each tested first and listed under "Sweep list changes".
    Anything else is listed under "Skipped" for a human.
+   Before writing, every drafted bullet and register note is audited claim by claim against its
+   page by a separate reader (`/refresh` step 2c); the digest gives how many were reworded or
+   dropped.
 4. `npm run check`. Commit as `docs(refresh): YYYY-MM-DD digest`. Add one line to `CHANGELOG.md`.
 5. `main` requires the CI and Site checks, so push the branch and open a pull request:
    `git push -u origin HEAD && gh pr create --fill`. The maintainer reviews every pull request

@@ -3,8 +3,8 @@ id: ai-generated-tests
 title: AI-generated tests
 area: 8-governance
 status: draft
-last_reviewed: 2026-10-28
-sources: [S163, S164, S166, S168, S169, S170, S471]
+last_reviewed: 2026-11-06
+sources: [S163, S164, S166, S168, S169, S170, S471, S500, S501, S505, S508]
 related: [human-in-the-loop, autonomous-qa-agents, mutation-checking, ci-gates-for-llm-apps, golden-datasets, non-determinism-and-pass-rates]
 ---
 
@@ -25,6 +25,7 @@ A passing generated test proves little on its own, because the model can write a
 6. Check determinism. Run the test ten times. A test that flakes goes to `quarantined` (nightly only) rather than into the suite.
 7. Graduate. After review and a mutation check, set the status to `trusted`, move the test into the gating suite, and record the reviewer. Keep the generated origin in history so the share of generated tests can be reported [S169].
 8. For eval cases rather than code tests: a generated case needs a human-verified expected output before it enters a golden set, otherwise the model is grading its own homework. See golden-datasets.
+9. For tests converted from a manual case: check the meaning against the source case, not only against the requirement. Compare the entities and values in both, and have a second model rewrite the test as a manual case for a step-by-step comparison; neither check has a published evaluation, so measure it on planted differences first. Run a dry run before review: a step with no matching definition is marked undefined and the rest of the scenario is skipped [S500]. See [18 Generate tests from manual cases](../../how-to/18-generate-tests-from-manual-cases.md).
 
 | Status | Runs in CI | Blocks merge | Who promotes it |
 |---|---|---|---|
@@ -49,6 +50,9 @@ A passing generated test proves little on its own, because the model can write a
 4. Flaky generated tests poison the gate. When outcomes vary across runs "teams lose trust" [S170]. Quarantine, then fix or delete.
 5. Generated expected answers. An eval case whose expected output the model also wrote is circular; release decisions need results a team can explain [S170].
 6. Losing the origin. Once the marker is stripped, nobody knows which tests were never read. Report the share of AI-assisted changes as a standing metric [S169].
+7. The expected value is the default. An assertion whose expected value equals the system's initial or default state passes whether or not the step under test did anything. Coverage cannot see it, because coverage "does not check that your tests are actually able to detect faults in the executed code" [S501]; the test is covered and still cannot fail [S505]. Start from a non-default value, or assert the change.
+8. Converting stale cases. A manual case for a feature that changed or no longer exists becomes a well-formed test of the wrong thing. Old suites carry many: 91.4% of 24,431 deleted Java tests were obsolete [S508]. Triage the source cases before generating.
+9. Invented steps. A generated step that matches no step definition is marked undefined and skips the rest of the scenario [S500]; a model that may write new step definitions to make it pass grows a second, unreviewed step library.
 
 ## Pattern from a production build
 On a platform with payment features, AI-generated tests were never treated as validated: each was marked for SDET review, and the rule "agents propose, humans merge" applied to test code as much as to product code. See [governance-agents-propose-humans-merge](../../patterns/governance-agents-propose-humans-merge.md).
@@ -61,3 +65,7 @@ On a platform with payment features, AI-generated tests were never treated as va
 - [S169] Establishing code review standards for AI-generated code, metacto, 8 July 2026.
 - [S170] AI testing in 2026: why signal, trust and intentional choices matter, Applitools, 20 August 2026.
 - [S471] Benchmarking LLM agents for behaviorally adequate test generation from software requirements (Req2Test-Bench), arXiv 2610.36584, 2026-10-27
+- [S500] Cucumber API Reference, Cucumber Open Source Project, living.
+- [S501] PIT mutation testing, pitest.org, living.
+- [S505] A Comprehensive Study of Pseudo-tested Methods, arXiv 1807.05030, 2018-07-13.
+- [S508] Understanding Test Deletion in Java Applications, MSR 2025, 2025-04-28.
