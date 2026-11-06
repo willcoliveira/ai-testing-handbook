@@ -330,8 +330,64 @@ down with an owner and a trigger to revisit.
 **Read.** [11 Report results](../how-to/11-report-results.md),
 [01 Decide what to test](../how-to/01-decide-what-to-test.md), step 5.
 
+## Generating tests from manual cases
 
-Phase 5 of this path, then playbooks 01 to 08 and 13 to 17 and the
+These come up when a team wants an LLM to turn a manual suite into automated tests. None has a
+single right answer. What interviewers listen for is a hypothesis: "I'd try X,
+because LLMs tend to do Y, and I'd check it by Z." A candidate who names the check is ahead of one
+who names the tool.
+
+### 35. How do you check that a generated test means the same thing as the manual case?
+**Short answer.** There is no ready metric, so I'd build two checks and test them. A deterministic
+diff of the entities and values in both (equipment, thresholds, expected states), then a round
+trip: a second model rewrites the generated test as a manual case and a judge compares it with the
+original, step by step.
+**The mechanism.** Models paraphrase confidently and drop or soften steps, and the test still
+reads well. I'd check the round trip by planting known differences in 30 pairs (a deleted
+precondition, a changed threshold) and counting how many it catches, then measure its agreement
+with a human. Judges of Gherkin tests can be scored for accuracy, reliability and cost per model
+[S504].
+**Follow-up to expect.** "And if the judge agrees with itself?" That is why the second model never
+sees the original, and why the planted pairs come first.
+**Read.** [18 Generate tests from manual cases](../how-to/18-generate-tests-from-manual-cases.md),
+step 5.
+
+### 36. What goes into the model's context to generate a Gherkin test?
+**Short answer.** The manual case, the existing step definitions most similar to it with their
+exact expressions, two or three reviewed tests from the same area, and the domain glossary. Not
+the whole step library.
+**The mechanism.** A step with no matching definition is marked undefined and the rest of the
+scenario is skipped [S500]; given free choice, a model writes steps that look right and match
+nothing. Few-shot examples raised accuracy in a BDD generation study [S502]. I'd check retrieval
+by comparing the undefined-step rate from a dry run [S500] with and without it on the same cases.
+**Read.** [18 Generate tests from manual cases](../how-to/18-generate-tests-from-manual-cases.md),
+steps 2 to 4.
+
+### 37. About 1,000 step definitions, hundreds of stale tests, a short deadline. How do you design the pipeline?
+**Short answer.** Triage the cases, index the steps, gate cheaply before the environment, start
+with one subsystem. Stale cases and stale steps stay out of the model's input. New step definitions
+need a person's approval. Parse, dry run and a meaning check run before anything books hours of
+environment time.
+**The mechanism.** Old suites are mostly dead weight when they are cleaned: 91.4% of 24,431 deleted
+Java tests were obsolete [S508]. The model copies what it is shown, so stale examples produce stale
+tests. Tests needing equipment the environment lacks are reported as blocked, not failed.
+**Read.** [18 Generate tests from manual cases](../how-to/18-generate-tests-from-manual-cases.md),
+steps 1, 4 and 7.
+
+### 38. How do you measure the pipeline's quality and improve it without guessing?
+**Short answer.** A fixed set of manual cases with accepted tests, run on every prompt, model or
+retrieval change, several times per case, with a rate at each gate: parses, no undefined steps,
+meaning kept, can fail, green in the environment, accepted without edits. The gate where the rate
+drops is the next thing to fix.
+**The mechanism.** "Green" overstates quality: on Req2Test-Bench 82.8% of instances got passing
+tests but only 33.8% were behaviourally adequate [S471]. So "can fail" is its own gate: change the
+expected value or break the behaviour and the test must turn red [S501][S505]. That also catches a
+test whose expected value equals the default, which passes whether or not the step did anything.
+**Read.** [18 Generate tests from manual cases](../how-to/18-generate-tests-from-manual-cases.md),
+steps 6 and 8; [mutation-checking](../practices/4-agents-and-systems/mutation-checking.md).
+
+
+Phase 5 of this path, then playbooks 01 to 08 and 13 to 18 and the
 [side-effects-and-state](../practices/4-agents-and-systems/side-effects-and-state.md) practice, then the
 [AI QA requirements](ai-qa-requirements.md) page for what roles ask for. Know one tool well enough to write a
 test in it live (DeepEval or promptfoo), and be ready to explain one number you reported with

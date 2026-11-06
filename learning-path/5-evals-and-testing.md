@@ -16,7 +16,8 @@ The whole reference, in this reading order.
 Work through [how-to/](../how-to/README.md) 01 to 12 against your own agent. Each playbook ends
 with a "Done when" you can check. The reading order below is the theory behind each step. If
 your system answers from documents, add [17 Test a RAG application](../how-to/17-test-a-rag-application.md)
-and stages 4 to 8 of the [RAG build project](rag-build-project.md).
+and stages 4 to 8 of the [RAG build project](rag-build-project.md). If you are asked to
+automate a manual suite with an LLM, add [18 Generate tests from manual cases](../how-to/18-generate-tests-from-manual-cases.md).
 
 ## Reading order
 
