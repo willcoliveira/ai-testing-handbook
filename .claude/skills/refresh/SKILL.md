@@ -46,17 +46,17 @@ found one.
 
 ## 2b. Verify the figures (main session decides, web-reader reads)
 After the reports are in and before anything is written, the main session lists the candidates it
-intends to accept and the figures each bullet would carry (the wording is audited in step 2c),
-then launches one `web-reader` per group of about twelve pages (lab, vendor and standards pages
-in one; arXiv abstracts, tool release pages and compare notes in another, with the one-at-a-time
-rule as above). Each prompt names the page and the quantities to quote (the sentence that gives
-the number of runs, the rate, the date, who is speaking), never the value expected, so the reader
-cannot confirm a number it was handed; it asks for the exact sentence in quotation marks, "not
-stated" where the page is silent, and both values where the page gives two. The main session writes only figures this round returned. A figure
-the page gives twice, or that the round could not pair with its comparison, stays out of the bullet
-and is listed under Skipped with both values. The first run of this step (2026-10-28) caught a
-monitor figure that one lab was quoting from another, a stop rate given as 62% and 67% on one page,
-and a rate whose baseline the fetch could not pair.
+intends to accept and the figures each bullet would carry (the wording is audited in step 2c), then
+launches one `web-reader` per group of about twelve pages (lab, vendor and standards pages in one;
+arXiv abstracts, tool release pages and compare notes in another, with the one-at-a-time rule as
+above). Each prompt names the page and the quantities to quote (the sentence that gives the number
+of runs, the rate, the date, who is speaking), never the value expected, so the reader cannot
+confirm a number it was handed; it asks for the exact sentence in quotation marks, "not stated"
+where the page is silent, and both values where the page gives two. The main session writes only
+figures this round returned. A figure the page gives twice, or that the round could not pair with
+its comparison, stays out of the bullet and is listed under Skipped with both values. The first run
+of this step (2026-10-28) caught a monitor figure that one lab was quoting from another, a stop rate
+given as 62% and 67% on one page, and a rate whose baseline the fetch could not pair.
 
 ## 2c. Audit the drafted bullets (main session drafts, web-reader audits)
 Step 2b checks numbers; it does not check scope. The audit of 2026-11-06 found 19 of 46 bullets
