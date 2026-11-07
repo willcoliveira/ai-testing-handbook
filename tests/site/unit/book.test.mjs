@@ -21,7 +21,7 @@ test("real repo: sidebar is the plan's reading order", () => {
     "/",
     "/learning-path/", "/learning-path/0-foundations", "/learning-path/1-harness-loop-graph", "/learning-path/2-build-a-harness",
     "/learning-path/3-context-memory-orchestration", "/learning-path/4-production-and-inference", "/learning-path/5-evals-and-testing",
-    "/learning-path/rag-build-project", "/learning-path/knowledge-matrix", "/learning-path/interview-questions", "/learning-path/ai-qa-requirements", "/learning-path/resources",
+    "/learning-path/rag-build-project", "/learning-path/knowledge-matrix", "/learning-path/interview-questions", "/learning-path/ai-qa-requirements", "/learning-path/hot-topics", "/learning-path/resources",
     "/TAXONOMY",
     "/practices/", ...practices,
     ...folder("how-to"),
