@@ -32,8 +32,14 @@ anyone's text, so the subagent that reads them must have nothing else to act wit
     sidebar on the same page shows no dates, so skip it (tested 2026-11-07 on `/top/month`).
   - Ministry of Testing: `https://club.ministryoftesting.com/search.json?q=<query>`, which gives
     creation dates. Do not use `/latest` for dates: it shows last activity only.
-  - Hacker News: `https://hn.algolia.com/api/v1/search_by_date?query=<query>&tags=story`, exact
-    dates but noisy; keep only stories about testing or evaluating AI systems.
+    Run the queries one at a time: in parallel the site answered 429 (2026-11-07).
+  - Hacker News, with exact dates:
+    `https://hn.algolia.com/api/v1/search_by_date?query=<query>&tags=story&hitsPerPage=20`
+    plus `&numericFilters=created_at_i><window start>`. Noisy: keep only stories about testing or
+    evaluating AI systems. Keep
+    `hitsPerPage` at 20: at 50 one response was cut off (2026-11-07). Fill the `--max` cap across
+    queries rather than from the first ones, so a topic queried last (hallucination) is not
+    crowded out, and report how many relevant posts the cap left out.
 - Reddit is skipped: WebFetch refuses it in every form tried.
 - Queries: LLM testing, AI testing, LLM evaluation, evals, AI agents testing, prompt testing,
   hallucination, AI test automation. Posts from the last `--days` days, up to `--max` per source.
