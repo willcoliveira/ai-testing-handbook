@@ -10,3 +10,7 @@ or fetch failed), Next steps for the reviewer.
 
 Review it, run `npm run check`, then commit with `docs(refresh): YYYY-MM-DD digest`. Each
 accepted digest adds one line to `CHANGELOG.md`. The skill never commits.
+
+Files named `revise-YYYY-MM-DD.md` are reports of the `/revise` skill: How and What sentences
+rewritten from open contradictions and moved versions, and claim-by-claim audits of older bullets
+with the error rate run over run. They are not refresh digests and do not set `--since`.
