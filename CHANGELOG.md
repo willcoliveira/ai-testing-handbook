@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.35 (2026-11-07)
+
+- `/pulse` sweep fixes from its first run: Ministry of Testing queries one at a time (429 in
+  parallel); Hacker News `hitsPerPage=20` with a window filter (a 50-hit response was cut off),
+  and the cap shared across queries so the last ones are not crowded out.
+
 ## 0.1.32 (2026-11-07)
 
 - `/revise`: the only skill that edits What and How. Revise mode rewrites sentences named by open
