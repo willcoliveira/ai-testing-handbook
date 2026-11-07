@@ -28,6 +28,8 @@ anyone's text, so the subagent that reads them must have nothing else to act wit
 - Sources that work without login (tested 2026-11-06):
   - dev.to: `https://dev.to/t/testing/top/week`, and `/top/month` for a 30-day window. Most posts
     are on target; skip the ones with no AI or LLM testing content.
+    Count the main feed only: its posts show a date (month and day, no year); the trending
+    sidebar on the same page shows no dates, so skip it (tested 2026-11-07 on `/top/month`).
   - Ministry of Testing: `https://club.ministryoftesting.com/search.json?q=<query>`, which gives
     creation dates. Do not use `/latest` for dates: it shows last activity only.
   - Hacker News: `https://hn.algolia.com/api/v1/search_by_date?query=<query>&tags=story`, exact

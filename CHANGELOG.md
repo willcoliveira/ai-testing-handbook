@@ -2,6 +2,15 @@
 
 ## 0.1.32 (2026-11-07)
 
+- `/revise`: the only skill that edits What and How. Revise mode rewrites sentences named by open
+  contradictions in the digests or citing a source whose version moved, recording the old
+  sentence, the new one and a quote fetched by a `web-reader`; `--audit` audits a sample of
+  bullets claim by claim, unaudited sources first, records dated audit notes on the register rows,
+  tracks the error rate run over run and proposes folding recurring bullets into How. Reports go
+  to `digests/revise-YYYY-MM-DD.md`; `check-diff-paths` has a `revise` profile.
+
+## 0.1.31 (2026-11-07)
+
 - `/pulse`: counts the AI testing topics in recent dev.to, Ministry of Testing and Hacker News
   posts on `learning-path/hot-topics.md`, maps each to handbook coverage (covered, partial, gap)
   and lists gaps as proposals for the reviewer; reads through `web-reader`, stores no usernames,

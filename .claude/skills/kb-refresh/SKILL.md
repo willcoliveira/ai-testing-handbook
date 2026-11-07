@@ -31,7 +31,8 @@ the reviewer what to commit.
 - `references/sweep-list.md`: the bounded list of pages and queries, grouped and capped.
 - `references/edit-rules.md`: what this skill may and may not change.
 - `references/digest-template.md`: the digest layout.
-- `digests/`: previous digests. The newest file's date is the default `--since`.
+- `digests/`: previous digests. The newest `YYYY-MM-DD.md` file's date is the default `--since`
+  (`revise-*.md` reports from `/revise` do not count).
 
 ## Flags
 
