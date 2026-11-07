@@ -1,10 +1,12 @@
 # Changelog
 
-## 0.1.34 (2026-11-07)
+## 0.1.35 (2026-11-07)
 
 - First `/pulse` run, 2026-10-08 to 2026-11-07: 47 posts kept (dev.to 12, Ministry of Testing 5,
   Hacker News 30), 21 topics; benchmark validity and agent testing lead; 3 gaps and 6 partial
   topics proposed; `learning-path/hot-topics.md`.
+
+## 0.1.34 (2026-11-07)
 
 - First `/revise --audit` run, 8 sampled bullets citing unaudited sources: 6 of 7 audited
   reworded from quoted sentences (S143, S147, S228, S229, S243, S072), S150 supported, S268
