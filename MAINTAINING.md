@@ -20,8 +20,8 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
    The sweeps read pages anyone can publish, so their reach is narrow by design: fetching is done
    by `web-reader` subagents (`.claude/agents/web-reader.md`, web access only); `kb-refresh`
    pre-approves only its own scripts and the sweep-list domains, so a write, an edit or any other
-   command asks you first; `/refresh` and `/roles` stage named paths only after
-   `node scripts/check-diff-paths.mjs <refresh|roles>` passes, and check the commit message and PR
+   command asks you first; `/refresh`, `/roles` and `/pulse` stage named paths only after
+   `node scripts/check-diff-paths.mjs <refresh|roles|pulse>` passes, and check the commit message and PR
    body with `check-forbidden --file`. With `git config core.hooksPath .githooks`, the `commit-msg`
    hook checks every commit message the same way.
 3. Read `digests/YYYY-MM-DD.md`, then `git diff`. The skill adds sourced bullets, register rows and date
@@ -40,6 +40,12 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
 
 `/roles` reads current AI QA postings and updates `learning-path/ai-qa-requirements.md` and the
 interview questions. It stores requirements only, never postings, companies or links.
+
+`/pulse` counts the AI testing topics QA communities discuss (dev.to, Ministry of Testing, Hacker
+News; Reddit refuses fetching) on `learning-path/hot-topics.md`, maps each to handbook coverage
+and lists gaps as proposals. It stores topics and counts only, never usernames, quotes or links,
+and writes no practice content: gaps are covered from primary sources by `/refresh` or a content
+pull request.
 
 ## When adding by hand
 

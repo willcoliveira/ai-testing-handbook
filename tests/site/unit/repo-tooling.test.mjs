@@ -27,8 +27,8 @@ test("kb-refresh pre-approves no write, no edit, no open-ended command, no open 
   }
 });
 
-test("refresh and roles fetch through web-reader and never stage everything", () => {
-  for (const skill of ["refresh", "roles"]) {
+test("refresh, roles and pulse fetch through web-reader and never stage everything", () => {
+  for (const skill of ["refresh", "roles", "pulse"]) {
     const s = read(`.claude/skills/${skill}/SKILL.md`);
     assert.match(s, /web-reader/, `${skill} uses web-reader`);
     assert.doesNotMatch(s, /general-purpose/, `${skill} has no general-purpose fetcher`);
@@ -42,6 +42,7 @@ test("check-diff-paths: only the profile's paths pass", () => {
   assert.deepEqual(outside(["sources.md", "sources/_x.rows.md", "practices/3-judging/a.md", "digests/d.md", "CHANGELOG.md"], PROFILES.refresh), []);
   assert.deepEqual(outside(["scripts/x.mjs", ".github/workflows/site.yml", "package.json", "practicesX/a.md"], PROFILES.refresh), ["scripts/x.mjs", ".github/workflows/site.yml", "package.json", "practicesX/a.md"]);
   assert.deepEqual(outside(["practices/3-judging/a.md"], PROFILES.roles), ["practices/3-judging/a.md"]);
+  assert.deepEqual(outside(["learning-path/hot-topics.md", "CHANGELOG.md", "practices/3-judging/a.md"], PROFILES.pulse), ["practices/3-judging/a.md"]);
 });
 
 test("check-diff-paths: sees modified and untracked files in a real repository", () => {

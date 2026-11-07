@@ -32,6 +32,8 @@ every video, talk and document with its phase and its testing counterpart.
   questions with sourced answers and the follow-up that tests depth, and
   [AI QA requirements](ai-qa-requirements.md) consolidates what the roles ask for, with the
   fundamentals, an example and what to build for each.
+- If you want to know what practitioners ask about now: [hot topics](hot-topics.md) counts the AI
+  testing topics QA communities discuss and shows where the handbook covers each.
 
 ## The build projects
 
