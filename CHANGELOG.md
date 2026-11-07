@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.31 (2026-11-07)
+
+- `/revise`: the only skill that edits What and How. Revise mode rewrites sentences named by open
+  contradictions in the digests or citing a source whose version moved, recording the old
+  sentence, the new one and a quote fetched by a `web-reader`; `--audit` audits a sample of
+  bullets claim by claim, unaudited sources first, records dated audit notes on the register rows,
+  tracks the error rate run over run and proposes folding recurring bullets into How. Reports go
+  to `digests/revise-YYYY-MM-DD.md`; `check-diff-paths` has a `revise` profile.
+
 ## 0.1.30 (2026-11-06)
 
 - `/refresh` step 2c and kb-refresh step 6: every drafted bullet is audited claim by claim against

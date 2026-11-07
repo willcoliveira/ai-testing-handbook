@@ -31,6 +31,10 @@ The routine, in the order it happens. `CONTRIBUTING.md` has the rules; this file
    Before writing, every drafted bullet and register note is audited claim by claim against its
    page by a separate reader (`/refresh` step 2c); the digest gives how many were reworded or
    dropped.
+   The refresh never rewrites What or How. `/revise` does: it rewrites those sentences from open
+   contradictions and moved versions, each with the old sentence, the new one and a fetched quote,
+   and `/revise --audit` audits a sample of older bullets; it writes `digests/revise-YYYY-MM-DD.md`
+   and opens its own pull request.
 4. `npm run check`. Commit as `docs(refresh): YYYY-MM-DD digest`. Add one line to `CHANGELOG.md`.
 5. `main` requires the CI and Site checks, so push the branch and open a pull request:
    `git push -u origin HEAD && gh pr create --fill`. The maintainer reviews every pull request

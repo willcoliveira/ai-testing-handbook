@@ -1,12 +1,13 @@
 // Fails when the working tree changes anything outside the paths a skill may touch. Run by /refresh
-// and /roles before staging, so a stray file a subagent or a fetched page produced cannot reach the
-// commit (security review, 2026-10-04). Usage: node scripts/check-diff-paths.mjs <refresh|roles>
+// /roles and /revise before staging, so a stray file a subagent or a fetched page produced cannot reach the
+// commit (security review, 2026-10-04). Usage: node scripts/check-diff-paths.mjs <refresh|roles|revise>
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 export const PROFILES = {
   refresh: ["sources.md", "sources/", "practices/", "digests/", "CHANGELOG.md", ".claude/skills/kb-refresh/references/sweep-list.md"],
   roles: ["learning-path/ai-qa-requirements.md", "learning-path/interview-questions.md", "sources.md", "sources/", "CHANGELOG.md"],
+  revise: ["sources.md", "sources/", "practices/", "digests/", "CHANGELOG.md"],
 };
 
 export function outside(paths, allowed) {

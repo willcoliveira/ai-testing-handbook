@@ -19,7 +19,8 @@ after the draft digest and does no git work.
 ## 1. Preflight (stop and report if any fails)
 - `git status --porcelain` is empty, and `git switch main && git pull --ff-only` succeeds.
 - `gh auth status` shows `willcoliveira` active; if not, `gh auth switch --user willcoliveira`.
-- `--since` defaults to the date of the newest file in `digests/` (ignore `*.draft.md`).
+- `--since` defaults to the date of the newest file in `digests/` (ignore `*.draft.md` and the
+  `revise-*.md` reports of `/revise`).
 - Branch `refresh/YYYY-MM-DD` (today). If it exists locally or on origin, add `-b`, `-c`, ...;
   the digest takes the same suffix (`digests/YYYY-MM-DD-b.md`).
 - Print the plan: groups, item count, `--since`, branch name.
