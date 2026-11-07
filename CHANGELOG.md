@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.32 (2026-11-07)
+
+- `/pulse`: counts the AI testing topics in recent dev.to, Ministry of Testing and Hacker News
+  posts on `learning-path/hot-topics.md`, maps each to handbook coverage (covered, partial, gap)
+  and lists gaps as proposals for the reviewer; reads through `web-reader`, stores no usernames,
+  quotes or links, writes no practice content; `pulse` profile in `check-diff-paths`.
+
 ## 0.1.30 (2026-11-06)
 
 - `/refresh` step 2c and kb-refresh step 6: every drafted bullet is audited claim by claim against
