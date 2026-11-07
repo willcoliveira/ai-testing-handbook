@@ -48,6 +48,8 @@ anyone's text, so the subagent that reads them must have nothing else to act wit
   sources, posts kept and skipped). Counts replace the previous run's; they describe a window,
   not a running total. Re-sort by total; keep the T numbers stable, and give a new topic the next
   free number. A topic with no posts this window stays in the table with zero counts.
+- On the first run, delete the `T1 (format example, not yet run)` row and number the real topics
+  from T1. Replace "Basis: not yet run" with the basis line.
 - Map each topic to the handbook: `covered` (a practice, playbook or pattern answers it; give its
   path), `partial` (a page touches it; name the page and what is missing) or `gap` (no page).
   Decide by reading the page, not by its title.
