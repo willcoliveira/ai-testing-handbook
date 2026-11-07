@@ -46,17 +46,43 @@ found one.
 
 ## 2b. Verify the figures (main session decides, web-reader reads)
 After the reports are in and before anything is written, the main session lists the candidates it
-intends to accept and the figures each bullet would carry, then launches one `web-reader` per
-group of about twelve pages (lab, vendor and standards pages in one; arXiv abstracts, tool release
-pages and compare notes in another, with the one-at-a-time rule as above). Each prompt names the
-page and the quantities to quote (the sentence that gives the number of runs, the rate, the date,
-who is speaking), never the value expected, so the reader cannot confirm a number it was handed;
-it asks for the exact sentence in quotation marks, "not stated" where the page is silent, and both
-values where the page gives two. The main session writes only figures this round returned. A figure
-the page gives twice, or that the round could not pair with its comparison, stays out of the bullet
-and is listed under Skipped with both values. The first run of this step (2026-10-28) caught a
-monitor figure that one lab was quoting from another, a stop rate given as 62% and 67% on one page,
-and a rate whose baseline the fetch could not pair.
+intends to accept and the figures each bullet would carry (the wording is audited in step 2c), then
+launches one `web-reader` per group of about twelve pages (lab, vendor and standards pages in one;
+arXiv abstracts, tool release pages and compare notes in another, with the one-at-a-time rule as
+above). Each prompt names the page and the quantities to quote (the sentence that gives the number
+of runs, the rate, the date, who is speaking), never the value expected, so the reader cannot
+confirm a number it was handed; it asks for the exact sentence in quotation marks, "not stated"
+where the page is silent, and both values where the page gives two. The main session writes only
+figures this round returned. A figure the page gives twice, or that the round could not pair with
+its comparison, stays out of the bullet and is listed under Skipped with both values. The first run
+of this step (2026-10-28) caught a monitor figure that one lab was quoting from another, a stop rate
+given as 62% and 67% on one page, and a rate whose baseline the fetch could not pair.
+
+## 2c. Audit the drafted bullets (main session drafts, web-reader audits)
+Step 2b checks numbers; it does not check scope. The audit of 2026-11-06 found 19 of 46 bullets
+from the October and November refreshes needing a fix although their figures were right: a
+qualifier dropped in compression ("on three API-served systems", "on large evaluation sets"), a
+hedge removed ("generally"), a quote attached to the wrong claim, a figure applied to the wrong
+population, a named metric glossed with a meaning the source does not give, and a page edited after
+it was read; two of those errors sat in the register note too. So after drafting every bullet and
+its register note, and before writing any file:
+- Launch `web-reader` audits of about eight bullets each, never the session that drafted them.
+  Bullets citing arXiv go to their own reader, at most six, with the one-at-a-time rule as its first
+  line (on 2026-11-06 a reader given arXiv and other pages together fetched five abstracts at
+  once). Each prompt carries the drafted bullet, its register note and the URL, and asks the reader
+  to assume the bullet is wrong and find where: split it into claims (each number, comparison,
+  attribution, quoted phrase, scope qualifier and characterisation), and give each a verdict with
+  the page's exact sentence in quotation marks: SUPPORTED, OVERSTATED (the page is weaker,
+  narrower, hedged or about a subset), UNSUPPORTED, CONTRADICTED, or ADDED INFERENCE (the bullet's
+  own conclusion). It also lists caveats the page states that the bullet leaves out.
+- A bullet or note with any verdict other than SUPPORTED is reworded using only the quoted
+  sentences, or dropped; a rewording built only from those quotes needs no second audit. An
+  omitted caveat is added when leaving it out changes what the bullet says. A verdict that rests on
+  a paraphrase, or that contradicts a quote step 2b already returned, is checked against that
+  quote before acting on it (the 2026-11-06 audit raised one such false alarm).
+- The digest gives the counts under Proposed edits (bullets audited, reworded, dropped), lists
+  each dropped bullet under Skipped with the verdict, and notes any reader that broke the
+  one-at-a-time rule.
 
 ## 3. Apply (main session only, kb-refresh edit rules)
 - Accept a new source only if it bears on testing, evaluation or safety practice; say why for

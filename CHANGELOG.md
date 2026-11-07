@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.30 (2026-11-06)
+
+- `/refresh` step 2c and kb-refresh step 6: every drafted bullet is audited claim by claim against
+  its page by a reader asked to find faults (supported, overstated, unsupported, contradicted,
+  added inference, omitted caveats) and is reworded from the quoted sentences or dropped; the
+  digest reports the counts. Prompted by the 2026-11-06 audit, where 19 of 46 recent bullets needed
+  a fix although their figures were right.
+
 ## 0.1.29 (2026-11-06)
 
 - Claim audit of the 46 sourced bullets added by the refreshes of October and November (S450 to
