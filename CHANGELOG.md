@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.1.35 (2026-11-07)
+## 0.1.34 (2026-11-07)
+
+- First `/revise --audit` run, 8 sampled bullets citing unaudited sources: 6 of 7 audited
+  reworded from quoted sentences (S143, S147, S228, S229, S243, S072), S150 supported, S268
+  skipped as PDF-only; audit notes on 8 rows; `digests/revise-2026-11-07.md`.
+
+## 0.1.33 (2026-11-07)
 
 - `/pulse` sweep fixes from its first run: Ministry of Testing queries one at a time (429 in
   parallel); Hacker News `hitsPerPage=20` with a window filter (a 50-hit response was cut off),
