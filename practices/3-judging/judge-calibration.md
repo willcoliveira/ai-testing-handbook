@@ -3,8 +3,8 @@ id: judge-calibration
 title: Judge calibration
 area: 3-judging
 status: draft
-last_reviewed: 2026-11-06
-sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320, S388, S391, S429, S482, S491]
+last_reviewed: 2026-11-13
+sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320, S388, S391, S429, S482, S491, S510]
 related: [llm-as-judge, human-annotation, rubrics-and-pairwise, statistical-treatment-of-evals, non-determinism-and-pass-rates]
 ---
 
@@ -44,6 +44,7 @@ An uncalibrated judge is an unmeasured guess, and its errors are not symmetric. 
 - **arXiv, 2026-10:** an audit of six frontier LLM judges across four benchmarks, five prompt formats, two presentation orders, three temperatures and ten repetitions per condition found the most deterministic judge agreed with ground truth only 51 percent of the time, and proposes a trustworthy verdict rate combining reproducibility, order invariance and accuracy [S429].
 - **arXiv, 2026-10:** streaming quantile matching calibrates judge scores to the human score distribution through an optimal-transport map, keeping the ordinal scale, and the authors report that post-hoc calibration generally narrows the raw error gap between smaller and larger judges; the abstract gives no figures [S482].
 - **arXiv, 2026-11:** AGORA aggregates several LLM judges with item-response theory, estimating each judge's sensitivity and rating thresholds without human labels; across three benchmarks it matches or exceeds Dawid-Skene on large evaluation sets, and its advantage widens as the set shrinks toward a few hundred items; the abstract gives no figures [S491].
+- **arXiv, 2026-11:** in a study of psychological depth in short stories, with 60 blinded pairwise evaluations of prompt-matched outputs from GPT-5 against GPT-4o and DeepSeek-R1 against DeepSeek-V3 (the authors' "closest available contrast for reasoning-oriented post-training"), an ensemble LLM judge showed a strong pro-reasoning bias (98.3% of pairs against 55.2% of human votes), consistent across its five configurations and partly tracking sentence length; the seven human annotators showed no universal reasoning advantage (GPT-5 slightly preferred over GPT-4o at 60.0-62.9%, DeepSeek-R1 behind DeepSeek-V3 at 42.9%) with low agreement (Krippendorff's α = 0.070), which the authors' annotation-quality checks suggested was genuine evaluative subjectivity [S510].
 
 ## Pitfalls
 1. Raw agreement on imbalanced classes. With a 5% defect rate a judge that always passes scores 95% agreement and zero recall on defects [S052].
@@ -86,3 +87,4 @@ reads the item. See [decision-model-triage-before-an-llm-judge](../../patterns/d
 - [S429] All verdicts are not equal: rethinking LLM judge reliability, arXiv 2610.12083, 2026-10-08
 - [S482] Quantiles, Not Points: Streaming Quantile Matching for Ordinal-Aware LLM-as-a-Judge Calibration, arXiv 2611.00447, 2026-10-30
 - [S491] AGORA: Reliability-Aware Aggregation of LLM Judges via Item-Response Theory, arXiv 2611.05556, 2026-11-03
+- [S510] Does Reasoning Improve Psychological Depth in Large Language Models?, arXiv 2611.09061, 2026-11-06

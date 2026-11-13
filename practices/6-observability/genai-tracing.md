@@ -3,7 +3,7 @@ id: genai-tracing
 title: GenAI tracing
 area: 6-observability
 status: draft
-last_reviewed: 2026-10-28
+last_reviewed: 2026-11-13
 sources: [S068, S071, S136, S137, S138, S139, S141, S323, S324, S327, S384]
 related: [online-evals-and-drift, redaction-in-telemetry, load-and-latency, agent-evals]
 ---
@@ -67,6 +67,8 @@ attributes:
 - **OpenTelemetry, 2026-10:** still no release; merged pull requests add a `gen_ai.client.inference.duration` metric for model calls, leaving `gen_ai.client.operation.duration` for other operations, rename the two streaming chunk metrics from `gen_ai.client.operation.*` to `gen_ai.client.inference.*`, record token usage histograms for failed operations, and make the `gen_ai.client.inference.operation.details` event recommended instead of opt-in [S136].
 - **OpenTelemetry, 2026-09:** PR #374 (merged 2026-09-22, breaking, unreleased) removes the `gen_ai.client.token.usage` histogram and its `gen_ai.token.type` attribute; token use is now five counters (`gen_ai.client.inference.usage.input_tokens`, `.output_tokens`, `.cache_read.input_tokens`, `.cache_write.input_tokens`, `.reasoning.output_tokens`) and two histograms (`gen_ai.client.inference.operation.input_tokens` and `.output_tokens`, buckets 1 to 67,108,864 in powers of 4), recorded for failed operations too [S136].
 - **OpenTelemetry, 2026-10:** still no release; PR #578 (merged 2026-10-26, marked breaking) moves embeddings off `gen_ai.client.operation.duration` and `gen_ai.client.token.usage` onto `gen_ai.client.embeddings.duration` and `gen_ai.client.embeddings.operation.input_tokens`, and the metrics page now says `gen_ai.client.operation.duration` "SHOULD NOT be reported for inference or embeddings operations" [S136].
+- **Langfuse, 2026-11:** v4.77.0 opens with the notice "This release removes automatic tokenization, as we believe no one should be relying on it"; its notes list "stop inferring observation usage from content", "remove background tokenizer pool" and "guide users to submit missing token usage" [S071].
+- **OpenTelemetry, 2026-11:** still no release; the metrics page says `gen_ai.client.operation.duration` "SHOULD NOT be reported for inference, embeddings, execute tool, or invoke agent client operations", naming `gen_ai.client.inference.duration`, `gen_ai.client.embeddings.duration`, `gen_ai.execute_tool.duration` and `gen_ai.client.invoke_agent.duration` instead, and "SHOULD NOT be reported for retrieval operations"; PR #635 (merged 2026-11-05, marked breaking in its description) adds the `gen_ai.client.invoke_agent.duration` histogram for remote agent invocations and says the older metric "now explicitly excludes invoke agent client operations", and PR #634 (merged 2026-11-05, with a breaking changelog fragment) requires GenAI content attributes as structured values and removes the JSON-string fallback [S136].
 
 ## Pitfalls
 1. **Treating Development names as stable.** A rename between convention releases leaves dashboards keyed on the old attribute blank; pin the instrumentation version and diff on upgrade [S136].
