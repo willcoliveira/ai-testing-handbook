@@ -3,8 +3,8 @@ id: model-and-system-cards
 title: Model and system cards
 area: 8-governance
 status: draft
-last_reviewed: 2026-11-06
-sources: [S156, S157, S160, S161, S164, S165, S216, S222, S223, S226, S229, S230, S238, S239, S246, S252, S254, S257, S265, S266, S267, S269, S273, S430, S453, S464, S480, S490, S495]
+last_reviewed: 2026-11-13
+sources: [S156, S157, S160, S161, S164, S165, S216, S222, S223, S226, S229, S230, S238, S239, S246, S252, S254, S257, S265, S266, S267, S269, S273, S430, S453, S464, S480, S490, S495, S522]
 related: [frontier-safety-frameworks, golden-datasets, capability-benchmarks, standards-and-regulation, data-contamination]
 ---
 
@@ -70,6 +70,7 @@ Writing a card for your own application: use a README.md with YAML metadata so t
 - **OpenAI, 2026-10:** the GPT-Rosalind-6 addendum covers a model with "the same weights as GPT-6 Astra" and fewer refusals on dual-use biology, offered only through trusted access; it takes the Cybersecurity and AI Self-Improvement levels from GPT-6 Astra's assessments, and reports that after adjusting for refusals the model exceeds the indicative High thresholds on three of four biology evaluations, with biorisk knowledge at 78.3% raw and 85.0% refusal-adjusted against an 80% threshold [S480].
 - **Moonshot AI, 2026-11:** the Kimi K3.1 Pro card (open weights, 2.8T total and 104B activated parameters) has no safety section, and its hallucination benchmarks, with and without tools, are marked internal [S490].
 - **OpenAI, 2026-11:** the ChatGPT Images 2.6 card runs 3,077 challenging requests against each model's GPT-Image-2.5 baseline, reports a statistically significant drop in Flare's non-violative outputs before moderation (78.36% to 75.04%), and says the results are not representative of how often violative requests or outputs arise in production traffic [S495].
+- **Google DeepMind, 2026-11:** the Gemini 4 Hydrogen launch post gives safety figures in sentences that name no comparison model (overreach in agentic tasks reduced "by up to 81%", under-service "by up to 79%", "more than 2.3x more resilient on the Gray Swan IPI benchmark"); the sentence before the first of them says "While 3.8 Flash has strong alignment and safeguards, Hydrogen is a leap ahead"; the post also says that "when faced with impossible or blocked tasks" Hydrogen achieves a 96.7% honesty rate on an internal agent honesty evaluation, reports 99.9% chain-of-thought legibility with zero deceptive reasoning edits across more than 200,000 audited turns, and points to a model card for details [S522].
 
 ## Pitfalls
 1. Reading the aggregate and skipping the factors. The point of the format is the disaggregated table [S156].
@@ -111,3 +112,4 @@ None yet.
 - [S480] GPT-Rosalind-6 System Card Addendum, OpenAI, 2026-10-30
 - [S490] Kimi K3.1 Pro model card, Moonshot AI (Hugging Face), 2026-11-02
 - [S495] ChatGPT Images 2.6 System Card, OpenAI, 2026-11-04
+- [S522] Introducing Gemini 4 Hydrogen, Google DeepMind (blog.google; Koray Kavukcuoglu), 2026-11-12

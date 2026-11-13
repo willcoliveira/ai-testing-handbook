@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.36 (2026-11-13)
+
+- Refresh since 2026-11-06: 14 new sources (S509 to S522): nine arXiv papers (a nine-dimension
+  prompt injection taxonomy, a judge's pro-reasoning bias, monitors that models can learn to evade,
+  patch-correctness evidence, an outside-the-model monitor, AgentScript-Eval, agentic injection
+  attackers, CapLite, DeepResearch RewardBench), Google DeepMind's Multimodal Knowledge Agent
+  benchmark, Gemini 4 Carbon availability and Gemini 4 Hydrogen launch posts and AlphaProof Code,
+  and OWASP's Securing Agentic Applications V2 (register only); 17 bullets in 12 practice files,
+  all audited claim by claim, 13 reworded from quoted sentences and none dropped; Inspect AI
+  0.3.289 (0.3.288 removes the web browser tools), DeepEval 4.3.4, Langfuse v4.80.0 (v4.77.0
+  removes automatic tokenization) and two OpenTelemetry GenAI breaking merges missed on
+  2026-11-06 recorded; sweep notes fixed on 17 items, none added or removed;
+  `digests/2026-11-13.md`.
+
 ## 0.1.35 (2026-11-07)
 
 - First `/pulse` run, 2026-10-08 to 2026-11-07: 47 posts kept (dev.to 12, Ministry of Testing 5,
