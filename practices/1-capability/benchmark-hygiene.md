@@ -3,8 +3,8 @@ id: benchmark-hygiene
 title: Benchmark hygiene: contamination, gaming and trust
 area: 1-capability
 status: draft
-last_reviewed: 2026-11-06
-sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295, S302, S418, S419, S456, S492]
+last_reviewed: 2026-11-13
+sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295, S302, S418, S419, S456, S492, S513]
 related: [capability-benchmarks, statistical-treatment-of-evals, data-contamination, golden-datasets]
 ---
 
@@ -57,6 +57,7 @@ A contaminated or gamed score is worse than no score, because it carries the aut
 - **arXiv, 2026-10:** an analysis of 4,782 JetBrains IDE agent sessions, a third with three or more user messages, motivates SWE-TaskFlow, which reshapes issue-derived benchmarks toward real interaction patterns; in a pilot on 700 SWE-Bench Pro tasks, sequential multi-step solving roughly doubled agent cost [S419].
 - **Amazon, 2026-10:** Amazon gave AVERI, an independent nonprofit, a random sample of prompts from its internal safety-evaluation suite; AVERI found broad topical coverage and low contamination risk, and gaps in linguistic and stylistic diversity, attack sophistication, freshness and signal quality, and Amazon reports refreshing the test set, adding tiered difficulty levels, a quarterly review cadence and multilingual prompts across all risk categories; the post gives no sample size or counts [S456].
 - **arXiv, 2026-11:** a construct-validity analysis of nine benchmarks used for agentic coding tools finds broad concepts such as coding capability measured with only a small set of metrics, and the attributes reported as possible confounders varying between benchmarks [S492].
+- **arXiv, 2026-11:** a technical report auditing how test observations support patch-correctness claims across classical repair systems and coding agents assembles 39 benchmark and evaluation artifacts and codes its 33 primary contributions along five dimensions (test provenance and exposure, behavioral scope, oracle basis and dependence, execution integrity, label adjudication); its central distinction separates checks visible during repair search from evidence reserved for final assessment, and four worked comparative audits show how changed candidate populations, oracle rules or execution budgets alter reported detection rates [S513].
 
 ## Pitfalls
 1. Trusting "verified" as permanent. Human-filtered tasks still carried flawed tests at a rate found only when strong models' failures were audited [S028].
@@ -98,3 +99,4 @@ None yet.
 - [S419] Coding-agent benchmarks should match their users' task flows (SWE-TaskFlow), arXiv 2610.09633, 2026-10-07
 - [S456] Strengthening AI safety evaluation through independent third-party review, Amazon (Rahul Gupta, Jwala Dhamala), 2026-10-20
 - [S492] Construct Validity of Coding Benchmarks for LLM-based Agentic Coding Tools, arXiv 2611.05665, 2026-11-03
+- [S513] Patch correctness in automated program repair: A five-dimensional evidence framework and cross-benchmark audit from classical repair to coding agents, arXiv 2611.10837, 2026-11-07

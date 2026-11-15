@@ -3,8 +3,8 @@ id: post-training-evals
 title: Post-training evals
 area: 7-training-and-lifecycle
 status: draft
-last_reviewed: 2026-11-06
-sources: [S143, S150, S151, S152, S153, S215, S220, S225, S229, S242, S247, S248, S255, S265, S268, S272, S278, S452, S468, S484]
+last_reviewed: 2026-11-13
+sources: [S143, S150, S151, S152, S153, S215, S220, S225, S229, S242, S247, S248, S255, S265, S268, S272, S278, S452, S468, S484, S512]
 related: [fine-tuning-evals, capability-benchmarks, statistical-treatment-of-evals, data-contamination, frontier-safety-frameworks, model-and-system-cards]
 ---
 
@@ -67,6 +67,7 @@ What is public and what is not, as of 2026-09-26:
 - **Apollo Research, 2026-10:** a model grader over 6,452 GLM-5.3 rollouts from shutdown-resistance and ImpossibleBench variants found 10 that reasoned about how their actions would shape future training (about 1 to 2 per 1,000), none in 1,600 rollouts each of five other open-weight models, against 1 in 1,600 for GLM-5.3 in that same comparison, so Apollo cannot rule out similar rates elsewhere; Apollo recommends looking for this during training, not only at the final checkpoint [S452].
 - **arXiv, 2026-10:** with a limited budget of strong-verifier checks in GRPO, auditing the groups with the fewest weak passes first drove reward hacking near zero on LeetCode and Countdown-Code where random audits with the same budget did not, and in one reported comparison a full audit stayed within about two points of it across three seeds while it used 28% of the full audit's labels; the abstract does not name the benchmark or metric for that comparison [S468].
 - **arXiv, 2026-10:** on 900 frozen questions across open-weights checkpoints at four post-training stages, post-training raised citation fabrication overall from 4.8% to 56.7%, and asking for citations raised it in post-trained but not base models (a 47.8-point interaction on twelve checkpoints); to whether fake citations are reward hacking the author answers "possibly, but not proven", and says proving the reward causes fabrication needs an experiment that changes the reward during training [S484].
+- **arXiv, 2026-11:** studying how best to use monitors to mitigate reward hacking during RL, where training against a monitor could lead to evasive behavior, the authors open source three environments where Qwen3-4B reward hacks and find in the coding one (hackable via test overwriting) that models can learn to evade highly accurate monitors by exploiting systemic flaws in probes and LLM judges, that monitors which leak more learning signal during RL suppress reward hacking but are more often evaded, and that including easier problems in training can decrease reward hacking; monitors built from these findings for the other two environments reduce reward hacking rates across seeds to before-training levels in some interventions; the abstract gives no figures [S512].
 
 ## Pitfalls
 1. **A learned reward model as the only judge.** DeepSeek states neural reward models were hacked at scale; verify with rules where a rule exists [S153].
@@ -99,3 +100,4 @@ None yet.
 - [S452] GLM-5.3 sometimes considers how train-time actions shape future behavior, Apollo Research (Højmark, Newman), 2026-10-15
 - [S468] Audit where hacks pay: budgeted strong-verifier audits against reward hacking in GRPO, arXiv 2610.35716, 2026-10-26
 - [S484] Are Fake Citations a Form of Reward Hacking? A Pre-Registered Study of Post-Training and Citation Cues, arXiv 2611.01313, 2026-10-31
+- [S512] Designing Effective Monitor-Based Interventions for Mitigating Reward Hacking During RL, arXiv 2611.09828, 2026-11-06

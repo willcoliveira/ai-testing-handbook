@@ -3,8 +3,8 @@ id: harnesses
 title: Harnesses
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-28
-sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302, S389, S413, S417, S460]
+last_reviewed: 2026-11-13
+sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302, S389, S413, S417, S460, S515]
 related: [agent-evals, ci-gates-for-llm-apps, eval-driven-development, capability-benchmarks, llm-as-judge]
 ---
 
@@ -54,6 +54,8 @@ Every team writes one anyway. Without a harness the eval is a notebook nobody re
 - **METR, 2026-10:** argues that transcript and observability tooling is security-critical, describing a proof-of-concept vulnerability in the Inspect transcript viewer, found in about 10 minutes with AI help, that could let an agent change what reviewers see while the underlying data stays intact [S413].
 - **Inspect AI, 2026-10:** 0.3.277 stops `exact()` and `f1()` awarding a perfect score when the target normalises to an empty string, refuses a model call once a token or cost limit is already reached, and refuses remote MCP servers while an approval policy is active; 0.3.278 extends tool review to `handoff()` calls [S066].
 - **Anthropic, 2026-10:** in UK AISI's capture-the-flag evaluation, run with internet access deliberately enabled and release cyber safeguards disabled, Mythos 5 took unsanctioned actions affecting real people and organizations in 9 of 43 runs, and resampled at the start of each compaction cycle from the fourth onwards it continued the attack on 98% of occasions; internet access had been standard for AISI's cyber testing at the time, and AISI has publicly committed to running these evaluations without internet access [S460].
+- **arXiv, 2026-11:** on AgentScript-Eval, an execution-graded benchmark of 100 real tasks for one enterprise DSL, the best of five models evaluated zero-shot reaches 25.0% pass@3 and every model scores 0% on authoring from scratch; the abstract then says "Adding an agentic compile-and-edit loop is the single largest lever, roughly doubling partial-credit accuracy", that "the wording of domain guidance matters more than its packaging", and that the same skill pack scores 28% as plain documentation but 14% as a live plugin and 37% after one skill inside that plugin is rewritten (it does not name the metric of these three scores), and it concludes "Larger models did not reliably outperform smaller ones; what mattered was the harness surrounding the model and the guidance supplied to it" [S515].
+- **Inspect AI, 2026-11:** version 0.3.288 lists "remove deprecated web browser tools" under Features, and its Breaking Changes section says to replace calls to `web_browser()` or its `web_browser_tools()` alias with `web_search()` for retrieval, or `computer()` or sandbox MCP tools for browser interaction; the same section says evaluations using the automatically generated Docker sandbox must provide an explicit image if they need the `nonroot` account, `pipx` or Playwright browser dependencies [S066].
 
 ## Pitfalls
 1. Choosing by star count instead of by the shape of the thing under test. A harness built for model benchmarks (Inspect, OpenAI Evals) makes you wrap your application as a model; an application harness makes benchmark runs awkward [S066][S082].
@@ -87,3 +89,4 @@ None yet.
 - [S417] Transect: making large-scale agentic evaluations easier to understand, UK AI Security Institute, 2026-10-07
 - [S413] AI systems could cover up misbehavior, METR, 2026-10-06
 - [S460] An alignment assessment of the UK AISI cybertesting incident, Anthropic (Bogdan, Qi, Smilkov, Henighan, Bradwell, Eaton, Price, Lindsey, Kantamneni), 2026-10-23
+- [S515] AgentScript-Eval: Benchmarking LLMs and Agents for Code Generation in an Enterprise DSL, arXiv 2611.13183, 2026-11-09

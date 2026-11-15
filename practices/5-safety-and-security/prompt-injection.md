@@ -3,8 +3,8 @@ id: prompt-injection
 title: Prompt injection
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-11-06
-sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371, S415, S421, S425, S450, S477, S481, S486, S489, S498]
+last_reviewed: 2026-11-13
+sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371, S415, S421, S425, S450, S477, S481, S486, S489, S498, S509, S514, S521]
 related: [red-teaming, guardrails, tool-use-evals, agent-evals]
 ---
 
@@ -102,6 +102,9 @@ unusual user prompts, and a model trained to trust the user turn can follow what
 - **arXiv, 2026-11:** malicious functionality hidden in updates of initially benign tools, with no adversarial prompt, reached a 97.6% attack success rate while keeping a 95.9% legitimate task completion rate across seven agent frameworks, a threat the authors say existing in-context defenses can hardly address [S486].
 - **arXiv, 2026-11:** a low-confidence monitor on typed decision models ranks injection hijacks above clean answers (AUROC 0.86-0.90 on four of five systems), yet at a threshold where at most 5% of clean answers alarm it misses 51-70% of hijacks from a plain injected note on the three API-served systems and 99-100% when the note claims certainty, although low confidence still ranks those at AUROC 0.70-0.79 [S489].
 - **arXiv, 2026-11:** on 90 validated task-tampering cases in three tool-use environments, a detection-and-removal defense still leaves observation-targeting attacks at 9.5% and state-targeting attacks at 12.1% success [S498].
+- **arXiv, 2026-11:** a taxonomy of nine dimensions along which prompt injection attacks differ, applied to nine prompt injection benchmarks, finds that most cover only a small region of that space; combining benchmarks helps, but 13% of pairwise category combinations remain untested, mostly among the less commonly represented categories [S509].
+- **arXiv, 2026-11:** a comparison of in-prompt defences with deterministic enforcement outside the model (four reference monitors of increasing strength), in an executable environment of 13 tasks and 12 tools, finds that two open-weights models (Qwen2.5-1.5B and Qwen2.5-7B, 156 attack episodes per defence and model) proposed the attacker's call in 64% and 84% of attack episodes behind the task-bound monitor, which admitted 1.3% and 7.7%, while guardrail effects depended on the model (a prompt guardrail moved obedience from 67% to 65% and from 86% to 55%, spotlighting plus a detector to 12% and 0%) against static attacks; the authors say the real-model evidence is limited to two open-weights models and static attacks; separately, the abstract reports that a naive monitor admits 18 of 33 effective attack variants, a hardened one 6 and a capability-bound one 1 [S514].
+- **arXiv, 2026-11:** enforcement defenses against prompt injection ask the agent's own model to write a security artifact that code then enforces, and across 15 open-weight models, 13 of them between 1.7B and 12B parameters, the policies, graphs and constraints that the agent's model writes admit attacks on 14 (Progent), 13 (IPIGuard) and 11 (DRIFT) of the models, and CaMeL's programs fail to run in up to 68% of episodes; the authors' CapLite derives its policy from the tool schemas and admits a write only if every argument that decides whom or what it affects is stated in the user's request, and they report "No attack succeeds in 13,935 attacked AgentDojo episodes" and "utility under attack comparable to CaMeL's (29.0% vs. 27.2%)" [S521].
 
 ## Pitfalls
 1. Trusting everything in the user turn. Anthropic's model "often reasoned that anything in the user's
@@ -150,3 +153,6 @@ None yet.
 - [S486] Beyond Prompt Injection: The Tool Update Gap in LLM Agent Security, arXiv 2611.01976, 2026-11-01
 - [S489] Ranked but Not Stopped: Detecting Prompt-Injection Hijacks from Typed Decision Models' Output Probabilities, arXiv 2611.02522, 2026-11-02
 - [S498] Beyond Instruction Override: Benchmarking Indirect Prompt Injection with Task-Tampering Attacks, arXiv 2611.07640, 2026-11-05
+- [S509] The Devil is in the Context: Nine Dimensions of Prompt Injection Attacks, arXiv 2611.04672, 2026-11-03
+- [S514] Treating the Model as an Untrusted Component: Deterministic Policy Enforcement, Human Approval and Taint Tracking Against Prompt Injection in Tool-Using Agents, with Validation on Open-Weights Models, arXiv 2611.11571, 2026-11-08
+- [S521] CapLite: Prompt-Injection Defense for Small Language Model Agents without Model-Written Security Artifacts, arXiv 2611.17115, 2026-11-12

@@ -3,7 +3,7 @@ id: llm-as-judge
 title: LLM-as-judge
 area: 3-judging
 status: draft
-last_reviewed: 2026-11-01
+last_reviewed: 2026-11-13
 sources: [S051, S052, S053, S054, S055, S056, S057, S058, S059, S060, S061, S066, S070, S071, S153, S213, S221, S229, S230, S252, S253, S255, S265, S270, S272, S278, S303, S445, S473, S475]
 related: [judge-calibration, rubrics-and-pairwise, human-annotation, criteria-authoring, non-determinism-and-pass-rates]
 ---
@@ -53,6 +53,7 @@ Human grading does not scale and code checks cannot read prose. Zheng et al. fou
 - **arXiv, 2026-10:** across seven public benchmarks, changing only what the judge was shown mattered more than which of three judges was used, though their prices differed 10- to 17-fold; about a tenth of the source did almost all of the work, and systems revised on the verdicts of judges that lacked the key source got worse; of 81 pre-registered predictions that ran, 32 met their bar [S445].
 - **arXiv, 2026-10:** on 9,852 hallucination-detection items across five types, the best of five decision models (a verdict with a probability per label, no free text) matched the generative judge gpt-6-sol on context inconsistency and came within 3 points on factual errors but trailed by 4 to 8 points on logical and instruction inconsistency; a confidence cascade matched or beat the judge on three types at 1-3% of its cost, and the authors say decision models need to be validated before use [S473].
 - **arXiv, 2026-10:** meaning-preserving rephrasings of a judge prompt can change evaluation outcomes and, in some settings, reverse relative model rankings; in a user study with 10 human annotators, LLM judges showed 6-9× larger agreement degradation under rephrasing than the humans, and aggregating verdicts across prompt variants improved robustness [S475].
+- **Inspect AI, 2026-11:** version 0.3.288 lists among its bug fixes "don't score an earlier grade when the final verdict line can't be parsed" and "harden model-graded scorer prompts against fake data markers in the graded answer"; version 0.3.289 tags blank completions with the reason no_response in model_graded_qa and choice [S066].
 
 ## Pitfalls
 1. Position bias. With the default prompt GPT-4 gave the same verdict across a swap only 65.0% of the time and Claude-v1 23.8%; most judges favoured the first position [S051]. The survey lists position bias as task-agnostic and swapping as the standard fix [S058].

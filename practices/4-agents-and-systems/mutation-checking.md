@@ -3,8 +3,8 @@ id: mutation-checking
 title: Mutation checking
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-11-06
-sources: [S078, S091, S092, S461]
+last_reviewed: 2026-11-13
+sources: [S078, S091, S092, S461, S519]
 related: [tool-use-evals, offline-probes, ai-generated-tests, ci-gates-for-llm-apps]
 ---
 
@@ -46,6 +46,7 @@ Coverage says a line ran. It does not say a test would fail if the line changed,
 - **mutmut, 3.8.0, 2026-09:** Python mutation testing with killed and survived states, incremental caching, parallel execution with an interactive terminal UI, coverage.py and type-checker filtering, and a requirement for fork support: "if you want to run on windows, you must run inside WSL" [S092].
 - **Sierra Research, tau2-bench, 2026-07:** an example of the same idea applied to a grader rather than to tests: the v1.0.1 changelog records that a prudent extra read call zeroed the reward, a defect found by inspecting what the grader was and was not sensitive to [S078].
 - **arXiv, 2026-10:** in the BARBICAN prompt-injection gateway, a classifier stage fed text mangled by a misconfigured tokenizer failed without moving end-to-end recall: fixing it lifted the stage AUC from 0.392 to 0.855 while system recall went from 80.67% to 80.34%, and a stub answering "malicious" scored 80.77%; the authors argue that deletion experiments need substitution experiments beside them [S461].
+- **Google DeepMind, 2026-11:** to confirm that AlphaProof Code, its agentic framework for formal verification, "can tell correct code from buggy code", DeepMind reintroduced two real, previously fixed bugs into an isolated version of Signal's code, and in both cases the system produced a machine-checked proof that the buggy version was insecure; the agents generated over six million lines of Lean in a verification process that took four weeks, human experts reviewed every formal specification, and the agents audited the proof and highlighted one percent of the codebase as needing a second look by a human [S519].
 
 ## Pitfalls
 1. Reading every survivor as a test gap. A mutation can survive because the branch is unreachable, in which case the finding is that a test's name overstates its guard, not that an assertion is missing.
@@ -62,3 +63,4 @@ None yet.
 - [S092] mutmut documentation, mutmut, living (3.8.0, 2026-09-12).
 - [S078] tau2-bench repository and changelog, Sierra Research, living (v1.0.1, 2026-07).
 - [S461] Deletion, Substitution, Repair and Transplant: component attribution in BARBICAN, a layered prompt-injection gateway for MCP, arXiv 2610.33198, 2026-10-23
+- [S519] Introducing AlphaProof Code: a breakthrough in verifying complex software at depth, Google DeepMind (Pushmeet Kohli, Swarat Chaudhuri), 2026-11-10
