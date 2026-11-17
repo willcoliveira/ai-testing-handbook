@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.37 (2026-11-16)
+
+- Four requirements in depth on `learning-path/ai-qa-requirements.md`: retrieval metrics (R11),
+  grader calibration (R12), desktop application automation and clinical imaging systems (R4),
+  each with what the phrase covers, sourced fundamentals, a worked example and what to show; no
+  postings read and no counts changed; interview questions 39 to 42; 33 new sources (S523 to
+  S555) and notes on S033 and S052 updated; five items added to "Gaps to fill next".
+
 ## 0.1.36 (2026-11-13)
 
 - Refresh since 2026-11-06: 14 new sources (S509 to S522): nine arXiv papers (a nine-dimension

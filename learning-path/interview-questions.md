@@ -387,6 +387,75 @@ test whose expected value equals the default, which passes whether or not the st
 steps 6 and 8; [mutation-checking](../practices/4-agents-and-systems/mutation-checking.md).
 
 
+## Requirements in depth
+These four go with the "Four requirements in depth" sections of the
+[AI QA requirements](ai-qa-requirements.md) page.
+
+### 39. Hit rate is 0.75. What does that hide, and what would you report beside it?
+**Short answer.** Hit rate counts a question as fine when one relevant chunk comes back [S526]. It
+hides how many of the needed chunks came back and where they ranked. Report recall@k for
+completeness, and MRR or nDCG@k for rank, with k set to what reaches the prompt.
+**The mechanism.** Recall at k is the relevant results in the top k over all relevant ones;
+precision at k ignores position; MRR looks only at the first relevant result [S524]. nDCG discounts
+by rank and normalises by the ideal ordering [S525]. Say how unlabelled retrieved chunks are
+counted, because treating them as irrelevant penalises a retriever for finding good chunks nobody
+labelled [S524].
+**Follow-up that tests depth.** "Recall@5 moved from 0.70 to 0.75 on 40 questions. Is it better?"
+On 40 questions that is the weight of two questions. Compare on the same questions with a
+paired difference and an interval [S004] before saying yes.
+**Read.** [AI QA requirements](ai-qa-requirements.md), retrieval metrics;
+[rag-evals](../practices/2-application-evals/rag-evals.md).
+
+### 40. Your judge agrees with people 89 percent of the time and reports a 67 percent pass rate. What is the real pass rate?
+**Short answer.** Not 67, and agreement alone cannot say. Split agreement into the true positive
+rate and the true negative rate [S052], then correct the observed rate for both.
+**The mechanism.** A judge with imperfect sensitivity and specificity biases the naive score
+[S527]. Observed pass rate = true rate x TPR + (1 - true rate) x (1 - TNR). With TPR 0.95 and TNR
+0.75 the corrected rate is (0.67 + 0.75 - 1) / (0.95 + 0.75 - 1) = 0.60. The interval has to carry
+the uncertainty of the calibration set as well as the test set [S527]; with 60 labelled failures
+the TNR alone is uncertain by about 11 points either way.
+**Follow-up that tests depth.** "How do you stop the calibration figure flattering the judge?"
+Few-shot examples, a dev set for prompt changes and a test set run once on the frozen prompt
+[S052]; recalibrate when the judge model or prompt changes.
+**Read.** [AI QA requirements](ai-qa-requirements.md), grader calibration;
+[judge-calibration](../practices/3-judging/judge-calibration.md);
+[05 Calibrate the evaluator](../how-to/05-calibrate-the-evaluator.md).
+
+### 41. How would you automate tests for a Windows desktop application?
+**Short answer.** Through the accessibility layer, not screen coordinates. Open the application in
+an inspector, see which properties its controls expose, and choose the tool from the UI framework.
+**The mechanism.** UI Automation gives programmatic access to desktop elements in a tree, and
+controls expose patterns such as Invoke and Value [S530][S531]. WinAppDriver's last stable release is
+from 2020 and the Appium driver that proxies to it is deprecated [S532][S533], so a new suite
+starts elsewhere: a UI Automation library such as FlaUI [S534], pywinauto with the backend the
+inspector points to [S535], or Playwright's experimental Electron support for an Electron app
+[S536]. Assert on end state (a file, a database row), not only on what the window shows.
+**Follow-up that tests depth.** "Could a computer use agent do it instead?" It can operate the
+application through screenshots, but the vendors say it can misjudge coordinates and report
+success without checking [S538], so the grader must check the actual outcome [S539], run in an
+isolated machine, and repeat trials. On OSWorld the best model at publication completed 12.24
+percent of tasks against over 72.36 percent for people [S537].
+**Read.** [AI QA requirements](ai-qa-requirements.md), desktop application automation;
+[agent-evals](../practices/4-agents-and-systems/agent-evals.md).
+
+### 42. You join a team whose software sits in a radiology workflow. What do you learn before you test?
+**Short answer.** The systems and the hand-offs between them, the standards at each hand-off, what
+test data is allowed, and whether a model change is a regulated change.
+**The mechanism.** Images and their metadata are DICOM [S541]; orders and scheduling arrive as HL7
+from the RIS, and the IHE Scheduled Workflow profile defines how patient and order data stay
+consistent through acquisition and storage in the PACS [S546]. DICOMweb gives REST services to
+search, retrieve and store [S542]. De-identifying headers does not guarantee a de-identified
+image: the standard names private attributes and burned-in pixels [S543], so prefer public
+de-identified archives [S555]. For an AI-enabled device, the FDA's change control plan guidance
+has the validation method for planned model changes reviewed in advance [S549].
+**Follow-up that tests depth.** "How do you score a generated report?" Text overlap aligns least
+well with radiologists: BLEU was the worst of the metrics one study compared, and a clinical-entity
+metric was among the best [S552]. Use such a metric plus a judge calibrated on radiologists'
+error counts [S553].
+**Read.** [AI QA requirements](ai-qa-requirements.md), clinical imaging systems;
+[regulated-domain-checks](../practices/5-safety-and-security/regulated-domain-checks.md).
+
+
 Phase 5 of this path, then playbooks 01 to 08 and 13 to 18 and the
 [side-effects-and-state](../practices/4-agents-and-systems/side-effects-and-state.md) practice, then the
 [AI QA requirements](ai-qa-requirements.md) page for what roles ask for. Know one tool well enough to write a
