@@ -3,8 +3,8 @@ id: statistical-treatment-of-evals
 title: Statistical treatment of eval scores
 area: 1-capability
 status: draft
-last_reviewed: 2026-09-27
-sources: [S002, S004, S005, S006, S010, S014, S015, S017, S021, S024, S220, S224, S225, S228, S229, S265, S267, S268, S272, S278]
+last_reviewed: 2026-11-21
+sources: [S002, S004, S005, S006, S010, S014, S015, S017, S021, S024, S220, S224, S225, S228, S229, S265, S267, S268, S272, S278, S556]
 related: [capability-benchmarks, benchmark-hygiene, non-determinism-and-pass-rates, judge-calibration]
 ---
 
@@ -54,6 +54,7 @@ The formulas below follow the error-bars paper [S004]. `n` is the number of ques
 - **NVIDIA, December 2025:** evaluates Nemotron 3 Nano under multiple prompt variants, "mean accuracy across eight seeds" per prompt, and reports the standard deviation of prompt averages as a prompt-sensitivity metric [S268]; its risk framework runs assessments at "50% confidence" during development and "95-99% confidence" for model-card data [S267].
 - **Cohere, April 2025:** reports the human agreement (77.7%) and Cohen's kappa (0.55) of its LLM jury for relative safety, and runs the demographic bias test "five times per sample" to plot the distribution [S272].
 - **xAI, April 2026:** reports an RMS calibration error over ten confidence bins on Humanity's Last Exam as its overconfidence metric [S265].
+- **Anthropic, 2026-11:** Anthropic's guidance on safety evaluations treats 100 items as the floor for a complex, multi-turn eval and 1,000 for a simpler, single-turn one, notes that the confidence intervals its system cards attach can exceed ±10 percentage points for multi-turn evals on the API, and asks evaluators to report the configuration used, because it may affect performance: its system cards report safety results both for the API (the raw model) and for claude.ai, where the system prompt is applied, and in testing Claude Fable 5.1 the difference in appropriate response rate between these two configurations on its multi-turn safety evals was as high as 34 percentage points [S556].
 
 ## Pitfalls
 1. Using the 0/1 standard error on fractional scores, as the Llama 3 report did; it understates the interval [S004].
@@ -87,3 +88,4 @@ None yet.
 - [S267] Frontier AI Risk Assessment, NVIDIA (Simkin, Pope, Derczynski, Parisien), 2025-08
 - [S272] Command A: An Enterprise-Ready Large Language Model (technical report), Cohere, arXiv 2504.00698, 2025-04
 - [S265] Grok 4.20 System Card, xAI, 2026-04-07
+- [S556] Building strong safety evaluations, Anthropic (Ruth Appel, Evan Frondorf, Jeremy Hadfield, Rebecca Hiscott, Kamya Jagadish, Shayne Longpre, Madeleine Tucker, Brett Wittmershaus), 2026-11-13

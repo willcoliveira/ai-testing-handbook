@@ -3,8 +3,8 @@ id: rubrics-and-pairwise
 title: Rubrics and pairwise
 area: 3-judging
 status: draft
-last_reviewed: 2026-11-13
-sources: [S051, S052, S053, S054, S055, S057, S058, S059, S060, S061, S427, S511]
+last_reviewed: 2026-11-21
+sources: [S051, S052, S053, S054, S055, S057, S058, S059, S060, S061, S427, S511, S570]
 related: [llm-as-judge, judge-calibration, human-annotation, criteria-authoring]
 ---
 
@@ -51,6 +51,7 @@ Pairwise mechanics:
 - **OpenAI docs, living:** score_model graders return a number in a range and multi graders combine sub-scores with a formula; the guide says to produce a smooth score, not a pass or fail stamp [S055].
 - **arXiv, 2026-10:** comparing 10 reasoning models as judges on rating and classification tasks, the rating scale shifted measured bias by up to 0.93 points on a 1-7 scale, detailed prompts cut leniency by 28.9 percentage points, and switching the judge model moved leniency by up to 56.1 percentage points [S427].
 - **arXiv, 2026-11:** DeepResearch RewardBench, a benchmark for evaluating reward modeling for research reports, collects report candidates from multiple agents or tool-augmented LLMs, has them scored using query-specific golden rubrics, and formats preference datasets as pairs, triplets and quadruplets; the authors report that while current reward models handle general coherence effectively, their performance significantly degrades when evaluating research reports, and that generative LLMs acting as judges "demonstrate comprehensive superiority in this domain, with comparative evaluation proving more effective than direct scoring methods"; the abstract gives no figures [S511].
+- **arXiv, 2026-11:** a scale-reversal probe that inverts a rubric's score anchors without altering its evaluation criteria, with floor normalization to calibrate reversal disagreement against intrinsic model variability, finds across five meta-evaluation benchmarks with seven LLM judges spanning open-weight and proprietary models widespread violations of semantic faithfulness (the principle that semantically equivalent rubrics must yield consistent scores), showing that raw reversal agreement alone is misleading; bidirectional anchor averaging reduces dependence on any single anchor direction without compromising alignment with human judgments [S570].
 
 ## Pitfalls
 1. Position bias in pairwise. Default-prompt GPT-4 was consistent across a swap 65.0% of the time; Claude-v1 23.8% [S051].
@@ -80,3 +81,4 @@ reading was kept as advice. See [decision-model-triage-before-an-llm-judge](../.
 - [S061] Create strong empirical evaluations, Anthropic Claude Platform docs, living.
 - [S427] How much do LLM-as-a-judge design choices matter? Prompt designs, rating scales and models compared, arXiv 2610.05094, 2026-10-04
 - [S511] DeepResearch RewardBench: Evaluating Reward Models for Deep Research Report, arXiv 2611.10156, 2026-11-06
+- [S570] Rubric Semantics or Numerical Priors? Auditing Scale-Direction Bias in LLM Judges, arXiv 2611.25588, 2026-11-19

@@ -3,7 +3,7 @@ id: ci-gates-for-llm-apps
 title: CI gates for LLM apps
 area: 2-application-evals
 status: draft
-last_reviewed: 2026-10-12
+last_reviewed: 2026-11-21
 sources: [S031, S032, S033, S036, S042, S043, S046, S047, S049, S068, S299, S346, S347]
 related: [eval-driven-development, non-determinism-and-pass-rates, load-and-latency, regression-on-upgrade, online-evals-and-drift]
 ---
@@ -79,6 +79,7 @@ holds only the checks that are stable enough to be believed, and the rest is rep
 - **arXiv, 2026-09:** selecting a benchmark subset from agent action-trajectory embeddings cut regression-testing cost by 90 percent in the paper's setting, at an accepted error rate [S299].
 - **Anthropic and OpenAI, 2026-09:** both structured-output docs guarantee schema adherence but name the exceptions: a refusal can take precedence over the schema, and a response cut off at the token limit may not match it [S346][S347].
 - **promptfoo, 2026-10:** 0.124.0 makes a target error that stops the eval fail the exit code and runs coding agents in isolated workspaces; 0.124.1 reports missing target output in red-team runs as errors [S068].
+- **promptfoo, 2026-11:** 0.126.0 says under "Before upgrading" that in string formulas in `derivedMetrics`, function calls, property access, assignments and formulas longer than 1,024 characters now stop the evaluation before any test cases run; its bug fixes apply weight 0 to throwing Python and Ruby file assertions and exclude tool calls when detecting refusals, and its highlights add grading of text, images, audio, video and PDFs with `google:decisions:gemini-decision-1` [S068].
 
 ## Pitfalls
 1. **Gating on a suite that is supposed to fail.** Capability evals start low by design [S032].

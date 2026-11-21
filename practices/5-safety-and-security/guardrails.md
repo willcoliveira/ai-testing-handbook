@@ -3,8 +3,8 @@ id: guardrails
 title: Guardrails
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-10-28
-sources: [S098, S104, S109, S114, S124, S126, S129, S135, S153, S214, S221, S233, S236, S243, S247, S254, S257, S261, S262, S266, S269, S272, S292, S294, S321, S426, S432, S451, S458]
+last_reviewed: 2026-11-21
+sources: [S098, S104, S109, S114, S124, S126, S129, S135, S153, S214, S221, S233, S236, S243, S247, S254, S257, S261, S262, S266, S269, S272, S292, S294, S321, S426, S432, S451, S458, S559, S561]
 related: [false-positive-protection, prompt-injection, redaction-in-telemetry, voice-agent-testing]
 ---
 
@@ -96,6 +96,8 @@ prevent safe uses of the product" [S104].
 - **Anthropic, 2026-10:** to limit distillation, Anthropic summarizes reasoning transcripts early, which lowered a model distilled on them from 80.4% to 71.8% on SWE-bench Verified, and runs a two-stage classifier against extraction attempts with a false positive rate of less than 0.1%; it reports a 90 to 99% cut in data harvested by distillers [S432].
 - **arXiv, 2026-10:** on 47,611 held-out examples (direct and indirect injections, hard-benign inputs, obfuscation and distribution shift) an LLM judge discriminated best (AUROC 0.897) against Jev (0.871) and Prompt Guard 2 86M and 22M (0.757 and 0.714), but at a 1% false-negative target every evaluated gate-reviewer system escalated more than 91.8% of inputs, and confidence scores alone did not give reliable decisions under distribution shift [S451].
 - **METR, 2026-10:** in a three-week high-access red team of OpenAI's internal agent misalignment monitor, a METR and a Redwood Research employee examined a compaction gap that OpenAI had found before the exercise and fixed during it (METR estimates on the order of 10% of eligible internal Codex traffic went unmonitored from May to July 2026), and found two client-controllable headers that disable monitoring for new agents, and serialization differences between what agents and monitors see that likely let agents make the monitor fail; OpenAI states that most of the vulnerabilities have been patched, with one fix in progress (the post was updated on October 29), which METR has not evaluated [S458].
+- **arXiv, 2026-11:** treating the system-prompt choice for an LLM-as-a-judge guardrail as constrained optimisation (maximise benign pass rate while keeping the missed-attack rate below a user-specified level with finite-sample statistical control), the authors propose two procedures, one of which certifies candidate prompts on a held-out evaluation set, and report on four datasets covering prompt injection, system-prompt leakage and sensitive-information disclosure that risk-certified selection consistently respects the target missed-attack level on held-out tests, while utility improves as the permitted risk is relaxed; the abstract gives no figures [S559].
+- **OpenAI, 2026-11:** the CSAM image classifier model card evaluates on approximately 46,849 access-controlled images plus approximately 1.25M Re-LAION-5B-research images for false-positive evaluation, and reports for likely-csam a recall of 61.27% for Black-tagged examples compared with 84.48%–90.32% for the other reported race tags, using tags assigned by an LLM annotator and asking readers to treat these results as directional; it says a classifier score alone does not confirm that an image is CSAM, establish its legal status, or determine whether it must be reported [S561].
 
 ## Pitfalls
 1. Over-blocking treated as safe. It is a defect with a cost; see
@@ -144,3 +146,5 @@ None yet.
 - [S432] Strengthening our defenses against distillation attacks, Anthropic, 2026-10-12
 - [S451] From detection to decision: calibration and deferral for prompt-injection detection, arXiv 2610.20907, 2026-10-14
 - [S458] Red-Teaming OpenAI's Internal Agent Monitoring Systems, METR (David Rein, Adam Kaufman), 2026-10-22
+- [S559] Risk-certified prompt optimization for LLM-as-a-judge guardrails, arXiv 2611.20156, 2026-11-15
+- [S561] OpenAI CSAM Image Classifier Model Card, OpenAI, 2026-11-16

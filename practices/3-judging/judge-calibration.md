@@ -3,8 +3,8 @@ id: judge-calibration
 title: Judge calibration
 area: 3-judging
 status: draft
-last_reviewed: 2026-11-13
-sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320, S388, S391, S429, S482, S491, S510]
+last_reviewed: 2026-11-21
+sources: [S051, S052, S053, S054, S056, S057, S059, S060, S062, S063, S064, S065, S251, S252, S255, S257, S303, S320, S388, S391, S429, S482, S491, S510, S556]
 related: [llm-as-judge, human-annotation, rubrics-and-pairwise, statistical-treatment-of-evals, non-determinism-and-pass-rates]
 ---
 
@@ -45,6 +45,7 @@ An uncalibrated judge is an unmeasured guess, and its errors are not symmetric. 
 - **arXiv, 2026-10:** streaming quantile matching calibrates judge scores to the human score distribution through an optimal-transport map, keeping the ordinal scale, and the authors report that post-hoc calibration generally narrows the raw error gap between smaller and larger judges; the abstract gives no figures [S482].
 - **arXiv, 2026-11:** AGORA aggregates several LLM judges with item-response theory, estimating each judge's sensitivity and rating thresholds without human labels; across three benchmarks it matches or exceeds Dawid-Skene on large evaluation sets, and its advantage widens as the set shrinks toward a few hundred items; the abstract gives no figures [S491].
 - **arXiv, 2026-11:** in a study of psychological depth in short stories, with 60 blinded pairwise evaluations of prompt-matched outputs from GPT-5 against GPT-4o and DeepSeek-R1 against DeepSeek-V3 (the authors' "closest available contrast for reasoning-oriented post-training"), an ensemble LLM judge showed a strong pro-reasoning bias (98.3% of pairs against 55.2% of human votes), consistent across its five configurations and partly tracking sentence length; the seven human annotators showed no universal reasoning advantage (GPT-5 slightly preferred over GPT-4o at 60.0-62.9%, DeepSeek-R1 behind DeepSeek-V3 at 42.9%) with low agreement (Krippendorff's α = 0.070), which the authors' annotation-quality checks suggested was genuine evaluative subjectivity [S510].
+- **Anthropic, 2026-11:** Anthropic's safety-evaluation guidance says that before trusting a grader, humans should label a sample of the transcripts without seeing the grader's verdicts, the agreement between the human verdicts and the grader's should be reported, corrected for chance, and that agreement should be benchmarked against how well the human labelers agree with each other; the post gives no agreement figure [S556].
 
 ## Pitfalls
 1. Raw agreement on imbalanced classes. With a 5% defect rate a judge that always passes scores 95% agreement and zero recall on defects [S052].
@@ -88,3 +89,4 @@ reads the item. See [decision-model-triage-before-an-llm-judge](../../patterns/d
 - [S482] Quantiles, Not Points: Streaming Quantile Matching for Ordinal-Aware LLM-as-a-Judge Calibration, arXiv 2611.00447, 2026-10-30
 - [S491] AGORA: Reliability-Aware Aggregation of LLM Judges via Item-Response Theory, arXiv 2611.05556, 2026-11-03
 - [S510] Does Reasoning Improve Psychological Depth in Large Language Models?, arXiv 2611.09061, 2026-11-06
+- [S556] Building strong safety evaluations, Anthropic (Ruth Appel, Evan Frondorf, Jeremy Hadfield, Rebecca Hiscott, Kamya Jagadish, Shayne Longpre, Madeleine Tucker, Brett Wittmershaus), 2026-11-13

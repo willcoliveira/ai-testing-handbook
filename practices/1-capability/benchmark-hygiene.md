@@ -3,8 +3,8 @@ id: benchmark-hygiene
 title: Benchmark hygiene: contamination, gaming and trust
 area: 1-capability
 status: draft
-last_reviewed: 2026-11-13
-sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295, S302, S418, S419, S456, S492, S513]
+last_reviewed: 2026-11-21
+sources: [S005, S006, S008, S012, S016, S020, S021, S022, S025, S026, S027, S028, S215, S222, S229, S231, S266, S272, S274, S276, S277, S278, S295, S302, S418, S419, S456, S492, S513, S560, S563]
 related: [capability-benchmarks, statistical-treatment-of-evals, data-contamination, golden-datasets]
 ---
 
@@ -58,6 +58,8 @@ A contaminated or gamed score is worse than no score, because it carries the aut
 - **Amazon, 2026-10:** Amazon gave AVERI, an independent nonprofit, a random sample of prompts from its internal safety-evaluation suite; AVERI found broad topical coverage and low contamination risk, and gaps in linguistic and stylistic diversity, attack sophistication, freshness and signal quality, and Amazon reports refreshing the test set, adding tiered difficulty levels, a quarterly review cadence and multilingual prompts across all risk categories; the post gives no sample size or counts [S456].
 - **arXiv, 2026-11:** a construct-validity analysis of nine benchmarks used for agentic coding tools finds broad concepts such as coding capability measured with only a small set of metrics, and the attributes reported as possible confounders varying between benchmarks [S492].
 - **arXiv, 2026-11:** a technical report auditing how test observations support patch-correctness claims across classical repair systems and coding agents assembles 39 benchmark and evaluation artifacts and codes its 33 primary contributions along five dimensions (test provenance and exposure, behavioral scope, oracle basis and dependence, execution integrity, label adjudication); its central distinction separates checks visible during repair search from evidence reserved for final assessment, and four worked comparative audits show how changed candidate populations, oracle rules or execution budgets alter reported detection rates [S513].
+- **Amazon, 2026-11:** BenchProofer's audit agent uses reference specifications to generate additional tests that look for behavior the original tests missed; Claude Opus 4.8 passes the standard SWE-Bench Verified tests on 425 of the 500 tasks, but 134 of those 425 patches fail the additional tests while the reference patch passes, and human reviewers of a random sample of 41 flagged patches identified 21 defects and 20 valid fixes [S560].
+- **OpenAI, 2026-11:** the GPT-6.2 System Card reports that, like GPT-6 Astra, GPT-6.2 Astra achieved the full score of 100 percent at every reasoning setting on ExploitBench V8 (41 V8 vulnerabilities), and says that the benchmark's use of historical vulnerabilities, which go back to 2023, raises a risk of contamination that may inflate the reported results [S563].
 
 ## Pitfalls
 1. Trusting "verified" as permanent. Human-filtered tasks still carried flawed tests at a rate found only when strong models' failures were audited [S028].
@@ -100,3 +102,5 @@ None yet.
 - [S456] Strengthening AI safety evaluation through independent third-party review, Amazon (Rahul Gupta, Jwala Dhamala), 2026-10-20
 - [S492] Construct Validity of Coding Benchmarks for LLM-based Agentic Coding Tools, arXiv 2611.05665, 2026-11-03
 - [S513] Patch correctness in automated program repair: A five-dimensional evidence framework and cross-benchmark audit from classical repair to coding agents, arXiv 2611.10837, 2026-11-07
+- [S560] BenchProofer: Formally verified coding benchmarks, on demand, Amazon (Amazon Science blog, "By the BenchProofer team"), 2026-11-16
+- [S563] GPT-6.2 System Card, OpenAI, 2026-11-17
