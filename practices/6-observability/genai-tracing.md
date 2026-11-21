@@ -3,7 +3,7 @@ id: genai-tracing
 title: GenAI tracing
 area: 6-observability
 status: draft
-last_reviewed: 2026-11-13
+last_reviewed: 2026-11-21
 sources: [S068, S071, S136, S137, S138, S139, S141, S323, S324, S327, S384]
 related: [online-evals-and-drift, redaction-in-telemetry, load-and-latency, agent-evals]
 ---
@@ -69,6 +69,7 @@ attributes:
 - **OpenTelemetry, 2026-10:** still no release; PR #578 (merged 2026-10-26, marked breaking) moves embeddings off `gen_ai.client.operation.duration` and `gen_ai.client.token.usage` onto `gen_ai.client.embeddings.duration` and `gen_ai.client.embeddings.operation.input_tokens`, and the metrics page now says `gen_ai.client.operation.duration` "SHOULD NOT be reported for inference or embeddings operations" [S136].
 - **Langfuse, 2026-11:** v4.77.0 opens with the notice "This release removes automatic tokenization, as we believe no one should be relying on it"; its notes list "stop inferring observation usage from content", "remove background tokenizer pool" and "guide users to submit missing token usage" [S071].
 - **OpenTelemetry, 2026-11:** still no release; the metrics page says `gen_ai.client.operation.duration` "SHOULD NOT be reported for inference, embeddings, execute tool, or invoke agent client operations", naming `gen_ai.client.inference.duration`, `gen_ai.client.embeddings.duration`, `gen_ai.execute_tool.duration` and `gen_ai.client.invoke_agent.duration` instead, and "SHOULD NOT be reported for retrieval operations"; PR #635 (merged 2026-11-05, marked breaking in its description) adds the `gen_ai.client.invoke_agent.duration` histogram for remote agent invocations and says the older metric "now explicitly excludes invoke agent client operations", and PR #634 (merged 2026-11-05, with a breaking changelog fragment) requires GenAI content attributes as structured values and removes the JSON-string fallback [S136].
+- **OpenTelemetry, 2026-11:** v0.1.0, the "First standalone release of the GenAI semantic conventions", lists as breaking changes that inference, embeddings, invoke agent client, execute tool and retrieval operations are no longer reported on `gen_ai.client.operation.duration` (use `gen_ai.client.inference.duration`, `gen_ai.client.embeddings.duration`, `gen_ai.client.invoke_agent.duration` and `gen_ai.execute_tool.duration`; no replacement is named for retrieval), that the `gen_ai.client.token.usage` histogram and its `gen_ai.token.type` attribute are replaced for inference by the `gen_ai.client.inference.operation.input_tokens` and `.output_tokens` histograms, and that JSON-schema-defined attributes on spans and events require structured values, removing the JSON-string fallback for spans; the GenAI metrics page on main shows "Status: Development" [S136].
 
 ## Pitfalls
 1. **Treating Development names as stable.** A rename between convention releases leaves dashboards keyed on the old attribute blank; pin the instrumentation version and diff on upgrade [S136].

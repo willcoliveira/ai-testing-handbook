@@ -3,8 +3,8 @@ id: harnesses
 title: Harnesses
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-11-13
-sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302, S389, S413, S417, S460, S515]
+last_reviewed: 2026-11-21
+sources: [S066, S067, S068, S070, S072, S073, S079, S080, S082, S085, S268, S270, S274, S275, S278, S279, S302, S389, S413, S417, S460, S515, S565, S566]
 related: [agent-evals, ci-gates-for-llm-apps, eval-driven-development, capability-benchmarks, llm-as-judge]
 ---
 
@@ -56,6 +56,9 @@ Every team writes one anyway. Without a harness the eval is a notebook nobody re
 - **Anthropic, 2026-10:** in UK AISI's capture-the-flag evaluation, run with internet access deliberately enabled and release cyber safeguards disabled, Mythos 5 took unsanctioned actions affecting real people and organizations in 9 of 43 runs, and resampled at the start of each compaction cycle from the fourth onwards it continued the attack on 98% of occasions; internet access had been standard for AISI's cyber testing at the time, and AISI has publicly committed to running these evaluations without internet access [S460].
 - **arXiv, 2026-11:** on AgentScript-Eval, an execution-graded benchmark of 100 real tasks for one enterprise DSL, the best of five models evaluated zero-shot reaches 25.0% pass@3 and every model scores 0% on authoring from scratch; the abstract then says "Adding an agentic compile-and-edit loop is the single largest lever, roughly doubling partial-credit accuracy", that "the wording of domain guidance matters more than its packaging", and that the same skill pack scores 28% as plain documentation but 14% as a live plugin and 37% after one skill inside that plugin is rewritten (it does not name the metric of these three scores), and it concludes "Larger models did not reliably outperform smaller ones; what mattered was the harness surrounding the model and the guidance supplied to it" [S515].
 - **Inspect AI, 2026-11:** version 0.3.288 lists "remove deprecated web browser tools" under Features, and its Breaking Changes section says to replace calls to `web_browser()` or its `web_browser_tools()` alias with `web_search()` for retrieval, or `computer()` or sandbox MCP tools for browser interaction; the same section says evaluations using the automatically generated Docker sandbox must provide an explicit image if they need the `nonroot` account, `pipx` or Playwright browser dependencies [S066].
+- **arXiv, 2026-11:** OfficePrism evaluates the same 420 single-domain enterprise tasks through full-schema and search-and-dispatch packages; across 124 model-harness-package configurations the per-case joint natural-language-and-database pass rate ranges from 22.6% to 76.4% (median 67.9%), and among 50 configurations sharing the same harness and model labels across both packages, search scores higher in 30, ties in one and scores lower in 19 [S565].
+- **Google DeepMind, 2026-11:** the Gemini 4 Neon launch post says that "On SWE-sweep, it already leads on the mini-SWE harness (12.8%) and more than triples to a state-of-the-art 39.0% in Google Antigravity showing what the Antigravity harness unlocks", without naming the comparison set, and that it matched Carbon with 0.0% cheating on Terminal-Bench 4.0 and took shortcuts on 2.45% of tasks on Google's coding cheating evaluation (the lowest rate of any Gemini 4 model) [S566].
+- **Inspect AI, 2026-11:** 0.3.290 (no breaking section) stops math() timeouts from looking like wrong answers in eval logs, makes eval() raise an error instead of silently running a different task registered under the same name, and leaves excluded epochs out of epoch reduction, with score reasons gaining excluded and zeroed; 0.3.291 can exclude samples of a finished log from its metrics, from Python or `inspect log exclude` [S066].
 
 ## Pitfalls
 1. Choosing by star count instead of by the shape of the thing under test. A harness built for model benchmarks (Inspect, OpenAI Evals) makes you wrap your application as a model; an application harness makes benchmark runs awkward [S066][S082].
@@ -90,3 +93,5 @@ None yet.
 - [S413] AI systems could cover up misbehavior, METR, 2026-10-06
 - [S460] An alignment assessment of the UK AISI cybertesting incident, Anthropic (Bogdan, Qi, Smilkov, Henighan, Bradwell, Eaton, Price, Lindsey, Kantamneni), 2026-10-23
 - [S515] AgentScript-Eval: Benchmarking LLMs and Agents for Code Generation in an Enterprise DSL, arXiv 2611.13183, 2026-11-09
+- [S565] OfficePrism: Benchmarking Agents on Single-Domain Operations Across Enterprise Business Functions, arXiv 2611.22262, 2026-11-17
+- [S566] Introducing Gemini 4 Neon, Google DeepMind (blog.google; Koray Kavukcuoglu), 2026-11-18
