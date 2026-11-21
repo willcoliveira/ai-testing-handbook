@@ -3,8 +3,8 @@ id: prompt-injection
 title: Prompt injection
 area: 5-safety-and-security
 status: draft
-last_reviewed: 2026-11-13
-sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371, S415, S421, S425, S450, S477, S481, S486, S489, S498, S509, S514, S521]
+last_reviewed: 2026-11-21
+sources: [S098, S099, S104, S114, S121, S123, S124, S125, S127, S281, S293, S294, S296, S307, S311, S314, S316, S364, S366, S371, S415, S421, S425, S450, S477, S481, S486, S489, S498, S509, S514, S521, S567]
 related: [red-teaming, guardrails, tool-use-evals, agent-evals]
 ---
 
@@ -105,6 +105,7 @@ unusual user prompts, and a model trained to trust the user turn can follow what
 - **arXiv, 2026-11:** a taxonomy of nine dimensions along which prompt injection attacks differ, applied to nine prompt injection benchmarks, finds that most cover only a small region of that space; combining benchmarks helps, but 13% of pairwise category combinations remain untested, mostly among the less commonly represented categories [S509].
 - **arXiv, 2026-11:** a comparison of in-prompt defences with deterministic enforcement outside the model (four reference monitors of increasing strength), in an executable environment of 13 tasks and 12 tools, finds that two open-weights models (Qwen2.5-1.5B and Qwen2.5-7B, 156 attack episodes per defence and model) proposed the attacker's call in 64% and 84% of attack episodes behind the task-bound monitor, which admitted 1.3% and 7.7%, while guardrail effects depended on the model (a prompt guardrail moved obedience from 67% to 65% and from 86% to 55%, spotlighting plus a detector to 12% and 0%) against static attacks; the authors say the real-model evidence is limited to two open-weights models and static attacks; separately, the abstract reports that a naive monitor admits 18 of 33 effective attack variants, a hardened one 6 and a capability-bound one 1 [S514].
 - **arXiv, 2026-11:** enforcement defenses against prompt injection ask the agent's own model to write a security artifact that code then enforces, and across 15 open-weight models, 13 of them between 1.7B and 12B parameters, the policies, graphs and constraints that the agent's model writes admit attacks on 14 (Progent), 13 (IPIGuard) and 11 (DRIFT) of the models, and CaMeL's programs fail to run in up to 68% of episodes; the authors' CapLite derives its policy from the tool schemas and admits a write only if every argument that decides whom or what it affects is stated in the user's request, and they report "No attack succeeds in 13,935 attacked AgentDojo episodes" and "utility under attack comparable to CaMeL's (29.0% vs. 27.2%)" [S521].
+- **arXiv, 2026-11:** pairing text and page-image versions of 191 English question-answering sources across six models, the authors find that rendering reduces append and format injection execution for every model, yet Qwen3-VL-8B still executes image-borne answer replacement at 77.96%, that a search over eight fixed attack candidates largely closes the image deficit in appending and formatting for Qwen and Gemini, though not for GPT-5-nano, and that utility ratios on original questions range from 93.31% to 101.61% but Qwen falls to 61.99% when answers combine two evidence spans; they call this conditional protection, motivating evaluations that report security by model, operation and attack budget alongside utility [S567].
 
 ## Pitfalls
 1. Trusting everything in the user turn. Anthropic's model "often reasoned that anything in the user's
@@ -156,3 +157,4 @@ None yet.
 - [S509] The Devil is in the Context: Nine Dimensions of Prompt Injection Attacks, arXiv 2611.04672, 2026-11-03
 - [S514] Treating the Model as an Untrusted Component: Deterministic Policy Enforcement, Human Approval and Taint Tracking Against Prompt Injection in Tool-Using Agents, with Validation on Open-Weights Models, arXiv 2611.11571, 2026-11-08
 - [S521] CapLite: Prompt-Injection Defense for Small Language Model Agents without Model-Written Security Artifacts, arXiv 2611.17115, 2026-11-12
+- [S567] What Survives the Shift from Text to Pixels? Conditional Protection against Prompt Injection in Image-Rendered Documents, arXiv 2611.24231, 2026-11-18

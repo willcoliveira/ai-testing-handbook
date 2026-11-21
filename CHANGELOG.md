@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.38 (2026-11-21)
+
+- Refresh since 2026-11-13: 17 new sources (S556 to S572): ten arXiv papers (Benchmark Factory,
+  SWE-CoWork, risk-certified prompts for judge guardrails, verifiers hacked by padding under an
+  exact oracle, OfficePrism, injections in image-rendered documents, AutoPI, a scale-reversal
+  probe for judges, scoring topology in zero-shot judging, SWE-Recreation), Anthropic's guidance
+  on building safety evaluations, Amazon's BenchProofer, OpenAI's CSAM image classifier model card
+  and GPT-6.2 System Card, the Gemini 4 Neon launch post, NVIDIA's tool-calling parser conformance
+  corpus, and OWASP's GenAI Data Security Best Practices v2 Part 2 (register only); 20 bullets in
+  15 practice files, all audited claim by claim, 17 reworded from quoted sentences and none
+  dropped; Inspect AI 0.3.291, promptfoo 0.126.0, Langfuse v4.83.0 and the first OpenTelemetry
+  GenAI semantic conventions release (v0.1.0) recorded; sweep notes fixed on 10 items and register
+  ids added on 7, none added or removed; `digests/2026-11-21.md`.
+
 ## 0.1.37 (2026-11-16)
 
 - Four requirements in depth on `learning-path/ai-qa-requirements.md`: retrieval metrics (R11),

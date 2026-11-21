@@ -3,8 +3,8 @@ id: golden-datasets
 title: Golden datasets
 area: 2-application-evals
 status: draft
-last_reviewed: 2026-09-26
-sources: [S031, S032, S033, S036, S038, S039, S041, S042, S043, S044, S048, S050]
+last_reviewed: 2026-11-21
+sources: [S031, S032, S033, S036, S038, S039, S041, S042, S043, S044, S048, S050, S557]
 related: [eval-driven-development, criteria-authoring, data-contamination, benchmark-hygiene, model-and-system-cards, online-evals-and-drift]
 ---
 
@@ -88,6 +88,7 @@ run less often or retired" [S042].
   and built from production logs and feedback [S050], [S043].
 - **Chen, Zaharia and Zou, 2023-10-31 (v3):** ran fixed question sets against March and June 2023 snapshots
   at temperature 0.1 and conclude on "the need to continuously monitor LLMs' behavior over time" [S041].
+- **arXiv, 2026-11:** Benchmark Factory, an autonomous meta-agent loop with human checkpoints, repairs candidate benchmarks until they clear quality anchors that need no per-task human labels; the authors used it to build benchmarks for five developer cohorts at their organization, a deliberately trivial benchmark failed the anchors, five broken graders failed them even under a relaxed rule fixed in advance that the real grader passes, and on configurations never used to build them the benchmarks ranked Claude Opus 4.7 at high reasoning effort above low effort (60.6% vs. 54.4% of tasks passed, p=0.002) and GPT-5.5 above GPT-5.4 (65.8% vs. 60.5%, p=0.004); the authors call the anchors necessary, not sufficient, conditions for a valid benchmark, designed to focus human review on what the loop cannot repair [S557].
 
 ## Pitfalls
 1. **Tuning the prompt on the test slice.** The final slice is reserved "for one final test"; using it
@@ -117,3 +118,4 @@ None yet.
 - [S044] Dataset Cards, Hugging Face Hub docs, living (checked 2026-09-26).
 - [S048] Dataset card template, Hugging Face huggingface_hub repository, living (checked 2026-09-26).
 - [S050] Datasets (guide), Braintrust docs, living (checked 2026-09-26).
+- [S557] Benchmark Factory: Agentic Benchmark Creation via Dataset Curation and Label-Free Quality Anchors, arXiv 2611.18890, 2026-11-13

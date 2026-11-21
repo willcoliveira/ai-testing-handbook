@@ -3,8 +3,8 @@ id: tool-use-evals
 title: Tool-use evals
 area: 4-agents-and-systems
 status: draft
-last_reviewed: 2026-10-01
-sources: [S066, S070, S077, S078, S083, S088, S089, S215, S220, S224, S229, S260, S268, S272, S319, S373, S377]
+last_reviewed: 2026-11-21
+sources: [S066, S070, S077, S078, S083, S088, S089, S215, S220, S224, S229, S260, S268, S272, S319, S373, S377, S569]
 related: [agent-evals, offline-probes, mutation-checking, harnesses, prompt-injection, side-effects-and-state]
 ---
 
@@ -54,6 +54,7 @@ Argument comparison rules that hold up:
 - **arXiv, 2026-09:** treating each tool's advertised interface as an executable contract confirmed seven tool defects and one evaluator property across 34 tools in four agent benchmarks, including a tau2-bench telecom case where the evaluator rewards refuelling a suspended line and fails the repaired tool [S319].
 - **Anthropic, 2025-09:** evaluates its tools with held-out task sets and grades four failure modes: the wrong tool, the right tool with wrong parameters, too few calls, and mishandled responses; it reports that tool naming and namespacing changed its eval results [S377].
 - **arXiv, 2025-08:** MCP-Universe benchmarks agents on 11 real MCP servers with execution-based evaluators; the best model reached 43.72 percent [S373].
+- **NVIDIA, 2026-11:** frontend-crates, the reusable Rust components behind NVIDIA Dynamo tool-calling parsers, pairs model outputs with expected results in a shared Conformance Corpus whose language-neutral YAML fixtures pair fixed input with expected output, so Rust parsers and Python references can run the same cases; NVIDIA's post says the initial test set an agent generates may contain errors because expected behavior depends on context the agent may not have, that if those expectations are wrong the parser can pass the tests and still behave incorrectly, and advises an adversarial review by the agent, then a manual pass case by case, and end-to-end tests with real models before claiming deployment support [S569].
 
 ## Pitfalls
 1. Exact-match on free-text arguments. A search query or a note field varies run to run; compare identifiers exactly and free text by schema or by a tolerant check [S089].
@@ -83,3 +84,4 @@ None yet.
 - [S319] Do Agent Benchmarks Do What They Say? An executable-contract audit of tool-using agent environments, arXiv 2609.37315, 2026-09-29
 - [S377] Writing effective tools for AI agents, using AI agents, Anthropic engineering, 2025-09-11
 - [S373] MCP-Universe: benchmarking LLMs with real-world MCP servers, arXiv 2508.14704, 2025-08-20
+- [S569] Build Tool-Calling Parsers in Rust with AI Agents, NVIDIA (Keiven Chang, Indrajit Maloji Bhosale, Krishnan Prashanth, Zhongdao Ren, Ryan McCormick), 2026-11-19
