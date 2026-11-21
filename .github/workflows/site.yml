@@ -83,7 +83,7 @@ jobs:
   e2e:
     name: Playwright (chromium, mobile-chrome)
     if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -96,13 +96,15 @@ jobs:
       - run: npm ci
       - name: Playwright version
         id: pw
-        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+          echo "image=${ImageOS:-unknown}" >> "$GITHUB_OUTPUT"
       - name: Cache browsers
         id: pw-cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-chromium-${{ steps.pw.outputs.version }}
+          key: ${{ runner.os }}-${{ steps.pw.outputs.image }}-playwright-chromium-${{ steps.pw.outputs.version }}
       - name: Install Chromium
         if: steps.pw-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
@@ -120,10 +122,14 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
+  # The browser jobs run on ubuntu-24.04, not ubuntu-latest. From 2026-11-15 ubuntu-latest gave
+  # 26.04 (libicu78), and the WebKit build cached on 24.04 failed to start there: it needs
+  # libicudata.so.74. The cache keys carry the runner image so a browser build is never restored
+  # onto another image. Try ubuntu-latest again with a Playwright upgrade.
   full:
     name: Playwright full set (4 projects, every page)
     if: github.event_name == 'push' || github.event_name == 'schedule'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -136,13 +142,15 @@ jobs:
       - run: npm ci
       - name: Playwright version
         id: pw
-        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+          echo "image=${ImageOS:-unknown}" >> "$GITHUB_OUTPUT"
       - name: Cache browsers
         id: pw-cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-chromium-webkit-${{ steps.pw.outputs.version }}
+          key: ${{ runner.os }}-${{ steps.pw.outputs.image }}-playwright-chromium-webkit-${{ steps.pw.outputs.version }}
       - name: Install Chromium and WebKit
         if: steps.pw-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium webkit
@@ -325,7 +333,7 @@ jobs:
   smoke:
     name: Smoke against the live site
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       BASE_URL: https://willcoliveira.github.io/ai-testing-handbook/
@@ -340,13 +348,15 @@ jobs:
       - run: npm ci
       - name: Playwright version
         id: pw
-        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+          echo "image=${ImageOS:-unknown}" >> "$GITHUB_OUTPUT"
       - name: Cache browsers
         id: pw-cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-chromium-${{ steps.pw.outputs.version }}
+          key: ${{ runner.os }}-${{ steps.pw.outputs.image }}-playwright-chromium-${{ steps.pw.outputs.version }}
       - name: Install Chromium
         if: steps.pw-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
